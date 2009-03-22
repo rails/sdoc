@@ -103,6 +103,10 @@ module Generators
       @values
     end
     
+    def absolute_path
+      @context.file_expanded_path
+    end
+    
   end
 
   #####################################################################
@@ -142,14 +146,40 @@ module Generators
     
     def self.github_url(file_relative_name, options)
       unless @@github_url_cache.has_key? file_relative_name
+        file = AllReferences[file_relative_name]
+        if file.nil?
+          return nil
+        end
+        path = file.absolute_path
+        name = File.basename(file_relative_name)
+        
         pwd = Dir.pwd
-        Dir.chdir(options.github_path)
-        s = `git log -1 #{file_relative_name}`
+        Dir.chdir(File.dirname(path))
+        s = `git log -1 --pretty=format:"commit %H" #{name}`
         Dir.chdir(pwd)
+        
         m = s.match(/commit\s+(\S+)/)
-        @@github_url_cache[file_relative_name] = m ? "#{options.github_url}/blob/#{m[1]}/#{file_relative_name}" : nil
+        if m
+          repository_path = path_relative_to_repository(path)
+          @@github_url_cache[file_relative_name] = "#{options.github_url}/blob/#{m[1]}#{repository_path}"
+        end
       end
       @@github_url_cache[file_relative_name]
+    end
+    
+    def self.path_relative_to_repository(path)
+      root = find_git_dir(path)
+      path[root.size..path.size]
+    end
+    
+    def self.find_git_dir(path)
+      while !path.empty? && path != '.'
+        if (File.exists? File.join(path, '.git')) 
+          return path
+        end
+        path = File.dirname(path)
+      end
+      ''
     end
     
 

@@ -7,12 +7,6 @@ class OptionsTest < Test::Unit::TestCase
     assert_not_nil(o.github_url)
   end
   
-  def test_should_add_github_path_option
-    o = Options.instance
-    o.parse(%w(--github_url .), RDoc::RDoc::GENERATORS)
-    assert_not_nil(o.github_path)
-  end
-  
   def test_should_set_default_generator_to_shtml
     o = Options.instance
     o.parse(%w(--github_url http://www.github.com), RDoc::RDoc::GENERATORS)

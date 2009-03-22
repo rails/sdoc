@@ -23,7 +23,6 @@ module SDoc
         go.each do |opt, arg|  
           case opt
             when "--github_url"  then @github_url = arg
-            when "--github_path" then @github_path = File.expand_path(arg)
             when "--fmt"         then generator_set = true
             when "--template"    then template_set = true
           end
@@ -54,7 +53,6 @@ module SDoc
 end
 
 Options::OptionList::OPTION_LIST << ['--github_url', '-G', 'url', 'Github url prefix like http://github.com/rails/rails']
-Options::OptionList::OPTION_LIST << ['--github_path', '-g', 'path', 'Path to repository root. Defaults to .']
 
 class Options
   def self.instance

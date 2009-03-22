@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><title>gen_search_index (Generators::SHTMLGenerator)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<style type="text/css">
+.ruby-comment    { color: green; font-style: italic }
+.ruby-constant   { color: #4433aa; font-weight: bold; }
+.ruby-identifier { color: #222222;  }
+.ruby-ivar       { color: #2233dd; }
+.ruby-keyword    { color: #3333FF; font-weight: bold }
+.ruby-node       { color: #777777; }
+.ruby-operator   { color: #111111;  }
+.ruby-regexp     { color: #662222; }
+.ruby-value      { color: #662222; font-style: italic }
+  .kw { color: #3333FF; font-weight: bold }
+  .cmt { color: green; font-style: italic }
+  .str { color: #662222; font-style: italic }
+  .re  { color: #662222; }
+</style>
+</head>
+<body bgcolor="white">
+<pre><span class="ruby-comment cmt"># File lib/sdoc/generators/shtml_generator.rb, line 263</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gen_search_index</span>
+      <span class="ruby-identifier">entries</span> = <span class="ruby-constant">HtmlMethod</span>.<span class="ruby-identifier">all_methods</span>.<span class="ruby-identifier">sort</span>
+      <span class="ruby-identifier">entries</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@classes</span>.<span class="ruby-identifier">sort</span>
+      <span class="ruby-identifier">entries</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@files</span>.<span class="ruby-identifier">sort</span>
+      <span class="ruby-identifier">entries</span> = <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">document_self</span> }
+      
+      <span class="ruby-identifier">result</span> = {
+        <span class="ruby-identifier">:searchIndex</span> =<span class="ruby-operator">&gt;</span> [],
+        <span class="ruby-identifier">:longSearchIndex</span> =<span class="ruby-operator">&gt;</span> [],
+        <span class="ruby-identifier">:info</span> =<span class="ruby-operator">&gt;</span> []
+      }
+      
+      <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">result</span>[<span class="ruby-identifier">:searchIndex</span>].<span class="ruby-identifier">push</span>( <span class="ruby-identifier">search_string</span>(<span class="ruby-identifier">item</span>.<span class="ruby-identifier">title</span>) )
+        <span class="ruby-identifier">result</span>[<span class="ruby-identifier">:longSearchIndex</span>].<span class="ruby-identifier">push</span>( <span class="ruby-identifier">search_string</span>(<span class="ruby-identifier">item</span>.<span class="ruby-identifier">namespace</span>) )
+        <span class="ruby-identifier">result</span>[<span class="ruby-identifier">:info</span>].<span class="ruby-identifier">push</span>([<span class="ruby-identifier">item</span>.<span class="ruby-identifier">title</span>, <span class="ruby-identifier">item</span>.<span class="ruby-identifier">namespace</span>, <span class="ruby-identifier">item</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">item</span>.<span class="ruby-identifier">params</span>, <span class="ruby-identifier">item</span>.<span class="ruby-identifier">snippet</span>])
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-value str">'index.js'</span>, <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-value str">'var data = '</span>); <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">result</span>.<span class="ruby-identifier">to_json</span>)
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-value str">'index.yaml'</span>, <span class="ruby-value str">'w'</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">result</span>.<span class="ruby-identifier">to_yaml</span>) }
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: Generators::SHTMLGenerator</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />Generators::SHTMLGenerator</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../files/lib/sdoc/generators/shtml_generator_rb.html">lib/sdoc/generators/shtml_generator.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+HTMLGenerator
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000037">build_class_list</a></li>
+  <li><a href="#M000036">build_indices</a></li>
+  <li><a href="#M000038">copy_resources</a></li>
+  <li><a href="#M000032">find_git_dir</a></li>
+  <li><a href="#M000033">for</a></li>
+  <li><a href="#M000042">gen_search_index</a></li>
+  <li><a href="#M000040">gen_tree_index</a></li>
+  <li><a href="#M000041">gen_tree_level</a></li>
+  <li><a href="#M000035">generate_html</a></li>
+  <li><a href="#M000030">github_url</a></li>
+  <li><a href="#M000034">load_html_template</a></li>
+  <li><a href="#M000031">path_relative_to_repository</a></li>
+  <li><a href="#M000039">search_string</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000032"></a><b>find_git_dir</b>(path)
+<a href="SHTMLGenerator.src/M000032.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000032.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L175" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000033"></a><b>for</b>(options)
+<a href="SHTMLGenerator.src/M000033.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000033.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L186" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000030"></a><b>github_url</b>(file_relative_name, options)
+<a href="SHTMLGenerator.src/M000030.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000030.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L147" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000031"></a><b>path_relative_to_repository</b>(path)
+<a href="SHTMLGenerator.src/M000031.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000031.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L170" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000037"></a><b>build_class_list</b>(from, html_file, class_dir)
+<a href="SHTMLGenerator.src/M000037.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000037.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L229" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000036"></a><b>build_indices</b>()
+<a href="SHTMLGenerator.src/M000036.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000036.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L219" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000038"></a><b>copy_resources</b>()
+<a href="SHTMLGenerator.src/M000038.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000038.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L238" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000042"></a><b>gen_search_index</b>()
+<a href="SHTMLGenerator.src/M000042.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000042.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L263" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000040"></a><b>gen_tree_index</b>()
+<a href="SHTMLGenerator.src/M000040.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000040.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L246" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000041"></a><b>gen_tree_level</b>(classes)
+<a href="SHTMLGenerator.src/M000041.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000041.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L254" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000035"></a><b>generate_html</b>()
+<a href="SHTMLGenerator.src/M000035.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000035.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L206" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000034"></a><b>load_html_template</b>()
+<a href="SHTMLGenerator.src/M000034.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000034.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L193" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000039"></a><b>search_string</b>(string)
+<a href="SHTMLGenerator.src/M000039.html" target="SOURCE_CODE" onclick="javascript:openCode('SHTMLGenerator.src/M000039.html'); return false;">source</a>
+   | <a href="/blob/efde228b63d547c1921e0a24bf2bd90a64503986/lib/sdoc/generators/shtml_generator.rb#L242" target="_blank" class="github_url">on GitHub</a>
+  </div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

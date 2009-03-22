@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Module: RDoc::Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Module</span><br />RDoc::Page</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../files/lib/sdoc/generators/template/shtml/shtml_rb.html">lib/sdoc/generators/template/shtml/shtml.rb</a>
+        </td>
+      </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">FONTS</td>
+    <td>=</td>
+    <td class="attr-value">&quot;\&quot;Bitstream Vera Sans\&quot;, Verdana, Arial, Helvetica, sans-serif&quot;</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">STYLE</td>
+    <td>=</td>
+    <td class="attr-value">&lt;&lt;CSS a {   color: #00F;   text-decoration: none; }  a:hover {   color: #77F;   text-decoration: underline; }  body, td, p {   font-family: %fonts%;   background: #FFF;   color: #000;   margin: 0px;   font-size: small; }  p {   margin-top: 0.5em;   margin-bottom: 0.5em; }  #content {   margin: 2em;   margin-left: 3.5em;   margin-right: 3.5em; }  #description p {   margin-bottom: 0.5em; }  .sectiontitle {   margin-top: 1em;   margin-bottom: 1em;   padding: 0.5em;   padding-left: 2em;   background: #005;   color: #FFF;   font-weight: bold; }  .attr-rw {   padding-left: 1em;   padding-right: 1em;   text-align: center;   color: #055; }  .attr-name {   font-weight: bold; }  .attr-desc { }  .attr-value {   font-family: monospace; }  .file-title-prefix {   font-size: large; }  .file-title {   font-size: large;   font-weight: bold;   background: #005;   color: #FFF; }  .banner {   background: #005;   color: #FFF;   border: 1px solid black;   padding: 1em; }  .banner td {   background: transparent;   color: #FFF; }  h1 a, h2 a, .sectiontitle a, .banner a {   color: #FF0; }  h1 a:hover, h2 a:hover, .sectiontitle a:hover, .banner a:hover {   color: #FF7; }  .dyn-source {   display: none;   background: #fffde8;   color: #000;   border: #ffe0bb dotted 1px;   margin: 0.5em 2em 0.5em 2em;   padding: 0.5em; }  .dyn-source .cmt {   color: #00F;   font-style: italic; }  .dyn-source .kw {   color: #070;   font-weight: bold; }  .method {   margin-left: 1em;   margin-right: 1em;   margin-bottom: 1em; }  .description pre {   padding: 0.5em;   border: #ffe0bb dotted 1px;   background: #fffde8; }  .method .title {   font-family: monospace;   font-size: large;   border-bottom: 1px dashed black;   margin-bottom: 0.3em;   padding-bottom: 0.1em; }  .method .description, .method .sourcecode {   margin-left: 1em; }  .description p, .sourcecode p {   margin-bottom: 0.5em; }  .method .sourcecode p.source-link {   text-indent: 0em;   margin-top: 0.5em; }  .method .aka {   margin-top: 0.3em;   margin-left: 1em;   font-style: italic;   text-indent: 2em; }  h1 {   padding: 1em;   margin-left: -1.5em;   font-size: x-large;   font-weight: bold;   color: #FFF;   background: #007; }  h2 {   padding: 0.5em 1em 0.5em 1em;   margin-left: -1.5em;   font-size: large;   font-weight: bold;   color: #FFF;   background: #009; }  h3, h4, h5, h6 {   color: #220088;   border-bottom: #5522bb solid 1px; }  .sourcecode &gt; pre {   padding: 0.5em;   border: 1px dotted black;   background: #FFE; }  dt {   font-weight: bold }  dd {   margin-bottom: 0.7em; } CSS</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">XHTML_PREAMBLE</td>
+    <td>=</td>
+    <td class="attr-value">%{&lt;?xml version=&quot;1.0&quot; encoding=&quot;%charset%&quot;?&gt; &lt;!DOCTYPE html       PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;      &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt; }</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">XHTML_FRAMESET_PREAMBLE</td>
+    <td>=</td>
+    <td class="attr-value">%{ &lt;!DOCTYPE html      PUBLIC &quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot;      &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd&quot;&gt;     }</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">HEADER</td>
+    <td>=</td>
+    <td class="attr-value">XHTML_PREAMBLE + &lt;&lt;ENDHEADER &lt;html&gt;   &lt;head&gt;     &lt;title&gt;%title%&lt;/title&gt;     &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=%charset%&quot; /&gt;     &lt;link rel=&quot;stylesheet&quot; href=&quot;%style_url%&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;      &lt;script language=&quot;JavaScript&quot; type=&quot;text/javascript&quot;&gt;     // &lt;![CDATA[          function toggleSource( id )         {           var elem           var link            if( document.getElementById )           {             elem = document.getElementById( id )             link = document.getElementById( &quot;l_&quot; + id )           }           else if ( document.all )           {             elem = eval( &quot;document.all.&quot; + id )             link = eval( &quot;document.all.l_&quot; + id )           }           else             return false;            if( elem.style.display == &quot;block&quot; )           {             elem.style.display = &quot;none&quot;             link.innerHTML = &quot;show&quot;           }           else           {             elem.style.display = &quot;block&quot;             link.innerHTML = &quot;hide&quot;           }         }          function openCode( url )         {           window.open( url, &quot;SOURCE_CODE&quot;, &quot;resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750&quot; ).focus();         }       // ]]&gt;     &lt;/script&gt;   &lt;/head&gt;    &lt;body&gt; ENDHEADER</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">FILE_PAGE</td>
+    <td>=</td>
+    <td class="attr-value">&lt;&lt;HTML &lt;table border='0' cellpadding='0' cellspacing='0' width=&quot;100%&quot; class='banner'&gt;   &lt;tr&gt;&lt;td&gt;     &lt;table width=&quot;100%&quot; border='0' cellpadding='0' cellspacing='0'&gt;&lt;tr&gt;       &lt;td class=&quot;file-title&quot; colspan=&quot;2&quot;&gt;&lt;span class=&quot;file-title-prefix&quot;&gt;File&lt;/span&gt;&lt;br /&gt;%short_name%&lt;/td&gt;       &lt;td align=&quot;right&quot;&gt;         &lt;table border='0' cellspacing=&quot;0&quot; cellpadding=&quot;2&quot;&gt;           &lt;tr&gt;             &lt;td&gt;Path:&lt;/td&gt;             &lt;td&gt;%full_path% IF:cvsurl                                 &amp;nbsp;(&lt;a href=&quot;%cvsurl%&quot;&gt;CVS&lt;/a&gt;) ENDIF:cvsurl IF:github_url   &amp;nbsp;(&lt;a href=&quot;%github_url%&quot; target=&quot;_blank&quot;&gt;Code on GitHub&lt;/a&gt;) ENDIF:github_url             &lt;/td&gt;           &lt;/tr&gt;           &lt;tr&gt;             &lt;td&gt;Modified:&lt;/td&gt;             &lt;td&gt;%dtm_modified%&lt;/td&gt;           &lt;/tr&gt;         &lt;/table&gt;       &lt;/td&gt;&lt;/tr&gt;     &lt;/table&gt;   &lt;/td&gt;&lt;/tr&gt; &lt;/table&gt;&lt;br /&gt; HTML</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">CLASS_PAGE</td>
+    <td>=</td>
+    <td class="attr-value">&lt;&lt;HTML &lt;table width=&quot;100%&quot; border='0' cellpadding='0' cellspacing='0' class='banner'&gt;&lt;tr&gt;   &lt;td class=&quot;file-title&quot;&gt;&lt;span class=&quot;file-title-prefix&quot;&gt;%classmod%&lt;/span&gt;&lt;br /&gt;%full_name%&lt;/td&gt;   &lt;td align=&quot;right&quot;&gt;     &lt;table cellspacing=&quot;0&quot; cellpadding=&quot;2&quot;&gt;       &lt;tr valign=&quot;top&quot;&gt;         &lt;td&gt;In:&lt;/td&gt;         &lt;td&gt; START:infiles HREF:full_path_url:full_path: IF:cvsurl &amp;nbsp;(&lt;a href=&quot;%cvsurl%&quot;&gt;CVS&lt;/a&gt;) ENDIF:cvsurl END:infiles         &lt;/td&gt;       &lt;/tr&gt; IF:parent     &lt;tr&gt;       &lt;td&gt;Parent:&lt;/td&gt;       &lt;td&gt; IF:par_url         &lt;a href=&quot;%par_url%&quot;&gt; ENDIF:par_url %parent% IF:par_url          &lt;/a&gt; ENDIF:par_url      &lt;/td&gt;    &lt;/tr&gt; ENDIF:parent          &lt;/table&gt;         &lt;/td&gt;         &lt;/tr&gt;       &lt;/table&gt; HTML</td>
+  </tr>
+  <tr valign='top'>
+    <td>&nbsp;</td>
+    <td colspan="2" class="attr-desc"></td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">METHOD_LIST</td>
+    <td>=</td>
+    <td class="attr-value">&lt;&lt;HTML   &lt;div id=&quot;content&quot;&gt; IF:diagram   &lt;table cellpadding='0' cellspacing='0' border='0' width=&quot;100%&quot;&gt;&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;     %diagram%   &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt; ENDIF:diagram  IF:description   &lt;div class=&quot;description&quot;&gt;%description%&lt;/div&gt; ENDIF:description  IF:requires   &lt;div class=&quot;sectiontitle&quot;&gt;Required Files&lt;/div&gt;   &lt;ul&gt; START:requires   &lt;li&gt;HREF:aref:name:&lt;/li&gt; END:requires   &lt;/ul&gt; ENDIF:requires  IF:toc   &lt;div class=&quot;sectiontitle&quot;&gt;Contents&lt;/div&gt;   &lt;ul&gt; START:toc   &lt;li&gt;&lt;a href=&quot;#%href%&quot;&gt;%secname%&lt;/a&gt;&lt;/li&gt; END:toc   &lt;/ul&gt; ENDIF:toc  IF:methods   &lt;div class=&quot;sectiontitle&quot;&gt;Methods&lt;/div&gt;   &lt;ul&gt; START:methods   &lt;li&gt;HREF:aref:name:&lt;/li&gt; END:methods   &lt;/ul&gt; ENDIF:methods  IF:includes &lt;div class=&quot;sectiontitle&quot;&gt;Included Modules&lt;/div&gt; &lt;ul&gt; START:includes   &lt;li&gt;HREF:aref:name:&lt;/li&gt; END:includes &lt;/ul&gt; ENDIF:includes  START:sections IF:sectitle &lt;div class=&quot;sectiontitle&quot;&gt;&lt;a name=&quot;%secsequence%&quot;&gt;%sectitle%&lt;/a&gt;&lt;/div&gt; IF:seccomment &lt;div class=&quot;description&quot;&gt; %seccomment% &lt;/div&gt; ENDIF:seccomment ENDIF:sectitle  IF:classlist   &lt;div class=&quot;sectiontitle&quot;&gt;Classes and Modules&lt;/div&gt;   %classlist% ENDIF:classlist  IF:constants   &lt;div class=&quot;sectiontitle&quot;&gt;Constants&lt;/div&gt;   &lt;table border='0' cellpadding='5'&gt; START:constants   &lt;tr valign='top'&gt;     &lt;td class=&quot;attr-name&quot;&gt;%name%&lt;/td&gt;     &lt;td&gt;=&lt;/td&gt;     &lt;td class=&quot;attr-value&quot;&gt;%value%&lt;/td&gt;   &lt;/tr&gt; IF:desc   &lt;tr valign='top'&gt;     &lt;td&gt;&amp;nbsp;&lt;/td&gt;     &lt;td colspan=&quot;2&quot; class=&quot;attr-desc&quot;&gt;%desc%&lt;/td&gt;   &lt;/tr&gt; ENDIF:desc END:constants   &lt;/table&gt; ENDIF:constants  IF:attributes   &lt;div class=&quot;sectiontitle&quot;&gt;Attributes&lt;/div&gt;   &lt;table border='0' cellpadding='5'&gt; START:attributes   &lt;tr valign='top'&gt;     &lt;td class='attr-rw'&gt; IF:rw [%rw%] ENDIF:rw     &lt;/td&gt;     &lt;td class='attr-name'&gt;%name%&lt;/td&gt;     &lt;td class='attr-desc'&gt;%a_desc%&lt;/td&gt;   &lt;/tr&gt; END:attributes   &lt;/table&gt; ENDIF:attributes  IF:method_list START:method_list IF:methods &lt;div class=&quot;sectiontitle&quot;&gt;%type% %category% methods&lt;/div&gt; START:methods &lt;div class=&quot;method&quot;&gt;   &lt;div class=&quot;title&quot;&gt; IF:callseq     &lt;a name=&quot;%aref%&quot;&gt;&lt;/a&gt;&lt;b&gt;%callseq%&lt;/b&gt; ENDIF:callseq IFNOT:callseq     &lt;a name=&quot;%aref%&quot;&gt;&lt;/a&gt;&lt;b&gt;%name%&lt;/b&gt;%params% ENDIF:callseq IF:codeurl &lt;a href=&quot;%codeurl%&quot; target=&quot;SOURCE_CODE&quot; onclick=&quot;javascript:openCode('%codeurl%'); return false;&quot;&gt;source&lt;/a&gt; IF:github_url    | &lt;a href=&quot;%github_url%&quot; target=&quot;_blank&quot; class=&quot;github_url&quot;&gt;on GitHub&lt;/a&gt; ENDIF:github_url ENDIF:codeurl   &lt;/div&gt; IF:m_desc   &lt;div class=&quot;description&quot;&gt;   %m_desc%   &lt;/div&gt; ENDIF:m_desc IF:aka &lt;div class=&quot;aka&quot;&gt;   This method is also aliased as START:aka   &lt;a href=&quot;%aref%&quot;&gt;%name%&lt;/a&gt; END:aka &lt;/div&gt; ENDIF:aka IF:sourcecode &lt;div class=&quot;sourcecode&quot;&gt;   &lt;p class=&quot;source-link&quot;&gt;     Source: &lt;a href=&quot;javascript:toggleSource('%aref%_source')&quot; id=&quot;l_%aref%_source&quot;&gt;show&lt;/a&gt; IF:github_url    | &lt;a href=&quot;%github_url%&quot; target=&quot;_blank&quot; class=&quot;github_url&quot;&gt;on GitHub&lt;/a&gt; ENDIF:github_url   &lt;/p&gt;   &lt;div id=&quot;%aref%_source&quot; class=&quot;dyn-source&quot;&gt; &lt;pre&gt; %sourcecode% &lt;/pre&gt;   &lt;/div&gt; &lt;/div&gt; ENDIF:sourcecode &lt;/div&gt; END:methods ENDIF:methods END:method_list ENDIF:method_list END:sections &lt;/div&gt; HTML</td>
+  </tr>
+  <tr valign='top'>
+    <td>&nbsp;</td>
+    <td colspan="2" class="attr-desc"></td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">FOOTER</td>
+    <td>=</td>
+    <td class="attr-value">&lt;&lt;ENDFOOTER   &lt;/body&gt; &lt;/html&gt; ENDFOOTER</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">BODY</td>
+    <td>=</td>
+    <td class="attr-value">HEADER + &lt;&lt;ENDBODY   !INCLUDE! &lt;!-- banner header --&gt;    &lt;div id=&quot;bodyContent&quot;&gt;     #{METHOD_LIST}   &lt;/div&gt;    #{FOOTER} ENDBODY</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">SRC_PAGE</td>
+    <td>=</td>
+    <td class="attr-value">XHTML_PREAMBLE + &lt;&lt;HTML &lt;html&gt; &lt;head&gt;&lt;title&gt;%title%&lt;/title&gt; &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=%charset%&quot; /&gt; &lt;style type=&quot;text/css&quot;&gt; .ruby-comment    { color: green; font-style: italic } .ruby-constant   { color: #4433aa; font-weight: bold; } .ruby-identifier { color: #222222;  } .ruby-ivar       { color: #2233dd; } .ruby-keyword    { color: #3333FF; font-weight: bold } .ruby-node       { color: #777777; } .ruby-operator   { color: #111111;  } .ruby-regexp     { color: #662222; } .ruby-value      { color: #662222; font-style: italic }   .kw { color: #3333FF; font-weight: bold }   .cmt { color: green; font-style: italic }   .str { color: #662222; font-style: italic }   .re  { color: #662222; } &lt;/style&gt; &lt;/head&gt; &lt;body bgcolor=&quot;white&quot;&gt; &lt;pre&gt;%code%&lt;/pre&gt; &lt;/body&gt; &lt;/html&gt; HTML</td>
+  </tr>
+  <tr valign='top'>
+    <td>&nbsp;</td>
+    <td colspan="2" class="attr-desc">
+Source code ##########################
+
+</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">FR_INDEX_BODY</td>
+    <td>=</td>
+    <td class="attr-value">&lt;&lt;HTML !INCLUDE! HTML</td>
+  </tr>
+  <tr valign='top'>
+    <td>&nbsp;</td>
+    <td colspan="2" class="attr-desc">
+Index ################################
+
+</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">FILE_INDEX</td>
+    <td>=</td>
+    <td class="attr-value">XHTML_PREAMBLE + &lt;&lt;HTML &lt;html&gt; &lt;head&gt; &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=%charset%&quot; /&gt; &lt;title&gt;Index&lt;/title&gt; &lt;style type=&quot;text/css&quot;&gt; &lt;!--   body {     background-color: #EEE;     font-family: #{FONTS};      color: #000;     margin: 0px;   }   .banner {     background: #005;     color: #FFF;     padding: 0.2em;     font-size: small;     font-weight: bold;     text-align: center;   }   .entries {     margin: 0.25em 1em 0 1em;     font-size: x-small;   }   a {     color: #00F;     text-decoration: none;     white-space: nowrap;   }   a:hover {     color: #77F;     text-decoration: underline;   } --&gt; &lt;/style&gt; &lt;base target=&quot;docwin&quot; /&gt; &lt;/head&gt; &lt;body&gt; &lt;div class=&quot;banner&quot;&gt;%list_title%&lt;/div&gt; &lt;div class=&quot;entries&quot;&gt; START:entries &lt;a href=&quot;%href%&quot;&gt;%name%&lt;/a&gt;&lt;br /&gt; END:entries &lt;/div&gt; &lt;/body&gt;&lt;/html&gt; HTML</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">CLASS_INDEX</td>
+    <td>=</td>
+    <td class="attr-value">FILE_INDEX</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">METHOD_INDEX</td>
+    <td>=</td>
+    <td class="attr-value">FILE_INDEX</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">INDEX</td>
+    <td>=</td>
+    <td class="attr-value">XHTML_FRAMESET_PREAMBLE + &lt;&lt;HTML &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt; &lt;head&gt;         &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=%charset%&quot;/&gt;          &lt;title&gt;%title%&lt;/title&gt; &lt;/head&gt; &lt;frameset cols=&quot;300,*&quot; frameborder=&quot;1&quot; border=&quot;1&quot; bordercolor=&quot;#666666&quot; framespacing=&quot;1&quot;&gt;     &lt;frame src=&quot;panel.html&quot; title=&quot;Search&quot; name=&quot;panel&quot; /&gt;     &lt;frame src=&quot;%initial_page%&quot; name=&quot;docwin&quot; /&gt; &lt;/frameset&gt; &lt;/html&gt; HTML</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">RESOURCES_PATH</td>
+    <td>=</td>
+    <td class="attr-value">File.join(File.expand_path(File.dirname(__FILE__)), 'resources/.')</td>
+  </tr>
+  </table>
+
+
+</div>
+
+  </div>
+
+    </body>
+</html>

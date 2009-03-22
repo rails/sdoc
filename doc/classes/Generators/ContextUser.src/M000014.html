@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><title>build_method_detail_list (Generators::ContextUser)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<style type="text/css">
+.ruby-comment    { color: green; font-style: italic }
+.ruby-constant   { color: #4433aa; font-weight: bold; }
+.ruby-identifier { color: #222222;  }
+.ruby-ivar       { color: #2233dd; }
+.ruby-keyword    { color: #3333FF; font-weight: bold }
+.ruby-node       { color: #777777; }
+.ruby-operator   { color: #111111;  }
+.ruby-regexp     { color: #662222; }
+.ruby-value      { color: #662222; font-style: italic }
+  .kw { color: #3333FF; font-weight: bold }
+  .cmt { color: green; font-style: italic }
+  .str { color: #662222; font-style: italic }
+  .re  { color: #662222; }
+</style>
+</head>
+<body bgcolor="white">
+<pre><span class="ruby-comment cmt"># File lib/sdoc/generators/shtml_generator.rb, line 290</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_method_detail_list</span>(<span class="ruby-identifier">section</span>)
+      <span class="ruby-identifier">outer</span> = []
+
+      <span class="ruby-identifier">methods</span> = <span class="ruby-ivar">@methods</span>.<span class="ruby-identifier">sort</span>
+      <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">singleton</span> <span class="ruby-keyword kw">in</span> [<span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>]
+        <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">vis</span> <span class="ruby-keyword kw">in</span> [ <span class="ruby-identifier">:public</span>, <span class="ruby-identifier">:protected</span>, <span class="ruby-identifier">:private</span> ] 
+          <span class="ruby-identifier">res</span> = []
+          <span class="ruby-identifier">methods</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">section</span> <span class="ruby-keyword kw">and</span>
+                <span class="ruby-identifier">m</span>.<span class="ruby-identifier">document_self</span> <span class="ruby-keyword kw">and</span> 
+                <span class="ruby-identifier">m</span>.<span class="ruby-identifier">visibility</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">vis</span> <span class="ruby-keyword kw">and</span> 
+                <span class="ruby-identifier">m</span>.<span class="ruby-identifier">singleton</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">singleton</span>
+              <span class="ruby-identifier">row</span> = {}
+              <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">call_seq</span>
+                <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;callseq&quot;</span>] = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">call_seq</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/-&gt;/</span>, <span class="ruby-value str">'&amp;rarr;'</span>)
+              <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;name&quot;</span>]        = <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">m</span>.<span class="ruby-identifier">name</span>)
+                <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;params&quot;</span>]      = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">params</span>
+              <span class="ruby-keyword kw">end</span>
+              <span class="ruby-identifier">desc</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">description</span>.<span class="ruby-identifier">strip</span>
+              <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;m_desc&quot;</span>]      = <span class="ruby-identifier">desc</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">desc</span>.<span class="ruby-identifier">empty?</span>
+              <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;aref&quot;</span>]        = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">aref</span>
+              <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;visibility&quot;</span>]  = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">visibility</span>.<span class="ruby-identifier">to_s</span>
+
+              <span class="ruby-identifier">alias_names</span> = []
+              <span class="ruby-identifier">m</span>.<span class="ruby-identifier">aliases</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">other</span><span class="ruby-operator">|</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">viewer</span>   <span class="ruby-comment cmt"># won't be if the alias is private</span>
+                  <span class="ruby-identifier">alias_names</span> <span class="ruby-operator">&lt;&lt;</span> {
+                    <span class="ruby-value str">'name'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">name</span>,
+                    <span class="ruby-value str">'aref'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">viewer</span>.<span class="ruby-identifier">as_href</span>(<span class="ruby-identifier">path</span>)
+                  } 
+                <span class="ruby-keyword kw">end</span>
+              <span class="ruby-keyword kw">end</span>
+              <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">alias_names</span>.<span class="ruby-identifier">empty?</span>
+                <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;aka&quot;</span>] = <span class="ruby-identifier">alias_names</span>
+              <span class="ruby-keyword kw">end</span>
+
+              <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">inline_source</span>
+                <span class="ruby-identifier">code</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">source_code</span>
+                <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;sourcecode&quot;</span>] = <span class="ruby-identifier">code</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">code</span>
+                <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;github_url&quot;</span>] = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">github_url</span>
+              <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">code</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">src_url</span>
+                <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">code</span>
+                  <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;codeurl&quot;</span>] = <span class="ruby-identifier">code</span>
+                  <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;imgurl&quot;</span>]  = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">img_url</span>
+                  <span class="ruby-identifier">row</span>[<span class="ruby-value str">&quot;github_url&quot;</span>] = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">github_url</span>
+                <span class="ruby-keyword kw">end</span>
+              <span class="ruby-keyword kw">end</span>
+              <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">row</span>
+            <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> 
+            <span class="ruby-identifier">outer</span> <span class="ruby-operator">&lt;&lt;</span> {
+              <span class="ruby-value str">&quot;type&quot;</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">vis</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">capitalize</span>,
+              <span class="ruby-value str">&quot;category&quot;</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">singleton</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;Class&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;Instance&quot;</span>,
+              <span class="ruby-value str">&quot;methods&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">res</span>
+            }
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">outer</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

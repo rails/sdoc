@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><title>parse (SDoc::Options)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<style type="text/css">
+.ruby-comment    { color: green; font-style: italic }
+.ruby-constant   { color: #4433aa; font-weight: bold; }
+.ruby-identifier { color: #222222;  }
+.ruby-ivar       { color: #2233dd; }
+.ruby-keyword    { color: #3333FF; font-weight: bold }
+.ruby-node       { color: #777777; }
+.ruby-operator   { color: #111111;  }
+.ruby-regexp     { color: #662222; }
+.ruby-value      { color: #662222; font-style: italic }
+  .kw { color: #3333FF; font-weight: bold }
+  .cmt { color: green; font-style: italic }
+  .str { color: #662222; font-style: italic }
+  .re  { color: #662222; }
+</style>
+</head>
+<body bgcolor="white">
+<pre><span class="ruby-comment cmt"># File lib/sdoc/options.rb, line 10</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">argv</span>, <span class="ruby-identifier">generators</span>)
+      <span class="ruby-identifier">old_argv</span> = <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">dup</span>
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">argv</span>)
+        <span class="ruby-ivar">@github_url</span> = <span class="ruby-keyword kw">nil</span>
+        
+        <span class="ruby-identifier">generator_set</span> = <span class="ruby-keyword kw">false</span>
+        <span class="ruby-identifier">template_set</span> = <span class="ruby-keyword kw">false</span>
+        <span class="ruby-ivar">@github_path</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>
+
+        <span class="ruby-identifier">go</span> = <span class="ruby-constant">GetoptLong</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-constant">OptionList</span>.<span class="ruby-identifier">options</span>)
+        <span class="ruby-identifier">go</span>.<span class="ruby-identifier">quiet</span> = <span class="ruby-keyword kw">true</span>
+
+        <span class="ruby-identifier">go</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opt</span>, <span class="ruby-identifier">arg</span><span class="ruby-operator">|</span>  
+          <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">opt</span>
+            <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;--github_url&quot;</span>  <span class="ruby-keyword kw">then</span> <span class="ruby-ivar">@github_url</span> = <span class="ruby-identifier">arg</span>
+            <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;--fmt&quot;</span>         <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">generator_set</span> = <span class="ruby-keyword kw">true</span>
+            <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;--template&quot;</span>    <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">template_set</span> = <span class="ruby-keyword kw">true</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">ensure</span>
+        <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">old_argv</span>)
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">argv</span>, <span class="ruby-identifier">generators</span>)
+      
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">generator_set</span>
+        <span class="ruby-ivar">@generator_name</span> = <span class="ruby-value str">'shtml'</span>
+        <span class="ruby-identifier">setup_generator</span>(<span class="ruby-identifier">generators</span>)
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">template_set</span>
+        <span class="ruby-ivar">@template</span> = <span class="ruby-ivar">@generator_name</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,3 +1,4 @@
+require "rdoc/rdoc"
 $:.unshift File.dirname(__FILE__)
 require "sdoc/options"
 require "sdoc/code_objects"

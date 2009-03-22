@@ -1,1 +1,0 @@
-var data = {"longSearchIndex":["toplevel","lib\/sdoc.rb"],"info":[["SDoc","TopLevel","classes\/SDoc.html","",""],["sdoc.rb","lib\/sdoc.rb","files\/lib\/sdoc_rb.html","",""]],"searchIndex":["sdoc","sdoc.rb"]}

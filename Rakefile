@@ -1,4 +1,5 @@
 require 'rake/testtask'
+require 'rake/gempackagetask'
 
 task :default => :test
 
@@ -8,4 +9,3 @@ Rake::TestTask.new("test") do |t|
   t.warning = true
   t.verbose = true
 end
-

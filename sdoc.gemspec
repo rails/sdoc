@@ -2,7 +2,7 @@ require "rake"
 
 Gem::Specification.new do |s| 
   s.name = "sdoc"
-  s.version = "0.0.2"
+  s.version = "0.0.1"
   s.author = "Vladimir Kolesnikov"
   s.email = "voloko@gmail.com"
   s.homepage = "http://voloko.ru/sdoc/rails"

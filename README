@@ -1,0 +1,7 @@
+== Searchable rdoc
+rdoc html with javascript search index.
+See online on railsapi.com
+
+== Usage
+sudo gem install voloko-sdoc --source http://gems.github.com
+sdoc --github_url http://github.com/yourname/yourproject -S projectdir

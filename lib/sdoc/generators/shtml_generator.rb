@@ -327,13 +327,13 @@ module Generators
               if @options.inline_source
                 code = m.source_code
                 row["sourcecode"] = code if code
-                row["github_url"] = m.github_url
+                row["github_url"] = m.github_url if @options.github_url
               else
                 code = m.src_url
                 if code
                   row["codeurl"] = code
                   row["imgurl"]  = m.img_url
-                  row["github_url"] = m.github_url
+                  row["github_url"] = m.github_url if @options.github_url
                 end
               end
               res << row

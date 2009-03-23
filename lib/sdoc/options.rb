@@ -5,7 +5,7 @@ module SDoc
   class Options < Options
     include Singleton
     
-    attr_accessor :github_url, :github_path
+    attr_accessor :github_url
 
     def parse(argv, generators)
       old_argv = ARGV.dup
@@ -15,7 +15,6 @@ module SDoc
         
         generator_set = false
         template_set = false
-        @github_path = Dir.pwd
 
         go = GetoptLong.new(*OptionList.options)
         go.quiet = true

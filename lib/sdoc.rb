@@ -1,10 +1,9 @@
-require "rdoc/rdoc"
 $:.unshift File.dirname(__FILE__)
-require "sdoc/options"
-require "sdoc/code_objects"
+$:.unshift File.join File.dirname(__FILE__), '..', 'rdoc', 'lib'
+require "rdoc"
 
 module SDoc
-  RDoc::RDoc::GENERATORS['shtml'] = RDoc::RDoc::Generator.new("sdoc/generators/shtml_generator.rb",
-                                   "SHTMLGenerator".intern,
-                                   'shtml')
 end
+
+require "sdoc/generator/shtml"
+

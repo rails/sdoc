@@ -23,14 +23,14 @@
                             <% end  %>
                         </td>
                     </tr>
-                    <% unless klass.module? %>
+                    <% if klass.type == 'class' %>
                     <tr>
                         <td>Parent:</td>
                         <td>
                             <% if String === klass.superclass %>
                             <%= klass.superclass %>
-                            <% else %>
-                            <a href="<%= "#{rel_prefix}/#{h klass.superclass.path}" %>"><%= h klass.superclass.full_name %></a>
+                            <% elsif !klass.superclass.nil? %>
+                            <a href="<%= klass.aref_to klass.superclass.path %>"><%= h klass.superclass.full_name %></a>
                             <% end %>
                         </td>
                     </tr>

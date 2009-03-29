@@ -97,9 +97,8 @@ class RDoc::Generator::SHtml
   ### Create class tree structure and write it as json
   def generate_class_tree
     debug_msg "Generating class tree"
-    topclasses = @classes.select {|klass| !(klass.parent === RDoc::ClassModule) }
+    topclasses = @classes.select {|klass| !(RDoc::ClassModule === klass.parent) } 
     tree = generate_class_tree_level topclasses
-    
     debug_msg "  writing class tree to %s" % TREE_FILE
     File.open(TREE_FILE, "w") do |f|
       f.write('var tree = '); f.write(tree.to_json)
@@ -137,8 +136,11 @@ class RDoc::Generator::SHtml
     add_file_search_index(index)
     
     debug_msg "  writing search index to %s" % SEARCH_INDEX_FILE
+    data = {
+      :index => index
+    }
     File.open(SEARCH_INDEX_FILE, "w") do |f|
-      f.write('var data = '); f.write(index.to_json)
+      f.write('var search_data = '); f.write(data.to_json)
     end unless $dryrun
   end
   

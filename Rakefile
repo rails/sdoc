@@ -10,11 +10,11 @@ Rake::TestTask.new("test") do |t|
   t.verbose = true
 end
 
-
+desc "Generate file list for .gemspec"
 task :gem_file_list do
   f = FileList.new
   f.include('lib/**/**')
   f.include('rdoc/**/**')
   f.exclude('rdoc/test/**/**')
-  print "%w(" + f.to_a.select{|file| !File.directory? file }.join(' ') + ")"
+  print "%w(" + f.to_a.select{|file| !File.directory? file }.join(' ') + ")\n"
 end

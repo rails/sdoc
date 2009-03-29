@@ -9,3 +9,12 @@ Rake::TestTask.new("test") do |t|
   t.warning = true
   t.verbose = true
 end
+
+
+task :gem_file_list do
+  f = FileList.new
+  f.include('lib/**/**')
+  f.include('rdoc/**/**')
+  f.exclude('rdoc/test/**/**')
+  print "%w(" + f.to_a.select{|file| !File.directory? file }.join(' ') + ")"
+end

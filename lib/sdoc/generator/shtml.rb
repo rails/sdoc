@@ -100,7 +100,7 @@ class RDoc::Generator::SHtml
     topclasses = @classes.select {|klass| !(klass.parent === RDoc::ClassModule) }
     tree = generate_class_tree_level topclasses
     
-    debug_msg "Writing class tree to %s" % TREE_FILE
+    debug_msg "  writing class tree to %s" % TREE_FILE
     File.open(TREE_FILE, "w") do |f|
       f.write('var tree = '); f.write(tree.to_json)
     end unless $dryrun
@@ -113,7 +113,7 @@ class RDoc::Generator::SHtml
       item = [
         klass.name, 
         klass.document_self ? klass.path : '',
-        klass.module? ? '' : (klass.superclass ? " < #{klass.superclass}" : ''), 
+        klass.module? ? '' : (klass.superclass ? " < #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}" : ''), 
         generate_class_tree_level(klass.classes_and_modules)
       ]
       tree << item
@@ -136,7 +136,7 @@ class RDoc::Generator::SHtml
     add_method_search_index(index)
     add_file_search_index(index)
     
-    debug_msg "Writing search index to %s" % SEARCH_INDEX_FILE
+    debug_msg "  writing search index to %s" % SEARCH_INDEX_FILE
     File.open(SEARCH_INDEX_FILE, "w") do |f|
       f.write('var data = '); f.write(index.to_json)
     end unless $dryrun
@@ -144,7 +144,7 @@ class RDoc::Generator::SHtml
   
   ### Add files to search +index+ array
   def add_file_search_index(index)
-    debug_msg "Generating file search index"
+    debug_msg "  generating file search index"
     
     @files.select { |method| 
       method.document_self 
@@ -164,7 +164,7 @@ class RDoc::Generator::SHtml
   
   ### Add classes to search +index+ array
   def add_class_search_index(index)
-    debug_msg "Generating class search index"
+    debug_msg "  generating class search index"
     
     @classes.select { |method| 
       method.document_self 
@@ -175,7 +175,7 @@ class RDoc::Generator::SHtml
         klass.name, 
         klass.parent.full_name, 
         klass.path, 
-        klass.module? ? '' : (klass.superclass ? " < #{klass.superclass}" : ''), 
+        klass.module? ? '' : (klass.superclass ? " < #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}" : ''), 
         snippet(klass.comment),
         TYPE_CLASS
       ])
@@ -184,7 +184,7 @@ class RDoc::Generator::SHtml
   
   ### Add methods to search +index+ array
   def add_method_search_index(index)
-    debug_msg "Generating method search index"
+    debug_msg "  generating method search index"
     
     @classes.map { |klass| 
       klass.method_list 

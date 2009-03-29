@@ -22,10 +22,16 @@
     </ul>
     <% end %>
 
-    <% unless context.method_list.empty? %>
+    <% 
+        list = context.method_list
+        unless @options.show_all
+            list = list.find_all {|m| m.visibility == :public || m.visibility == :protected || m.force_documentation }
+        end
+    %>
+    <% unless list.empty? %>
     <div class="sectiontitle">Methods</div>
     <ul>
-        <% context.method_list.sort{ |a, b| a.name <=> b.name }.each do |method| %>
+        <% list.sort{ |a, b| a.name <=> b.name }.each do |method| %>
         <li><a href="#<%= method.aref %>"><%= method.name %></a></li>
         <% end %>
     </ul>
@@ -102,7 +108,9 @@
     <% context.methods_by_type.each do |type, visibilities|
         next if visibilities.empty?
         visibilities.each do |visibility, methods|
-            next if methods.empty? %>
+            next if methods.empty? 
+            next unless visibility == :public || visibility == :protected || methods.any? {|m| m.force_documentation }
+            %>
             <div class="sectiontitle"><%= type.capitalize %> <%= visibility.to_s.capitalize %> methods</div>
             <% methods.each do |method| %>
             <div class="method">

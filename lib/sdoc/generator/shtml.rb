@@ -188,11 +188,16 @@ class RDoc::Generator::SHtml
   def add_method_search_index(index)
     debug_msg "  generating method search index"
     
-    @classes.map { |klass| 
+    list = @classes.map { |klass| 
       klass.method_list 
     }.flatten.sort{ |a, b| a.name <=> b.name }.select { |method| 
       method.document_self 
-    }.each do |method|
+    }
+    unless @options.show_all
+        list = list.find_all {|m| m.visibility == :public || m.visibility == :protected || m.force_documentation }
+    end
+    
+    list.each do |method|
       index[:searchIndex].push( search_string(method.name) )
       index[:longSearchIndex].push( search_string(method.parent.name) )
       index[:info].push([

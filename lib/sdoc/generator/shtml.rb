@@ -24,8 +24,8 @@ class RDoc::Generator::SHtml
   GENERATOR_DIRS = [File.join('sdoc', 'generator'), File.join('rdoc', 'generator')]
   
   # Used in js to reduce index sizes
-  TYPE_METHOD = 1
-  TYPE_CLASS  = 2
+  TYPE_CLASS  = 1
+  TYPE_METHOD = 2
   TYPE_FILE   = 3
   
   TREE_FILE = File.join 'panel', 'tree.js'

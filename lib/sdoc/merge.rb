@@ -79,12 +79,17 @@ class SDoc::Merge
         items << {
           :info => info,
           :searchIndex => searchIndex[j],
-          :longSearchIndex => longSearchIndex[j]
+          :longSearchIndex => name + ' ' + longSearchIndex[j]
         }
       end
     end
     items.sort! do |a, b|
-      a[:info][5] == b[:info][5] ? a[:info][0] <=> b[:info][0] : a[:info][5] <=> b[:info][5]
+      a[:info][5] == b[:info][5] ?        # type (class/method/file)
+        (a[:info][0] == b[:info][0] ?     # or name
+          a[:info][1] <=> b[:info][1] :    # or namespace
+          a[:info][0] <=> b[:info][0]
+        ) : 
+        a[:info][5] <=> b[:info][5]
     end
     
     index = {

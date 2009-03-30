@@ -51,7 +51,7 @@ class SDoc::Merge
         name,
         '',
         '',
-        subtree
+        append_path(subtree, name)
       ]
       tree << item
     end
@@ -60,6 +60,14 @@ class SDoc::Merge
     FileUtils.mkdir_p File.dirname(dst)
     File.open(dst, "w") do |f|
       f.write('var tree = '); f.write(tree.to_json)
+    end
+  end
+  
+  def append_path subtree, path
+    subtree.map do |item|
+      item[1] = path + '/' + item[1] unless item[1].empty?
+      item[3] = append_path item[3], path
+      item
     end
   end
   
@@ -86,7 +94,10 @@ class SDoc::Merge
     items.sort! do |a, b|
       a[:info][5] == b[:info][5] ?        # type (class/method/file)
         (a[:info][0] == b[:info][0] ?     # or name
-          a[:info][1] <=> b[:info][1] :    # or namespace
+          (a[:info][6] == b[:info][6] ?   # or doc part
+            a[:info][1] <=> b[:info][1] :  # or namespace
+            a[:info][6] <=> b[:info][6]
+          ) :
           a[:info][0] <=> b[:info][0]
         ) : 
         a[:info][5] <=> b[:info][5]

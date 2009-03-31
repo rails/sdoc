@@ -1,6 +1,6 @@
 Gem::Specification.new do |s| 
   s.name = "sdoc"
-  s.version = "0.1.5"
+  s.version = "0.1.6"
   s.author = "Vladimir Kolesnikov"
   s.email = "voloko@gmail.com"
   s.homepage = "http://railsapi.com"

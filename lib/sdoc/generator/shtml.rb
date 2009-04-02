@@ -1,4 +1,12 @@
 require 'rubygems'
+gem "rdoc", ">= 2.4.2"
+if Gem.available? "json" 
+  gem "json", ">= 1.1.3"
+else
+  gem "json_pure", ">= 1.1.3"
+end
+
+require 'iconv'
 require 'json'
 require 'pathname'
 require 'fileutils'
@@ -259,7 +267,20 @@ class RDoc::Generator::SHtml
     else
       content = str.gsub(/^\s*(#+)\s*/, '')
     end
+    
     content.sub(/^(.{100,}?)\s.*/m, "\\1").gsub(/\r?\n/m, ' ')
+    
+    begin
+      content.to_json
+    rescue # might fail on non-unicode string
+      begin
+        content = Iconv.conv('latin1//ignore', "UTF8", content) # remove all non-unicode chars
+        content.to_json
+      rescue
+        content = '' # something hugely wrong happend
+      end
+    end
+    content
   end
 
   ### Build search index key

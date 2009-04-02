@@ -1,7 +1,4 @@
 $:.unshift File.dirname(__FILE__)
-$:.unshift File.join File.dirname(__FILE__), '..', 'rdoc', 'lib'
-
-$rdoc_rakefile = true # hack to force darkfish not to load rdoc gem 
 require "rdoc/rdoc"
 
 module SDoc

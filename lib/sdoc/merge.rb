@@ -3,25 +3,34 @@ require 'pathname'
 require 'fileutils'
 require 'json'
 
+require 'sdoc/templatable'
+
 class SDoc::Merge
+  include SDoc::Templatable
   
   FLAG_FILE = "created.rid"
   
   def initialize()
     @names = []
     @op_dir = 'doc'
+    @title = ''
     @directories = []
+    template_dir = RDoc::Generator::SHtml.template_dir('merge')
+		@template_dir = Pathname.new File.expand_path(template_dir)
   end
   
   def merge(options)
     parse_options options
     
+		@outputdir = Pathname.new( @op_dir )
+		
     check_directories
     setup_output_dir
     setup_names
     copy_files
-    merge_tree
     merge_search_index
+    merge_tree
+    generate_index_file
   end
   
   def parse_options(options)
@@ -34,6 +43,10 @@ class SDoc::Merge
       
       opt.on("-o", "--op [DIRECTORY]", "Set the output directory") do |v|
         @op_dir = v
+      end
+      
+      opt.on("-t", "--title [TITLE]", "Set the title of merged file") do |v|
+        @title = v
       end
     end
     opts.parse! options
@@ -49,7 +62,7 @@ class SDoc::Merge
       subtree = JSON.parse data
       item = [
         name,
-        '',
+        @indexes[name]["index"]["info"][0][2],
         '',
         append_path(subtree, name)
       ]
@@ -73,11 +86,13 @@ class SDoc::Merge
   
   def merge_search_index
     items = []
+    @indexes = {}
     @directories.each_with_index do |dir, i|
       name = @names[i]
       filename = File.join dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE
       data = open(filename).read.sub(/var search_data =\s*/, '')
       subindex = JSON.parse data
+      @indexes[name] = subindex
       
       searchIndex = subindex["index"]["searchIndex"]
       longSearchIndex = subindex["index"]["longSearchIndex"]
@@ -92,15 +107,8 @@ class SDoc::Merge
       end
     end
     items.sort! do |a, b|
-      a[:info][5] == b[:info][5] ?        # type (class/method/file)
-        (a[:info][0] == b[:info][0] ?     # or name
-          (a[:info][6] == b[:info][6] ?   # or doc part
-            a[:info][1] <=> b[:info][1] :  # or namespace
-            a[:info][6] <=> b[:info][6]
-          ) :
-          a[:info][0] <=> b[:info][0]
-        ) : 
-        a[:info][5] <=> b[:info][5]
+      # type (class/method/file) or name or doc part or namespace
+      [a[:info][5], a[:info][0], a[:info][6], a[:info][1]] <=> [b[:info][5], b[:info][0], b[:info][6], b[:info][1]]
     end
     
     index = {
@@ -120,8 +128,16 @@ class SDoc::Merge
     end
   end
   
+  def generate_index_file
+    templatefile = @template_dir + 'index.rhtml'
+    outfile      = @outputdir + 'index.html'
+	  index_path   = @indexes[@names.first]["index"]["info"][0][2]
+	  
+    render_template templatefile, binding(), outfile
+  end
+  
   def setup_names
-    unless @names.size
+    unless @names.size > 0
       @directories.each do |dir|
         name = File.basename dir
         name = File.basename File.dirname(dir) if name == 'doc'

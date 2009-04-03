@@ -17,6 +17,7 @@ require 'rdoc/generator'
 require 'rdoc/generator/markup'
 
 require 'sdoc/github'
+require 'sdoc/templatable'
 
 class RDoc::ClassModule
   def with_documentation?
@@ -28,6 +29,7 @@ class RDoc::Generator::SHtml
   RDoc::RDoc.add_generator( self )
   include ERB::Util
   include SDoc::GitHub
+  include SDoc::Templatable
   
   GENERATOR_DIRS = [File.join('sdoc', 'generator'), File.join('rdoc', 'generator')]
   
@@ -50,6 +52,16 @@ class RDoc::Generator::SHtml
     self.new(options)
   end
   
+  def self.template_dir template
+		$LOAD_PATH.map do |path|
+		  GENERATOR_DIRS.map do |dir|
+  			File.join path, dir, 'template', template
+	    end
+		end.flatten.find do |dir|
+			File.directory? dir
+		end
+  end
+  
   def initialize(options)
 		@options = options
 		@options.diagram = false
@@ -57,13 +69,7 @@ class RDoc::Generator::SHtml
     
 		template = @options.template || 'shtml'
 
-		template_dir = $LOAD_PATH.map do |path|
-		  GENERATOR_DIRS.map do |dir|
-  			File.join path, dir, 'template', template
-	    end
-		end.flatten.find do |dir|
-			File.directory? dir
-		end
+		template_dir = self.template_dir template
 
 		raise RDoc::Error, "could not find template #{template.inspect}" unless
 			template_dir
@@ -295,46 +301,4 @@ class RDoc::Generator::SHtml
 		debug_msg "Copying #{resoureces_path}/** to #{@outputdir}/**"
     FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s unless $dryrun
   end
-  
-	### Load and render the erb template in the given +templatefile+ within the
-	### specified +context+ (a Binding object) and return output
-	### Both +templatefile+ and +outfile+ should be Pathname-like objects.
-  def eval_template(templatefile, context)
-		template_src = templatefile.read
-		template = ERB.new( template_src, nil, '<>' )
-		template.filename = templatefile.to_s
-
-    begin
-      template.result( context )
-    rescue NoMethodError => err
-      raise RDoc::Error, "Error while evaluating %s: %s (at %p)" % [
-        templatefile.to_s,
-        err.message,
-        eval( "_erbout[-50,50]", context )
-        ], err.backtrace
-      end
-  end
-  
-  ### Load and render the erb template with the given +template_name+ within
-  ### current context. Adds all +local_assigns+ to context
-  def include_template(template_name, local_assigns = {})
-    source = local_assigns.keys.map { |key| "#{key} = local_assigns[:#{key}];" }.join
-    eval("#{source};templatefile = @template_dir + template_name;eval_template(templatefile, binding)")
-  end
-  
-	### Load and render the erb template in the given +templatefile+ within the
-	### specified +context+ (a Binding object) and write it out to +outfile+.
-	### Both +templatefile+ and +outfile+ should be Pathname-like objects.
-	def render_template( templatefile, context, outfile )
-    output = eval_template(templatefile, context)
-		unless $dryrun
-			outfile.dirname.mkpath
-			outfile.open( 'w', 0644 ) do |ofh|
-				ofh.print( output )
-			end
-		else
-			debug_msg "  would have written %d bytes to %s" %
-			[ output.length, outfile ]
-		end
-	end  
 end

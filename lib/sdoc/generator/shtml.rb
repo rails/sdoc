@@ -212,7 +212,7 @@ class RDoc::Generator::SHtml
     end
     
     list.each do |method|
-      index[:searchIndex].push( search_string(method.name) )
+      index[:searchIndex].push( search_string(method.name) + '()' )
       index[:longSearchIndex].push( search_string(method.parent.name) )
       index[:info].push([
         method.name, 
@@ -260,7 +260,11 @@ class RDoc::Generator::SHtml
 		debug_msg "Generating index file in #@outputdir"
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
-	  index_path   = @files.first.path
+    if @options.main_page && index_path = @files.find { |f| f.full_name == @options.main_page }
+      index_path = index_path.path
+    else
+	    index_path = @files.first.path
+    end
 	  
 	  self.render_template( templatefile, binding(), outfile )
 	end

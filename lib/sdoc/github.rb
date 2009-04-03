@@ -54,8 +54,8 @@ module SDoc::GitHub
   
   def in_dir(dir)
     pwd = Dir.pwd
-    Dir.chdir dir
     begin
+      Dir.chdir dir
       return yield
     ensure
       Dir.chdir pwd

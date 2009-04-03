@@ -114,7 +114,7 @@ class RDoc::Generator::SHtml
     topclasses = @classes.select {|klass| !(RDoc::ClassModule === klass.parent) } 
     tree = generate_class_tree_level topclasses
     debug_msg "  writing class tree to %s" % TREE_FILE
-    File.open(TREE_FILE, "w") do |f|
+    File.open(TREE_FILE, "w", 0644) do |f|
       f.write('var tree = '); f.write(tree.to_json)
     end unless $dryrun
   end
@@ -153,7 +153,7 @@ class RDoc::Generator::SHtml
     data = {
       :index => index
     }
-    File.open(SEARCH_INDEX_FILE, "w") do |f|
+    File.open(SEARCH_INDEX_FILE, "w", 0644) do |f|
       f.write('var search_data = '); f.write(data.to_json)
     end unless $dryrun
   end
@@ -303,6 +303,6 @@ class RDoc::Generator::SHtml
   def copy_resources
     resoureces_path = @template_dir + RESOURCES_DIR
 		debug_msg "Copying #{resoureces_path}/** to #{@outputdir}/**"
-    FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s unless $dryrun
+    FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s, :preserve => true unless $dryrun
   end
 end

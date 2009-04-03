@@ -71,7 +71,7 @@ class SDoc::Merge
     
     dst = File.join @op_dir, RDoc::Generator::SHtml::TREE_FILE
     FileUtils.mkdir_p File.dirname(dst)
-    File.open(dst, "w") do |f|
+    File.open(dst, "w", 0644) do |f|
       f.write('var tree = '); f.write(tree.to_json)
     end
   end
@@ -123,7 +123,7 @@ class SDoc::Merge
     
     dst = File.join @op_dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE
     FileUtils.mkdir_p File.dirname(dst)
-    File.open(dst, "w") do |f|
+    File.open(dst, "w", 0644) do |f|
       f.write('var search_data = '); f.write(search_data.to_json)
     end
   end
@@ -154,7 +154,7 @@ class SDoc::Merge
       
       Dir.new(dir).each do |item|
         if File.directory?(File.join(dir, item)) && item != '.' && item != '..' && item != index_dir
-          FileUtils.cp_r File.join(dir, item), File.join(@op_dir, name, item)
+          FileUtils.cp_r File.join(dir, item), File.join(@op_dir, name, item), :preserve => true
         end
       end
     end
@@ -162,7 +162,7 @@ class SDoc::Merge
     dir = @directories.first
     Dir.new(dir).each do |item|
       if item != '.' && item != '..' && item != RDoc::Generator::SHtml::FILE_DIR && item != RDoc::Generator::SHtml::CLASS_DIR
-        FileUtils.cp_r File.join(dir, item), @op_dir
+        FileUtils.cp_r File.join(dir, item), @op_dir, :preserve => true
       end
     end
   end
@@ -182,10 +182,6 @@ class SDoc::Merge
         error "#{dir} does not seem to be an sdoc directory"
       end
     end
-  end
-  
-  def update_output_dir(op_dir, time)
-    File.open(File.join @op_dir, FLAG_FILE, "w") { |f| f.puts time.rfc2822 }
   end
   
   ##

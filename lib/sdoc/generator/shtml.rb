@@ -69,12 +69,12 @@ class RDoc::Generator::SHtml
     
 		template = @options.template || 'shtml'
 
-		template_dir = self.template_dir template
+		templ_dir = self.class.template_dir template
 
 		raise RDoc::Error, "could not find template #{template.inspect}" unless
-			template_dir
+			templ_dir
 		
-		@template_dir = Pathname.new File.expand_path(template_dir)
+		@template_dir = Pathname.new File.expand_path(templ_dir)
 		@basedir = Pathname.pwd.expand_path
   end
   

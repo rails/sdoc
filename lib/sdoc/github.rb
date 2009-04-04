@@ -54,11 +54,11 @@ module SDoc::GitHub
   
   def in_dir(dir)
     pwd = Dir.pwd
-    begin
-      Dir.chdir dir
-      return yield
-    ensure
-      Dir.chdir pwd
-    end
+    Dir.chdir dir
+    return yield
+  rescue Exception => e
+    return ''
+  ensure
+    Dir.chdir pwd
   end
 end

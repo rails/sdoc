@@ -18,6 +18,7 @@ require 'rdoc/generator/markup'
 
 require 'sdoc/github'
 require 'sdoc/templatable'
+require 'sdoc/helpers'
 
 class RDoc::ClassModule
   def with_documentation?
@@ -30,6 +31,7 @@ class RDoc::Generator::SHtml
   include ERB::Util
   include SDoc::GitHub
   include SDoc::Templatable
+  include SDoc::Helpers
   
   GENERATOR_DIRS = [File.join('sdoc', 'generator'), File.join('rdoc', 'generator')]
   

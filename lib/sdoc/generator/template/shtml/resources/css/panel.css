@@ -79,6 +79,7 @@
             width: 100%;
             overflow-y: scroll;
             overflow-x: hidden;
+            -overflow-y: hidden;
             background: #EDF3FE url(../i/results_bg.png);
             z-index: 2;
         }
@@ -88,12 +89,15 @@
             font-size: 0.8em;
             width: 100%;
             background: #EDF3FE url(../i/results_bg.png);
-            zoom:1;
+            -zoom:1;
         }
 
         .panel .result ul li
         {
             height: 46px;
+            -height: 50px;
+            -display: inline;
+            -width: 100%;
             overflow: hidden;
             padding: 4px 10px 0 10px;
             cursor: pointer;
@@ -239,8 +243,10 @@
             bottom: 0;
             left: 0;
             width: 100%;
+            -height: expression((this.parentNode.offsetHeight - 31));
             overflow-y: scroll;
             overflow-x: hidden;
+            -overflow-y: hidden;
             background: #EDF3FE url(../i/tree_bg.png);
             z-index: 3;
         }
@@ -253,6 +259,10 @@
         .panel .tree li
         {
             cursor: pointer;
+            overflow: hidden;
+            -height: 23px;
+            -display: inline;
+            -zoom: 1;
         }
         
         

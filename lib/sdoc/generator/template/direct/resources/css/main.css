@@ -111,7 +111,8 @@ pre
 .methods dd
 {
     margin-left: 2.5em;
-    min-height: 2em;
+    min-height: 1.8em;
+    -height: 1.8em;
     padding-bottom: 0.8em;
 }
 

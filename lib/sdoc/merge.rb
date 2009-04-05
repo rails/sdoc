@@ -97,7 +97,7 @@ class SDoc::Merge
       searchIndex = subindex["index"]["searchIndex"]
       longSearchIndex = subindex["index"]["longSearchIndex"]
       subindex["index"]["info"].each_with_index do |info, j|
-        info[2] = name + '/' + info[2]
+        info[2] = name + '/' + extract_index_path(dir)
         info[6] = i
         items << {
           :info => info,
@@ -128,10 +128,21 @@ class SDoc::Merge
     end
   end
   
+  def extract_index_path dir
+    filename = File.join dir, 'index.html'
+    content = File.open(filename) { |f| f.read }
+    match = content.match(/<frame\s+src="([^"]+)"\s+name="docwin"/mi)
+    if match
+      match[1]
+    else
+      ''
+    end
+  end
+  
   def generate_index_file
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
-	  index_path   = @indexes[@names.first]["index"]["info"][0][2]
+	  index_path   = @names[0] + '/' + extract_index_path(@directories[0])
 	  
     render_template templatefile, binding(), outfile
   end

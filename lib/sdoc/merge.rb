@@ -62,7 +62,7 @@ class SDoc::Merge
       subtree = JSON.parse data
       item = [
         name,
-        @indexes[name]["index"]["info"][0][2],
+        name + '/' + extract_index_path(dir),
         '',
         append_path(subtree, name)
       ]
@@ -97,7 +97,7 @@ class SDoc::Merge
       searchIndex = subindex["index"]["searchIndex"]
       longSearchIndex = subindex["index"]["longSearchIndex"]
       subindex["index"]["info"].each_with_index do |info, j|
-        info[2] = name + '/' + extract_index_path(dir)
+        info[2] = name + '/' + info[2]
         info[6] = i
         items << {
           :info => info,

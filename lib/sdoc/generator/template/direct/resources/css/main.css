@@ -36,7 +36,10 @@ h2 {
 }
 
 h3 {
-    
+    font-size: 1.4em;
+    color:#555;
+    margin: 1.4em 0 0.7em 0;
+    font-weight: normal;
 }
 
 h4 {

@@ -15,10 +15,11 @@
 <body>     
     <div class="banner">
         <h1>
-            <span class="type">File</span> <%= h file.name %>
+            <%= h file.name %>
         </h1>
         <ul class="files">
             <li><%= h file.relative_name %></li>
+            <li>Last modified: <%= file.file_stat.mtime %></li>
         </ul>
     </div>
 

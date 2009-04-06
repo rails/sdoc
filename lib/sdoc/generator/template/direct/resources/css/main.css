@@ -58,7 +58,16 @@ h4 {
 li
 {
     margin: 0 0 0.5em 2em;
+}
+
+ul li
+{
     list-style: disc;
+}
+
+ol li
+{
+    list-style: decimal;
 }
 
 .banner

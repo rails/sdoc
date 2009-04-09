@@ -280,7 +280,7 @@ class RDoc::Generator::SHtml
       content = str.gsub(/^\s*(#+)\s*/, '')
     end
     
-    content.sub(/^(.{100,}?)\s.*/m, "\\1").gsub(/\r?\n/m, ' ')
+    content = content.sub(/^(.{100,}?)\s.*/m, "\\1").gsub(/\r?\n/m, ' ')
     
     begin
       content.to_json

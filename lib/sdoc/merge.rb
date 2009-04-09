@@ -12,6 +12,7 @@ class SDoc::Merge
   
   def initialize()
     @names = []
+    @urls = []
     @op_dir = 'doc'
     @title = ''
     @directories = []
@@ -28,6 +29,7 @@ class SDoc::Merge
     setup_output_dir
     setup_names
     copy_files
+    copy_docs if @urls.empty?
     merge_search_index
     merge_tree
     generate_index_file
@@ -48,6 +50,11 @@ class SDoc::Merge
       opt.on("-t", "--title [TITLE]", "Set the title of merged file") do |v|
         @title = v
       end
+      
+      opt.on("-u", "--urls [URLS]", "Paths to merged docs. If you \n" +
+                   "set this files and classes won't be actualy copied to merged build") do |v|
+        @urls = v.split(' ').map{|name| name.strip }
+      end
     end
     opts.parse! options
     @directories = options.dup
@@ -57,14 +64,15 @@ class SDoc::Merge
     tree = []
     @directories.each_with_index do |dir, i|
       name = @names[i]
+      url = @urls.empty? ? name : @urls[i]
       filename = File.join dir, RDoc::Generator::SHtml::TREE_FILE
       data = open(filename).read.sub(/var tree =\s*/, '')
       subtree = JSON.parse data
       item = [
         name,
-        name + '/' + extract_index_path(dir),
+        url + '/' + extract_index_path(dir),
         '',
-        append_path(subtree, name)
+        append_path(subtree, url)
       ]
       tree << item
     end
@@ -89,6 +97,7 @@ class SDoc::Merge
     @indexes = {}
     @directories.each_with_index do |dir, i|
       name = @names[i]
+      url = @urls.empty? ? name : @urls[i]
       filename = File.join dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE
       data = open(filename).read.sub(/var search_data =\s*/, '')
       subindex = JSON.parse data
@@ -97,7 +106,7 @@ class SDoc::Merge
       searchIndex = subindex["index"]["searchIndex"]
       longSearchIndex = subindex["index"]["longSearchIndex"]
       subindex["index"]["info"].each_with_index do |info, j|
-        info[2] = name + '/' + info[2]
+        info[2] = url + '/' + info[2]
         info[6] = i
         items << {
           :info => info,
@@ -142,7 +151,8 @@ class SDoc::Merge
   def generate_index_file
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
-	  index_path   = @names[0] + '/' + extract_index_path(@directories[0])
+    url          = @urls.empty? ? @names[0] : @urls[0]
+    index_path   = url + '/' + extract_index_path(@directories[0])
 	  
     render_template templatefile, binding(), outfile
   end
@@ -157,7 +167,7 @@ class SDoc::Merge
     end
   end
   
-  def copy_files
+  def copy_docs
     @directories.each_with_index do |dir, i|
       name = @names[i]
       index_dir = File.dirname(RDoc::Generator::SHtml::TREE_FILE)
@@ -169,7 +179,9 @@ class SDoc::Merge
         end
       end
     end
-    
+  end
+  
+  def copy_files
     dir = @directories.first
     Dir.new(dir).each do |item|
       if item != '.' && item != '..' && item != RDoc::Generator::SHtml::FILE_DIR && item != RDoc::Generator::SHtml::CLASS_DIR

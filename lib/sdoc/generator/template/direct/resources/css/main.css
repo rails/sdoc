@@ -53,7 +53,21 @@ h4 {
     width: 0; height: 0;
 }
 
+dt
+{
+    margin-bottom: 0.3em;
+}
 
+dd
+{
+    margin-left: 2em;
+    margin-bottom: 1em;
+}
+
+dd p
+{
+    margin-bottom: 0.7em;
+}
 
 li
 {
@@ -120,9 +134,10 @@ pre
     color:#AAA;
     position: absolute;
     font-weight: normal;
+    margin: 0;
 }
 
-.methods dd, dd
+.methods dd
 {
     margin-left: 2.5em;
     min-height: 1.8em;

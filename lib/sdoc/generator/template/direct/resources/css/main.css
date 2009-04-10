@@ -122,7 +122,7 @@ pre
     font-weight: normal;
 }
 
-.methods dd
+.methods dd, dd
 {
     margin-left: 2.5em;
     min-height: 1.8em;

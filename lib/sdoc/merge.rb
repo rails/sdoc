@@ -171,7 +171,7 @@ class SDoc::Merge
     @directories.each_with_index do |dir, i|
       name = @names[i]
       index_dir = File.dirname(RDoc::Generator::SHtml::TREE_FILE)
-      FileUtils.mkdir_p(File.join @op_dir, name)
+      FileUtils.mkdir_p(File.join(@op_dir, name))
       
       Dir.new(dir).each do |item|
         if File.directory?(File.join(dir, item)) && item != '.' && item != '..' && item != index_dir
@@ -199,9 +199,9 @@ class SDoc::Merge
   
   def check_directories
     @directories.each do |dir|
-      unless File.exists?(File.join dir, FLAG_FILE) && 
-      File.exists?(File.join dir, RDoc::Generator::SHtml::TREE_FILE) && 
-      File.exists?(File.join dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE)
+      unless File.exists?(File.join(dir, FLAG_FILE)) && 
+      File.exists?(File.join(dir, RDoc::Generator::SHtml::TREE_FILE)) && 
+      File.exists?(File.join(dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE))
         error "#{dir} does not seem to be an sdoc directory"
       end
     end

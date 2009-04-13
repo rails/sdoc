@@ -130,7 +130,8 @@
                 </div>
                 <% unless (description = method.description).empty? %>
                 <div class="description">
-                    <%= description %>
+                  <%# TODO delete this dirty hack when documentation for example for JavaScriptHelper will not be cutted off by <script> tag %>
+                  <%= description.gsub('<script>'){ |m| h(m) } %>
                 </div>
                 <% end %>
                 <% unless method.aliases.empty? %>

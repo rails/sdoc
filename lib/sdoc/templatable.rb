@@ -34,7 +34,16 @@ module SDoc::Templatable
     output = eval_template(templatefile, context)
     
     # TODO delete this dirty hack when documentation for example for GeneratorMethods will not be cutted off by <script> tag
-    output = output.gsub('<script>', '&lt;script;&gt;')
+    begin
+      if output.respond_to? :force_encoding
+        encoding = output.encoding
+        output = output.force_encoding('ASCII-8BIT').gsub('<script>', '&lt;script;&gt;').force_encoding(encoding)
+      else
+        output = output.gsub('<script>', '&lt;script&gt;')
+      end
+    rescue Exception => e
+      
+    end
     
 		unless $dryrun
 			outfile.dirname.mkpath

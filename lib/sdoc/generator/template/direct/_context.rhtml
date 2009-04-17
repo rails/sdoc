@@ -1,6 +1,8 @@
 <div id="content">
     <% unless (desc = context.description).empty? %>
-    <div class="description"><%= desc %></div>
+    <div class="description">
+        <%= desc %>
+    </div>
     <% end %>
 
     <% unless context.requires.empty? %>
@@ -130,8 +132,7 @@
                 </div>
                 <% unless (description = method.description).empty? %>
                 <div class="description">
-                  <%# TODO delete this dirty hack when documentation for example for JavaScriptHelper will not be cutted off by <script> tag %>
-                  <%= description.gsub('<script>'){ |m| h(m) } %>
+                  <%= description %>
                 </div>
                 <% end %>
                 <% unless method.aliases.empty? %>

@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sdoc}
-  s.version = "0.2.9"
+  s.version = "0.2.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Volodya Kolesnikov"]
-  s.date = %q{2009-04-15}
+  s.date = %q{2009-04-17}
   s.email = %q{voloko@gmail.com}
   s.executables = ["sdoc", "sdoc-merge"]
   s.extra_rdoc_files = [

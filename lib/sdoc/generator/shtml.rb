@@ -21,8 +21,12 @@ require 'sdoc/templatable'
 require 'sdoc/helpers'
 
 class RDoc::ClassModule
+  def document_self_or_methods
+    document_self || method_list.any?{ |m| m.document_self }
+  end
+  
   def with_documentation?
-    document_self || classes_and_modules.any?{ |c| c.with_documentation? }
+    document_self_or_methods || classes_and_modules.any?{ |c| c.with_documentation? }
   end
 end
 
@@ -127,7 +131,7 @@ class RDoc::Generator::SHtml
     classes.select{|c| c.with_documentation? }.sort.each do |klass|
       item = [
         klass.name, 
-        klass.document_self ? klass.path : '',
+        klass.document_self_or_methods ? klass.path : '',
         klass.module? ? '' : (klass.superclass ? " < #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}" : ''), 
         generate_class_tree_level(klass.classes_and_modules)
       ]
@@ -164,8 +168,8 @@ class RDoc::Generator::SHtml
   def add_file_search_index(index)
     debug_msg "  generating file search index"
     
-    @files.select { |method| 
-      method.document_self 
+    @files.select { |file| 
+      file.document_self 
     }.sort.each do |file|
       index[:searchIndex].push( search_string(file.name) )
       index[:longSearchIndex].push( search_string(file.path) )
@@ -184,8 +188,8 @@ class RDoc::Generator::SHtml
   def add_class_search_index(index)
     debug_msg "  generating class search index"
     
-    @classes.select { |method| 
-      method.document_self 
+    @classes.select { |klass| 
+      klass.document_self_or_methods
     }.sort.each do |klass|
       index[:searchIndex].push( search_string(klass.name) )
       index[:longSearchIndex].push( search_string(klass.parent.name) )
@@ -205,7 +209,7 @@ class RDoc::Generator::SHtml
     debug_msg "  generating method search index"
     
     list = @classes.map { |klass| 
-      klass.method_list 
+      klass.method_list
     }.flatten.sort{ |a, b| a.name == b.name ? a.parent.full_name <=> b.parent.full_name : a.name <=> b.name }.select { |method| 
       method.document_self 
     }

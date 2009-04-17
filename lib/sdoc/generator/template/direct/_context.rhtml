@@ -1,6 +1,8 @@
 <div id="content">
     <% unless (desc = context.description).empty? %>
-    <div class="description"><%= desc %></div>
+    <div class="description">
+        <%= desc %>
+    </div>
     <% end %>
 
     <% unless context.requires.empty? %>
@@ -116,7 +118,7 @@
         next if visibilities.empty?
         visibilities.each do |visibility, methods|
             next if methods.empty? 
-            next unless visibility == :public || visibility == :protected || methods.any? {|m| m.force_documentation }
+            next unless @options.show_all || visibility == :public || visibility == :protected || methods.any? {|m| m.force_documentation }
             %>
             <div class="sectiontitle"><%= type.capitalize %> <%= visibility.to_s.capitalize %> methods</div>
             <% methods.each do |method| %>
@@ -130,8 +132,7 @@
                 </div>
                 <% unless (description = method.description).empty? %>
                 <div class="description">
-                  <%# TODO delete this dirty hack when documentation for example for JavaScriptHelper will not be cutted off by <script> tag %>
-                  <%= description.gsub('<script>'){ |m| h(m) } %>
+                  <%= description %>
                 </div>
                 <% end %>
                 <% unless method.aliases.empty? %>

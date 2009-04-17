@@ -32,6 +32,10 @@ module SDoc::Templatable
 	### Both +templatefile+ and +outfile+ should be Pathname-like objects.
 	def render_template( templatefile, context, outfile )
     output = eval_template(templatefile, context)
+    
+    # TODO delete this dirty hack when documentation for example for GeneratorMethods will not be cutted off by <script> tag
+    output = output.gsub('<script>', '&lt;script;&gt;')
+    
 		unless $dryrun
 			outfile.dirname.mkpath
 			outfile.open( 'w', 0644 ) do |file|

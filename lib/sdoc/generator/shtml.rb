@@ -73,7 +73,7 @@ class RDoc::Generator::SHtml
 		@options.diagram = false
     @github_url_cache = {}
     
-		template = @options.template || 'shtml'
+		template = @options.template || 'direct'
 
 		templ_dir = self.class.template_dir template
 

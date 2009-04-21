@@ -28,21 +28,21 @@
  	       });
 
  	       $('#search')[0].value == '' && $('#search-label').show();
- 	       
- 	       setInterval(function() { $('#search')[0].value != '' && $('#search-label').hide() }, 100)
 	    }
 	   $(function() {
-	       placeholder();
-	       new Searchdoc.Panel($('#panel'), search_data, tree, top.frames[1]);
-	       $('#search').focus();
-	       
-	       s = window.parent.location.search.match(/\?q=(.*)$/)[1].replace('+', ' ');
-	       if (s.length > 0)
-	       {
-           $('#search').val(s);
-           search.quickSearch = true;
-           search.search(s);
-	       }
+           placeholder();
+           var panel = new Searchdoc.Panel($('#panel'), search_data, tree, top.frames[1]);
+           $('#search').focus();
+
+           var s = window.parent.location.search.match(/\?q=(.*)$/);
+           if (s) {
+               s = decodeURIComponent(s[1])
+               if (s.length > 0)
+               {
+                   $('#search').val(s);
+                   panel.search(s, true);
+               }
+           }
 	   })
 		//]]>
 	</script>

@@ -36,7 +36,7 @@
 
            var s = window.parent.location.search.match(/\?q=(.*)$/);
            if (s) {
-               s = decodeURIComponent(s[1])
+               s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
                if (s.length > 0)
                {
                    $('#search').val(s);

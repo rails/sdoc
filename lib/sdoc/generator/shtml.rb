@@ -118,7 +118,7 @@ class RDoc::Generator::SHtml
   def generate_class_tree
     debug_msg "Generating class tree"
     topclasses = @classes.select {|klass| !(RDoc::ClassModule === klass.parent) } 
-    tree = generate_class_tree_level topclasses
+    tree = generate_file_tree + generate_class_tree_level(topclasses)
     debug_msg "  writing class tree to %s" % TREE_FILE
     File.open(TREE_FILE, "w", 0644) do |f|
       f.write('var tree = '); f.write(tree.to_json)
@@ -261,16 +261,20 @@ class RDoc::Generator::SHtml
 		end
 	end
 	
+  def index_file
+    if @options.main_page && file = @files.find { |f| f.full_name == @options.main_page }
+      file
+    else
+      @files.first
+    end
+  end
+
 	### Create index.html with frameset
 	def generate_index_file
 		debug_msg "Generating index file in #@outputdir"
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
-    if @options.main_page && index_path = @files.find { |f| f.full_name == @options.main_page }
-      index_path = index_path.path
-    else
-	    index_path = @files.first.path
-    end
+    index_path = index_file.path
 	  
 	  self.render_template( templatefile, binding(), outfile )
 	end
@@ -310,5 +314,42 @@ class RDoc::Generator::SHtml
     resoureces_path = @template_dir + RESOURCES_DIR
 		debug_msg "Copying #{resoureces_path}/** to #{@outputdir}/**"
     FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s, :preserve => true unless $dryrun
+  end
+
+  class FilesTree
+    attr_reader :children
+    def add(path, url)
+      path = path.split(File::SEPARATOR) unless Array === path
+      @children ||= {}
+      if path.length == 1
+        @children[path.first] = url
+      else
+        @children[path.first] ||= FilesTree.new
+        @children[path.first].add(path[1, path.length], url)
+      end
+    end
+  end
+
+  def generate_file_tree
+    if @files.length > 1
+      @files_tree = FilesTree.new
+      @files.each do |file|
+        @files_tree.add(file.relative_name, file.path)
+      end
+      [['', '', 'files', generate_file_tree_level(@files_tree)]]
+    else
+      []
+    end
+  end
+
+  def generate_file_tree_level(tree)
+    tree.children.keys.sort.map do |name|
+      child = tree.children[name]
+      if String === child
+        [name, child, '', []]
+      else
+        ['', '', name, generate_file_tree_level(child)]
+      end
+    end
   end
 end

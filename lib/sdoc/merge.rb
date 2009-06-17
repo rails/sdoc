@@ -67,7 +67,7 @@ class SDoc::Merge
       url = @urls.empty? ? name : @urls[i]
       filename = File.join dir, RDoc::Generator::SHtml::TREE_FILE
       data = open(filename).read.sub(/var tree =\s*/, '')
-      subtree = JSON.parse data
+      subtree = JSON.parse data, :max_nesting => 35
       item = [
         name,
         url + '/' + extract_index_path(dir),
@@ -100,7 +100,7 @@ class SDoc::Merge
       url = @urls.empty? ? name : @urls[i]
       filename = File.join dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE
       data = open(filename).read.sub(/var search_data =\s*/, '')
-      subindex = JSON.parse data
+      subindex = JSON.parse data, :max_nesting => 35
       @indexes[name] = subindex
       
       searchIndex = subindex["index"]["searchIndex"]

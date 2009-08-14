@@ -191,13 +191,14 @@ class RDoc::Generator::SHtml
     @classes.select { |klass| 
       klass.document_self_or_methods
     }.sort.each do |klass|
+      modulename = klass.module? ? '' : (klass.superclass ? (String === klass.superclass ? klass.superclass : klass.superclass.full_name) : '')
       index[:searchIndex].push( search_string(klass.name) )
-      index[:longSearchIndex].push( search_string(klass.parent.name) )
+      index[:longSearchIndex].push( search_string(klass.parent.full_name) )
       index[:info].push([
         klass.name, 
         klass.parent.full_name, 
         klass.path, 
-        klass.module? ? '' : (klass.superclass ? " < #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}" : ''), 
+        modulename ? " < #{modulename}" : '', 
         snippet(klass.comment),
         TYPE_CLASS
       ])

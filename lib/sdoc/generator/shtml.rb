@@ -220,7 +220,7 @@ class RDoc::Generator::SHtml
     
     list.each do |method|
       index[:searchIndex].push( search_string(method.name) + '()' )
-      index[:longSearchIndex].push( search_string(method.parent.name) )
+      index[:longSearchIndex].push( search_string(method.parent.full_name) )
       index[:info].push([
         method.name, 
         method.parent.full_name, 

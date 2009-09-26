@@ -1,7 +1,7 @@
 require "rdoc/parser/c"
 
-# New RDoc somehow misses class comemnts.
-# copyied this function from "2.2.2" 
+# New RDoc somehow misses class comments.
+# copied this function from "2.2.2" 
 if ['2.4.2', '2.4.3'].include? RDoc::VERSION
 
   class RDoc::Parser::C

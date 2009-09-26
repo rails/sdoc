@@ -194,9 +194,10 @@ class RDoc::Generator::SHtml
       modulename = klass.module? ? '' : (klass.superclass ? (String === klass.superclass ? klass.superclass : klass.superclass.full_name) : '')
       index[:searchIndex].push( search_string(klass.name) )
       index[:longSearchIndex].push( search_string(klass.parent.full_name) )
+      files = klass.in_files.map{ |file| file.absolute_name }
       index[:info].push([
         klass.name, 
-        klass.parent.full_name, 
+        files.include?(klass.parent.full_name) ? files.first : klass.parent.full_name, 
         klass.path, 
         modulename ? " < #{modulename}" : '', 
         snippet(klass.comment),

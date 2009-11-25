@@ -6,8 +6,7 @@
 - <tt>sdoc</tt> - command line tool to run rdoc with generator=shtml
 
 == Getting Started
-    gem sources -a http://gems.github.com
-    sudo gem install voloko-sdoc
+    sudo gem install sdoc
     sdoc -N projectdir
 
 == Command line sdoc

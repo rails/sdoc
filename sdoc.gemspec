@@ -1,12 +1,11 @@
-# -*- encoding: utf-8 -*-
-
 Gem::Specification.new do |s|
   s.name = %q{sdoc}
-  s.version = "0.2.14.1"
+  s.version = "0.2.15"
+  s.platform = Gem::Platform.new(["universal", "java", nil]) if defined?(::JRUBY_VERSION)
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Volodya Kolesnikov"]
-  s.date = %q{2009-08-14}
+  s.date = %q{2009-12-12}
   s.email = %q{voloko@gmail.com}
   s.executables = ["sdoc", "sdoc-merge"]
   s.extra_rdoc_files = [
@@ -68,7 +67,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/voloko/sdoc}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.4}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{rdoc html with javascript search index.}
 
   if s.respond_to? :specification_version then
@@ -76,14 +75,15 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<json>, [">= 1.1.3"])
       s.add_runtime_dependency(%q<rdoc>, [">= 2.4.2"])
+      s.add_runtime_dependency(defined?(::JRUBY_VERSION) ? %q<json_pure> : %q<json>, [">= 1.1.3"])
     else
-      s.add_dependency(%q<json>, [">= 1.1.3"])
       s.add_dependency(%q<rdoc>, [">= 2.4.2"])
+      s.add_runtime_dependency(defined?(::JRUBY_VERSION) ? %q<json_pure> : %q<json>, [">= 1.1.3"])
     end
   else
-    s.add_dependency(%q<json>, [">= 1.1.3"])
     s.add_dependency(%q<rdoc>, [">= 2.4.2"])
+    s.add_runtime_dependency(defined?(::JRUBY_VERSION) ? %q<json_pure> : %q<json>, [">= 1.1.3"])
   end
 end
+

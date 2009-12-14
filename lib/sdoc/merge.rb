@@ -1,6 +1,8 @@
 require 'optparse'
 require 'pathname'
 require 'fileutils'
+
+gem 'json_pure', '>= 1.1.3' if defined?(::JRUBY_VERSION)
 require 'json'
 
 require 'sdoc/templatable'

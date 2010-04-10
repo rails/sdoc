@@ -70,7 +70,9 @@ class RDoc::Generator::SHtml
 
   def initialize(options)
     @options = options
-    @options.diagram = false
+    if @options.respond_to?('diagram=')
+      @options.diagram = false
+    end
     @github_url_cache = {}
 
     template = @options.template || 'direct'

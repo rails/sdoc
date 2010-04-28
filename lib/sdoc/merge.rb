@@ -82,7 +82,7 @@ class SDoc::Merge
     dst = File.join @op_dir, RDoc::Generator::SHtml::TREE_FILE
     FileUtils.mkdir_p File.dirname(dst)
     File.open(dst, "w", 0644) do |f|
-      f.write('var tree = '); f.write(tree.to_json)
+      f.write('var tree = '); f.write(tree.to_json(:max_nesting => 35))
     end
   end
   

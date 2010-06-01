@@ -18,10 +18,16 @@ module SDoc::GitHub
   end
   
   protected
-  
+
+  def have_git?
+    @have_git = system('git --version > /dev/null 2>&1') if @have_git.nil?
+    @have_git
+  end
+
   def commit_sha1(path)
+    return false unless have_git?
     name = File.basename(path)
-    s = in_dir(File.join(basedir, File.dirname(path))) do
+    s = Dir.chdir(File.join(basedir, File.dirname(path))) do
       `git log -1 --pretty=format:"commit %H" #{name}`
     end
     m = s.match(/commit\s+(\S+)/)
@@ -29,7 +35,8 @@ module SDoc::GitHub
   end
   
   def repository_url(path)
-    s = in_dir(File.join(basedir, File.dirname(path))) do
+    return false unless have_git?
+    s = Dir.chdir(File.join(basedir, File.dirname(path))) do
       `git config --get remote.origin.url`
     end
     m = s.match(%r{github.com[/:](.*)\.git$})
@@ -50,15 +57,5 @@ module SDoc::GitHub
       path = File.dirname(path)
     end
     ''
-  end  
-  
-  def in_dir(dir)
-    pwd = Dir.pwd
-    Dir.chdir dir
-    return yield
-  rescue Exception => e
-    return ''
-  ensure
-    Dir.chdir pwd
   end
 end

@@ -1,17 +1,10 @@
-require 'rubygems'
-gem "rdoc", ">= 2.4.2"
-if Gem.available? "json" 
-  gem "json", ">= 1.1.3"
-else
-  gem "json_pure", ">= 1.1.3"
-end
-
+require 'sdoc/json_backend'
 require 'iconv'
-require 'json'
 require 'pathname'
 require 'fileutils'
 require 'erb'
 
+gem 'rdoc', '>= 2.4.2'
 require 'rdoc/rdoc'
 require 'rdoc/generator'
 require 'rdoc/generator/markup'

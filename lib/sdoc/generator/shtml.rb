@@ -116,7 +116,7 @@ class RDoc::Generator::SHtml
     tree = generate_file_tree + generate_class_tree_level(topclasses)
     debug_msg "  writing class tree to %s" % TREE_FILE
     File.open(TREE_FILE, "w", 0644) do |f|
-      f.write('var tree = '); f.write(tree.to_json(:max_nesting => 35))
+      f.write('var tree = '); f.write(tree.to_json(:max_nesting => 0))
     end unless $dryrun
   end
 
@@ -155,7 +155,7 @@ class RDoc::Generator::SHtml
       :index => index
     }
     File.open(SEARCH_INDEX_FILE, "w", 0644) do |f|
-      f.write('var search_data = '); f.write(data.to_json(:max_nesting => 35))
+      f.write('var search_data = '); f.write(data.to_json(:max_nesting => 0))
     end unless $dryrun
   end
 
@@ -288,11 +288,11 @@ class RDoc::Generator::SHtml
     content = content.sub(/^(.{100,}?)\s.*/m, "\\1").gsub(/\r?\n/m, ' ')
 
     begin
-      content.to_json
+      content.to_json(:max_nesting => 0)
     rescue # might fail on non-unicode string
       begin
         content = Iconv.conv('latin1//ignore', "UTF8", content) # remove all non-unicode chars
-        content.to_json
+        content.to_json(:max_nesting => 0)
       rescue
         content = '' # something hugely wrong happend
       end

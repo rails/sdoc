@@ -67,7 +67,7 @@ class SDoc::Merge
       url = @urls.empty? ? name : @urls[i]
       filename = File.join dir, RDoc::Generator::SHtml::TREE_FILE
       data = open(filename).read.sub(/var tree =\s*/, '')
-      subtree = JSON.parse data, :max_nesting => 35
+      subtree = JSON.parse(data, :max_nesting => 0)
       item = [
         name,
         url + '/' + extract_index_path(dir),
@@ -80,7 +80,7 @@ class SDoc::Merge
     dst = File.join @op_dir, RDoc::Generator::SHtml::TREE_FILE
     FileUtils.mkdir_p File.dirname(dst)
     File.open(dst, "w", 0644) do |f|
-      f.write('var tree = '); f.write(tree.to_json(:max_nesting => 35))
+      f.write('var tree = '); f.write(tree.to_json(:max_nesting => 0))
     end
   end
   
@@ -100,7 +100,7 @@ class SDoc::Merge
       url = @urls.empty? ? name : @urls[i]
       filename = File.join dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE
       data = open(filename).read.sub(/var search_data =\s*/, '')
-      subindex = JSON.parse data, :max_nesting => 35
+      subindex = JSON.parse(data, :max_nesting => 0)
       @indexes[name] = subindex
       
       searchIndex = subindex["index"]["searchIndex"]
@@ -133,7 +133,7 @@ class SDoc::Merge
     dst = File.join @op_dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE
     FileUtils.mkdir_p File.dirname(dst)
     File.open(dst, "w", 0644) do |f|
-      f.write('var search_data = '); f.write(search_data.to_json(:max_nesting => 35))
+      f.write('var search_data = '); f.write(search_data.to_json(:max_nesting => 0))
     end
   end
   

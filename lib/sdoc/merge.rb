@@ -2,9 +2,7 @@ require 'optparse'
 require 'pathname'
 require 'fileutils'
 
-gem 'json_pure', '>= 1.1.3' if defined?(::JRUBY_VERSION)
-require 'json'
-
+require 'sdoc/json_backen'
 require 'sdoc/templatable'
 
 class SDoc::Merge
@@ -135,7 +133,7 @@ class SDoc::Merge
     dst = File.join @op_dir, RDoc::Generator::SHtml::SEARCH_INDEX_FILE
     FileUtils.mkdir_p File.dirname(dst)
     File.open(dst, "w", 0644) do |f|
-      f.write('var search_data = '); f.write(search_data.to_json)
+      f.write('var search_data = '); f.write(search_data.to_json(:max_nesting => 35))
     end
   end
   

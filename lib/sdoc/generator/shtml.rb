@@ -1,17 +1,10 @@
-require 'rubygems'
-gem "rdoc", ">= 2.4.2"
-if Gem.available? "json" 
-  gem "json", ">= 1.1.3"
-else
-  gem "json_pure", ">= 1.1.3"
-end
-
+require 'sdoc/json_backend'
 require 'iconv'
-require 'json'
 require 'pathname'
 require 'fileutils'
 require 'erb'
 
+gem 'rdoc', '>= 2.4.2'
 require 'rdoc/rdoc'
 require 'rdoc/generator'
 require 'rdoc/generator/markup'
@@ -123,7 +116,7 @@ class RDoc::Generator::SHtml
     tree = generate_file_tree + generate_class_tree_level(topclasses)
     debug_msg "  writing class tree to %s" % TREE_FILE
     File.open(TREE_FILE, "w", 0644) do |f|
-      f.write('var tree = '); f.write(tree.to_json)
+      f.write('var tree = '); f.write(tree.to_json(:max_nesting => 35))
     end unless $dryrun
   end
 
@@ -162,7 +155,7 @@ class RDoc::Generator::SHtml
       :index => index
     }
     File.open(SEARCH_INDEX_FILE, "w", 0644) do |f|
-      f.write('var search_data = '); f.write(data.to_json)
+      f.write('var search_data = '); f.write(data.to_json(:max_nesting => 35))
     end unless $dryrun
   end
 

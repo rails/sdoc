@@ -2,7 +2,7 @@ require 'optparse'
 require 'pathname'
 require 'fileutils'
 
-require 'sdoc/json_backen'
+require 'sdoc/json_backend'
 require 'sdoc/templatable'
 
 class SDoc::Merge

@@ -1,6 +1,6 @@
 $:.unshift File.dirname(__FILE__)
 require "rubygems"
-gem "rdoc", ">= 2.4.2"
+gem "rdoc", "= 2.4.3"
 
 require "rdoc/rdoc"
 

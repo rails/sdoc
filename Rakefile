@@ -28,7 +28,7 @@ begin
     gem.email = "voloko@gmail.com"
     gem.homepage = "http://github.com/voloko/sdoc"
     gem.authors = ["Volodya Kolesnikov"]
-    gem.add_dependency("rdoc", ">= 2.4.2")
+    gem.add_dependency("rdoc", "= 2.4.3")
     
     if defined?(JRUBY_VERSION)
       gem.platform = Gem::Platform.new(['universal', 'java', nil])

@@ -147,6 +147,7 @@
                     <p class="source-link">
                         Source: <a href="javascript:toggleSource('<%= method.aref %>_source')" id="l_<%= method.aref %>_source">show</a>
                         <% 
+                            if options.github
                             if markup =~ /File\s(\S+), line (\d+)/
                                 path = $1
                                 line = $2.to_i
@@ -155,7 +156,7 @@
                             if github
                         %>
                         | <a href="<%= "#{github}#L#{line}" %>" target="_blank" class="github_url">on GitHub</a>
-                        <% end %>
+                        <% end end %>
                     </p>
                     <div id="<%= method.aref %>_source" class="dyn-source">
                         <pre><%= method.markup_code %></pre>

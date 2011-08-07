@@ -18,6 +18,10 @@ class RDoc::ClassModule
   end
 end
 
+class RDoc::Options
+  attr_accessor :github
+end
+
 class RDoc::Generator::SDoc
   RDoc::RDoc.add_generator self
 
@@ -44,10 +48,8 @@ class RDoc::Generator::SDoc
   RESOURCES_DIR = File.join('resources', '.')
 
   attr_reader :basedir
-
-  class << self
-    attr_reader :github
-  end
+  
+  attr_reader :options
 
   def self.setup_options(options)
     @github = false
@@ -59,7 +61,7 @@ class RDoc::Generator::SDoc
     opt.separator nil
     opt.on("--github", "-g",
            "Generate links to github.") do |value|
-      @github = true
+      options.github = true
     end
 
     opt.separator nil

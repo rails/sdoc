@@ -1,17 +1,12 @@
-require 'sdoc/json_backend'
-require 'iconv'
+require 'erb'
 require 'pathname'
 require 'fileutils'
-require 'erb'
-
-gem 'rdoc', '>= 2.4.2'
-require 'rdoc/rdoc'
-require 'rdoc/generator'
-require 'rdoc/generator/markup'
+require 'json'
 
 require 'sdoc/github'
 require 'sdoc/templatable'
 require 'sdoc/helpers'
+require 'rdoc/generator'
 
 class RDoc::ClassModule
   def document_self_or_methods
@@ -23,14 +18,17 @@ class RDoc::ClassModule
   end
 end
 
-class RDoc::Generator::SHtml
-  RDoc::RDoc.add_generator( self )
+class RDoc::Generator::SDoc
+  RDoc::RDoc.add_generator self
+
+  DESCRIPTION = 'Searchable HTML documentation'
+
   include ERB::Util
   include SDoc::GitHub
   include SDoc::Templatable
   include SDoc::Helpers
 
-  GENERATOR_DIRS = [File.join('sdoc', 'generator'), File.join('rdoc', 'generator')]
+  GENERATOR_DIRS = [File.join('sdoc', 'generator')]
 
   # Used in js to reduce index sizes
   TYPE_CLASS  = 1
@@ -47,18 +45,24 @@ class RDoc::Generator::SHtml
 
   attr_reader :basedir
 
-  def self.for(options)
-    self.new(options)
+  class << self
+    attr_reader :github
   end
 
-  def self.template_dir template
-    $LOAD_PATH.map do |path|
-      GENERATOR_DIRS.map do |dir|
-        File.join path, dir, 'template', template
-      end
-    end.flatten.find do |dir|
-      File.directory? dir
+  def self.setup_options(options)
+    @github = false
+    options.template = 'direct'
+
+    opt = options.option_parser
+    opt.separator nil
+    opt.separator "SDoc generator options:"
+    opt.separator nil
+    opt.on("--github", "-g",
+           "Generate links to github.") do |value|
+      @github = true
     end
+
+    opt.separator nil
   end
 
   def initialize(options)
@@ -70,7 +74,7 @@ class RDoc::Generator::SHtml
 
     template = @options.template || 'direct'
 
-    templ_dir = self.class.template_dir template
+    templ_dir = self.class.template_dir_for template
 
     raise RDoc::Error, "could not find template #{template.inspect}" unless
     templ_dir
@@ -79,8 +83,8 @@ class RDoc::Generator::SHtml
     @basedir = Pathname.pwd.expand_path
   end
 
-  def generate( top_levels )
-    @outputdir = Pathname.new( @options.op_dir ).expand_path( @basedir )
+  def generate(top_levels)
+    @outputdir = Pathname.new(@options.op_dir).expand_path(@basedir)
     @files = top_levels.sort
     @classes = RDoc::TopLevel.all_classes_and_modules.sort
 
@@ -103,16 +107,26 @@ class RDoc::Generator::SHtml
 
 
   protected
+  def self.template_dir_for template
+    $LOAD_PATH.map do |path|
+      GENERATOR_DIRS.map do |dir|
+        File.join path, dir, 'template', template
+      end
+    end.flatten.find do |dir|
+      File.directory? dir
+    end
+  end
+
   ### Output progress information if debugging is enabled
   def debug_msg( *msg )
     return unless $DEBUG_RDOC
     $stderr.puts( *msg )
-  end  
+  end
 
   ### Create class tree structure and write it as json
   def generate_class_tree
     debug_msg "Generating class tree"
-    topclasses = @classes.select {|klass| !(RDoc::ClassModule === klass.parent) } 
+    topclasses = @classes.select {|klass| !(RDoc::ClassModule === klass.parent) }
     tree = generate_file_tree + generate_class_tree_level(topclasses)
     debug_msg "  writing class tree to %s" % TREE_FILE
     File.open(TREE_FILE, "w", 0644) do |f|
@@ -125,9 +139,9 @@ class RDoc::Generator::SHtml
     tree = []
     classes.select{|c| c.with_documentation? }.sort.each do |klass|
       item = [
-        klass.name, 
+        klass.name,
         klass.document_self_or_methods ? klass.path : '',
-        klass.module? ? '' : (klass.superclass ? " < #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}" : ''), 
+        klass.module? ? '' : (klass.superclass ? " < #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}" : ''),
         generate_class_tree_level(klass.classes_and_modules)
       ]
       tree << item
@@ -163,16 +177,16 @@ class RDoc::Generator::SHtml
   def add_file_search_index(index)
     debug_msg "  generating file search index"
 
-    @files.select { |file| 
-      file.document_self 
+    @files.select { |file|
+      file.document_self
     }.sort.each do |file|
       index[:searchIndex].push( search_string(file.name) )
       index[:longSearchIndex].push( search_string(file.path) )
       index[:info].push([
-        file.name, 
-        file.path, 
-        file.path, 
-        '', 
+        file.name,
+        file.path,
+        file.path,
+        '',
         snippet(file.comment),
         TYPE_FILE
       ])
@@ -183,7 +197,7 @@ class RDoc::Generator::SHtml
   def add_class_search_index(index)
     debug_msg "  generating class search index"
 
-    @classes.select { |klass| 
+    @classes.select { |klass|
       klass.document_self_or_methods
     }.sort.each do |klass|
       modulename = klass.module? ? '' : (klass.superclass ? (String === klass.superclass ? klass.superclass : klass.superclass.full_name) : '')
@@ -191,10 +205,10 @@ class RDoc::Generator::SHtml
       index[:longSearchIndex].push( search_string(klass.parent.full_name) )
       files = klass.in_files.map{ |file| file.absolute_name }
       index[:info].push([
-        klass.name, 
-        files.include?(klass.parent.full_name) ? files.first : klass.parent.full_name, 
-        klass.path, 
-        modulename ? " < #{modulename}" : '', 
+        klass.name,
+        files.include?(klass.parent.full_name) ? files.first : klass.parent.full_name,
+        klass.path,
+        modulename ? " < #{modulename}" : '',
         snippet(klass.comment),
         TYPE_CLASS
       ])
@@ -205,23 +219,27 @@ class RDoc::Generator::SHtml
   def add_method_search_index(index)
     debug_msg "  generating method search index"
 
-    list = @classes.map { |klass| 
+    list = @classes.map do |klass|
       klass.method_list
-    }.flatten.sort{ |a, b| a.name == b.name ? a.parent.full_name <=> b.parent.full_name : a.name <=> b.name }.select { |method| 
-      method.document_self 
-    }
-    unless @options.show_all
-      list = list.find_all {|m| m.visibility == :public || m.visibility == :protected || m.force_documentation }
+    end.flatten.sort do |a, b| 
+      a.name == b.name ? 
+        a.parent.full_name <=> b.parent.full_name : 
+        a.name <=> b.name 
+    end.select do |method|
+      method.document_self
+    end.find_all do |m| 
+      m.visibility == :public || m.visibility == :protected || 
+      m.force_documentation
     end
 
     list.each do |method|
       index[:searchIndex].push( search_string(method.name) + '()' )
       index[:longSearchIndex].push( search_string(method.parent.full_name) )
       index[:info].push([
-        method.name, 
-        method.parent.full_name, 
-        method.path, 
-        method.params, 
+        method.name,
+        method.parent.full_name,
+        method.path,
+        method.params,
         snippet(method.comment),
         TYPE_METHOD
       ])

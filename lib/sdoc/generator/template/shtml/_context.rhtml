@@ -24,9 +24,7 @@
 
     <% 
         list = context.method_list
-        unless @options.show_all
-            list = list.find_all {|m| m.visibility == :public || m.visibility == :protected || m.force_documentation }
-        end
+        list = list.find_all {|m| m.visibility == :public || m.visibility == :protected || m.force_documentation }
     %>
     <% unless list.empty? %>
     <div class="sectiontitle">Methods</div>
@@ -109,7 +107,7 @@
         next if visibilities.empty?
         visibilities.each do |visibility, methods|
             next if methods.empty? 
-            next unless @options.show_all || visibility == :public || visibility == :protected || methods.any? {|m| m.force_documentation }
+            next unless visibility == :public || visibility == :protected || methods.any? {|m| m.force_documentation }
             %>
             <div class="sectiontitle"><%= type.capitalize %> <%= visibility.to_s.capitalize %> methods</div>
             <% methods.each do |method| %>

@@ -1,3 +1,4 @@
+require 'erb'
 require "sdoc"
 
 module SDoc::Templatable

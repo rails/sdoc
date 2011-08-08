@@ -1,11 +1,19 @@
+require 'rubygems'
 require 'erb'
 require 'pathname'
 require 'fileutils'
+if Gem.available? "json"
+  gem "json", ">= 1.1.3"
+else
+  gem "json_pure", ">= 1.1.3"
+end
 require 'json'
 
 require 'sdoc/github'
 require 'sdoc/templatable'
 require 'sdoc/helpers'
+require 'rdoc'
+require 'rdoc/rdoc'
 require 'rdoc/generator'
 
 class RDoc::ClassModule

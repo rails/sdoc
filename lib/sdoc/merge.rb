@@ -2,7 +2,13 @@ require 'optparse'
 require 'pathname'
 require 'fileutils'
 
-require 'sdoc/json_backend'
+if Gem.available? "json"
+  gem "json", ">= 1.1.3"
+else
+  gem "json_pure", ">= 1.1.3"
+end
+require 'json'
+
 require 'sdoc/templatable'
 
 class SDoc::Merge

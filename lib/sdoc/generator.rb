@@ -115,8 +115,6 @@ class RDoc::Generator::SDoc
     FILE_DIR
   end
 
-
-  protected
   def self.template_dir_for template
     $LOAD_PATH.map do |path|
       GENERATOR_DIRS.map do |dir|
@@ -127,6 +125,8 @@ class RDoc::Generator::SDoc
     end
   end
 
+
+  protected
   ### Output progress information if debugging is enabled
   def debug_msg( *msg )
     return unless $DEBUG_RDOC

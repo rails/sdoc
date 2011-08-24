@@ -1,6 +1,6 @@
 <div id="content">
     <% unless (desc = context.description).empty? %>
-    <div class="description">
+    <div class="description" id="description">
         <%= desc %>
     </div>
     <% end %>
@@ -158,7 +158,7 @@
                         | <a href="<%= "#{github}#L#{line}" %>" target="_blank" class="github_url">on GitHub</a>
                         <% end end %>
                     </p>
-                    <div id="<%= method.aref %>_source" class="dyn-source">
+                    <div id="<%= method.aref %>_source" class="dyn-source x">
                         <pre><%= method.markup_code %></pre>
                     </div>
                 </div>

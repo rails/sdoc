@@ -28,6 +28,7 @@ end
 
 class RDoc::Options
   attr_accessor :github
+  attr_accessor :se_index
 end
 
 class RDoc::Generator::SDoc
@@ -56,12 +57,12 @@ class RDoc::Generator::SDoc
   RESOURCES_DIR = File.join('resources', '.')
 
   attr_reader :basedir
-  
+
   attr_reader :options
 
   def self.setup_options(options)
     @github = false
-    options.template = 'direct'
+    options.se_index = true
 
     opt = options.option_parser
     opt.separator nil
@@ -71,7 +72,19 @@ class RDoc::Generator::SDoc
            "Generate links to github.") do |value|
       options.github = true
     end
+    opt.separator nil
 
+    opt.on("--no-se-index", "-ns",
+           "Do not generated index file for search engines.",
+           "",
+           "SDoc uses javascript to refrence individual documentation pages.",
+           "Search engine crawlers are not smart enough to find all the",
+           "referenced pages.",
+           "To help them SDoc generates a static file with links to every",
+           "documentation page. This file is not shown to the user."
+           ) do |value|
+      options.se_index = false
+    end
     opt.separator nil
   end
 
@@ -81,8 +94,8 @@ class RDoc::Generator::SDoc
       @options.diagram = false
     end
     @github_url_cache = {}
-
-    template = @options.template || 'direct'
+    @options.template = 'direct' if @options.template == 'sdoc'
+    template = @options.template
 
     templ_dir = self.class.template_dir_for template
 
@@ -105,6 +118,7 @@ class RDoc::Generator::SDoc
     generate_file_files
     generate_class_files
     generate_index_file
+    generate_se_index if @options.se_index
   end
 
   def class_dir
@@ -231,14 +245,14 @@ class RDoc::Generator::SDoc
 
     list = @classes.map do |klass|
       klass.method_list
-    end.flatten.sort do |a, b| 
-      a.name == b.name ? 
-        a.parent.full_name <=> b.parent.full_name : 
-        a.name <=> b.name 
+    end.flatten.sort do |a, b|
+      a.name == b.name ?
+        a.parent.full_name <=> b.parent.full_name :
+        a.name <=> b.name
     end.select do |method|
       method.document_self
-    end.find_all do |m| 
-      m.visibility == :public || m.visibility == :protected || 
+    end.find_all do |m|
+      m.visibility == :public || m.visibility == :protected ||
       m.force_documentation
     end
 
@@ -299,7 +313,16 @@ class RDoc::Generator::SDoc
     debug_msg "Generating index file in #@outputdir"
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
-    index_path = index_file.path
+    index_path   = index_file.path
+
+    self.render_template( templatefile, binding(), outfile )
+  end
+
+  ### Generate file with links for the search engine
+  def generate_se_index
+    debug_msg "Generating search engine index in #@outputdir"
+    templatefile = @template_dir + 'se_index.rhtml'
+    outfile      = @outputdir + 'panel/links.html'
 
     self.render_template( templatefile, binding(), outfile )
   end

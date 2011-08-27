@@ -25,7 +25,8 @@ module SDoc::Templatable
   ### current context. Adds all +local_assigns+ to context
   def include_template(template_name, local_assigns = {})
     source = local_assigns.keys.map { |key| "#{key} = local_assigns[:#{key}];" }.join
-    eval("#{source};templatefile = @template_dir + template_name;eval_template(templatefile, binding)")
+    templatefile = @template_dir + template_name
+    eval("#{source};eval_template(templatefile, binding)")
   end
   
 	### Load and render the erb template in the given +templatefile+ within the

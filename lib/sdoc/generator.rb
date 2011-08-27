@@ -85,6 +85,7 @@ class RDoc::Generator::SDoc
       options.se_index = false
     end
     opt.separator nil
+    
   end
 
   def initialize(options)
@@ -93,15 +94,8 @@ class RDoc::Generator::SDoc
       @options.diagram = false
     end
     @github_url_cache = {}
-    @options.template = 'direct' if @options.template == 'sdoc'
-    template = @options.template
-
-    templ_dir = self.class.template_dir_for template
-
-    raise RDoc::Error, "could not find template #{template.inspect}" unless
-    templ_dir
-
-    @template_dir = Pathname.new File.expand_path(templ_dir)
+    
+    @template_dir = Pathname.new(options.template_dir)
     @basedir = Pathname.pwd.expand_path
   end
 
@@ -127,17 +121,6 @@ class RDoc::Generator::SDoc
   def file_dir
     FILE_DIR
   end
-
-  def self.template_dir_for template
-    $LOAD_PATH.map do |path|
-      GENERATOR_DIRS.map do |dir|
-        File.join path, dir, 'template', template
-      end
-    end.flatten.find do |dir|
-      File.directory? dir
-    end
-  end
-
 
   protected
   ### Output progress information if debugging is enabled

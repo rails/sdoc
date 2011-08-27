@@ -76,7 +76,6 @@ class RDoc::Generator::SDoc
 
     opt.on("--no-se-index", "-ns",
            "Do not generated index file for search engines.",
-           "",
            "SDoc uses javascript to refrence individual documentation pages.",
            "Search engine crawlers are not smart enough to find all the",
            "referenced pages.",

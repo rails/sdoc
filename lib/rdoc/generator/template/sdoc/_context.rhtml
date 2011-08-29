@@ -121,7 +121,7 @@
             <div class="sectiontitle"><%= type.capitalize %> <%= visibility.to_s.capitalize %> methods</div>
             <% methods.each do |method| %>
             <div class="method">
-                <div class="title" id="<%= method.aref %>">
+                <div class="title method-title" id="<%= method.aref %>">
                     <% if method.call_seq %>
                     <a name="<%= method.aref %>"></a><b><%= method.call_seq.gsub(/->/, '&rarr;') %></b>
                     <% else %>
@@ -142,24 +142,26 @@
                 </div>
                 <% end %>
                 <% if method.token_stream %>
-                <% markup = method.markup_code %>
+                <% markup = method.sdoc_markup_code %>
                 <div class="sourcecode">
                     <p class="source-link">
                         Source: <a href="javascript:toggleSource('<%= method.aref %>_source')" id="l_<%= method.aref %>_source">show</a>
                         <% 
-                            if options.github
                             if markup =~ /File\s(\S+), line (\d+)/
                                 path = $1
                                 line = $2.to_i
                             end
-                            github = github_url(path)
-                            if github
+                        %>
+                        <%
+                            if options.github && path
+                                github = github_url(path)
+                                    if github
                         %>
                         | <a href="<%= "#{github}#L#{line}" %>" target="_blank" class="github_url">on GitHub</a>
                         <% end end %>
                     </p>
-                    <div id="<%= method.aref %>_source" class="dyn-source x">
-                        <pre><%= method.markup_code %></pre>
+                    <div id="<%= method.aref %>_source" class="dyn-source">
+                        <pre><%= markup %></pre>
                     </div>
                 </div>
                 <% end %>

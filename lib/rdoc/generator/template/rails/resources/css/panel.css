@@ -51,7 +51,7 @@
             font-size: 12px;
             line-height: 29px;
             margin-left: 3px;
-            color: #999;
+            color: #777;
             cursor: text;
         }
 
@@ -127,7 +127,7 @@
         .panel .result ul li h1 i,
         .panel .result ul li p.snippet
         {
-            color: #999;
+            color: #777;
         }
 
         .panel .result ul li b

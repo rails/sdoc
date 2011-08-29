@@ -40,7 +40,7 @@ module SDoc::GitHub
       `git config --get remote.origin.url`
     end
     m = s.match(%r{github.com[/:](.*)\.git$})
-    m ? "http://github.com/#{m[1]}/blob/" : false
+    m ? "https://github.com/#{m[1]}/blob/" : false
   end
 
   def path_relative_to_repository(path)

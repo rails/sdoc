@@ -252,7 +252,7 @@ tt {
     font-size: 1.1em;
     color:#333;
 }
-.method .title {
+.method .method-title {
     border-bottom: 1px dotted #666;
     padding: 0 0 0.15em 0;
     margin: 0 0 0.5em 0;
@@ -275,4 +275,43 @@ tt {
 .method .source-link
 {
     font-size: 0.85em;
+}
+
+.ruby-constant {
+  color: teal;
+}
+.ruby-keyword {
+  color: #000;
+  font-weight: bold
+}
+.ruby-title {
+  color: #900;
+  font-weight: bold;
+}
+.ruby-ivar {
+  color: teal;
+}
+.ruby-operator {
+  color: #000;
+  font-weight: bold
+}
+.ruby-identifier {
+  color: #000;
+}
+.ruby-string,
+.ruby-node {
+  color: #D14;
+}
+.ruby-comment {
+  color: #998;
+  font-style: italic;
+}
+.ruby-regexp {
+  color: #009926;
+}
+.ruby-value {
+  color: #990073;
+}
+.ruby-number {
+  color: #40A070;
 }

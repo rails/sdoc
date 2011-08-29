@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README.rdoc"]
 
   s.add_runtime_dependency('rdoc', "~> 3")
+  s.add_runtime_dependency('sanitize', '~> 2')
   if defined?(JRUBY_VERSION)
     s.platform = Gem::Platform.new(['universal', 'java', nil])
     s.add_runtime_dependency("json_pure", ">= 1.1.3")

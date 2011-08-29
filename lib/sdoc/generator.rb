@@ -2,12 +2,14 @@ require 'rubygems'
 require 'erb'
 require 'pathname'
 require 'fileutils'
+require 'rdoc/markup/to_html'
 if Gem.available? "json"
   gem "json", ">= 1.1.3"
 else
   gem "json_pure", ">= 1.1.3"
 end
 require 'json'
+require 'sanitize'
 
 require 'sdoc/github'
 require 'sdoc/templatable'
@@ -311,6 +313,7 @@ class RDoc::Generator::SDoc
 
   ### Strip comments on a space after 100 chars
   def snippet(str)
+
     str ||= ''
     if str =~ /^(?>\s*)[^\#]/
       content = str
@@ -318,6 +321,8 @@ class RDoc::Generator::SDoc
       content = str.gsub(/^\s*(#+)\s*/, '')
     end
 
+    # Get a plain string with no markup.
+    content = Sanitize.clean(RDoc::Markup::ToHtml.new.convert(content))
     content = content.sub(/^(.{100,}?)\s.*/m, "\\1").gsub(/\r?\n/m, ' ')
 
     begin

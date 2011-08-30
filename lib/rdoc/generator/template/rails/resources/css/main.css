@@ -12,16 +12,16 @@ a:link, a:active, a:visited, a:hover {
   text-decoration: none;
 }
 
-a:hover {
+a:hover, .banner a:hover {
   color: #333;
   background: #FE8;
 }
 
-h1 a, h2 a, .sectiontitle a, .banner a {
+h1 a, h2 a, .banner a {
   color: #fff;
 }
 
-h1 a:hover, h2 a:hover, .sectiontitle a:hover, .banner a:hover {
+h1 a:hover, h2 a:hover {
   color: #fff;
 }
 
@@ -145,6 +145,10 @@ ol li
     list-style: none;
     margin-left: 0;
     margin-bottom: 0;
+}
+
+.banner .github_url {
+  color: #CCC;
 }
 
 pre

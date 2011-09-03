@@ -355,12 +355,22 @@ class RDoc::Generator::SDoc
     end
   end
 
-  def index_file
-    if @options.main_page && file = @files.find { |f| f.full_name == @options.main_page }
-      file
-    else
-      @files.first
+  ### Determines index path based on @options.main_page (or lack thereof)
+  def index_path
+    # Break early to avoid a big if block when no main page is specified
+    default = @files.first.path
+    return default unless @options.main_page
+
+    # Handle attempts to hit class docs directly
+    if @options.main_page.include?("::")
+      return "%s/%s.html" % [class_dir, @options.main_page.gsub("::", "/")]
     end
+    if file = @files.find { |f| f.full_name == @options.main_page }
+      return file.path
+    end
+
+    # Nothing else worked, so stick with the default
+    return default
   end
 
   ### Create index.html with frameset
@@ -368,7 +378,6 @@ class RDoc::Generator::SDoc
     debug_msg "Generating index file in #@outputdir"
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
-    index_path   = index_file.path
 
     self.render_template( templatefile, binding(), outfile )
   end

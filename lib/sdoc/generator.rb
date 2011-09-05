@@ -214,14 +214,17 @@ class RDoc::Generator::SDoc
   end
 
   ### Recursivly build class tree structure
-  def generate_class_tree_level(classes)
+  def generate_class_tree_level(classes, visited = {})
     tree = []
-    classes.select{|c| c.with_documentation? }.sort.each do |klass|
+    classes.select do |klass| 
+      !visited[klass] && klass.with_documentation? 
+    end.sort.each do |klass|
+      visited[klass] = true
       item = [
         klass.name,
         klass.document_self_or_methods ? klass.path : '',
         klass.module? ? '' : (klass.superclass ? " < #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}" : ''),
-        generate_class_tree_level(klass.classes_and_modules)
+        generate_class_tree_level(klass.classes_and_modules, visited)
       ]
       tree << item
     end
@@ -259,6 +262,7 @@ class RDoc::Generator::SDoc
     @files.select { |file|
       file.document_self
     }.sort.each do |file|
+      debug_msg "    #{file.path}"
       index[:searchIndex].push( search_string(file.name) )
       index[:longSearchIndex].push( search_string(file.path) )
       index[:info].push([
@@ -275,11 +279,11 @@ class RDoc::Generator::SDoc
   ### Add classes to search +index+ array
   def add_class_search_index(index)
     debug_msg "  generating class search index"
-
-    @classes.select { |klass|
+    @classes.uniq.select { |klass|
       klass.document_self_or_methods
     }.sort.each do |klass|
       modulename = klass.module? ? '' : (klass.superclass ? (String === klass.superclass ? klass.superclass : klass.superclass.full_name) : '')
+      debug_msg "    #{klass.parent.full_name}::#{klass.name}"
       index[:searchIndex].push( search_string(klass.name) )
       index[:longSearchIndex].push( search_string(klass.parent.full_name) )
       files = klass.in_files.map{ |file| file.absolute_name }
@@ -298,7 +302,7 @@ class RDoc::Generator::SDoc
   def add_method_search_index(index)
     debug_msg "  generating method search index"
 
-    list = @classes.map do |klass|
+    list = @classes.uniq.map do |klass|
       klass.method_list
     end.flatten.sort do |a, b|
       a.name == b.name ?
@@ -312,6 +316,7 @@ class RDoc::Generator::SDoc
     end
 
     list.each do |method|
+      debug_msg "    #{method.full_name}"
       index[:searchIndex].push( search_string(method.name) + '()' )
       index[:longSearchIndex].push( search_string(method.parent.full_name) )
       index[:info].push([

@@ -200,6 +200,15 @@ pre
   border-bottom: 1px solid #000;
 }
 
+.contenttitle {
+  margin-top: 4em;
+  margin-bottom: 1.3em;
+  margin-left: -0.9em;
+  font-size: 1.6em;
+  padding: 0 0 0.25em 0;
+  font-weight: bold;
+}
+
 .attr-rw {
   padding-right: 1em;
   text-align: center;

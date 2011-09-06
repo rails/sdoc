@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby -KU
-
 require File.dirname(__FILE__) + '/../lib/sdoc' # add extensions
 require 'sdoc/merge'
 

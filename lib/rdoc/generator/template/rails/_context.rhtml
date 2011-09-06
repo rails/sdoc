@@ -156,7 +156,7 @@
             <% end %>
           </div>
           
-          <% unless method.comment %>
+          <% if method.comment %>
             <div class="description">
               <%= method.description.strip %>
             </div>

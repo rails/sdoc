@@ -366,15 +366,11 @@ class RDoc::Generator::SDoc
     default = @files.first.path
     return default unless @options.main_page
 
-    main_page = @options.main_page.dup
-
     # Transform class name to file path
-    if main_page.include?("::")
-      slashed = main_page.sub(/^::/, "").gsub("::", "/")
-      main_page = "%s/%s.html" % [ class_dir, slashed ]
-    end
-
-    if file = @files.find { |f| f.full_name == main_page }
+    if @options.main_page.include?("::")
+      slashed = @options.main_page.sub(/^::/, "").gsub("::", "/")
+      "%s/%s.html" % [ class_dir, slashed ]
+    elsif file = @files.find { |f| f.full_name == @options.main_page }
       file.path
     else
       default

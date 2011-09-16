@@ -366,16 +366,19 @@ class RDoc::Generator::SDoc
     default = @files.first.path
     return default unless @options.main_page
 
-    # Handle attempts to hit class docs directly
-    if @options.main_page.include?("::")
-      return "%s/%s.html" % [class_dir, @options.main_page.gsub("::", "/")]
-    end
-    if file = @files.find { |f| f.full_name == @options.main_page }
-      return file.path
+    main_page = @options.main_page.dup
+
+    # Transform class name to file path
+    if main_page.include?("::")
+      slashed = main_page.sub(/^::/, "").gsub("::", "/")
+      main_page = "%s/%s.html" % [ class_dir, slashed ]
     end
 
-    # Nothing else worked, so stick with the default
-    return default
+    if file = @files.find { |f| f.full_name == main_page }
+      file.path
+    else
+      default
+    end
   end
 
   ### Create index.html with frameset

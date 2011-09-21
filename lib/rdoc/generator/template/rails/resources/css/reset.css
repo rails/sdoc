@@ -33,11 +33,6 @@ q:before, q:after {
 	content: none;
 }
 
-/* remember to define focus styles! */
-:focus {
-	outline: 0;
-}
-
 /* remember to highlight inserts somehow! */
 ins {
 	text-decoration: none;

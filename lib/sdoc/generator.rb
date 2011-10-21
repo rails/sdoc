@@ -2,27 +2,19 @@ require 'rubygems'
 require 'erb'
 require 'pathname'
 require 'fileutils'
-require 'rdoc/markup/to_html'
 if Gem.available? "json"
   gem "json", ">= 1.1.3"
 else
   gem "json_pure", ">= 1.1.3"
 end
 require 'json'
-require 'sanitize'
 
 require 'sdoc/github'
 require 'sdoc/templatable'
 require 'sdoc/helpers'
 require 'rdoc'
-require 'rdoc/rdoc'
-require 'rdoc/generator'
 
 class RDoc::ClassModule
-  def document_self_or_methods
-    document_self || method_list.any?{ |m| m.document_self }
-  end
-
   def with_documentation?
     document_self_or_methods || classes_and_modules.any?{ |c| c.with_documentation? }
   end
@@ -116,20 +108,14 @@ class RDoc::Generator::SDoc
 
   GENERATOR_DIRS = [File.join('sdoc', 'generator')]
 
-  # Used in js to reduce index sizes
-  TYPE_CLASS  = 1
-  TYPE_METHOD = 2
-  TYPE_FILE   = 3
-
   TREE_FILE = File.join 'panel', 'tree.js'
-  SEARCH_INDEX_FILE = File.join 'panel', 'search_index.js'
 
   FILE_DIR = 'files'
   CLASS_DIR = 'classes'
 
   RESOURCES_DIR = File.join('resources', '.')
 
-  attr_reader :basedir
+  attr_reader :base_dir
 
   attr_reader :options
 
@@ -169,18 +155,20 @@ class RDoc::Generator::SDoc
     @github_url_cache = {}
 
     @template_dir = Pathname.new(options.template_dir)
-    @basedir = Pathname.pwd.expand_path
+    @base_dir = Pathname.pwd.expand_path
+
+    @json_index = RDoc::Generator::JsonIndex.new self, options
   end
 
   def generate(top_levels)
-    @outputdir = Pathname.new(@options.op_dir).expand_path(@basedir)
+    @outputdir = Pathname.new(@options.op_dir).expand_path(@base_dir)
     @files = top_levels.sort
     @classes = RDoc::TopLevel.all_classes_and_modules.sort
 
     # Now actually write the output
     copy_resources
     generate_class_tree
-    generate_search_index
+    @json_index.generate top_levels
     generate_file_files
     generate_class_files
     generate_index_file
@@ -216,8 +204,8 @@ class RDoc::Generator::SDoc
   ### Recursivly build class tree structure
   def generate_class_tree_level(classes, visited = {})
     tree = []
-    classes.select do |klass| 
-      !visited[klass] && klass.with_documentation? 
+    classes.select do |klass|
+      !visited[klass] && klass.with_documentation?
     end.sort.each do |klass|
       visited[klass] = true
       item = [
@@ -229,30 +217,6 @@ class RDoc::Generator::SDoc
       tree << item
     end
     tree
-  end
-
-  ### Create search index for all classes, methods and files
-  ### Wite it as json
-  def generate_search_index
-    debug_msg "Generating search index"
-
-    index = {
-      :searchIndex => [],
-      :longSearchIndex => [],
-      :info => []
-    }
-
-    add_class_search_index(index)
-    add_method_search_index(index)
-    add_file_search_index(index)
-
-    debug_msg "  writing search index to %s" % SEARCH_INDEX_FILE
-    data = {
-      :index => index
-    }
-    File.open(SEARCH_INDEX_FILE, "w", 0644) do |f|
-      f.write('var search_data = '); f.write(data.to_json(:max_nesting => 0))
-    end unless $dryrun
   end
 
   ### Add files to search +index+ array
@@ -366,16 +330,15 @@ class RDoc::Generator::SDoc
     default = @files.first.path
     return default unless @options.main_page
 
-    # Handle attempts to hit class docs directly
+    # Transform class name to file path
     if @options.main_page.include?("::")
-      return "%s/%s.html" % [class_dir, @options.main_page.gsub("::", "/")]
+      slashed = @options.main_page.sub(/^::/, "").gsub("::", "/")
+      "%s/%s.html" % [ class_dir, slashed ]
+    elsif file = @files.find { |f| f.full_name == @options.main_page }
+      file.path
+    else
+      default
     end
-    if file = @files.find { |f| f.full_name == @options.main_page }
-      return file.path
-    end
-
-    # Nothing else worked, so stick with the default
-    return default
   end
 
   ### Create index.html with frameset
@@ -394,39 +357,6 @@ class RDoc::Generator::SDoc
     outfile      = @outputdir + 'panel/links.html'
 
     self.render_template( templatefile, binding(), outfile )
-  end
-
-  ### Strip comments on a space after 100 chars
-  def snippet(str)
-
-    str ||= ''
-    if str =~ /^(?>\s*)[^\#]/
-      content = str
-    else
-      content = str.gsub(/^\s*(#+)\s*/, '')
-    end
-
-    # Get a plain string with no markup.
-    content = Sanitize.clean(RDoc::Markup::ToHtml.new.convert(content))
-    content = content.sub(/^(.{100,}?)\s.*/m, "\\1").gsub(/\r?\n/m, ' ')
-
-    begin
-      content.to_json(:max_nesting => 0)
-    rescue # might fail on non-unicode string
-      begin
-        content = Iconv.conv('latin1//ignore', "UTF8", content) # remove all non-unicode chars
-        content.to_json(:max_nesting => 0)
-      rescue
-        content = '' # something hugely wrong happend
-      end
-    end
-    content
-  end
-
-  ### Build search index key
-  def search_string(string)
-    string ||= ''
-    string.downcase.gsub(/\s/,'')
   end
 
   ### Copy all the resource files to output dir

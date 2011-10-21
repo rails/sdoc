@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby -KU
-require File.dirname(__FILE__) + '/../lib/sdoc' # add extensions
+require 'sdoc'
 
 begin
   ARGV.push('--format=sdoc') if ARGV.grep(/\A(-f|--fmt|--format|-r|-R|--ri|--ri-site)\b/).empty?

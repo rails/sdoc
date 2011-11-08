@@ -109,6 +109,7 @@ class RDoc::Generator::SDoc
   GENERATOR_DIRS = [File.join('sdoc', 'generator')]
 
   TREE_FILE = File.join 'panel', 'tree.js'
+  SEARCH_INDEX_FILE = File.join 'js', 'search_index.js'
 
   FILE_DIR = 'files'
   CLASS_DIR = 'classes'

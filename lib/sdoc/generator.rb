@@ -306,7 +306,7 @@ class RDoc::Generator::SDoc
       rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
       debug_msg "  rendering #{outfile}"
-      self.render_template( templatefile, binding(), outfile )
+      self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
     end
   end
 
@@ -321,7 +321,7 @@ class RDoc::Generator::SDoc
       rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
       debug_msg "  rendering #{outfile}"
-      self.render_template( templatefile, binding(), outfile )
+      self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
     end
   end
 
@@ -348,7 +348,7 @@ class RDoc::Generator::SDoc
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
 
-    self.render_template( templatefile, binding(), outfile )
+    self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
   end
 
   ### Generate file with links for the search engine
@@ -357,7 +357,7 @@ class RDoc::Generator::SDoc
     templatefile = @template_dir + 'se_index.rhtml'
     outfile      = @outputdir + 'panel/links.html'
 
-    self.render_template( templatefile, binding(), outfile )
+    self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
   end
 
   ### Copy all the resource files to output dir

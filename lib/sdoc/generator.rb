@@ -199,7 +199,7 @@ class RDoc::Generator::SDoc
     debug_msg "  writing class tree to %s" % TREE_FILE
     File.open(TREE_FILE, "w", 0644) do |f|
       f.write('var tree = '); f.write(tree.to_json(:max_nesting => 0))
-    end unless $dryrun
+    end unless @options.dry_run
   end
 
   ### Recursivly build class tree structure
@@ -364,7 +364,7 @@ class RDoc::Generator::SDoc
   def copy_resources
     resoureces_path = @template_dir + RESOURCES_DIR
     debug_msg "Copying #{resoureces_path}/** to #{@outputdir}/**"
-    FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s, :preserve => true unless $dryrun
+    FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s, :preserve => true unless @options.dry_run
   end
 
   class FilesTree

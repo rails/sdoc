@@ -27,7 +27,7 @@ module SDoc::GitHub
   def commit_sha1(path)
     return false unless have_git?
     name = File.basename(path)
-    s = Dir.chdir(File.join(basedir, File.dirname(path))) do
+    s = Dir.chdir(File.join(base_dir, File.dirname(path))) do
       `git log -1 --pretty=format:"commit %H" #{name}`
     end
     m = s.match(/commit\s+(\S+)/)
@@ -36,7 +36,7 @@ module SDoc::GitHub
   
   def repository_url(path)
     return false unless have_git?
-    s = Dir.chdir(File.join(basedir, File.dirname(path))) do
+    s = Dir.chdir(File.join(base_dir, File.dirname(path))) do
       `git config --get remote.origin.url`
     end
     m = s.match(%r{github.com[/:](.*)\.git$})
@@ -44,7 +44,7 @@ module SDoc::GitHub
   end
 
   def path_relative_to_repository(path)
-    absolute_path = File.join(basedir, path)
+    absolute_path = File.join(base_dir, path)
     root = path_to_git_dir(File.dirname(absolute_path))
     absolute_path[root.size..absolute_path.size]
   end

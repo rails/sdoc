@@ -4,9 +4,9 @@
 
 ### What is sdoc?
 
-RDoc generator to build searchable documentation.
+RDoc generator to build searchable HTML documentation for Ruby code.
 
-* `sdoc` - command line tool to run rdoc with `generator=shtml`
+* `sdoc` - command line tool to run rdoc with `generator=shtml` (searchable HTML)
 * `sdoc-merge` - comand line tool to merge multiple sdoc folders into a single documentation site
 
 
@@ -22,9 +22,8 @@ RDoc generator to build searchable documentation.
 
 ### sdoc
 
-`sdoc` is simply a wrapper to the rdoc command line tool. See `sdoc --help`
-for more details. `--fmt` is set to shtml by default.
-Default template `-T` is shtml. You can also use 'direct' template.
+`sdoc` is simply a wrapper for the `rdoc` command line tool. See `sdoc --help`
+for more details. `--fmt` is set to `shtml` by default. The default template `-T` is `shtml`, but you can also use the `direct` template.
 
 Example:
 

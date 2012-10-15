@@ -1,20 +1,20 @@
 # SDoc
 
-## What is it?
+### What is it?
 
 * shtml - RDoc's generator to build searchable documentation
 * `sdoc-merge` - comand line tool to build merge multiple sdoc documentations
   packages into a single one
 * `sdoc` - command line tool to run rdoc with generator=shtml
 
-## Getting Started
+### Getting Started
 
 ```bash
   gem install sdoc
   sdoc -N projectdir
 ```
 
-## Command line sdoc
+### Command line sdoc
 
 sdoc is simply a wrapper to the rdoc command line tool. See `sdoc --help`
 for more details. `--fmt` is set to shtml by default.
@@ -26,7 +26,7 @@ Example:
 sdoc -o doc/rails -T direct rails
 ```
 
-## Rake
+### Rake
 
 ```ruby
 # Rakefile
@@ -40,7 +40,7 @@ Rake::RDocTask.new do |rdoc|
 end
 ```
 
-## sdoc-merge
+### sdoc-merge
 
 <pre>
 Usage: sdoc-merge [options] directories
@@ -57,5 +57,5 @@ sdoc-merge --title "Ruby v1.9, Rails v2.3.2.1" --op merged --names "Ruby,Rails" 
 
 # Who?
 
-* Vladimir Kolesnikov ([@voloko](https://github.com/voloko))
-* Nathan Broadbent ([@ndbroadbent](https://github.com/ndbroadbent))
+* Vladimir Kolesnikov ([voloko](https://github.com/voloko))
+* Nathan Broadbent ([ndbroadbent](https://github.com/ndbroadbent))

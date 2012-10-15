@@ -1,6 +1,6 @@
 # SDoc
 
-## Powering http://api.rubyonrails.org/
+**Powering http://api.rubyonrails.org/ and http://railsapi.com/**
 
 ### What is sdoc?
 

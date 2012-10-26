@@ -114,7 +114,7 @@ class RDoc::Generator::SDoc
   FILE_DIR = 'files'
   CLASS_DIR = 'classes'
 
-  RESOURCES_DIR = File.join('resources', '')
+  RESOURCES_DIR = File.join('resources', '.')
 
   attr_reader :base_dir
 
@@ -362,9 +362,9 @@ class RDoc::Generator::SDoc
 
   ### Copy all the resource files to output dir
   def copy_resources
-    resoureces_path = @template_dir + RESOURCES_DIR
-    debug_msg "Copying #{resoureces_path}/** to #{@outputdir}/**"
-    FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s, :preserve => true unless @options.dry_run
+    resources_path = @template_dir + RESOURCES_DIR.sub(/\.$/, '')
+    debug_msg "Copying #{resources_path}/** to #{@outputdir}/**"
+    FileUtils.cp_r resources_path.to_s, @outputdir.to_s, :preserve => true unless @options.dry_run
   end
 
   class FilesTree

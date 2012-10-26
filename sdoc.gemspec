@@ -2,9 +2,9 @@
 
 Gem::Specification.new do |s|
   s.name = "sdoc"
-  s.version = "0.3.17"
+  s.version = "0.3.18"
 
-  s.authors = ["Vladimir Kolesnikov"]
+  s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent"]
   s.description = %q{rdoc generator html with javascript search index.}
   s.summary = %q{rdoc html with javascript search index.}
   s.homepage = %q{http://github.com/voloko/sdoc}

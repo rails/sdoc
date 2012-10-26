@@ -199,7 +199,7 @@ class RDoc::Generator::SDoc
     debug_msg "  writing class tree to %s" % TREE_FILE
     File.open(TREE_FILE, "w", 0644) do |f|
       f.write('var tree = '); f.write(tree.to_json(:max_nesting => 0))
-    end unless $dryrun
+    end unless @options.dry_run
   end
 
   ### Recursivly build class tree structure
@@ -306,7 +306,7 @@ class RDoc::Generator::SDoc
       rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
       debug_msg "  rendering #{outfile}"
-      self.render_template( templatefile, binding(), outfile )
+      self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
     end
   end
 
@@ -321,7 +321,7 @@ class RDoc::Generator::SDoc
       rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
       debug_msg "  rendering #{outfile}"
-      self.render_template( templatefile, binding(), outfile )
+      self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
     end
   end
 
@@ -348,7 +348,7 @@ class RDoc::Generator::SDoc
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
 
-    self.render_template( templatefile, binding(), outfile )
+    self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
   end
 
   ### Generate file with links for the search engine
@@ -357,14 +357,14 @@ class RDoc::Generator::SDoc
     templatefile = @template_dir + 'se_index.rhtml'
     outfile      = @outputdir + 'panel/links.html'
 
-    self.render_template( templatefile, binding(), outfile )
+    self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
   end
 
   ### Copy all the resource files to output dir
   def copy_resources
     resoureces_path = @template_dir + RESOURCES_DIR
     debug_msg "Copying #{resoureces_path}/** to #{@outputdir}/**"
-    FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s, :preserve => true unless $dryrun
+    FileUtils.cp_r resoureces_path.to_s, @outputdir.to_s, :preserve => true unless @options.dry_run
   end
 
   class FilesTree

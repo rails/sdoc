@@ -114,7 +114,7 @@ class RDoc::Generator::SDoc
   FILE_DIR = 'files'
   CLASS_DIR = 'classes'
 
-  RESOURCES_DIR = File.join('resources', '.')
+  RESOURCES_DIR = File.join('resources', '')
 
   attr_reader :base_dir
 

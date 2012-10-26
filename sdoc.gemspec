@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
     s.respond_to? :required_rubygems_version=
 
   s.rdoc_options = ["--charset=UTF-8"]
-  s.extra_rdoc_files = ["README.rdoc"]
+  s.extra_rdoc_files = ["README.md"]
 
   s.add_runtime_dependency('rdoc', "~> 3.10")
   if defined?(JRUBY_VERSION)

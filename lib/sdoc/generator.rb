@@ -362,9 +362,9 @@ class RDoc::Generator::SDoc
 
   ### Copy all the resource files to output dir
   def copy_resources
-    resources_path = @template_dir + RESOURCES_DIR.sub(/\.$/, '')
+    resources_path = @template_dir + RESOURCES_DIR
     debug_msg "Copying #{resources_path}/** to #{@outputdir}/**"
-    FileUtils.cp_r resources_path.to_s, @outputdir.to_s, :preserve => true unless @options.dry_run
+    FileUtils.cp_r resources_path.to_s, @outputdir.to_s unless @options.dry_run
   end
 
   class FilesTree

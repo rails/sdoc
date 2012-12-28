@@ -27,7 +27,7 @@ class SDoc::Merge
   def merge(options)
     parse_options options
 
-		@outputdir = Pathname.new( @op_dir )
+    @outputdir = Pathname.new( @op_dir )
 
     check_directories
     setup_output_dir
@@ -56,8 +56,8 @@ class SDoc::Merge
       end
 
       opt.on("-u", "--urls [URLS]", "Paths to merged docs. If you",
-                   "set this files and classes won't be actualy",
-                   "copied to merged build") do |v|
+                    "set this files and classes won't be actualy",
+                    "copied to merged build") do |v|
         @urls = v.split(' ').map{|name| name.strip }
       end
     end

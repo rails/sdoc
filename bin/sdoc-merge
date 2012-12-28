@@ -21,4 +21,3 @@ rescue Exception => e
   end
   exit 1
 end
-

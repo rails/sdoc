@@ -2,13 +2,13 @@ require 'erb'
 require "sdoc"
 
 module SDoc::Templatable
-	### Load and render the erb template in the given +templatefile+ within the
-	### specified +context+ (a Binding object) and return output
-	### Both +templatefile+ and +outfile+ should be Pathname-like objects.
+  ### Load and render the erb template in the given +templatefile+ within the
+  ### specified +context+ (a Binding object) and return output
+  ### Both +templatefile+ and +outfile+ should be Pathname-like objects.
   def eval_template(templatefile, context)
-		template_src = templatefile.read
-		template = ERB.new( template_src, nil, '<>' )
-		template.filename = templatefile.to_s
+    template_src = templatefile.read
+    template = ERB.new( template_src, nil, '<>' )
+    template.filename = templatefile.to_s
 
     begin
       template.result( context )
@@ -29,10 +29,10 @@ module SDoc::Templatable
     eval("#{source};eval_template(templatefile, binding)")
   end
 
-	### Load and render the erb template in the given +templatefile+ within the
-	### specified +context+ (a Binding object) and write it out to +outfile+.
-	### Both +templatefile+ and +outfile+ should be Pathname-like objects.
-	def render_template( templatefile, context, outfile )
+  ### Load and render the erb template in the given +templatefile+ within the
+  ### specified +context+ (a Binding object) and write it out to +outfile+.
+  ### Both +templatefile+ and +outfile+ should be Pathname-like objects.
+  def render_template( templatefile, context, outfile )
     output = eval_template(templatefile, context)
 
     # TODO delete this dirty hack when documentation for example for GeneratorMethods will not be cutted off by <script> tag
@@ -47,14 +47,14 @@ module SDoc::Templatable
 
     end
 
-		unless $dryrun
-			outfile.dirname.mkpath
-			outfile.open( 'w', 0644 ) do |file|
-				file.print( output )
-			end
-		else
-			debug_msg "  would have written %d bytes to %s" %
-			[ output.length, outfile ]
-		end
-	end
+    unless $dryrun
+      outfile.dirname.mkpath
+      outfile.open( 'w', 0644 ) do |file|
+        file.print( output )
+      end
+    else
+      debug_msg "  would have written %d bytes to %s" %
+      [ output.length, outfile ]
+    end
+  end
 end

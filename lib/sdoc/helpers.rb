@@ -14,7 +14,7 @@ module SDoc::Helpers
     end
     yield group unless group[:methods].size == 0
   end
-  
+
 protected
   def group_name name
     if match = name.match(/^([a-z])/i)

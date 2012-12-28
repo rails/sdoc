@@ -5,3 +5,4 @@ doc
 /test.rb
 Gemfile.lock
 /.rake_tasks~
+/*.gem

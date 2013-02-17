@@ -20,7 +20,7 @@ module SDoc::Templatable
         ], err.backtrace
       end
   end
-  
+
   ### Load and render the erb template with the given +template_name+ within
   ### current context. Adds all +local_assigns+ to context
   def include_template(template_name, local_assigns = {})
@@ -28,13 +28,13 @@ module SDoc::Templatable
     templatefile = @template_dir + template_name
     eval("#{source};eval_template(templatefile, binding)")
   end
-  
+
 	### Load and render the erb template in the given +templatefile+ within the
 	### specified +context+ (a Binding object) and write it out to +outfile+.
 	### Both +templatefile+ and +outfile+ should be Pathname-like objects.
 	def render_template( templatefile, context, outfile )
     output = eval_template(templatefile, context)
-    
+
     # TODO delete this dirty hack when documentation for example for GeneratorMethods will not be cutted off by <script> tag
     begin
       if output.respond_to? :force_encoding
@@ -44,9 +44,9 @@ module SDoc::Templatable
         output = output.gsub('<script>', '&lt;script&gt;')
       end
     rescue Exception => e
-      
+
     end
-    
+
 		unless $dryrun
 			outfile.dirname.mkpath
 			outfile.open( 'w', 0644 ) do |file|
@@ -56,5 +56,5 @@ module SDoc::Templatable
 			debug_msg "  would have written %d bytes to %s" %
 			[ output.length, outfile ]
 		end
-	end  
+	end
 end

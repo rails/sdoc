@@ -159,6 +159,7 @@ class RDoc::Generator::SDoc
     if @options.respond_to?('diagram=')
       @options.diagram = false
     end
+    @options.pipe = true
     @github_url_cache = {}
 
     @template_dir = Pathname.new(options.template_dir)

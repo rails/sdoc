@@ -1,7 +1,8 @@
-### This is just a fork to test some minor hacks to better support Windows.
+### Caution: This is just a fork to test some minor hacks to better support Windows.
+
+( Purpuse is to remove Colons (:) in composite paths for URLs in Windows. )
 
 ### Please use the original:
-
 
 # SDoc
 

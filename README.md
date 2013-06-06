@@ -1,6 +1,6 @@
 ### Caution: This is just a fork to test some minor hacks to better support MS-Windows.
 
-( Purpose is to remove Colons (:) in composite paths for URLs in Windows. )
+( Purpose is to remove Colons (:) in URLs consisting of composite paths. )
 
 
 

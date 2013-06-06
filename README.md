@@ -1,4 +1,6 @@
-## This is just a fork to test some minor hacks to better support Windows.
+### This is just a fork to test some minor hacks to better support Windows.
+
+### Please use the original:
 
 
 # SDoc

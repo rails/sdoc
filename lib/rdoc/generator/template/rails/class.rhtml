@@ -28,7 +28,7 @@
         </h1>
         <ul class="files">
             <% klass.in_files.each do |file| %>
-            <li><a href="<%= "#{rel_prefix}/#{h file.path}" %>"><%= h file.absolute_name %></a></li>
+            <li><a href="<%= "#{rel_prefix}/#{h file.path.sub(":","")}" %>"><%= h file.absolute_name %></a></li>
             <% end  %>
         </ul>
     </div>

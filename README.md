@@ -1,3 +1,6 @@
+## This is just a fork to test some minor hacks to better support Windows.
+
+
 # SDoc
 
 **Powering http://api.rubyonrails.org/ and http://railsapi.com/**

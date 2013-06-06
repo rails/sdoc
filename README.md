@@ -1,5 +1,4 @@
-### Caution: This is just a fork to test some minor hacks to better support 
-### MS-Windows.
+### Caution: This is just a fork to test some minor hacks to better support MS-Windows.
 
 ( Purpose is to remove Colons (:) in URLs consisting of composite paths. )
 

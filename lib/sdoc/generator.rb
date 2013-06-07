@@ -120,6 +120,8 @@ class RDoc::Generator::SDoc
 
   attr_reader :options
 
+  attr_reader :store
+
   def self.setup_options(options)
     @github = false
     options.se_index = true
@@ -148,12 +150,13 @@ class RDoc::Generator::SDoc
 
   end
 
-  def initialize(options)
+  def initialize(store, options)
     @options = options
     if @options.respond_to?('diagram=')
       @options.diagram = false
     end
     @github_url_cache = {}
+    @store = store
 
     @template_dir = Pathname.new(options.template_dir)
     @base_dir = Pathname.pwd.expand_path
@@ -161,15 +164,15 @@ class RDoc::Generator::SDoc
     @json_index = RDoc::Generator::JsonIndex.new self, options
   end
 
-  def generate(top_levels)
+  def generate
     @outputdir = Pathname.new(@options.op_dir).expand_path(@base_dir)
-    @files = top_levels.sort
-    @classes = RDoc::TopLevel.all_classes_and_modules.sort
+    @files = @store.all_files.sort
+    @classes = @store.all_classes_and_modules.sort
 
     # Now actually write the output
     copy_resources
     generate_class_tree
-    @json_index.generate top_levels
+    @json_index.generate
     generate_file_files
     generate_class_files
     generate_index_file

@@ -36,20 +36,20 @@ describe RDoc::Generator::SDoc do
 
   it "should parse no search engine index option" do
     out, err = capture_io do
-      @parser.parse '--no-se-index'
+      @parser.parse '--without-search'
     end
 
     err.wont_match /^invalid options/
-    @options.se_index.must_equal false
+    @options.search_index.must_equal false
   end
 
-  it "should parse no-se-index shorthand option" do
+  it "should parse search-index shorthand option" do
     out, err = capture_io do
-      @parser.parse '-ns'
+      @parser.parse '-s'
     end
 
     err.wont_match /^invalid options/
-    @options.se_index.must_equal false
+    @options.search_index.must_equal false
   end
 
 end

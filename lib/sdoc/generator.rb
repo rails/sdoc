@@ -22,7 +22,7 @@ end
 
 class RDoc::Options
   attr_accessor :github
-  attr_accessor :se_index
+  attr_accessor :search_index
 end
 
 class RDoc::AnyMethod
@@ -127,7 +127,7 @@ class RDoc::Generator::SDoc
 
   def self.setup_options(options)
     @github = false
-    options.se_index = true
+    options.search_index = true
 
     opt = options.option_parser
     opt.separator nil
@@ -139,15 +139,15 @@ class RDoc::Generator::SDoc
     end
     opt.separator nil
 
-    opt.on("--no-se-index", "-ns",
+    opt.on("--without-search", "-s",
            "Do not generated index file for search engines.",
            "SDoc uses javascript to refrence individual documentation pages.",
            "Search engine crawlers are not smart enough to find all the",
            "referenced pages.",
            "To help them SDoc generates a static file with links to every",
            "documentation page. This file is not shown to the user."
-           ) do |value|
-      options.se_index = false
+           ) do
+      options.search_index = false
     end
     opt.separator nil
 
@@ -180,7 +180,7 @@ class RDoc::Generator::SDoc
     generate_file_files
     generate_class_files
     generate_index_file
-    generate_se_index if @options.se_index
+    generate_search_index if @options.search_index
   end
 
   def class_dir
@@ -359,9 +359,9 @@ class RDoc::Generator::SDoc
   end
 
   ### Generate file with links for the search engine
-  def generate_se_index
+  def generate_search_index
     debug_msg "Generating search engine index in #@outputdir"
-    templatefile = @template_dir + 'se_index.rhtml'
+    templatefile = @template_dir + 'search_index.rhtml'
     outfile      = @outputdir + 'panel/links.html'
 
     self.render_template( templatefile, binding(), outfile ) unless @options.dry_run

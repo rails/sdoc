@@ -7,7 +7,7 @@
 RDoc generator to build searchable HTML documentation for Ruby code.
 
 * `sdoc` - command line tool to run rdoc with `generator=shtml` (searchable HTML)
-* `sdoc-merge` - comand line tool to merge multiple sdoc folders into a single documentation site
+* `sdoc-merge` - command line tool to merge multiple sdoc folders into a single documentation site
 
 
 ### Getting Started

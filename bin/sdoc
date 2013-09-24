@@ -2,7 +2,10 @@
 require 'sdoc'
 
 begin
-  ARGV.push('--format=sdoc') if ARGV.grep(/\A(-f|--fmt|--format|-r|-R|--ri|--ri-site)\b/).empty?
+  #the 'format' option must be the very first option parsed because 
+  #it is only upon being parsed that the other sdoc options are 
+  #added to the list of available options in the option parser  
+  ARGV.unshift('--format=sdoc') if ARGV.grep(/\A(-f|--fmt|--format|-r|-R|--ri|--ri-site)\b/).empty?
   r = RDoc::RDoc.new
   r.document ARGV
 rescue SystemExit

@@ -22,7 +22,7 @@ end
 
 class RDoc::Options
   attr_accessor :github
-  attr_accessor :se_index
+  attr_accessor :no_se_index
 end
 
 class RDoc::AnyMethod
@@ -121,8 +121,8 @@ class RDoc::Generator::SDoc
   attr_reader :options
 
   def self.setup_options(options)
-    @github = false
-    options.se_index = true
+    options.github = false
+    options.no_se_index = false
 
     opt = options.option_parser
     opt.separator nil
@@ -134,7 +134,7 @@ class RDoc::Generator::SDoc
     end
     opt.separator nil
 
-    opt.on("--no-se-index", "-ns",
+    opt.on("--no-se-index", "-n",
            "Do not generated index file for search engines.",
            "SDoc uses javascript to refrence individual documentation pages.",
            "Search engine crawlers are not smart enough to find all the",
@@ -142,7 +142,7 @@ class RDoc::Generator::SDoc
            "To help them SDoc generates a static file with links to every",
            "documentation page. This file is not shown to the user."
            ) do |value|
-      options.se_index = false
+      options.no_se_index = true
     end
     opt.separator nil
 
@@ -173,7 +173,7 @@ class RDoc::Generator::SDoc
     generate_file_files
     generate_class_files
     generate_index_file
-    generate_se_index if @options.se_index
+    generate_se_index unless @options.no_se_index
   end
 
   def class_dir

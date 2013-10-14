@@ -2,7 +2,7 @@ module SDoc::GitHub
   def github_url(path)
     unless @github_url_cache.has_key? path
       @github_url_cache[path] = false
-      file = RDoc::TopLevel.find_file_named(path)
+      file = @store.find_file_named(path)
       if file
         base_url = repository_url(path)
         if base_url

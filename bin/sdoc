@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby -KU
 require 'sdoc'
 
+if (ARGV[0] == '--version')
+  puts "sdoc #{SDoc::VERSION}"
+  exit 0
+end
+
 begin
   ARGV.push('--format=sdoc') if ARGV.grep(/\A(-f|--fmt|--format|-r|-R|--ri|--ri-site)\b/).empty?
   r = RDoc::RDoc.new

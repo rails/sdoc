@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../spec_helper')
+require File.join(File.dirname(__FILE__), '/spec_helper')
 
 describe RDoc::Generator::SDoc do
   before :each do
@@ -17,8 +17,10 @@ describe RDoc::Generator::SDoc do
   end
 
   it "should parse github option" do
+    assert !@options.github
+
     out, err = capture_io do
-      @parser.parse '--github'
+      @parser.parse %w[--github]
     end
 
     err.wont_match /^invalid options/
@@ -26,8 +28,10 @@ describe RDoc::Generator::SDoc do
   end
 
   it "should parse github short-hand option" do
+    assert !@options.github
+
     out, err = capture_io do
-      @parser.parse '-g'
+      @parser.parse %w[-g]
     end
 
     err.wont_match /^invalid options/
@@ -35,8 +39,10 @@ describe RDoc::Generator::SDoc do
   end
 
   it "should parse no search engine index option" do
+    @options.search_index.must_equal true
+
     out, err = capture_io do
-      @parser.parse '--without-search'
+      @parser.parse %w[--without-search]
     end
 
     err.wont_match /^invalid options/
@@ -44,8 +50,9 @@ describe RDoc::Generator::SDoc do
   end
 
   it "should parse search-index shorthand option" do
+    @options.search_index.must_equal true
     out, err = capture_io do
-      @parser.parse '-s'
+      @parser.parse %w[-s]
     end
 
     err.wont_match /^invalid options/

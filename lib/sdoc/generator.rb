@@ -302,7 +302,7 @@ class RDoc::Generator::SDoc
 
     @classes.each do |klass|
       debug_msg "  working on %s (%s)" % [ klass.full_name, klass.path ]
-      outfile     = @outputdir + klass.path
+      outfile     = @outputdir + klass.path.sub(":","")
       rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
       debug_msg "  rendering #{outfile}"
@@ -316,7 +316,7 @@ class RDoc::Generator::SDoc
     templatefile = @template_dir + 'file.rhtml'
 
     @files.each do |file|
-      outfile     = @outputdir + file.path
+      outfile     = @outputdir + file.path.sub(":","")
       debug_msg "  working on %s (%s)" % [ file.full_name, outfile ]
       rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
@@ -328,7 +328,7 @@ class RDoc::Generator::SDoc
   ### Determines index path based on @options.main_page (or lack thereof)
   def index_path
     # Break early to avoid a big if block when no main page is specified
-    default = @files.first.path
+    default = @files.first.path.sub(":","")
     return default unless @options.main_page
 
     # Transform class name to file path
@@ -336,7 +336,8 @@ class RDoc::Generator::SDoc
       slashed = @options.main_page.sub(/^::/, "").gsub("::", "/")
       "%s/%s.html" % [ class_dir, slashed ]
     elsif file = @files.find { |f| f.full_name == @options.main_page }
-      file.path
+      file.path.sub(":","") # TODO: This needs some rework ...
+      file.path 
     else
       default
     end
@@ -371,6 +372,8 @@ class RDoc::Generator::SDoc
     attr_reader :children
     def add(path, url)
       path = path.split(File::SEPARATOR) unless Array === path
+      path = path.map!{ |e| e.gsub(":","") }
+      url = url.sub(":","")
       @children ||= {}
       if path.length == 1
         @children[path.first] = url
@@ -385,7 +388,7 @@ class RDoc::Generator::SDoc
     if @files.length > 1
       @files_tree = FilesTree.new
       @files.each do |file|
-        @files_tree.add(file.relative_name, file.path)
+        @files_tree.add(file.relative_name, file.path.sub(":",""))
       end
       [['', '', 'files', generate_file_tree_level(@files_tree)]]
     else

@@ -1,3 +1,10 @@
+### Caution: This is just a fork to test some minor hacks to better support MS-Windows.
+
+( Purpose is to remove Colons (:) in URLs consisting of composite paths. )
+
+
+
+### Please use the original:
 # SDoc
 
 **Powering http://api.rubyonrails.org/ and http://railsapi.com/**

@@ -2,9 +2,9 @@
 
 Gem::Specification.new do |s|
   s.name = "sdoc"
-  s.version = "0.3.20"
+  s.version = "0.4.0"
 
-  s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent"]
+  s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent", "Jean Mertz"]
   s.description = %q{rdoc generator html with javascript search index.}
   s.summary = %q{rdoc html with javascript search index.}
   s.homepage = %q{http://github.com/voloko/sdoc}
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = ["README.md"]
 
-  s.add_runtime_dependency('rdoc', "~> 3.10")
+  s.add_runtime_dependency('rdoc', "~> 4.0.0.rc")
   if defined?(JRUBY_VERSION)
     s.platform = Gem::Platform.new(['universal', 'java', nil])
     s.add_runtime_dependency("json_pure", ">= 1.1.3")

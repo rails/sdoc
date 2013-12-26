@@ -66,3 +66,4 @@ end
 
 * Vladimir Kolesnikov ([voloko](https://github.com/voloko))
 * Nathan Broadbent ([ndbroadbent](https://github.com/ndbroadbent))
+* Zachary Scott ([zzak](https://github.com/zzak))

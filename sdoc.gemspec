@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "sdoc"
-  s.version = "0.4.0"
+  s.version = "0.4.0.rc.1"
 
   s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent", "Jean Mertz", "Zachary Scott"]
   s.description = %q{rdoc generator html with javascript search index.}

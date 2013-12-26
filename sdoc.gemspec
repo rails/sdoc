@@ -16,7 +16,8 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = ["README.md"]
 
-  s.add_runtime_dependency('rdoc', "~> 4.0.0")
+  s.add_runtime_dependency('rdoc', "~> 4.0", "< 5.0")
+
   if defined?(JRUBY_VERSION)
     s.platform = Gem::Platform.new(['universal', 'java', nil])
     s.add_runtime_dependency("json_pure", ">= 1.1.3")
@@ -32,4 +33,3 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 end
-

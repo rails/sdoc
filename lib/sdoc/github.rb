@@ -2,7 +2,7 @@ module SDoc::GitHub
   def github_url(path)
     unless @github_url_cache.has_key? path
       @github_url_cache[path] = false
-      file = RDoc::TopLevel.find_file_named(path)
+      file = @store.find_file_named(path)
       if file
         base_url = repository_url(path)
         if base_url
@@ -16,7 +16,7 @@ module SDoc::GitHub
     end
     @github_url_cache[path]
   end
-  
+
   protected
 
   def have_git?
@@ -33,7 +33,7 @@ module SDoc::GitHub
     m = s.match(/commit\s+(\S+)/)
     m ? m[1] : false
   end
-  
+
   def repository_url(path)
     return false unless have_git?
     s = Dir.chdir(File.join(base_dir, File.dirname(path))) do
@@ -51,7 +51,7 @@ module SDoc::GitHub
 
   def path_to_git_dir(path)
     while !path.empty? && path != '.'
-      if (File.exists? File.join(path, '.git')) 
+      if (File.exists? File.join(path, '.git'))
         return path
       end
       path = File.dirname(path)

@@ -1,3 +1,6 @@
+*.gem
+.bundle
 pkg
 doc
 /test.rb
+Gemfile.lock

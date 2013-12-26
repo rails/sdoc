@@ -1,7 +1,7 @@
 $:.unshift File.dirname(__FILE__)
 require "rubygems"
-gem 'rdoc', '~> 3'
+gem 'rdoc'
 
 module SDoc end
-  
+
 require 'sdoc/generator'

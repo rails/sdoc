@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby -KU
 require 'sdoc'
 
-if (ARGV[0] == '--version')
+if ARGV.include?("--version")
   puts "sdoc #{SDoc::VERSION}"
   exit 0
 end

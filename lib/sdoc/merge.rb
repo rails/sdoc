@@ -198,7 +198,7 @@ class SDoc::Merge
 
   def setup_output_dir
     if File.exists? @op_dir
-      error "#{@op_dir} allready exists"
+      error "#{@op_dir} already exists"
     end
     FileUtils.mkdir_p @op_dir
   end

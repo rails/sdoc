@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
+require_relative 'lib/sdoc.rb'
 
 Gem::Specification.new do |s|
   s.name = "sdoc"
-  s.version = "0.4.0.rc.1"
+  s.version = SDoc::VERSION
 
   s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent", "Jean Mertz", "Zachary Scott"]
   s.description = %q{rdoc generator html with javascript search index.}

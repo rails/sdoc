@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/zzak/sdoc.png?branch=master)](https://travis-ci.org/zzak/sdoc)
 
-**Powering http://api.rubyonrails.org/ and http://railsapi.com/**
+**Powering http://api.rubyonrails.org/ and http://ruby-docs.org/**
 
 ### What is sdoc?
 

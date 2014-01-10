@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.description = %q{rdoc generator html with javascript search index.}
   s.summary = %q{rdoc html with javascript search index.}
   s.homepage = %q{http://github.com/voloko/sdoc}
-  s.email = %q{voloko@gmail.com}
+  s.email = %q{voloko@gmail.com zachary@zacharyscott.net}
   s.license = 'MIT'
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.3.6") if

@@ -22,9 +22,9 @@ Gem::Specification.new do |s|
 
   if defined?(JRUBY_VERSION)
     s.platform = Gem::Platform.new(['universal', 'java', nil])
-    s.add_runtime_dependency("json_pure", ">= 1.1.3")
+    s.add_runtime_dependency("json_pure", "~> 1.8")
   else
-    s.add_runtime_dependency("json", ">= 1.1.3")
+    s.add_runtime_dependency("json", "~> 1.8")
   end
 
   s.add_development_dependency "bundler", "~> 1.3"

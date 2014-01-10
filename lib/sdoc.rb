@@ -3,7 +3,7 @@ require "rubygems"
 gem 'rdoc'
 
 module SDoc
-  VERSION = "0.4.0.rc.1"
+  VERSION = "0.4.0"
 end
 
 require 'sdoc/generator'

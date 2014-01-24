@@ -8,16 +8,16 @@
     <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix} %>
 </head>
 
-<body>     
+<body>
     <div class="banner">
         <% if ENV['HORO_PROJECT_NAME'] %>
             <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />
         <% end %>
         <h1>
-            <span class="type"><%= klass.module? ? 'Module' : 'Class' %></span> 
-            <%= h klass.full_name %> 
+            <span class="type"><%= klass.module? ? 'Module' : 'Class' %></span>
+            <%= h klass.full_name %>
             <% if klass.type == 'class' %>
-                <span class="parent">&lt; 
+                <span class="parent">&lt;
                     <% if String === klass.superclass %>
                     <%= klass.superclass %>
                     <% elsif !klass.superclass.nil? %>
@@ -36,4 +36,4 @@
         <%= include_template '_context.rhtml', {:context => klass, :rel_prefix => rel_prefix} %>
     </div>
   </body>
-</html>    
+</html>

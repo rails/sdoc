@@ -8,7 +8,7 @@
     <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix} %>
 </head>
 
-<body>     
+<body>
     <div class="banner">
         <% if ENV['HORO_PROJECT_NAME'] %>
             <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />

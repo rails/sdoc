@@ -1,4 +1,4 @@
-require 'erb'
+require 'erubis'
 require "sdoc"
 
 module SDoc::Templatable
@@ -7,7 +7,7 @@ module SDoc::Templatable
   ### Both +templatefile+ and +outfile+ should be Pathname-like objects.
   def eval_template(templatefile, context)
     template_src = templatefile.read
-    template = ERB.new( template_src, nil, '<>' )
+    template = Erubis::Eruby.new(template_src, :trim => true)
     template.filename = templatefile.to_s
 
     begin

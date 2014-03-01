@@ -13,6 +13,8 @@ Gem::Specification.new do |s|
   s.email = %q{voloko@gmail.com zachary@zacharyscott.net}
   s.license = 'MIT'
 
+  s.require_path = 'lib'
+
   s.required_rubygems_version = Gem::Requirement.new(">= 1.3.6") if
     s.respond_to? :required_rubygems_version=
 

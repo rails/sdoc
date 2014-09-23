@@ -150,7 +150,7 @@
         <div class="method">
           <div class="title method-title" id="<%= method.aref %>">
             <% if method.call_seq %>
-              <b><%= method.call_seq.gsub(/->/, '&rarr;') %></b>
+              <b><%= method.call_seq.gsub(/->/, '&rarr;').gsub(/\n(.)/, '<br />\1') %></b>
             <% else %>
               <b><%= h method.name %></b><%= h method.params %>
             <% end %>

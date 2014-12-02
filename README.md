@@ -23,8 +23,9 @@ RDoc generator to build searchable HTML documentation for Ruby code.
 
 ### sdoc
 
-`sdoc` is simply a wrapper for the `rdoc` command line tool. See `sdoc --help`
-for more details. `--fmt` is set to `shtml` by default. The default template `-T` is `shtml`, but you can also use the `direct` template.
+`sdoc` is simply a wrapper for the `rdoc` command line tool. See `sdoc --help` for more details.
+
+`--fmt` is set to `shtml` by default. The default template `-T` is `shtml`, but you can also use the `direct` template.
 
 Example:
 
@@ -34,12 +35,12 @@ sdoc -o doc/rails -T direct rails
 
 ### sdoc-merge
 
-<pre>
+```
 Usage: sdoc-merge [options] directories
     -n, --names [NAMES]              Names of merged repositories. Comma separated
     -o, --op [DIRECTORY]             Set the output directory
     -t, --title [TITLE]              Set the title of merged file
-</pre>
+```
 
 Example:
 

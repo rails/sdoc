@@ -5,7 +5,6 @@ rvm:
   - 2.0.0
   - 2.1
   - ruby-head
-  - jruby-19mode
   - jruby-head
 notifications:
   recipients:

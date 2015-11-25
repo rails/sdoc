@@ -140,8 +140,8 @@ class RDoc::Generator::SDoc
     opt.separator nil
 
     opt.on("--without-search", "-s",
-            "Do not generated index file for search engines.",
-            "SDoc uses javascript to refrence individual documentation pages.",
+            "Do not generate index file for search engines.",
+            "SDoc uses javascript to reference individual documentation pages.",
             "Search engine crawlers are not smart enough to find all the",
             "referenced pages.",
             "To help them SDoc generates a static file with links to every",

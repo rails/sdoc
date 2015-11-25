@@ -105,9 +105,9 @@
       <table border='0' cellpadding='5'>
         <% context.each_constant do |const| %>
           <tr valign='top'>
-            <td class="attr-name"><%= h const.name %></td>
+            <td class="attr-name"><a name="<%= h const.name %>"><%= h const.name %></a></td>
             <td>=</td>
-            <td class="attr-value"><%= h const.value %></td>
+            <td class="attr-value"><pre><%= h const.value %></pre></td>
           </tr>
           <% if const.comment %>
             <tr valign='top'>
@@ -156,13 +156,13 @@
             <% end %>
             <a href="<%= "#{rel_prefix}/#{context.path}##{method.aref}"%>" name="<%= method.aref %>" class="permalink">Link</a>
           </div>
-          
+
           <% if method.comment %>
             <div class="description">
               <%= method.description.strip %>
             </div>
           <% end %>
-          
+
           <% unless method.aliases.empty? %>
             <div class="aka">
               Also aliased as: <%= method.aliases.map do |aka|
@@ -180,7 +180,7 @@
               Alias for: <a href="<%= context.aref_to method.is_alias_for.path %>"><%= h method.is_alias_for.name %></a>
             </div>
           <% end %>
-          
+
           <% if method.token_stream %>
             <% markup = method.sdoc_markup_code %>
             <div class="sourcecode">
@@ -197,7 +197,7 @@
                 end
               %>
               <p class="source-link">
-                Source: 
+                Source:
                 <a href="javascript:toggleSource('<%= method.aref %>_source')" id="l_<%= method.aref %>_source">show</a>
                 <% if github %>
                   | <a href="<%= "#{github}#L#{line}" %>" target="_blank" class="github_url">on GitHub</a>

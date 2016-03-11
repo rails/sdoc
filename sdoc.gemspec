@@ -20,13 +20,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README.md"]
 
   s.add_runtime_dependency("rdoc", "~> 4.0")
-
-  if defined?(JRUBY_VERSION)
-    s.platform = Gem::Platform.new(['universal', 'java', nil])
-    s.add_runtime_dependency("json_pure", "~> 1.7", ">= 1.7.7")
-  else
-    s.add_runtime_dependency("json", "~> 1.7", ">= 1.7.7")
-  end
+  s.add_runtime_dependency("json", "~> 1.7", ">= 1.7.7")
 
   s.files         = `git ls-files`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }

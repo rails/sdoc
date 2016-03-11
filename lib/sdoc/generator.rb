@@ -2,11 +2,6 @@ require 'rubygems'
 require 'erb'
 require 'pathname'
 require 'fileutils'
-if Gem::Specification.respond_to?(:find_by_name) ? Gem::Specification::find_by_name("json") : Gem.available?("json")
-  gem "json", ">= 1.1.3"
-else
-  gem "json_pure", ">= 1.1.3"
-end
 require 'json'
 
 require 'sdoc/github'

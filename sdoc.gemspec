@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency("json", "~> 1.7", ">= 1.7.7")
   end
 
-  s.add_development_dependency "bundler", "~> 1.3"
+  s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
   s.add_development_dependency "minitest", "~> 4.0"
 

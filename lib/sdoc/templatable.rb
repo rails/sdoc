@@ -1,5 +1,4 @@
 require 'erb'
-require "sdoc"
 
 module SDoc::Templatable
   ### Load and render the erb template in the given +templatefile+ within the
@@ -18,7 +17,7 @@ module SDoc::Templatable
         err.message,
         eval( "_erbout[-50,50]", context )
         ], err.backtrace
-      end
+    end
   end
 
   ### Load and render the erb template with the given +template_name+ within
@@ -26,7 +25,7 @@ module SDoc::Templatable
   def include_template(template_name, local_assigns = {})
     source = local_assigns.keys.map { |key| "#{key} = local_assigns[:#{key}];" }.join
     templatefile = @template_dir + template_name
-    eval("#{source};eval_template(templatefile, binding)")
+    eval("#{source};eval_template(#{templatefile}, binding)")
   end
 
   ### Load and render the erb template in the given +templatefile+ within the
@@ -43,8 +42,7 @@ module SDoc::Templatable
       else
         output = output.gsub('<script>', '&lt;script&gt;')
       end
-    rescue Exception => e
-
+    rescue Exception
     end
 
     unless $dryrun

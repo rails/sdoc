@@ -1,7 +1,12 @@
+0.4.2
+=====
+
+[Compare v0.4.1...v0.4.2](https://github.com/voloko/sdoc/compare/v0.4.1...v0.4.2)
+
 0.4.1
 =====
 
-[Compare v0.4.0...v0.4.1][1]
+[Compare v0.4.0...v0.4.1](https://github.com/voloko/sdoc/compare/v0.4.0...v0.4.1)
 
 Breaking Changes
 ----------------
@@ -29,9 +34,7 @@ Bug Fixes
 0.4.0
 =====
 
-[Compare v0.3.20...v0.4.0][2]
+[Compare v0.3.20...v0.4.0](https://github.com/voloko/sdoc/compare/v0.3.20...v0.4.0)
 
 No friendly log for this version yet, but PRs are welcome!
 
-[1]: https://github.com/voloko/sdoc/compare/v0.4.0...v0.4.1
-[2]: https://github.com/voloko/sdoc/compare/v0.3.20...v0.4.0

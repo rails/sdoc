@@ -1,5 +1,6 @@
 ---
 before_install: gem install bundler
+before_script: bundle exec rake rdoc_master
 rvm:
   - 1.8.7
   - 1.9.3
@@ -10,6 +11,17 @@ rvm:
   - ruby-head
   - jruby-19mode
   - jruby-head
+matrix:
+  include:
+    - { rvm: 1.8.7, env: rdoc=master }
+    - { rvm: 1.9.3, env: rdoc=master }
+    - { rvm: 2.0.0, env: rdoc=master }
+    - { rvm: 2.1.0, env: rdoc=master }
+    - { rvm: 2.2.0, env: rdoc=master }
+    - { rvm: 2.3.0, env: rdoc=master }
+    - { rvm: ruby-head, env: rdoc=master }
+    - { rvm: jruby-19mode, env: rdoc=master }
+    - { rvm: jruby-head, env: rdoc=master }
 notifications:
   email:
     - mail@zzak.io

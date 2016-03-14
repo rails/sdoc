@@ -4,4 +4,4 @@ gemspec
 
 gem "rake", "< 11"
 gem "minitest"
-
+gem "hoe"

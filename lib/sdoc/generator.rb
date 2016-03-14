@@ -115,6 +115,8 @@ class RDoc::Generator::SDoc
 
   attr_reader :options
 
+  attr_reader :rel_prefix
+
   ##
   # The RDoc::Store that is the source of the generated content
 
@@ -305,6 +307,7 @@ class RDoc::Generator::SDoc
     @classes.each do |klass|
       debug_msg "  working on %s (%s)" % [ klass.full_name, klass.path ]
       outfile     = @outputdir + klass.path
+      rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
       debug_msg "  rendering #{outfile}"
       self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
@@ -319,6 +322,7 @@ class RDoc::Generator::SDoc
     @files.each do |file|
       outfile     = @outputdir + file.path
       debug_msg "  working on %s (%s)" % [ file.full_name, outfile ]
+      rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
       debug_msg "  rendering #{outfile}"
       self.render_template( templatefile, binding(), outfile ) unless @options.dry_run

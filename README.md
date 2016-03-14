@@ -63,11 +63,16 @@ require 'rdoc/task' # ensure this file is also required in order to use `RDoc::T
 
 RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = 'doc/rdoc' # name of output directory
-  rdoc.options << '--fmt' << 'shtml' # explictly set shtml generator
-  rdoc.template = 'direct' # lighter template used on railsapi.com
-  ...
+  rdoc.generator = 'sdoc' # explictly set the sdoc generator
+  rdoc.template = 'rails' # template used on api.rubyonrails.org
 end
 ```
+
+NOTE: If you don't set `template` the default "sdoc" template is chosen, with a lighter color scheme.
+
+Now you can execute this command with `rake rdoc`, to compile the documentation for the current project directory.
+
+Alternatively you can pass this command a path to the project you wish to compile: `rake rdoc path/to/project`.
 
 ### RDoc
 

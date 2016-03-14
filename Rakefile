@@ -15,7 +15,7 @@ task :spec => :test
 task :rdoc_master do
   if ENV["rdoc"]="master"
     puts "Testing against rdoc master, please wait for install.."
-    sh "git clone --depth=1 https://github.com/rdoc/rdoc" unless Dir.exists?("rdoc")
+    sh "git clone --depth=1 https://github.com/rdoc/rdoc"
     cd "rdoc" do
       sh "rake"
       sh "rake install_gem"

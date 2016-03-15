@@ -2,6 +2,6 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "rake", "< 11"
+gem "rake", "~> 10.4.2"
 gem "minitest"
 gem "hoe"

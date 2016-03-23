@@ -115,8 +115,6 @@ class RDoc::Generator::SDoc
 
   attr_reader :options
 
-  attr_reader :rel_prefix
-
   ##
   # The RDoc::Store that is the source of the generated content
 

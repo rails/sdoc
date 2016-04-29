@@ -12,8 +12,8 @@
         //zoom: 1;
     }
     
-    .panel_tree .results, 
-    .panel_results .tree 
+    .panel_tree .results,
+    .panel_results .tree
     {
         display: none;
     }
@@ -70,13 +70,6 @@
     /* Header with search box (end) */
 
     /* Results and tree (begin) */
-        .panel .result ul li,
-        .panel .tree   ul li
-        {
-            height: 23px;
-            line-height: 23px;
-        }
-
         .panel .result ul li a,
         .panel .tree   ul li a
         {
@@ -115,6 +108,7 @@
             overflow: hidden;
             padding: 4px 10px 0 10px;
             cursor: pointer;
+            height: 46px;
         }
 
         .panel .result ul li a
@@ -123,6 +117,7 @@
             font-weight: normal;
             color: #333;
             white-space: nowrap;
+            margin-bottom: 2px;
         }
 
         .panel .result ul li p
@@ -275,6 +270,8 @@
         {
             cursor: pointer;
             overflow: hidden;
+            height: 23px;
+            line-height: 23px;
         }
 
 

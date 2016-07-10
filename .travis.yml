@@ -1,7 +1,7 @@
 ---
 before_install:
   - gem install bundler
-before_script: ./scripts/rdoc-install.sh
+  - ./scripts/rdoc-install.sh
 rvm:
   - 1.8.7
   - 1.9.3

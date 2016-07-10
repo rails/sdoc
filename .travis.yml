@@ -1,8 +1,6 @@
 ---
 before_install:
   - gem install bundler
-  - gem install rake -v"< 11"
-  - gem install hoe
 before_script: ./scripts/rdoc-install.sh
 rvm:
   - 1.8.7

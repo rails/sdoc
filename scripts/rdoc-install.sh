@@ -7,7 +7,7 @@ if [ "${rdoc}" = "master" ]; then
   gem install kpeg -v"~> 0.9"
   gem install racc -v"~> 1.4"
   gem install minitest -v"~> 4.7"
-  gem install json -v"~ 1.4"
+  gem install json -v"~> 1.4"
   git clone --depth=1 https://github.com/rdoc/rdoc
   cd rdoc
   rake

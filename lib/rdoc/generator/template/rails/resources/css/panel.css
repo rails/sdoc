@@ -18,6 +18,23 @@
         display: none;
     }
 
+    .panel .footer {
+      width: 100%;
+      height: 29px;
+      position: absolute;
+      bottom: 0;
+      border-top: 1px solid #666;
+      z-index: 99;
+      background: #fff;
+    }
+
+    .panel .footer p {
+      margin-top: 9px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+
     /* Header with search box (begin) */
         .panel .header
         {
@@ -255,6 +272,7 @@
             -overflow-y: hidden;
             background: #EEE url(../i/tree_bg.png);
             z-index: 30;
+            margin-bottom: 30px;
         }
 
         .panel .tree ul

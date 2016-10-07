@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
 
   s.require_path = 'lib'
 
+  s.required_ruby_version = Gem::Requirement.new('>= 1.9.3')
   s.required_rubygems_version = Gem::Requirement.new(">= 1.3.6") if
     s.respond_to? :required_rubygems_version=
 
@@ -22,7 +23,6 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README.md"]
 
   s.add_runtime_dependency("rdoc", "~> 4.0")
-  s.add_runtime_dependency("json", "~> 1.7", ">= 1.7.7")
 
   s.files         = `git ls-files`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }

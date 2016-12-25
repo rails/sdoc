@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = ["README.md"]
 
-  s.add_runtime_dependency("rdoc", "5.0.0.beta2")
+  s.add_runtime_dependency("rdoc", "5.0.0")
 
   s.files         = `git ls-files`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }

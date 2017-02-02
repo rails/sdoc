@@ -13,6 +13,7 @@ rvm:
 matrix:
   allow_failures:
     - env: rdoc=master
+    - rvm: jruby-head
   include:
     - { rvm: 1.9.3, env: rdoc=master }
     - { rvm: 2.0.0, env: rdoc=master }

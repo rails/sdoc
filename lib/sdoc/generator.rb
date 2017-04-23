@@ -122,7 +122,6 @@ class RDoc::Generator::SDoc
 
   def self.setup_options(options)
     @github = false
-    options.search_index = true
 
     opt = options.option_parser
     opt.separator nil
@@ -131,18 +130,6 @@ class RDoc::Generator::SDoc
     opt.on("--github", "-g",
             "Generate links to github.") do |value|
       options.github = true
-    end
-    opt.separator nil
-
-    opt.on("--without-search", "-s",
-            "Do not generate index file for search engines.",
-            "SDoc uses javascript to reference individual documentation pages.",
-            "Search engine crawlers are not smart enough to find all the",
-            "referenced pages.",
-            "To help them SDoc generates a static file with links to every",
-            "documentation page. This file is not shown to the user."
-            ) do
-      options.search_index = false
     end
     opt.separator nil
 
@@ -175,7 +162,6 @@ class RDoc::Generator::SDoc
     generate_file_files
     generate_class_files
     generate_index_file
-    generate_search_index if @options.search_index
   end
 
   def class_dir

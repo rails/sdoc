@@ -37,26 +37,4 @@ describe RDoc::Generator::SDoc do
     err.wont_match(/^invalid options/)
     @options.github.must_equal true
   end
-
-  it "should parse no search engine index option" do
-    @options.search_index.must_equal true
-
-    _, err = capture_io do
-      @parser.parse %w[--without-search]
-    end
-
-    err.wont_match(/^invalid options/)
-    @options.search_index.must_equal false
-  end
-
-  it "should parse search-index shorthand option" do
-    @options.search_index.must_equal true
-    _, err = capture_io do
-      @parser.parse %w[-s]
-    end
-
-    err.wont_match(/^invalid options/)
-    @options.search_index.must_equal false
-  end
-
 end

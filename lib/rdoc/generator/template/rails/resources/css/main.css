@@ -110,10 +110,11 @@ ol li
 
 .banner
 {
-    background: #C52F24;
+    background: #B61D1D;
     color: #FFF;
-    border: 1px solid #980905;
+    border-bottom: 1px solid #9b281c;
     padding: 1em;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 .banner h1
 {

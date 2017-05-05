@@ -325,7 +325,7 @@
 
         .panel .tree ul li.current
         {
-            background: #C52F24;
+            background: #B61D1D;
         }
 
         .panel .tree ul li.current .icon
@@ -363,7 +363,7 @@
 
         .panel .tree ul li.current:hover
         {
-            background: #C52F24;
+            background: #B61D1D;
         }
 
         .panel .tree .stopper

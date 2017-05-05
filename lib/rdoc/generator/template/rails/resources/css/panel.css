@@ -82,7 +82,7 @@
             overflow-y: scroll;
             overflow-x: hidden;
             -overflow-y: hidden;
-            background: #EEE url(../i/results_bg.png);
+            //background: #EEE url(../i/results_bg.png);
             z-index: 2;
             //zoom:1;
         }
@@ -91,7 +91,7 @@
         {
             font-size: 0.8em;
             width: 100%;
-            background: #EEE url(../i/results_bg.png);
+            //background: #EEE url(../i/results_bg.png);
             //zoom:1;
         }
 
@@ -248,28 +248,23 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            //zoom: 1;
-            //height: expression((this.parentNode.offsetHeight - 31));
             overflow-y: scroll;
             overflow-x: hidden;
-            -overflow-y: hidden;
-            background: #EEE url(../i/tree_bg.png);
             z-index: 30;
         }
 
-        .panel .tree ul
+        .panel .tree ul:first-child
         {
-            background: #EEE url(../i/tree_bg.png);
+            background: url(../i/tree_bg.svg);
+            background-size: 1px 60px;
         }
 
         .panel .tree li
         {
             cursor: pointer;
             overflow: hidden;
-            //height: 23px;
-            //display: inline;
-            //zoom: 1;
-            //width: 100%;
+            height: 30px;
+            line-height: 100%;
         }
 
 
@@ -286,8 +281,8 @@
         {
             width: 10px;
             height: 9px;
-            background: url(../i/arrows.png);
-            background-position: 0 -9px;
+            background: url(../i/arrow-down.svg);
+            background-size: 10px;
             position: absolute;
             left: 1px;
             top: 8px;
@@ -296,7 +291,8 @@
 
         .panel .tree li.closed .icon
         {
-            background-position: 0 0;
+            background: url(../i/arrow-right.svg);
+            background-size: 10px;
         }
 
         .panel .tree ul li h1
@@ -346,12 +342,14 @@
 
         .panel .tree ul li.current .icon
         {
-            background-position: -10px -9px;
+            background: url(../i/arrow-right.svg);
+            background-size: 10px;
         }
 
         .panel .tree ul li.current.closed .icon
         {
-            background-position: -10px 0;
+            background: url(../i/arrow-down.svg);
+            background-size: 10px;
         }
 
         .panel .tree ul li.current h1

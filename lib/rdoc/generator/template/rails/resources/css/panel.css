@@ -31,16 +31,6 @@
             z-index: 300;
         }
 
-        .panel .header label
-        {
-            position: absolute;
-            font-size: 12px;
-            line-height: 35px;
-            margin-left: 3px;
-            color: #777;
-            cursor: text;
-        }
-
         .panel .header input
         {
             border: 0;

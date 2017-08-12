@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'erb'
 require 'pathname'
 require 'fileutils'
@@ -50,8 +49,6 @@ class RDoc::Generator::SDoc
   attr_reader :store
 
   def self.setup_options(options)
-    @github = false
-
     opt = options.option_parser
     opt.separator nil
     opt.separator "SDoc generator options:"

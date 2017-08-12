@@ -1,16 +1,15 @@
 module SDoc::GitHub
   def github_url(path)
+    return false unless have_git?
+
     unless @github_url_cache.has_key? path
       @github_url_cache[path] = false
       file = @store.find_file_named(path)
       if file
         base_url = repository_url(path)
         if base_url
-          sha1 = commit_sha1(path)
-          if sha1
-            relative_url = path_relative_to_repository(path)
-            @github_url_cache[path] = "#{base_url}#{sha1}#{relative_url}"
-          end
+          relative_url = path_relative_to_repository(path)
+          @github_url_cache[path] = "#{base_url}#{last_commit_sha1}#{relative_url}"
         end
       end
     end
@@ -24,23 +23,23 @@ module SDoc::GitHub
     @have_git
   end
 
-  def commit_sha1(path)
-    return false unless have_git?
-    name = File.basename(path)
-    s = Dir.chdir(File.join(base_dir, File.dirname(path))) do
-      `git log -1 --pretty=format:"commit %H" #{name}`
+  def last_commit_sha1
+    return @sha1 if defined?(@sha1)
+
+    @sha1 = Dir.chdir(base_dir) do
+      `git rev-parse HEAD`.chomp
     end
-    m = s.match(/commit\s+(\S+)/)
-    m ? m[1] : false
   end
 
   def repository_url(path)
-    return false unless have_git?
+    return @repository_url if defined?(@repository_url)
+
     s = Dir.chdir(File.join(base_dir, File.dirname(path))) do
       `git config --get remote.origin.url`
     end
+
     m = s.match(%r{github.com[/:](.*)\.git$})
-    m ? "https://github.com/#{m[1]}/blob/" : false
+    @repository_url = m ? "https://github.com/#{m[1]}/blob/" : false
   end
 
   def path_relative_to_repository(path)

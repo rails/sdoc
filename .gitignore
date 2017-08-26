@@ -6,4 +6,4 @@ doc
 Gemfile.lock
 /.rake_tasks~
 /*.gem
-rails/
+/rails/

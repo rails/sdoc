@@ -4,6 +4,19 @@
     <title><%= h klass.full_name %></title>
     <meta charset="<%= @options.charset %>" />
     <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix} %>
+
+    <meta property="og:title" value="<%= klass.full_name %>">
+
+  <% unless (description = klass.description).empty? %>
+    <% human_desc = truncate(strip_tags(description.gsub("\n", " ").strip)) %>
+    <meta name="description" content="<%= human_desc %>">
+    <meta property="og:description" content="<%= human_desc %>">
+  <% end %>
+
+    <meta name="keywords" content="<%= klass.full_name %> class">
+  <% unless klass.method_list.empty? %>
+    <meta name="keywords" content="<%= klass.method_list.map(&:name).join(", ") %>">
+  <% end %>
 </head>
 
 <body>

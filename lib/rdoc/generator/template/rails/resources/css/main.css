@@ -1,20 +1,24 @@
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
   background: #FFF;
-  color: #000;
+  color: #3B3B3B;
   margin: 0px;
-  font-size: 0.82em;
+  font-size: 15px;
   line-height: 1.25em;
 }
 
 a:link, a:active, a:visited, a:hover {
-  color: #980905;
+  color: #CC0000;
   text-decoration: none;
 }
 
-a:hover, .banner a:hover {
-  color: #333;
-  background: #FE8;
+a:hover {
+  color: #990000;
+  text-decoration: underline;
+}
+
+.banner a:hover {
+  color: white;
 }
 
 h1 a, h2 a, .banner a {
@@ -27,6 +31,7 @@ h1 a:hover, h2 a:hover {
 
 p {
   margin-bottom: 1em;
+  text-align: justify;
 }
 
 h1 {
@@ -110,10 +115,11 @@ ol li
 
 .banner
 {
-    background: #C52F24;
+    background: #B61D1D;
     color: #FFF;
-    border: 1px solid #980905;
+    border-bottom: 1px solid #9b281c;
     padding: 1em;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 .banner h1
 {
@@ -254,8 +260,9 @@ tt {
 
 .description pre {
   padding: 0.5em;
-  border: #ffe0bb dotted 1px;
-  background: #fffde8;
+  background: #EEEEEE;
+  font-size: 15px;
+  overflow-x: scroll;
 }
 
 .method {

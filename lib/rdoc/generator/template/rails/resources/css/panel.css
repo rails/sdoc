@@ -9,7 +9,7 @@
         background: #FFF;
         z-index: 2;
         font-family: "Helvetica Neue", "Arial", sans-serif;
-        //zoom: 1;
+        overflow-x: hidden;
     }
 
     .panel_tree .results,
@@ -21,50 +21,28 @@
     /* Header with search box (begin) */
         .panel .header
         {
+            background: white url(../i/search.svg) no-repeat;
+            background-position: 5px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            height: 40px;
             width: 100%;
-            height: 29px;
-            border-bottom: 1px solid #666;
-            position: relative;
-            left: 0; top: 0;
-            background: #e8e8e8;
-        }
-
-        .panel .header div
-        {
-            margin: 0 7px;
-        }
-        .panel .header table
-        {
-            height: 29px;
-            width: 100%;
-        }
-
-        .panel .header table td
-        {
-            vertical-align: middle;
-            text-align: middle;
-        }
-
-        .panel .header label
-        {
             position: absolute;
-            font-size: 12px;
-            line-height: 29px;
-            margin-left: 3px;
-            color: #777;
-            cursor: text;
+            left: 0; top: 0;
+            z-index: 300;
         }
 
-        .panel .header table input
+        .panel .header input
         {
-            width: 100%;
+            border: 0;
             box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
             display: inline-block;
-            -webkit-appearance: searchfield;
-            height: 22px;
-            //height: auto;
+            font-size: 14px;
+            height: 40px;
+            width: 100%;
+            padding: 0 5px;
+            margin: 0;
+            margin-left: 25px;
+            outline: none;
         }
 
     /* Header with search box (end) */
@@ -74,37 +52,31 @@
         .panel .result
         {
             position: absolute;
-            top: 30px;
+            top: 40px;
             bottom: 0;
             left: 0;
             width: 100%;
-            //height: expression((this.parentNode.offsetHeight - 31));
             overflow-y: scroll;
             overflow-x: hidden;
-            -overflow-y: hidden;
-            background: #EEE url(../i/results_bg.png);
             z-index: 2;
-            //zoom:1;
         }
 
         .panel .result ul
         {
             font-size: 0.8em;
             width: 100%;
-            background: #EEE url(../i/results_bg.png);
-            //zoom:1;
         }
 
         .panel .result ul li
         {
             height: 46px;
-            -height: 50px;
-            //display: inline;
-            //width: 100%;
-            //zoom: 1;
             overflow: hidden;
             padding: 4px 10px 0 10px;
             cursor: pointer;
+        }
+
+        .panel .result ul li:nth-child(2n) {
+            background: #F0EFEF;
         }
 
         .panel .result ul li h1
@@ -137,7 +109,7 @@
 
         .panel .result ul li.current
         {
-            background: #C52F24;
+            background: #B61D1D;
         }
 
         .panel .result ul li.current h1,
@@ -166,7 +138,7 @@
 
         .panel .result ul li.current:hover
         {
-            background: #C52F24;
+            background: #B61D1D;
         }
 
         .panel .result ul li .badge
@@ -243,33 +215,29 @@
     /* Tree (begin) */ /**/
         .panel .tree
         {
+            background: white;
             position: absolute;
-            top: 30px;
+            top: 40px;
             bottom: 0;
             left: 0;
             width: 100%;
-            //zoom: 1;
-            //height: expression((this.parentNode.offsetHeight - 31));
             overflow-y: scroll;
             overflow-x: hidden;
-            -overflow-y: hidden;
-            background: #EEE url(../i/tree_bg.png);
             z-index: 30;
         }
 
-        .panel .tree ul
+        .panel .tree ul:first-child
         {
-            background: #EEE url(../i/tree_bg.png);
+            background: url(../i/tree_bg.svg);
+            background-size: 1px 60px;
         }
 
         .panel .tree li
         {
             cursor: pointer;
             overflow: hidden;
-            //height: 23px;
-            //display: inline;
-            //zoom: 1;
-            //width: 100%;
+            height: 30px;
+            line-height: 100%;
         }
 
 
@@ -286,8 +254,8 @@
         {
             width: 10px;
             height: 9px;
-            background: url(../i/arrows.png);
-            background-position: 0 -9px;
+            background: url(../i/arrow-down.svg);
+            background-size: 10px;
             position: absolute;
             left: 1px;
             top: 8px;
@@ -296,7 +264,8 @@
 
         .panel .tree li.closed .icon
         {
-            background-position: 0 0;
+            background: url(../i/arrow-right.svg);
+            background-size: 10px;
         }
 
         .panel .tree ul li h1
@@ -341,17 +310,19 @@
 
         .panel .tree ul li.current
         {
-            background: #C52F24;
+            background: #B61D1D;
         }
 
         .panel .tree ul li.current .icon
         {
-            background-position: -10px -9px;
+            background: url(../i/arrow-right.svg);
+            background-size: 10px;
         }
 
         .panel .tree ul li.current.closed .icon
         {
-            background-position: -10px 0;
+            background: url(../i/arrow-down.svg);
+            background-size: 10px;
         }
 
         .panel .tree ul li.current h1
@@ -377,7 +348,7 @@
 
         .panel .tree ul li.current:hover
         {
-            background: #C52F24;
+            background: #B61D1D;
         }
 
         .panel .tree .stopper

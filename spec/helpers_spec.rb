@@ -10,10 +10,12 @@ describe SDoc::Helpers do
   describe "#strip_tags" do
     it "should strip out HTML tags from the given string" do
       strings = [
-        [ %(<strong>Hello world</strong>),                 "Hello world"       ],
-        [ %(<a href="Streams.html">Streams</a> are great), "Streams are great" ],
-        [ %(<a href="../Base.html">Base</a>),              "Base"              ],
-        [ %(Some<br>\ntext),                               "Some\ntext"        ]
+        [ %(<strong>Hello world</strong>),                                      "Hello world"          ],
+        [ %(<a href="Streams.html">Streams</a> are great),                      "Streams are great"    ],
+        [ %(<a href="https://github.com?x=1&y=2#123">zzak/sdoc</a> Standalone), "zzak/sdoc Standalone" ],
+        [ %(<h1 id="module-AR::Cb-label-Foo+Bar">AR Cb</h1>),                   "AR Cb"                ],
+        [ %(<a href="../Base.html">Base</a>),                                   "Base"                 ],
+        [ %(Some<br>\ntext),                                                    "Some\ntext"           ]
       ]
 
       strings.each do |(html, stripped)|

@@ -21,7 +21,7 @@ module SDoc::Helpers
   #
   #   strip_tags("<strong>Hello world</strong>") => "Hello world"
   def strip_tags(text)
-    text.gsub(/\<\/?[a-zA-Z\s"\.\/\=]+\>/, "")
+    text.gsub(%r{</?[^>]+?>}, "")
   end
 
   # Truncates a given string. It tries to take whole sentences to have

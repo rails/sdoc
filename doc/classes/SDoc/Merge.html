@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SDoc::Merge</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <meta property="og:title" value="SDoc::Merge">
+
+  
+
+    <meta name="keywords" content="SDoc::Merge class">
+  
+    <meta name="keywords" content="new, merge, parse_options, merge_tree, append_path, merge_search_index, extract_index_path, generate_index_file, setup_names, copy_docs, copy_files, setup_output_dir, check_directories, error">
+  
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span>
+            SDoc::Merge
+            
+                <span class="parent">&lt;
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/sdoc/merge_rb.html">lib/sdoc/merge.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-append_path">append_path</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-check_directories">check_directories</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-copy_docs">copy_docs</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-copy_files">copy_files</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-error">error</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-extract_index_path">extract_index_path</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-generate_index_file">generate_index_file</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-merge">merge</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-merge_search_index">merge_search_index</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-merge_tree">merge_tree</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-parse_options">parse_options</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup_names">setup_names</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-setup_output_dir">setup_output_dir</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="Templatable.html">
+              SDoc::Templatable
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">FLAG_FILE</td>
+            <td>=</td>
+            <td class="attr-value">&quot;created.rid&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>()
+  <span class="ruby-ivar">@names</span> = []
+  <span class="ruby-ivar">@urls</span> = []
+  <span class="ruby-ivar">@op_dir</span> = <span class="ruby-string">&#39;doc&#39;</span>
+  <span class="ruby-ivar">@title</span> = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-ivar">@directories</span> = []
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+    
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-append_path">
+            
+              <b>append_path</b>(subtree, path)
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-append_path" name="method-i-append_path" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-append_path_source')" id="l_method-i-append_path_source">show</a>
+                
+              </p>
+              <div id="method-i-append_path_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">append_path</span> <span class="ruby-identifier">subtree</span>, <span class="ruby-identifier">path</span>
+  <span class="ruby-identifier">subtree</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">item</span>[<span class="ruby-value">1</span>] = <span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">item</span>[<span class="ruby-value">1</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">item</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">item</span>[<span class="ruby-value">3</span>] = <span class="ruby-identifier">append_path</span> <span class="ruby-identifier">item</span>[<span class="ruby-value">3</span>], <span class="ruby-identifier">path</span>
+    <span class="ruby-identifier">item</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-check_directories">
+            
+              <b>check_directories</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-check_directories" name="method-i-check_directories" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-check_directories_source')" id="l_method-i-check_directories_source">show</a>
+                
+              </p>
+              <div id="method-i-check_directories_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 200</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_directories</span>
+  <span class="ruby-ivar">@directories</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-constant">FLAG_FILE</span>)) <span class="ruby-operator">&amp;&amp;</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TREE_FILE</span>)) <span class="ruby-operator">&amp;&amp;</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">SEARCH_INDEX_FILE</span>))
+      <span class="ruby-identifier">error</span> <span class="ruby-node">&quot;#{dir} does not seem to be an sdoc directory&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-copy_docs">
+            
+              <b>copy_docs</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-copy_docs" name="method-i-copy_docs" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-copy_docs_source')" id="l_method-i-copy_docs_source">show</a>
+                
+              </p>
+              <div id="method-i-copy_docs_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 170</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">copy_docs</span>
+  <span class="ruby-ivar">@directories</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@names</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-identifier">index_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TREE_FILE</span>)
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@op_dir</span>, <span class="ruby-identifier">name</span>))
+
+    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dir</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">item</span>)) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">item</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;.&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">item</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;..&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">item</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">index_dir</span>
+        <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp_r</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">item</span>), <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@op_dir</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">item</span>), <span class="ruby-value">:preserve</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-copy_files">
+            
+              <b>copy_files</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-copy_files" name="method-i-copy_files" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-copy_files_source')" id="l_method-i-copy_files_source">show</a>
+                
+              </p>
+              <div id="method-i-copy_files_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">copy_files</span>
+  <span class="ruby-identifier">dir</span> = <span class="ruby-ivar">@directories</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dir</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">item</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;.&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">item</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;..&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">item</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">FILE_DIR</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">item</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">CLASS_DIR</span>
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp_r</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">item</span>), <span class="ruby-ivar">@op_dir</span>, <span class="ruby-value">:preserve</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-error">
+            
+              <b>error</b>(msg)
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-error" name="method-i-error" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Report an error message and exit</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-error_source')" id="l_method-i-error_source">show</a>
+                
+              </p>
+              <div id="method-i-error_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 213</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">error</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>, <span class="ruby-identifier">msg</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-extract_index_path">
+            
+              <b>extract_index_path</b>(dir)
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-extract_index_path" name="method-i-extract_index_path" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-extract_index_path_source')" id="l_method-i-extract_index_path_source">show</a>
+                
+              </p>
+              <div id="method-i-extract_index_path_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 140</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">extract_index_path</span> <span class="ruby-identifier">dir</span>
+  <span class="ruby-identifier">filename</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">dir</span>, <span class="ruby-string">&#39;index.html&#39;</span>
+  <span class="ruby-identifier">content</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span> }
+  <span class="ruby-identifier">match</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/&lt;frame\s+src=&quot;([^&quot;]+)&quot;\s+name=&quot;docwin&quot;/mi</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">match</span>
+    <span class="ruby-identifier">match</span>[<span class="ruby-value">1</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_index_file">
+            
+              <b>generate_index_file</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-generate_index_file" name="method-i-generate_index_file" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_index_file_source')" id="l_method-i-generate_index_file_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_index_file_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_index_file</span>
+  <span class="ruby-identifier">templatefile</span> = <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;index.rhtml&#39;</span>
+  <span class="ruby-identifier">outfile</span>      = <span class="ruby-ivar">@outputdir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;index.html&#39;</span>
+  <span class="ruby-identifier">url</span>          = <span class="ruby-ivar">@urls</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@names</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">:</span> <span class="ruby-ivar">@urls</span>[<span class="ruby-value">0</span>]
+  <span class="ruby-identifier">index_path</span>   = <span class="ruby-identifier">url</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">extract_index_path</span>(<span class="ruby-ivar">@directories</span>[<span class="ruby-value">0</span>])
+
+  <span class="ruby-identifier">render_template</span> <span class="ruby-identifier">templatefile</span>, <span class="ruby-identifier">binding</span>(), <span class="ruby-identifier">outfile</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-merge">
+            
+              <b>merge</b>(options)
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-merge" name="method-i-merge" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-merge_source')" id="l_method-i-merge_source">show</a>
+                
+              </p>
+              <div id="method-i-merge_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">parse_options</span> <span class="ruby-identifier">options</span>
+
+  <span class="ruby-ivar">@outputdir</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>( <span class="ruby-ivar">@op_dir</span> )
+
+  <span class="ruby-identifier">check_directories</span>
+  <span class="ruby-identifier">setup_output_dir</span>
+  <span class="ruby-identifier">setup_names</span>
+  <span class="ruby-identifier">copy_files</span>
+  <span class="ruby-identifier">copy_docs</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@urls</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">merge_search_index</span>
+  <span class="ruby-identifier">merge_tree</span>
+  <span class="ruby-identifier">generate_index_file</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-merge_search_index">
+            
+              <b>merge_search_index</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-merge_search_index" name="method-i-merge_search_index" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-merge_search_index_source')" id="l_method-i-merge_search_index_source">show</a>
+                
+              </p>
+              <div id="method-i-merge_search_index_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">merge_search_index</span>
+  <span class="ruby-identifier">items</span> = []
+  <span class="ruby-ivar">@indexes</span> = {}
+  <span class="ruby-ivar">@directories</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@names</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@urls</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@urls</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-identifier">filename</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">dir</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">SEARCH_INDEX_FILE</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>).<span class="ruby-identifier">read</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/var search_data =\s*/</span>, <span class="ruby-string">&#39;&#39;</span>)
+    <span class="ruby-identifier">subindex</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">data</span>, <span class="ruby-value">:max_nesting</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+    <span class="ruby-ivar">@indexes</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">subindex</span>
+
+    <span class="ruby-identifier">searchIndex</span> = <span class="ruby-identifier">subindex</span>[<span class="ruby-string">&quot;index&quot;</span>][<span class="ruby-string">&quot;searchIndex&quot;</span>]
+    <span class="ruby-identifier">longSearchIndex</span> = <span class="ruby-identifier">subindex</span>[<span class="ruby-string">&quot;index&quot;</span>][<span class="ruby-string">&quot;longSearchIndex&quot;</span>]
+    <span class="ruby-identifier">subindex</span>[<span class="ruby-string">&quot;index&quot;</span>][<span class="ruby-string">&quot;info&quot;</span>].<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">info</span>, <span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">info</span>[<span class="ruby-value">2</span>] = <span class="ruby-identifier">url</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">info</span>[<span class="ruby-value">2</span>]
+      <span class="ruby-identifier">info</span>[<span class="ruby-value">6</span>] = <span class="ruby-identifier">i</span>
+      <span class="ruby-identifier">items</span> <span class="ruby-operator">&lt;&lt;</span> {
+        <span class="ruby-value">:info</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">info</span>,
+        <span class="ruby-value">:searchIndex</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">searchIndex</span>[<span class="ruby-identifier">j</span>],
+        <span class="ruby-value">:longSearchIndex</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">longSearchIndex</span>[<span class="ruby-identifier">j</span>]
+      }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">items</span>.<span class="ruby-identifier">sort!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span><span class="ruby-operator">|</span>
+    <span class="ruby-comment"># type (class/method/file) or name or doc part or namespace</span>
+    [<span class="ruby-identifier">a</span>[<span class="ruby-value">:info</span>][<span class="ruby-value">5</span>], <span class="ruby-identifier">a</span>[<span class="ruby-value">:info</span>][<span class="ruby-value">0</span>], <span class="ruby-identifier">a</span>[<span class="ruby-value">:info</span>][<span class="ruby-value">6</span>], <span class="ruby-identifier">a</span>[<span class="ruby-value">:info</span>][<span class="ruby-value">1</span>]] <span class="ruby-operator">&lt;=&gt;</span> [<span class="ruby-identifier">b</span>[<span class="ruby-value">:info</span>][<span class="ruby-value">5</span>], <span class="ruby-identifier">b</span>[<span class="ruby-value">:info</span>][<span class="ruby-value">0</span>], <span class="ruby-identifier">b</span>[<span class="ruby-value">:info</span>][<span class="ruby-value">6</span>], <span class="ruby-identifier">b</span>[<span class="ruby-value">:info</span>][<span class="ruby-value">1</span>]]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">index</span> = {
+    <span class="ruby-value">:searchIndex</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">items</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">item</span>[<span class="ruby-value">:searchIndex</span>]},
+    <span class="ruby-value">:longSearchIndex</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">items</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">item</span>[<span class="ruby-value">:longSearchIndex</span>]},
+    <span class="ruby-value">:info</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">items</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">item</span>[<span class="ruby-value">:info</span>]}
+  }
+  <span class="ruby-identifier">search_data</span> = {
+    <span class="ruby-value">:index</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">index</span>,
+    <span class="ruby-value">:badges</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@names</span>
+  }
+
+  <span class="ruby-identifier">dst</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-ivar">@op_dir</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">SEARCH_INDEX_FILE</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">dst</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">dst</span>, <span class="ruby-string">&quot;w&quot;</span>, <span class="ruby-value">0644</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;var search_data = &#39;</span>); <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">search_data</span>.<span class="ruby-identifier">to_json</span>(<span class="ruby-value">:max_nesting</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>))
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-merge_tree">
+            
+              <b>merge_tree</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-merge_tree" name="method-i-merge_tree" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-merge_tree_source')" id="l_method-i-merge_tree_source">show</a>
+                
+              </p>
+              <div id="method-i-merge_tree_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 63</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">merge_tree</span>
+  <span class="ruby-identifier">tree</span> = []
+  <span class="ruby-ivar">@directories</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@names</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@urls</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@urls</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-identifier">filename</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">dir</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TREE_FILE</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>).<span class="ruby-identifier">read</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/var tree =\s*/</span>, <span class="ruby-string">&#39;&#39;</span>)
+    <span class="ruby-identifier">subtree</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">data</span>, <span class="ruby-value">:max_nesting</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">item</span> = [
+      <span class="ruby-identifier">name</span>,
+      <span class="ruby-identifier">url</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">extract_index_path</span>(<span class="ruby-identifier">dir</span>),
+      <span class="ruby-string">&#39;&#39;</span>,
+      <span class="ruby-identifier">append_path</span>(<span class="ruby-identifier">subtree</span>, <span class="ruby-identifier">url</span>)
+    ]
+    <span class="ruby-identifier">tree</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">item</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">dst</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-ivar">@op_dir</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">SDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TREE_FILE</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">dst</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">dst</span>, <span class="ruby-string">&quot;w&quot;</span>, <span class="ruby-value">0644</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;var tree = &#39;</span>); <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">tree</span>.<span class="ruby-identifier">to_json</span>(<span class="ruby-value">:max_nesting</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>))
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-parse_options">
+            
+              <b>parse_options</b>(options)
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-parse_options" name="method-i-parse_options" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-parse_options_source')" id="l_method-i-parse_options_source">show</a>
+                
+              </p>
+              <div id="method-i-parse_options_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_options</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">opts</span> = <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-string">&quot;Usage: sdoc-merge [options] directories&quot;</span>
+
+    <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&quot;-n&quot;</span>, <span class="ruby-string">&quot;--names [NAMES]&quot;</span>, <span class="ruby-string">&quot;Names of merged repositories. Comma separated&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@names</span> = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;,&#39;</span>).<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> }
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&quot;-o&quot;</span>, <span class="ruby-string">&quot;--op [DIRECTORY]&quot;</span>, <span class="ruby-string">&quot;Set the output directory&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@op_dir</span> = <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&quot;-t&quot;</span>, <span class="ruby-string">&quot;--title [TITLE]&quot;</span>, <span class="ruby-string">&quot;Set the title of merged file&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&quot;-u&quot;</span>, <span class="ruby-string">&quot;--urls [URLS]&quot;</span>, <span class="ruby-string">&quot;Paths to merged docs. If you&quot;</span>,
+                  <span class="ruby-string">&quot;set this files and classes won&#39;t be actualy&quot;</span>,
+                  <span class="ruby-string">&quot;copied to merged build&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@urls</span> = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39; &#39;</span>).<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">strip</span> }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">parse!</span> <span class="ruby-identifier">options</span>
+  <span class="ruby-ivar">@template_dir</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Options</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">template_dir_for</span> <span class="ruby-string">&#39;merge&#39;</span>)
+  <span class="ruby-ivar">@directories</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setup_names">
+            
+              <b>setup_names</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-setup_names" name="method-i-setup_names" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-setup_names_source')" id="l_method-i-setup_names_source">show</a>
+                
+              </p>
+              <div id="method-i-setup_names_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setup_names</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@names</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@directories</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span> <span class="ruby-identifier">dir</span>
+      <span class="ruby-identifier">name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;doc&#39;</span>
+      <span class="ruby-ivar">@names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setup_output_dir">
+            
+              <b>setup_output_dir</b>()
+            
+            <a href="../../classes/SDoc/Merge.html#method-i-setup_output_dir" name="method-i-setup_output_dir" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-setup_output_dir_source')" id="l_method-i-setup_output_dir_source">show</a>
+                
+              </p>
+              <div id="method-i-setup_output_dir_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/merge.rb, line 193</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setup_output_dir</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span> <span class="ruby-ivar">@op_dir</span>
+    <span class="ruby-identifier">error</span> <span class="ruby-node">&quot;#{@op_dir} already exists&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span> <span class="ruby-ivar">@op_dir</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

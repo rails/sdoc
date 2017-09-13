@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>RDoc::Generator::SDoc</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <meta property="og:title" value="RDoc::Generator::SDoc">
+
+  
+
+    <meta name="keywords" content="RDoc::Generator::SDoc class">
+  
+    <meta name="keywords" content="setup_options, new, generate, class_dir, file_dir, debug_msg, generate_index_file, generate_class_files, generate_file_files, generate_search_index, generate_class_tree, generate_class_tree_level, index_path, copy_resources, generate_file_tree, generate_file_tree_level">
+  
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span>
+            RDoc::Generator::SDoc
+            
+                <span class="parent">&lt;
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/sdoc/generator_rb.html">lib/sdoc/generator.rb</a></li>
+            
+            <li><a href="../../../files/lib/sdoc/merge_rb.html">lib/sdoc/merge.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="SDoc/FilesTree.html">RDoc::Generator::SDoc::FilesTree</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-class_dir">class_dir</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-copy_resources">copy_resources</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-debug_msg">debug_msg</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-file_dir">file_dir</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-generate">generate</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-generate_class_files">generate_class_files</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-generate_class_tree">generate_class_tree</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-generate_class_tree_level">generate_class_tree_level</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-generate_file_files">generate_file_files</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-generate_file_tree">generate_file_tree</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-generate_file_tree_level">generate_file_tree_level</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-generate_index_file">generate_index_file</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-generate_search_index">generate_search_index</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-index_path">index_path</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-setup_options">setup_options</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            ERB::Util
+          
+        </li>
+      
+        <li>
+          
+            <a href="../../SDoc/GitHub.html">
+              SDoc::GitHub
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="../../SDoc/Templatable.html">
+              SDoc::Templatable
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="../../SDoc/Helpers.html">
+              SDoc::Helpers
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">CLASS_DIR</td>
+            <td>=</td>
+            <td class="attr-value">&#39;classes&#39;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">DESCRIPTION</td>
+            <td>=</td>
+            <td class="attr-value">&#39;Searchable HTML documentation&#39;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">FILE_DIR</td>
+            <td>=</td>
+            <td class="attr-value">&#39;files&#39;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">GENERATOR_DIRS</td>
+            <td>=</td>
+            <td class="attr-value">[File.join(&#39;sdoc&#39;, &#39;generator&#39;)]</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RESOURCES_DIR</td>
+            <td>=</td>
+            <td class="attr-value">File.join(&#39;resources&#39;, &#39;.&#39;)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SEARCH_INDEX_FILE</td>
+            <td>=</td>
+            <td class="attr-value">File.join &#39;js&#39;, &#39;search_index.js&#39;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TREE_FILE</td>
+            <td>=</td>
+            <td class="attr-value">File.join &#39;panel&#39;, &#39;tree.js&#39;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>base_dir</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>options</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>store</td>
+            <td class='attr-desc'><p>The RDoc::Store that is the source of the generated content</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(store, options)
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">store</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-ivar">@store</span>   = <span class="ruby-identifier">store</span>
+  <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-string">&#39;diagram=&#39;</span>)
+    <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">diagram</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">pipe</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@github_url_cache</span> = {}
+
+  <span class="ruby-ivar">@template_dir</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">template_dir</span>)
+  <span class="ruby-ivar">@base_dir</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">pwd</span>.<span class="ruby-identifier">expand_path</span>
+
+  <span class="ruby-ivar">@json_index</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">JsonIndex</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-setup_options">
+            
+              <b>setup_options</b>(options)
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-c-setup_options" name="method-c-setup_options" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-c-setup_options_source')" id="l_method-c-setup_options_source">show</a>
+                
+              </p>
+              <div id="method-c-setup_options_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">setup_options</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">opt</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">option_parser</span>
+  <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">separator</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">separator</span> <span class="ruby-string">&quot;SDoc generator options:&quot;</span>
+  <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">separator</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-string">&quot;--github&quot;</span>, <span class="ruby-string">&quot;-g&quot;</span>,
+          <span class="ruby-string">&quot;Generate links to github.&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>.<span class="ruby-identifier">github</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">separator</span> <span class="ruby-keyword">nil</span>
+
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+    
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-class_dir">
+            
+              <b>class_dir</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-class_dir" name="method-i-class_dir" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-class_dir_source')" id="l_method-i-class_dir_source">show</a>
+                
+              </p>
+              <div id="method-i-class_dir_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">class_dir</span>
+  <span class="ruby-constant">CLASS_DIR</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-file_dir">
+            
+              <b>file_dir</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-file_dir" name="method-i-file_dir" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-file_dir_source')" id="l_method-i-file_dir_source">show</a>
+                
+              </p>
+              <div id="method-i-file_dir_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">file_dir</span>
+  <span class="ruby-constant">FILE_DIR</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate">
+            
+              <b>generate</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate" name="method-i-generate" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_source')" id="l_method-i-generate_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate</span>
+  <span class="ruby-ivar">@outputdir</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@options</span>.<span class="ruby-identifier">op_dir</span>).<span class="ruby-identifier">expand_path</span>(<span class="ruby-ivar">@base_dir</span>)
+  <span class="ruby-ivar">@files</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">all_files</span>.<span class="ruby-identifier">sort</span>
+  <span class="ruby-ivar">@classes</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">all_classes_and_modules</span>.<span class="ruby-identifier">sort</span>
+
+  <span class="ruby-comment"># Now actually write the output</span>
+  <span class="ruby-identifier">copy_resources</span>
+  <span class="ruby-ivar">@json_index</span>.<span class="ruby-identifier">generate</span>
+  <span class="ruby-ivar">@json_index</span>.<span class="ruby-identifier">generate_gzipped</span>
+  <span class="ruby-identifier">generate_search_index</span>
+  <span class="ruby-identifier">generate_class_tree</span>
+
+  <span class="ruby-identifier">generate_index_file</span>
+  <span class="ruby-identifier">generate_file_files</span>
+  <span class="ruby-identifier">generate_class_files</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+      <div class="sectiontitle">Instance Protected methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-copy_resources">
+            
+              <b>copy_resources</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-copy_resources" name="method-i-copy_resources" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Copy all the resource files to output dir</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-copy_resources_source')" id="l_method-i-copy_resources_source">show</a>
+                
+              </p>
+              <div id="method-i-copy_resources_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 206</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">copy_resources</span>
+  <span class="ruby-identifier">resources_path</span> = <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">+</span> <span class="ruby-constant">RESOURCES_DIR</span>
+  <span class="ruby-identifier">debug_msg</span> <span class="ruby-node">&quot;Copying #{resources_path}/** to #{@outputdir}/**&quot;</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp_r</span> <span class="ruby-identifier">resources_path</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-ivar">@outputdir</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">dry_run</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-debug_msg">
+            
+              <b>debug_msg</b>( *msg )
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-debug_msg" name="method-i-debug_msg" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Output progress information if debugging is enabled</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-debug_msg_source')" id="l_method-i-debug_msg_source">show</a>
+                
+              </p>
+              <div id="method-i-debug_msg_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">debug_msg</span>( <span class="ruby-operator">*</span><span class="ruby-identifier">msg</span> )
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">$DEBUG_RDOC</span>
+  <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span>( <span class="ruby-operator">*</span><span class="ruby-identifier">msg</span> )
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_class_files">
+            
+              <b>generate_class_files</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate_class_files" name="method-i-generate_class_files" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Generate a documentation file for each class</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_class_files_source')" id="l_method-i-generate_class_files_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_class_files_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_class_files</span>
+  <span class="ruby-identifier">debug_msg</span> <span class="ruby-node">&quot;Generating class documentation in #@outputdir&quot;</span>
+  <span class="ruby-identifier">templatefile</span> = <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;class.rhtml&#39;</span>
+
+  <span class="ruby-ivar">@classes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">debug_msg</span> <span class="ruby-string">&quot;  working on %s (%s)&quot;</span> <span class="ruby-operator">%</span> [ <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">path</span> ]
+    <span class="ruby-identifier">outfile</span>     = <span class="ruby-ivar">@outputdir</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">path</span>
+    <span class="ruby-identifier">rel_prefix</span>  = <span class="ruby-ivar">@outputdir</span>.<span class="ruby-identifier">relative_path_from</span>( <span class="ruby-identifier">outfile</span>.<span class="ruby-identifier">dirname</span> )
+
+    <span class="ruby-identifier">debug_msg</span> <span class="ruby-node">&quot;  rendering #{outfile}&quot;</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">render_template</span>( <span class="ruby-identifier">templatefile</span>, <span class="ruby-identifier">binding</span>(), <span class="ruby-identifier">outfile</span> ) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">dry_run</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_class_tree">
+            
+              <b>generate_class_tree</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate_class_tree" name="method-i-generate_class_tree" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Create class tree structure and write it as json</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_class_tree_source')" id="l_method-i-generate_class_tree_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_class_tree_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_class_tree</span>
+  <span class="ruby-identifier">debug_msg</span> <span class="ruby-string">&quot;Generating class tree&quot;</span>
+  <span class="ruby-identifier">topclasses</span> = <span class="ruby-ivar">@classes</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span>(<span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">ClassModule</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">parent</span>) }
+  <span class="ruby-identifier">tree</span> = <span class="ruby-identifier">generate_file_tree</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">generate_class_tree_level</span>(<span class="ruby-identifier">topclasses</span>)
+  <span class="ruby-identifier">debug_msg</span> <span class="ruby-string">&quot;  writing class tree to %s&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-constant">TREE_FILE</span>
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-constant">TREE_FILE</span>, <span class="ruby-string">&quot;w&quot;</span>, <span class="ruby-value">0644</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;var tree = &#39;</span>); <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">tree</span>.<span class="ruby-identifier">to_json</span>(<span class="ruby-value">:max_nesting</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>))
+  <span class="ruby-keyword">end</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">dry_run</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_class_tree_level">
+            
+              <b>generate_class_tree_level</b>(classes, visited = {})
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate_class_tree_level" name="method-i-generate_class_tree_level" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Recursivly build class tree structure</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_class_tree_level_source')" id="l_method-i-generate_class_tree_level_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_class_tree_level_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 171</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_class_tree_level</span>(<span class="ruby-identifier">classes</span>, <span class="ruby-identifier">visited</span> = {})
+  <span class="ruby-identifier">tree</span> = []
+  <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span>
+    <span class="ruby-operator">!</span><span class="ruby-identifier">visited</span>[<span class="ruby-identifier">klass</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">with_documentation?</span>
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">visited</span>[<span class="ruby-identifier">klass</span>] = <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">item</span> = [
+      <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">name</span>,
+      <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">document_self_or_methods</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>,
+      <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">module?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-operator">:</span> (<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">superclass</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot; &lt; #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;&#39;</span>),
+      <span class="ruby-identifier">generate_class_tree_level</span>(<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">classes_and_modules</span>, <span class="ruby-identifier">visited</span>)
+    ]
+    <span class="ruby-identifier">tree</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">item</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">tree</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_file_files">
+            
+              <b>generate_file_files</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate_file_files" name="method-i-generate_file_files" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Generate a documentation file for each file</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_file_files_source')" id="l_method-i-generate_file_files_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_file_files_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_file_files</span>
+  <span class="ruby-identifier">debug_msg</span> <span class="ruby-node">&quot;Generating file documentation in #@outputdir&quot;</span>
+  <span class="ruby-identifier">templatefile</span> = <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;file.rhtml&#39;</span>
+
+  <span class="ruby-ivar">@files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">outfile</span>     = <span class="ruby-ivar">@outputdir</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">path</span>
+    <span class="ruby-identifier">debug_msg</span> <span class="ruby-string">&quot;  working on %s (%s)&quot;</span> <span class="ruby-operator">%</span> [ <span class="ruby-identifier">file</span>.<span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">outfile</span> ]
+    <span class="ruby-identifier">rel_prefix</span>  = <span class="ruby-ivar">@outputdir</span>.<span class="ruby-identifier">relative_path_from</span>( <span class="ruby-identifier">outfile</span>.<span class="ruby-identifier">dirname</span> )
+
+    <span class="ruby-identifier">debug_msg</span> <span class="ruby-node">&quot;  rendering #{outfile}&quot;</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">render_template</span>( <span class="ruby-identifier">templatefile</span>, <span class="ruby-identifier">binding</span>(), <span class="ruby-identifier">outfile</span> ) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">dry_run</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_file_tree">
+            
+              <b>generate_file_tree</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate_file_tree" name="method-i-generate_file_tree" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_file_tree_source')" id="l_method-i-generate_file_tree_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_file_tree_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 226</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_file_tree</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@files</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+    <span class="ruby-ivar">@files_tree</span> = <span class="ruby-constant">FilesTree</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@files_tree</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">file</span>.<span class="ruby-identifier">relative_name</span>, <span class="ruby-identifier">file</span>.<span class="ruby-identifier">path</span>)
+    <span class="ruby-keyword">end</span>
+    [[<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;files&#39;</span>, <span class="ruby-identifier">generate_file_tree_level</span>(<span class="ruby-ivar">@files_tree</span>)]]
+  <span class="ruby-keyword">else</span>
+    []
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_file_tree_level">
+            
+              <b>generate_file_tree_level</b>(tree)
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate_file_tree_level" name="method-i-generate_file_tree_level" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_file_tree_level_source')" id="l_method-i-generate_file_tree_level_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_file_tree_level_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 238</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_file_tree_level</span>(<span class="ruby-identifier">tree</span>)
+  <span class="ruby-identifier">tree</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">child</span> = <span class="ruby-identifier">tree</span>.<span class="ruby-identifier">children</span>[<span class="ruby-identifier">name</span>]
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">child</span>
+      [<span class="ruby-identifier">name</span>, <span class="ruby-identifier">child</span>, <span class="ruby-string">&#39;&#39;</span>, []]
+    <span class="ruby-keyword">else</span>
+      [<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;&#39;</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">generate_file_tree_level</span>(<span class="ruby-identifier">child</span>)]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_index_file">
+            
+              <b>generate_index_file</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate_index_file" name="method-i-generate_index_file" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Create index.html with frameset</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_index_file_source')" id="l_method-i-generate_index_file_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_index_file_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_index_file</span>
+  <span class="ruby-identifier">debug_msg</span> <span class="ruby-node">&quot;Generating index file in #@outputdir&quot;</span>
+  <span class="ruby-identifier">templatefile</span> = <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;index.rhtml&#39;</span>
+  <span class="ruby-identifier">outfile</span>      = <span class="ruby-ivar">@outputdir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;index.html&#39;</span>
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">render_template</span>( <span class="ruby-identifier">templatefile</span>, <span class="ruby-identifier">binding</span>(), <span class="ruby-identifier">outfile</span> ) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">dry_run</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-generate_search_index">
+            
+              <b>generate_search_index</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-generate_search_index" name="method-i-generate_search_index" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Generate file with links for the search engine</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-generate_search_index_source')" id="l_method-i-generate_search_index_source">show</a>
+                
+              </p>
+              <div id="method-i-generate_search_index_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_search_index</span>
+  <span class="ruby-identifier">debug_msg</span> <span class="ruby-node">&quot;Generating search engine index in #@outputdir&quot;</span>
+  <span class="ruby-identifier">templatefile</span> = <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;search_index.rhtml&#39;</span>
+  <span class="ruby-identifier">outfile</span>      = <span class="ruby-ivar">@outputdir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;panel/links.html&#39;</span>
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">render_template</span>( <span class="ruby-identifier">templatefile</span>, <span class="ruby-identifier">binding</span>(), <span class="ruby-identifier">outfile</span> ) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">dry_run</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-index_path">
+            
+              <b>index_path</b>()
+            
+            <a href="../../../classes/RDoc/Generator/SDoc.html#method-i-index_path" name="method-i-index_path" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Determines index path based on @options.main_page (or lack thereof)</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-index_path_source')" id="l_method-i-index_path_source">show</a>
+                
+              </p>
+              <div id="method-i-index_path_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/generator.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index_path</span>
+  <span class="ruby-comment"># Break early to avoid a big if block when no main page is specified</span>
+  <span class="ruby-identifier">default</span> = <span class="ruby-ivar">@files</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">path</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">default</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">main_page</span>
+
+  <span class="ruby-comment"># Transform class name to file path</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">main_page</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&quot;::&quot;</span>)
+    <span class="ruby-identifier">slashed</span> = <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">main_page</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^::/</span>, <span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;::&quot;</span>, <span class="ruby-string">&quot;/&quot;</span>)
+    <span class="ruby-string">&quot;%s/%s.html&quot;</span> <span class="ruby-operator">%</span> [ <span class="ruby-identifier">class_dir</span>, <span class="ruby-identifier">slashed</span> ]
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">file</span> = <span class="ruby-ivar">@files</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">full_name</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">main_page</span> }
+    <span class="ruby-identifier">file</span>.<span class="ruby-identifier">path</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">default</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SDoc::GitHub</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <meta property="og:title" value="SDoc::GitHub">
+
+  
+
+    <meta name="keywords" content="SDoc::GitHub class">
+  
+    <meta name="keywords" content="github_url, have_git?, last_commit_sha1, repository_url, path_relative_to_repository, path_to_git_dir">
+  
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span>
+            SDoc::GitHub
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/sdoc/github_rb.html">lib/sdoc/github.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-github_url">github_url</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>H</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-have_git-3F">have_git?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-last_commit_sha1">last_commit_sha1</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-path_relative_to_repository">path_relative_to_repository</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-path_to_git_dir">path_to_git_dir</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-repository_url">repository_url</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-github_url">
+            
+              <b>github_url</b>(path)
+            
+            <a href="../../classes/SDoc/GitHub.html#method-i-github_url" name="method-i-github_url" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-github_url_source')" id="l_method-i-github_url_source">show</a>
+                
+              </p>
+              <div id="method-i-github_url_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/github.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">github_url</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">have_git?</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@github_url_cache</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">path</span>
+    <span class="ruby-ivar">@github_url_cache</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-keyword">false</span>
+    <span class="ruby-identifier">file</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">find_file_named</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">file</span>
+      <span class="ruby-identifier">base_url</span> = <span class="ruby-identifier">repository_url</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">base_url</span>
+        <span class="ruby-identifier">relative_url</span> = <span class="ruby-identifier">path_relative_to_repository</span>(<span class="ruby-identifier">path</span>)
+        <span class="ruby-ivar">@github_url_cache</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-node">&quot;#{base_url}#{last_commit_sha1}#{relative_url}&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@github_url_cache</span>[<span class="ruby-identifier">path</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+      <div class="sectiontitle">Instance Protected methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-have_git-3F">
+            
+              <b>have_git?</b>()
+            
+            <a href="../../classes/SDoc/GitHub.html#method-i-have_git-3F" name="method-i-have_git-3F" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-have_git-3F_source')" id="l_method-i-have_git-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-have_git-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/github.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">have_git?</span>
+  <span class="ruby-ivar">@have_git</span> = <span class="ruby-identifier">system</span>(<span class="ruby-string">&#39;git --version &gt; /dev/null 2&gt;&amp;1&#39;</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@have_git</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-ivar">@have_git</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-last_commit_sha1">
+            
+              <b>last_commit_sha1</b>()
+            
+            <a href="../../classes/SDoc/GitHub.html#method-i-last_commit_sha1" name="method-i-last_commit_sha1" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-last_commit_sha1_source')" id="l_method-i-last_commit_sha1_source">show</a>
+                
+              </p>
+              <div id="method-i-last_commit_sha1_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/github.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">last_commit_sha1</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@sha1</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-ivar">@sha1</span>)
+
+  <span class="ruby-ivar">@sha1</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">base_dir</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-value">%x`git rev-parse HEAD`</span>.<span class="ruby-identifier">chomp</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-path_relative_to_repository">
+            
+              <b>path_relative_to_repository</b>(path)
+            
+            <a href="../../classes/SDoc/GitHub.html#method-i-path_relative_to_repository" name="method-i-path_relative_to_repository" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-path_relative_to_repository_source')" id="l_method-i-path_relative_to_repository_source">show</a>
+                
+              </p>
+              <div id="method-i-path_relative_to_repository_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/github.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">path_relative_to_repository</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">absolute_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">base_dir</span>, <span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">root</span> = <span class="ruby-identifier">path_to_git_dir</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">absolute_path</span>))
+  <span class="ruby-identifier">absolute_path</span>[<span class="ruby-identifier">root</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">..</span><span class="ruby-identifier">absolute_path</span>.<span class="ruby-identifier">size</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-path_to_git_dir">
+            
+              <b>path_to_git_dir</b>(path)
+            
+            <a href="../../classes/SDoc/GitHub.html#method-i-path_to_git_dir" name="method-i-path_to_git_dir" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-path_to_git_dir_source')" id="l_method-i-path_to_git_dir_source">show</a>
+                
+              </p>
+              <div id="method-i-path_to_git_dir_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/github.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">path_to_git_dir</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-keyword">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;.&#39;</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;.git&#39;</span>))
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">path</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-string">&#39;&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-repository_url">
+            
+              <b>repository_url</b>(path)
+            
+            <a href="../../classes/SDoc/GitHub.html#method-i-repository_url" name="method-i-repository_url" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-repository_url_source')" id="l_method-i-repository_url_source">show</a>
+                
+              </p>
+              <div id="method-i-repository_url_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/github.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">repository_url</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@repository_url</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-ivar">@repository_url</span>)
+
+  <span class="ruby-identifier">s</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">base_dir</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>))) <span class="ruby-keyword">do</span>
+    <span class="ruby-value">%x`git config --get remote.origin.url`</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">m</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">%r{github.com[/:](.*)\.git$}</span>)
+  <span class="ruby-ivar">@repository_url</span> = <span class="ruby-identifier">m</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;https://github.com/#{m[1]}/blob/&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

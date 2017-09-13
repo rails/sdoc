@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>searchdoc.js</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            searchdoc.js
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/rdoc/generator/template/sdoc/resources/js/searchdoc.js
+                
+            </li>
+            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Searchdoc = {};</p>
+
+<p>// navigation.js ——————————————</p>
+
+<p>Searchdoc.Navigation = new function() {</p>
+
+<pre><code>this.initNavigation = function() {
+    var _this = this;
+
+    $(document).keydown(function(e) {
+        _this.onkeydown(e);
+    }).keyup(function(e) {
+        _this.onkeyup(e);
+    });
+
+    this.navigationActive = true;
+};
+
+this.setNavigationActive = function(state) {
+    this.navigationActive = state;
+    this.clearMoveTimeout();
+};
+
+this.onkeyup = function(e) {
+    if (!this.navigationActive) return;
+    switch (e.keyCode) {
+        case 37: //Event.KEY_LEFT:
+        case 38: //Event.KEY_UP:
+        case 39: //Event.KEY_RIGHT:
+        case 40: //Event.KEY_DOWN:
+        case 73: // i - qwerty
+        case 74: // j
+        case 75: // k
+        case 76: // l
+        case 67: // c - dvorak
+        case 72: // h
+        case 84: // t
+        case 78: // n
+            this.clearMoveTimeout();
+            break;
+    }
+};
+
+this.onkeydown = function(e) {
+    if (!this.navigationActive) return;
+    switch (e.keyCode) {
+        case 37: //Event.KEY_LEFT:
+        case 74: // j (qwerty)
+        case 72: // h (dvorak)
+            if (this.moveLeft()) e.preventDefault();
+            break;
+        case 38: //Event.KEY_UP:
+        case 73: // i (qwerty)
+        case 67: // c (dvorak)
+            if (e.keyCode == 38 || e.ctrlKey) {
+                if (this.moveUp()) e.preventDefault();
+                this.startMoveTimeout(false);
+            }
+            break;
+        case 39: //Event.KEY_RIGHT:
+        case 76: // l (qwerty)
+        case 78: // n (dvorak)
+            if (this.moveRight()) e.preventDefault();
+            break;
+        case 40: //Event.KEY_DOWN:
+        case 75: // k (qwerty)
+        case 84: // t (dvorak)
+            if (e.keyCode == 40 || e.ctrlKey) {
+                if (this.moveDown()) e.preventDefault();
+                this.startMoveTimeout(true);
+            }
+            break;
+        case 9: //Event.KEY_TAB:
+        case 13: //Event.KEY_RETURN:
+            if (this.$current) this.select(this.$current);
+            break;
+        case 83: // s (qwerty)
+        case 79: // o (dvorak)
+            if (e.ctrlKey) {
+                $(&#39;#search&#39;).focus();
+                e.preventDefault();
+            }
+            break;
+    }
+    if (e.ctrlKey &amp;&amp; e.shiftKey) this.select(this.$current);
+};
+
+this.clearMoveTimeout = function() {
+    clearTimeout(this.moveTimeout);
+    this.moveTimeout = null;
+};
+
+this.startMoveTimeout = function(isDown) {
+    if (!$.browser.mozilla &amp;&amp; !$.browser.opera) return;
+    if (this.moveTimeout) this.clearMoveTimeout();
+    var _this = this;
+
+    var go = function() {
+        if (!_this.moveTimeout) return;
+        _this[isDown ? &#39;moveDown&#39; : &#39;moveUp&#39;]();
+        _this.moveTimout = setTimeout(go, 100);
+    };
+    this.moveTimeout = setTimeout(go, 200);
+};
+
+this.moveRight = function() {};
+
+this.moveLeft = function() {};
+
+this.move = function(isDown) {};
+
+this.moveUp = function() {
+    return this.move(false);
+};
+
+this.moveDown = function() {
+    return this.move(true);
+};</code></pre>
+
+<p>};</p>
+
+<p>// scrollIntoView.js ————————————–</p>
+
+<p>function scrollIntoView(element, view) {</p>
+
+<pre><code>var offset, viewHeight, viewScroll, height;
+offset = element.offsetTop;
+height = element.offsetHeight;
+viewHeight = view.offsetHeight;
+viewScroll = view.scrollTop;
+if (offset - viewScroll + height &gt; viewHeight) {
+    view.scrollTop = offset - viewHeight + height;
+}
+if (offset &lt; viewScroll) {
+    view.scrollTop = offset;
+}</code></pre>
+
+<p>}</p>
+
+<p>// panel.js ———————————————–</p>
+
+<p>Searchdoc.Panel = function(element, data, tree, frame) {</p>
+
+<pre><code>this.$element = $(element);
+this.$input = $(&#39;input&#39;, element).eq(0);
+this.$result = $(&#39;.result ul&#39;, element).eq(0);
+this.frame = frame;
+this.$current = null;
+this.$view = this.$result.parent();
+this.data = data;
+this.searcher = new Searcher(data.index);
+this.tree = new Searchdoc.Tree($(&#39;.tree&#39;, element), tree, this);
+this.init();</code></pre>
+
+<p>};</p>
+
+<p>Searchdoc.Panel.prototype = $.extend({}, Searchdoc.Navigation, new
+function() {</p>
+
+<pre><code>var suid = 1;
+
+this.init = function() {
+    var _this = this;
+    var observer = function() {
+        _this.search(_this.$input[0].value);
+    };
+    this.$input.keyup(observer);
+    this.$input.click(observer); // mac&#39;s clear field
+
+    this.searcher.ready(function(results, isLast) {
+        _this.addResults(results, isLast);
+    });
+
+    this.$result.click(function(e) {
+        e.preventDefault();
+        _this.$current.removeClass(&#39;current&#39;);
+        _this.$current = $(e.target).closest(&#39;li&#39;).addClass(&#39;current&#39;);
+        _this.select();
+        _this.$input.focus();
+    });
+
+    this.initNavigation();
+    this.setNavigationActive(false);
+};
+
+this.search = function(value, selectFirstMatch) {
+    value = jQuery.trim(value).toLowerCase();
+    this.selectFirstMatch = selectFirstMatch;
+    if (value) {
+        this.$element.removeClass(&#39;panel_tree&#39;).addClass(&#39;panel_results&#39;);
+        this.tree.setNavigationActive(false);
+        this.setNavigationActive(true);
+    } else {
+        this.$element.addClass(&#39;panel_tree&#39;).removeClass(&#39;panel_results&#39;);
+        this.tree.setNavigationActive(true);
+        this.setNavigationActive(false);
+    }
+    if (value != this.lastQuery) {
+        this.lastQuery = value;
+        this.firstRun = true;
+        this.searcher.find(value);
+    }
+};
+
+this.addResults = function(results, isLast) {
+    var target = this.$result.get(0);
+    if (this.firstRun &amp;&amp; (results.length &gt; 0 || isLast)) {
+        this.$current = null;
+        this.$result.empty();
+    }
+    for (var i = 0, l = results.length; i &lt; l; i++) {
+        target.appendChild(renderItem.call(this, results[i]));
+    }
+    if (this.firstRun &amp;&amp; results.length &gt; 0) {
+        this.firstRun = false;
+        this.$current = $(target.firstChild);
+        this.$current.addClass(&#39;current&#39;);
+        if (this.selectFirstMatch) this.select();
+        scrollIntoView(this.$current[0], this.$view[0]);
+    }
+    if (jQuery.browser.msie) this.$element[0].className += &#39;&#39;;
+};
+
+this.open = function(src) {
+    this.frame.location.href = &#39;../&#39; + src;
+    if (this.frame.highlight) this.frame.highlight(src);
+};
+
+this.select = function() {
+    this.open(this.$current.data(&#39;path&#39;));
+};
+
+this.move = function(isDown) {
+    if (!this.$current) return;
+    var $next = this.$current[isDown ? &#39;next&#39; : &#39;prev&#39;]();
+    if ($next.length) {
+        this.$current.removeClass(&#39;current&#39;);
+        $next.addClass(&#39;current&#39;);
+        scrollIntoView($next[0], this.$view[0]);
+        this.$current = $next;
+    }
+    return true;
+};
+
+function renderItem(result) {
+    var li = document.createElement(&#39;li&#39;),
+    html = &#39;&#39;,
+    badge = result.badge;
+    html += &#39;&lt;a href=&quot;../&#39; + result.path + &#39;&quot;&gt;&#39; + hlt(result.title);
+    if (result.params) html += &#39;&lt;i&gt;&#39; + result.params + &#39;&lt;/i&gt;&#39;;
+    html += &#39;&lt;/a&gt;&#39;;
+    html += &#39;&lt;p&gt;&#39;;
+    if (typeof badge != &#39;undefined&#39;) {
+        html += &#39;&lt;span class=&quot;badge badge_&#39; + (badge % 6 + 1) + &#39;&quot;&gt;&#39; + stripHTML(this.data.badges[badge] || &#39;unknown&#39;) + &#39;&lt;/span&gt;&#39;;
+    }
+    html += hlt(result.namespace) + &#39;&lt;/p&gt;&#39;;
+    if (result.snippet) html += &#39;&lt;p class=&quot;snippet&quot;&gt;&#39; + stripHTML(result.snippet.replace(/^&lt;p&gt;/, &#39;&#39;)) + &#39;&lt;/p&gt;&#39;;
+    li.innerHTML = html;
+    jQuery.data(li, &#39;path&#39;, result.path);
+    return li;
+}
+
+function hlt(html) {
+    return escapeHTML(html).replace(/\u0001/g, &#39;&lt;b&gt;&#39;).replace(/\u0002/g, &#39;&lt;/b&gt;&#39;);
+}
+
+function escapeHTML(html) {
+    return html.replace(/[&amp;&lt;&gt;]/g, function(c) {
+        return &#39;&amp;#&#39; + c.charCodeAt(0) + &#39;;&#39;;
+    });
+}
+
+function stripHTML(html) {
+    var in_tag = false;
+    var output = &quot;&quot;;
+
+    for (var i = 0; i &lt; html.length; i++) {
+        if (html[i] == &#39;&lt;&#39;){
+            in_tag = true;
+        } else if (html[i] == &#39;&gt;&#39;) {
+            in_tag = false;
+            i++;
+        }
+
+        if (!in_tag &amp;&amp; i &lt; html.length)
+            output += html[i];
+    }
+
+    return output;
+}</code></pre>
+
+<p>});</p>
+
+<p>// tree.js ————————————————</p>
+
+<p>Searchdoc.Tree = function(element, tree, panel) {</p>
+
+<pre><code>this.$element = $(element);
+this.$list = $(&#39;ul&#39;, element);
+this.tree = tree;
+this.panel = panel;
+this.init();</code></pre>
+
+<p>};</p>
+
+<p>Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new
+function() {</p>
+
+<pre><code>this.init = function() {
+    var stopper = document.createElement(&#39;li&#39;);
+    stopper.className = &#39;stopper&#39;;
+    this.$list[0].appendChild(stopper);
+    for (var i = 0, l = this.tree.length; i &lt; l; i++) {
+        buildAndAppendItem.call(this, this.tree[i], 0, stopper);
+    }
+    var _this = this;
+    this.$list.click(function(e) {
+        e.preventDefault();
+        var $target = $(e.target),
+            $li = $target.closest(&#39;li&#39;);
+        if ($target.hasClass(&#39;icon&#39;)) {
+            _this.toggle($li);
+        } else {
+            _this.select($li);
+        }
+    });
+
+    this.initNavigation();
+    if (jQuery.browser.msie) document.body.className += &#39;&#39;;
+};
+
+this.select = function($li) {
+    this.highlight($li);
+    var path = $li[0].searchdoc_tree_data.path;
+    if (path) this.panel.open(path);
+};
+
+this.highlight = function($li) {
+    if (this.$current) this.$current.removeClass(&#39;current&#39;);
+    this.$current = $li.addClass(&#39;current&#39;);
+};
+
+this.toggle = function($li) {
+    var closed = !$li.hasClass(&#39;closed&#39;),
+        children = $li[0].searchdoc_tree_data.children;
+    $li.toggleClass(&#39;closed&#39;);
+    for (var i = 0, l = children.length; i &lt; l; i++) {
+        toggleVis.call(this, $(children[i].li), !closed);
+    }
+};
+
+this.moveRight = function() {
+    if (!this.$current) {
+        this.highlight(this.$list.find(&#39;li:first&#39;));
+        return;
+    }
+    if (this.$current.hasClass(&#39;closed&#39;)) {
+        this.toggle(this.$current);
+    }
+};
+
+this.moveLeft = function() {
+    if (!this.$current) {
+        this.highlight(this.$list.find(&#39;li:first&#39;));
+        return;
+    }
+    if (!this.$current.hasClass(&#39;closed&#39;)) {
+        this.toggle(this.$current);
+    } else {
+        var level = this.$current[0].searchdoc_tree_data.level;
+        if (level === 0) return;
+        var $next = this.$current.prevAll(&#39;li.level_&#39; + (level - 1) + &#39;:visible:first&#39;);
+        this.$current.removeClass(&#39;current&#39;);
+        $next.addClass(&#39;current&#39;);
+        scrollIntoView($next[0], this.$element[0]);
+        this.$current = $next;
+    }
+};
+
+this.move = function(isDown) {
+    if (!this.$current) {
+        this.highlight(this.$list.find(&#39;li:first&#39;));
+        return true;
+    }
+    var next = this.$current[0];
+    if (isDown) {
+        do {
+            next = next.nextSibling;
+            if (next &amp;&amp; next.style &amp;&amp; next.style.display != &#39;none&#39;) break;
+        } while (next);
+    } else {
+        do {
+            next = next.previousSibling;
+            if (next &amp;&amp; next.style &amp;&amp; next.style.display != &#39;none&#39;) break;
+        } while (next);
+    }
+    if (next &amp;&amp; next.className.indexOf(&#39;stopper&#39;) == -1) {
+        this.$current.removeClass(&#39;current&#39;);
+        $(next).addClass(&#39;current&#39;);
+        scrollIntoView(next, this.$element[0]);
+        this.$current = $(next);
+    }
+    return true;
+};
+
+function toggleVis($li, show) {
+    var closed = $li.hasClass(&#39;closed&#39;),
+        children = $li[0].searchdoc_tree_data.children;
+    $li.css(&#39;display&#39;, show ? &#39;&#39; : &#39;none&#39;);
+    if (!show &amp;&amp; this.$current &amp;&amp; $li[0] == this.$current[0]) {
+        this.$current.removeClass(&#39;current&#39;);
+        this.$current = null;
+    }
+    for (var i = 0, l = children.length; i &lt; l; i++) {
+        toggleVis.call(this, $(children[i].li), show &amp;&amp; !closed);
+    }
+}
+
+function buildAndAppendItem(item, level, before) {
+    var li = renderItem(item, level),
+        list = this.$list[0];
+    item.li = li;
+    list.insertBefore(li, before);
+    for (var i = 0, l = item[3].length; i &lt; l; i++) {
+        buildAndAppendItem.call(this, item[3][i], level + 1, before);
+    }
+    return li;
+}
+
+function renderItem(item, level) {
+    var li = document.createElement(&#39;li&#39;),
+        cnt = document.createElement(&#39;div&#39;),
+        a = document.createElement(&#39;a&#39;),
+        p = document.createElement(&#39;p&#39;),
+        icon, i;
+
+    a.href = &#39;../&#39; + item[1];
+    li.appendChild(cnt);
+    li.style.paddingLeft = getOffset(level);
+    cnt.className = &#39;content&#39;;
+    if (!item[1]) li.className = &#39;empty &#39;;
+    cnt.appendChild(a);
+    // cnt.appendChild(p);
+    a.appendChild(document.createTextNode(item[0]));
+    // p.appendChild(document.createTextNode(item[4]));
+    if (item[2]) {
+        i = document.createElement(&#39;i&#39;);
+        i.appendChild(document.createTextNode(item[2]));
+        a.appendChild(i);
+    }
+    if (item[3].length &gt; 0) {
+        icon = document.createElement(&#39;div&#39;);
+        icon.className = &#39;icon&#39;;
+        cnt.appendChild(icon);
+    }
+
+    // user direct assignement instead of $()
+    // it&#39;s 8x faster
+    // $(li).data(&#39;path&#39;, item[1])
+    //     .data(&#39;children&#39;, item[3])
+    //     .data(&#39;level&#39;, level)
+    //     .css(&#39;display&#39;, level == 0 ? &#39;&#39; : &#39;none&#39;)
+    //     .addClass(&#39;level_&#39; + level)
+    //     .addClass(&#39;closed&#39;);
+    li.searchdoc_tree_data = {
+        path: item[1],
+        children: item[3],
+        level: level
+    };
+    li.style.display = level === 0 ? &#39;&#39; : &#39;none&#39;;
+    li.className += &#39;level_&#39; + level + &#39; closed&#39;;
+    return li;
+}
+
+function getOffset(level) {
+    return 5 + 18 * level + &#39;px&#39;;
+}</code></pre>
+
+<p>});</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

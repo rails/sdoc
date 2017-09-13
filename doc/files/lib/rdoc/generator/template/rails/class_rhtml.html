@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>class.rhtml</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            class.rhtml
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/rdoc/generator/template/rails/class.rhtml
+                
+            </li>
+            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>&lt;!DOCTYPE html&gt; &lt;html lang=“en”&gt; &lt;head&gt;</p>
+
+<pre><code>  &lt;title&gt;&lt;%= h klass.full_name %&gt;&lt;/title&gt;
+  &lt;meta charset=&quot;&lt;%= @options.charset %&gt;&quot; /&gt;
+  &lt;%= include_template &#39;_head.rhtml&#39;, {:rel_prefix =&gt; rel_prefix} %&gt;
+
+  &lt;meta property=&quot;og:title&quot; value=&quot;&lt;%= klass.full_name %&gt;&quot;&gt;
+
+&lt;% unless (description = klass.description).empty? %&gt;
+  &lt;% human_desc = truncate(strip_tags(description.gsub(&quot;\n&quot;, &quot; &quot;).strip)) %&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;&lt;%= human_desc %&gt;&quot;&gt;
+  &lt;meta property=&quot;og:description&quot; content=&quot;&lt;%= human_desc %&gt;&quot;&gt;
+&lt;% end %&gt;
+
+  &lt;meta name=&quot;keywords&quot; content=&quot;&lt;%= klass.full_name %&gt; class&quot;&gt;
+&lt;% unless klass.method_list.empty? %&gt;
+  &lt;meta name=&quot;keywords&quot; content=&quot;&lt;%= klass.method_list.map(&amp;:name).join(&quot;, &quot;) %&gt;&quot;&gt;
+&lt;% end %&gt;</code></pre>
+
+<p>&lt;/head&gt;</p>
+
+<p>&lt;body&gt;</p>
+
+<pre><code>  &lt;div class=&quot;banner&quot;&gt;
+      &lt;% if ENV[&#39;HORO_PROJECT_NAME&#39;] %&gt;
+          &lt;span&gt;&lt;%= ERB::Util.html_escape(ENV[&#39;HORO_PROJECT_NAME&#39;]) %&gt; &lt;%= ERB::Util.html_escape(ENV[&#39;HORO_PROJECT_VERSION&#39;]) %&gt;&lt;/span&gt;&lt;br /&gt;
+      &lt;% end %&gt;
+      &lt;h1&gt;
+          &lt;span class=&quot;type&quot;&gt;&lt;%= klass.module? ? &#39;Module&#39; : &#39;Class&#39; %&gt;&lt;/span&gt;
+          &lt;%= h klass.full_name %&gt;
+          &lt;% if klass.type == &#39;class&#39; %&gt;
+              &lt;span class=&quot;parent&quot;&gt;&amp;lt;
+                  &lt;% if String === klass.superclass %&gt;
+                  &lt;%= klass.superclass %&gt;
+                  &lt;% elsif !klass.superclass.nil? %&gt;
+                  &lt;a href=&quot;&lt;%= klass.aref_to klass.superclass.path %&gt;&quot;&gt;&lt;%= h klass.superclass.full_name %&gt;&lt;/a&gt;
+                  &lt;% end %&gt;
+              &lt;/span&gt;
+          &lt;% end %&gt;
+      &lt;/h1&gt;
+      &lt;ul class=&quot;files&quot;&gt;
+          &lt;% klass.in_files.each do |file| %&gt;
+          &lt;li&gt;&lt;a href=&quot;&lt;%= &quot;#{rel_prefix}/#{h file.path}&quot; %&gt;&quot;&gt;&lt;%= h file.absolute_name %&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;% end  %&gt;
+      &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;bodyContent&quot;&gt;
+      &lt;%= include_template &#39;_context.rhtml&#39;, {:context =&gt; klass, :rel_prefix =&gt; rel_prefix} %&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+
+<p>&lt;/html&gt;</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

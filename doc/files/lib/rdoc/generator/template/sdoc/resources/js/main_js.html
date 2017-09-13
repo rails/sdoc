@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>main.js</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            main.js
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/rdoc/generator/template/sdoc/resources/js/main.js
+                
+            </li>
+            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>function toggleSource(id) {</p>
+
+<pre><code>var src = $(&#39;#&#39; + id).toggle();
+var isVisible = src.is(&#39;:visible&#39;);
+$(&#39;#l_&#39; + id).html(isVisible ? &#39;hide&#39; : &#39;show&#39;);
+if (!src.data(&#39;syntax-higlighted&#39;)) {
+  src.data(&#39;syntax-higlighted&#39;, 1);
+  hljs.highlightBlock(src[0]);
+}</code></pre>
+
+<p>}</p>
+
+<p>window.highlight = function(url) {</p>
+
+<pre><code>var hash = url.match(/#([^#]+)$/);
+if (hash) {
+  var parent = document.querySelector(&#39;a[name=&#39; + hash[1] + &#39;]&#39;).parentElement;
+
+  parent.classList.add(&#39;highlight&#39;);
+
+  setTimeout(function() {
+    parent.classList.remove(&#39;highlight&#39;);
+  }, 1000);
+}</code></pre>
+
+<p>};</p>
+
+<p>$(function() {</p>
+
+<pre><code>highlight(&#39;#&#39; + location.hash);
+$(&#39;.description pre&#39;).each(function() {
+  hljs.highlightBlock(this);
+});</code></pre>
+
+<p>});</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

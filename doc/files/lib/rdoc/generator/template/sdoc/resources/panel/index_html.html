@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>index.html</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            index.html
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/rdoc/generator/template/sdoc/resources/panel/index.html
+                
+            </li>
+            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>&lt;!DOCTYPE html&gt; &lt;html lang=“en”&gt; &lt;head&gt;</p>
+
+<pre><code>&lt;title&gt;search index&lt;/title&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;../css/reset.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot; charset=&quot;utf-8&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;../css/panel.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot; charset=&quot;utf-8&quot; /&gt;
+&lt;script src=&quot;../js/search_index.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../js/searcher.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;tree.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../js/jquery-1.3.2.min.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../js/searchdoc.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+function placeholder() {
+  if ($(&#39;&lt;input type=&quot;text&quot;&gt;&#39;)[0].placeholder !== undefined) return;
+
+  $(&#39;#search-label&#39;).click(function() {
+    $(&#39;#search&#39;).focus();
+    $(&#39;#search-label&#39;).hide();
+  });
+
+  $(&#39;#search&#39;).focus(function() {
+    $(&#39;#search-label&#39;).hide();
+  });
+  $(&#39;#search&#39;).blur(function() {
+    this.value == &#39;&#39; &amp;&amp; $(&#39;#search-label&#39;).show();
+  });
+
+  $(&#39;#search&#39;)[0].value == &#39;&#39; &amp;&amp; $(&#39;#search-label&#39;).show();
+}
+$(function() {
+  placeholder();
+  $(&#39;#links&#39;).hide();
+  var panel = new Searchdoc.Panel($(&#39;#panel&#39;), search_data, tree, window.parent.frames[1]);
+  $(&#39;#search&#39;).focus();
+
+  var s = window.parent.location.search.match(/\?q=([^&amp;]+)/);
+  if (s) {
+    s = decodeURIComponent(s[1]).replace(/\+/g, &#39; &#39;);
+    if (s.length &gt; 0) {
+      $(&#39;#search&#39;).val(s);
+      panel.search(s, true);
+    }
+  }
+})
+&lt;/script&gt;</code></pre>
+
+<p>&lt;/head&gt;</p>
+
+<p>&lt;body&gt;</p>
+
+<pre><code>&lt;div class=&quot;panel panel_tree&quot; id=&quot;panel&quot;&gt;
+  &lt;div class=&quot;header&quot;&gt;
+    &lt;div&gt;
+      &lt;label for=&quot;search&quot; id=&quot;search-label&quot; style=&quot;display: none&quot;&gt;Search&lt;/label&gt;
+      &lt;table&gt;
+        &lt;tr&gt;
+          &lt;td&gt;
+            &lt;input type=&quot;Search&quot; placeholder=&quot;Search&quot; autosave=&quot;searchdoc&quot; results=&quot;10&quot; id=&quot;search&quot; autocomplete=&quot;off&quot; /&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;tree&quot;&gt;
+    &lt;ul&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;result&quot;&gt;
+    &lt;ul&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;a href=&quot;links.html&quot; id=&quot;links&quot;&gt;index&lt;/a&gt;</code></pre>
+
+<p>&lt;/body&gt;</p>
+
+<p>&lt;/html&gt;</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

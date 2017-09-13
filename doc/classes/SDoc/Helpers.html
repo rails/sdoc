@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SDoc::Helpers</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <meta property="og:title" value="SDoc::Helpers">
+
+  
+
+    <meta name="keywords" content="SDoc::Helpers class">
+  
+    <meta name="keywords" content="each_letter_group, strip_tags, truncate, group_name">
+  
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span>
+            SDoc::Helpers
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/sdoc/helpers_rb.html">lib/sdoc/helpers.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each_letter_group">each_letter_group</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-group_name">group_name</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-strip_tags">strip_tags</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-truncate">truncate</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-each_letter_group">
+            
+              <b>each_letter_group</b>(methods, &amp;block)
+            
+            <a href="../../classes/SDoc/Helpers.html#method-i-each_letter_group" name="method-i-each_letter_group" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-each_letter_group_source')" id="l_method-i-each_letter_group_source">show</a>
+                
+              </p>
+              <div id="method-i-each_letter_group_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/helpers.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">each_letter_group</span>(<span class="ruby-identifier">methods</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">group</span> = {<span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;&#39;</span>, <span class="ruby-value">:methods</span> =<span class="ruby-operator">&gt;</span> []}
+  <span class="ruby-identifier">methods</span>.<span class="ruby-identifier">sort</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">b</span>.<span class="ruby-identifier">name</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">method</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">gname</span> = <span class="ruby-identifier">group_name</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">name</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">gname</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">group</span>[<span class="ruby-value">:name</span>]
+      <span class="ruby-keyword">yield</span> <span class="ruby-identifier">group</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">group</span>[<span class="ruby-value">:methods</span>].<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">group</span> = {
+        <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">gname</span>,
+        <span class="ruby-value">:methods</span> =<span class="ruby-operator">&gt;</span> []
+      }
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">group</span>[<span class="ruby-value">:methods</span>].<span class="ruby-identifier">push</span>(<span class="ruby-identifier">method</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-identifier">group</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">group</span>[<span class="ruby-value">:methods</span>].<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-strip_tags">
+            
+              <b>strip_tags</b>(text)
+            
+            <a href="../../classes/SDoc/Helpers.html#method-i-strip_tags" name="method-i-strip_tags" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Strips out HTML tags from a given string.</p>
+
+<p>Example:</p>
+
+<pre><code>strip_tags(&quot;&lt;strong&gt;Hello world&lt;/strong&gt;&quot;) =&gt; &quot;Hello world&quot;</code></pre>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-strip_tags_source')" id="l_method-i-strip_tags_source">show</a>
+                
+              </p>
+              <div id="method-i-strip_tags_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/helpers.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strip_tags</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-identifier">text</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">%r{&lt;/?[^&gt;]+?&gt;}</span>, <span class="ruby-string">&quot;&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-truncate">
+            
+              <b>truncate</b>(text, options = {})
+            
+            <a href="../../classes/SDoc/Helpers.html#method-i-truncate" name="method-i-truncate" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>Truncates a given string. It tries to take whole sentences to have a
+meaningful description for SEO tags.</p>
+
+<p>The only available option is <code>:length</code> which defaults to 200.</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-truncate_source')" id="l_method-i-truncate_source">show</a>
+                
+              </p>
+              <div id="method-i-truncate_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/helpers.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">truncate</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">text</span>
+    <span class="ruby-identifier">length</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:length</span>, <span class="ruby-value">200</span>)
+    <span class="ruby-identifier">stop</span>   = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-string">&quot;.&quot;</span>, <span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">length</span>
+
+    <span class="ruby-node">&quot;#{text[0, stop]}.&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+      <div class="sectiontitle">Instance Protected methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-group_name">
+            
+              <b>group_name</b>(name)
+            
+            <a href="../../classes/SDoc/Helpers.html#method-i-group_name" name="method-i-group_name" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-group_name_source')" id="l_method-i-group_name_source">show</a>
+                
+              </p>
+              <div id="method-i-group_name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/sdoc/helpers.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">group_name</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">match</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/^([a-z])/i</span>)
+    <span class="ruby-identifier">match</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">upcase</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&#39;#&#39;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>file.rhtml</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            file.rhtml
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/rdoc/generator/template/sdoc/file.rhtml
+                
+            </li>
+            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”</p>
+
+<pre><code>&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</code></pre>
+
+<p>&lt;html xmlns=“<a
+href="http://www.w3.org/1999/xhtml">www.w3.org/1999/xhtml</a>”
+xml:lang=“en” lang=“en”&gt; &lt;head&gt;</p>
+
+<pre><code>&lt;title&gt;&lt;%= h file.name %&gt;&lt;/title&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=&lt;%= @options.charset %&gt;&quot; /&gt;
+&lt;%= include_template &#39;_head.rhtml&#39;, {:rel_prefix =&gt; rel_prefix} %&gt;</code></pre>
+
+<p>&lt;/head&gt;</p>
+
+<p>&lt;body&gt;</p>
+
+<pre><code>  &lt;div class=&quot;banner&quot;&gt;
+      &lt;% if ENV[&#39;HORO_PROJECT_NAME&#39;] %&gt;
+          &lt;span&gt;&lt;%= ERB::Util.html_escape(ENV[&#39;HORO_PROJECT_NAME&#39;]) %&gt; &lt;%= ERB::Util.html_escape(ENV[&#39;HORO_PROJECT_VERSION&#39;]) %&gt;&lt;/span&gt;&lt;br /&gt;
+      &lt;% end %&gt;
+      &lt;h1&gt;
+          &lt;%= h file.name %&gt;
+      &lt;/h1&gt;
+      &lt;ul class=&quot;files&quot;&gt;
+          &lt;li&gt;&lt;%= h file.relative_name %&gt;&lt;/li&gt;
+          &lt;li&gt;Last modified: &lt;%= file.last_modified %&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;bodyContent&quot;&gt;
+      &lt;%= include_template &#39;_context.rhtml&#39;, {:context =&gt; file, :rel_prefix =&gt; rel_prefix} %&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+
+<p>&lt;/html&gt;</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

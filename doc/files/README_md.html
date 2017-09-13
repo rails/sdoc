@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>README.md</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            README.md
+        </h1>
+        <ul class="files">
+            
+            <li>
+                README.md
+                
+            </li>
+            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-SDoc"><a href="../classes/SDoc.html">SDoc</a></h1>
+
+<p><a href="https://travis-ci.org/zzak/sdoc"><img
+src="https://travis-ci.org/zzak/sdoc.png?branch=master"></a></p>
+
+<p><strong>Powering <a
+href="http://api.rubyonrails.org">api.rubyonrails.org</a>/</strong></p>
+
+<h3 id="label-What+is+sdoc-3F">What is sdoc?</h3>
+
+<p><a href="../classes/SDoc.html">SDoc</a> is an HTML template built on top of
+the <a href="../classes/RDoc.html">RDoc</a> documentation generator for
+Ruby code.</p>
+
+<p>Provided are two command-line tools you get when you installing the gem:</p>
+<ul><li>
+<p><code>sdoc</code> - command line tool to run rdoc with
+<code>generator=shtml</code> (searchable HTML)</p>
+</li><li>
+<p><code>sdoc-merge</code> - command line tool to merge multiple sdoc folders
+into a single documentation site</p>
+</li></ul>
+
+<h3 id="label-Getting+Started">Getting Started</h3>
+
+<pre><code># Install the gem
+gem install sdoc
+
+# Generate documentation for &#39;projectdir&#39;
+sdoc projectdir
+</code></pre>
+
+<h3 id="label-sdoc">sdoc</h3>
+
+<p><code>sdoc</code> is simply a wrapper for the <code>rdoc</code> command
+line tool. See <code>sdoc --help</code> for more details.</p>
+
+<p>When using the <code>sdoc</code> command, <code>--fmt</code> is set to
+<code>shtml</code> by default. The default template (or <code>-T</code>
+option) is set to <code>shtml</code>, but you can also use the
+<code>direct</code> template when generating documentation.</p>
+
+<p>Example:</p>
+
+<pre><code>sdoc -o doc/rails -T direct rails</code></pre>
+
+<h3 id="label-sdoc-merge">sdoc-merge</h3>
+
+<p><code>sdoc-merge</code> is useful tool for combining multiple projects
+documentation into one HTML website. See <code>sdoc-merge --help</code> for
+more details.</p>
+
+<pre><code>Usage: sdoc-merge [options] directories
+    -n, --names [NAMES]              Names of merged repositories. Comma separated
+    -o, --op [DIRECTORY]             Set the output directory
+    -t, --title [TITLE]              Set the title of merged file</code></pre>
+
+<p>Example:</p>
+
+<pre><code>sdoc-merge --title &quot;Ruby v1.9, Rails v2.3.2.1&quot; --op merged --names &quot;Ruby,Rails&quot; ruby-v1.9 rails-v2.3.2.1</code></pre>
+
+<h3 id="label-Rake+Task">Rake Task</h3>
+
+<p>If you want, you can setup a task in your <code>Rakefile</code> for
+generating your project&#39;s documentation via the <code>rake rdoc</code>
+command.</p>
+
+<pre><code># Rakefile
+require &#39;sdoc&#39; # and use your RDoc task the same way you used it before
+require &#39;rdoc/task&#39; # ensure this file is also required in order to use `RDoc::Task`
+
+RDoc::Task.new do |rdoc|
+  rdoc.rdoc_dir = &#39;doc/rdoc&#39; # name of output directory
+  rdoc.generator = &#39;sdoc&#39; # explictly set the sdoc generator
+  rdoc.template = &#39;rails&#39; # template used on api.rubyonrails.org
+end
+</code></pre>
+
+<p>NOTE: If you don&#39;t set <code>template</code> the default “sdoc”
+template is chosen, with a lighter color scheme.</p>
+
+<p>Now you can execute this command with <code>rake rdoc</code>, to compile
+the documentation for the current project directory.</p>
+
+<p>Alternatively you can pass this command a path to the project you wish to
+compile: <code>rake rdoc path/to/project</code>.</p>
+
+<h3 id="label-RDoc"><a href="../classes/RDoc.html">RDoc</a></h3>
+
+<p>As mentioned before, <a href="../classes/SDoc.html">SDoc</a> is built on
+top of the <a href="../classes/RDoc.html">RDoc</a> project.</p>
+
+<p>If you notice any bugs in the output of your documentation, it may be
+RDoc&#39;s fault and should be <a
+href="https://github.com/rdoc/rdoc/issues/new">reported upstream</a>.</p>
+
+<p>An example of an <a href="../classes/SDoc.html">SDoc</a> bug would be:</p>
+<ul><li>
+<p>Exception is raised when merging project documentation (ala
+<code>sdoc-merge</code>)</p>
+</li><li>
+<p>Error or warning in JavaScript or HTML found in your browser</p>
+</li><li>
+<p>Generation fails with some exception (likely due to incompatibility with <a
+href="../classes/RDoc.html">RDoc</a>)</p>
+</li></ul>
+
+<p>Please feel free to still report issues here for both projects, especially
+if you aren&#39;t sure.</p>
+
+<p>As maintainer of both projects, I&#39;ll see if I can identify the root of
+the cause :bow: :bow: :bow:</p>
+
+<h3 id="label-Who-3F">Who?</h3>
+<ul><li>
+<p>Vladimir Kolesnikov (<a href="https://github.com/voloko">voloko</a>)</p>
+</li><li>
+<p>Nathan Broadbent (<a href="https://github.com/ndbroadbent">ndbroadbent</a>)</p>
+</li><li>
+<p>Zachary Scott (<a href="https://github.com/zzak">zzak</a>)</p>
+</li></ul>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

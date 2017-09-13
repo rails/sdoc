@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>sdoc.gemspec</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            sdoc.gemspec
+        </h1>
+        <ul class="files">
+            
+            <li>
+                sdoc.gemspec
+                
+            </li>
+            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>$:.push File.expand_path(“../lib”, __FILE__) require &#39;sdoc/version&#39;</p>
+
+<p>Gem::Specification.new do |s|</p>
+
+<pre><code>s.name = &quot;sdoc&quot;
+s.version = SDoc::VERSION
+
+s.authors = [&quot;Vladimir Kolesnikov&quot;, &quot;Nathan Broadbent&quot;, &quot;Jean Mertz&quot;, &quot;Zachary Scott&quot;]
+s.description = %q{rdoc generator html with javascript search index.}
+s.summary = %q{rdoc html with javascript search index.}
+s.homepage = %q{https://github.com/zzak/sdoc}
+s.email = %q{voloko@gmail.com mail@zzak.io}
+s.license = &#39;MIT&#39;
+
+s.require_path = &#39;lib&#39;
+
+s.required_ruby_version = Gem::Requirement.new(&#39;&gt;= 1.9.3&#39;)
+s.required_rubygems_version = Gem::Requirement.new(&quot;&gt;= 1.3.6&quot;) if
+  s.respond_to? :required_rubygems_version=
+
+s.rdoc_options = [&quot;--charset=UTF-8&quot;]
+s.extra_rdoc_files = [&quot;README.md&quot;]
+
+s.add_runtime_dependency(&quot;rdoc&quot;, &quot;~&gt; 5.0&quot;)
+
+s.files         = `git ls-files`.split(&quot;\n&quot;)
+s.executables   = `git ls-files -- bin/*`.split(&quot;\n&quot;).map{ |f| File.basename(f) }
+</code></pre>
+
+<p>end</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>

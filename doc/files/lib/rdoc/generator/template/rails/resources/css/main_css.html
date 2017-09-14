@@ -3,17 +3,51 @@
 <head>
     <title>main.css</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../../../../../../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../../../../../../css/reset.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../../../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../../../css/panel.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../../../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../../../../js/search_index.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../js/searcher.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../panel/tree.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../../../js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $('#links').hide();
+  var panel = new Searchdoc.Panel($('#panel'), search_data, tree, top.frames[1]);
+  $('#search').focus();
 
+  var s = window.parent.location.search.match(/\?q=([^&]+)/);
+  if (s) {
+    s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
+    if (s.length > 0) {
+      $('#search').val(s);
+      panel.search(s, true);
+    }
+  }
+})
+</script>
 </head>
 
 <body>
-    <div class="banner">
+    <div class="panel panel_tree" id="panel">
+  <div class="header">
+    <input type="text" placeholder="Search for a class, method, ..." autosave="searchdoc" results="10" id="search" autocomplete="off" />
+  </div>
+  <div class="tree">
+    <ul>
+    </ul>
+  </div>
+  <div class="result">
+    <ul>
+    </ul>
+  </div>
+</div>
+    <div id="bodyContent">
+        <div class="banner">
         
         <h1>
             main.css
@@ -24,12 +58,10 @@
                 lib/rdoc/generator/template/rails/resources/css/main.css
                 
             </li>
-            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+            <li>Last modified: 2017-09-13 18:20:24 -0500</li>
         </ul>
-    </div>
-
-    <div id="bodyContent">
-        <div id="content">
+     </div>
+    <div id="content">
   
     <div class="description">
       
@@ -42,48 +74,52 @@ margin: 0px;
 font-size: 15px;
 line-height: 1.25em;</code></pre>
 
-<p>}</p>
+<p>} bodyContent{</p>
 
-<p>a:link, a:active, a:visited, a:hover {</p>
+<pre><code>width: 75%; 
+float: right;</code></pre>
+
+<p>} bodyContent a:link, bodyContent a:active, bodyContent a:visited,
+bodyContent a:hover {</p>
 
 <pre><code>color: #CC0000;
 text-decoration: none;</code></pre>
 
 <p>}</p>
 
-<p>a:hover {</p>
+<p>bodyContent a:hover {</p>
 
 <pre><code>color: #990000;
 text-decoration: underline;</code></pre>
 
 <p>}</p>
 
-<p>.banner a:hover {</p>
+<p>bodyContent .banner a:hover {</p>
 
 <pre><code>color: white;</code></pre>
 
 <p>}</p>
 
-<p>h1 a, h2 a, .banner a {</p>
+<p>bodyContent h1 a, bodyContent h2 a, bodyContent .banner a {</p>
 
 <pre><code>color: #fff;</code></pre>
 
 <p>}</p>
 
-<p>h1 a:hover, h2 a:hover {</p>
+<p>bodyContent h1 a:hover, bodyContent h2 a:hover {</p>
 
 <pre><code>color: #fff;</code></pre>
 
 <p>}</p>
 
-<p>p {</p>
+<p>bodyContent p {</p>
 
 <pre><code>margin-bottom: 1em;
 text-align: justify;</code></pre>
 
 <p>}</p>
 
-<p>h1 {</p>
+<p>bodyContent h1 {</p>
 
 <pre><code>font-size: 2.1em;
 font-weight: normal;
@@ -92,7 +128,7 @@ margin: 1.4em 0 0.7em 0;</code></pre>
 
 <p>}</p>
 
-<p>h2 {</p>
+<p>bodyContent h2 {</p>
 
 <pre><code>font-size: 1.6em;
 margin: 1.8em 0 0.8em 0;
@@ -101,7 +137,7 @@ line-height: 1.2em;</code></pre>
 
 <p>}</p>
 
-<p>h3 {</p>
+<p>bodyContent h3 {</p>
 
 <pre><code>font-size: 1.4em;
 color:#555;
@@ -110,77 +146,77 @@ font-weight: normal;</code></pre>
 
 <p>}</p>
 
-<p>h4 {</p>
+<p>bodyContent h4 {</p>
 
 <pre><code>margin: 1.4em 0 0.5em 0;
 font-size: 1em;</code></pre>
 
 <p>}</p>
 
-<p>table {</p>
+<p>bodyContent table {</p>
 
 <pre><code>margin-bottom: 1em;</code></pre>
 
 <p>}</p>
 
-<p>td, th {</p>
+<p>bodyContent td, bodyContent th {</p>
 
 <pre><code>padding: 0 0.7em 0.3em 0;</code></pre>
 
 <p>}</p>
 
-<p>th {</p>
+<p>bodyContent th {</p>
 
 <pre><code>font-weight: bold;</code></pre>
 
 <p>}</p>
 
-<p>.clear {</p>
+<p>bodyContent .clear {</p>
 
 <pre><code>clear: both;
 width: 0; height: 0;</code></pre>
 
 <p>}</p>
 
-<p>dt {</p>
+<p>bodyContent dt {</p>
 
 <pre><code>margin-bottom: 0.3em;
 font-weight: bold;</code></pre>
 
 <p>}</p>
 
-<p>dd {</p>
+<p>bodyContent dd {</p>
 
 <pre><code>margin-left: 2em;
 margin-bottom: 1em;</code></pre>
 
 <p>}</p>
 
-<p>dd p {</p>
+<p>bodyContent dd p {</p>
 
 <pre><code>margin-top: 0.6em;</code></pre>
 
 <p>}</p>
 
-<p>li {</p>
+<p>bodyContent li {</p>
 
 <pre><code>margin: 0 0 0.5em 2em;</code></pre>
 
 <p>}</p>
 
-<p>ul li {</p>
+<p>bodyContent ul li {</p>
 
 <pre><code>list-style: disc;</code></pre>
 
 <p>}</p>
 
-<p>ol li {</p>
+<p>bodyContent ol li {</p>
 
 <pre><code>list-style: decimal;</code></pre>
 
 <p>}</p>
 
-<p>.banner {</p>
+<p>bodyContent .banner {</p>
 
 <pre><code>background: #B61D1D;
 color: #FFF;
@@ -188,27 +224,27 @@ border-bottom: 1px solid #9b281c;
 padding: 1em;
 box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);</code></pre>
 
-<p>} .banner h1 {</p>
+<p>} bodyContent .banner h1 {</p>
 
 <pre><code>font-size: 1.2em;
 margin: 0;</code></pre>
 
 <p>}</p>
 
-<p>.banner h1 .type {</p>
+<p>bodyContent .banner h1 .type {</p>
 
 <pre><code>font-size: 0.833em;
 display:block;</code></pre>
 
 <p>}</p>
 
-<p>.banner h1 .type, .banner h1 .parent {</p>
+<p>bodyContent .banner h1 .type, bodyContent .banner h1 .parent {</p>
 
 <pre><code>color: #CCC;</code></pre>
 
 <p>}</p>
 
-<p>.banner ul {</p>
+<p>bodyContent .banner ul {</p>
 
 <pre><code>margin-top: 0.3em;
 margin-bottom: 0;
@@ -216,7 +252,7 @@ font-size: 0.85em;</code></pre>
 
 <p>}</p>
 
-<p>.banner li {</p>
+<p>bodyContent .banner li {</p>
 
 <pre><code>list-style: none;
 margin-left: 0;
@@ -224,19 +260,19 @@ margin-bottom: 0;</code></pre>
 
 <p>}</p>
 
-<p>.banner .github_url {</p>
+<p>bodyContent .banner .github_url {</p>
 
 <pre><code>color: #CCC;</code></pre>
 
 <p>}</p>
 
-<p>pre {</p>
+<p>bodyContent pre {</p>
 
 <pre><code>margin-bottom: 1em;</code></pre>
 
 <p>}</p>
 
-<p>.methods dt {</p>
+<p>bodyContent .methods dt {</p>
 
 <pre><code>width: 1em;
 font-size: 1.5em;
@@ -247,7 +283,7 @@ margin: 0;</code></pre>
 
 <p>}</p>
 
-<p>.methods dd {</p>
+<p>bodyContent .methods dd {</p>
 
 <pre><code>margin-left: 2.5em;
 min-height: 1.8em;
@@ -256,7 +292,7 @@ padding-bottom: 0.8em;</code></pre>
 
 <p>}</p>
 
-<p>.methods ul li {</p>
+<p>bodyContent .methods ul li {</p>
 
 <pre><code>margin-right: 0.7em;
 margin-left: 0;
@@ -265,7 +301,7 @@ display: inline;</code></pre>
 
 <p>}</p>
 
-<p>content {</p>
+<p>bodyContent content {</p>
 
 <pre><code>margin: 2em;
 margin-left: 3.5em;
@@ -273,7 +309,7 @@ margin-right: 3.5em;</code></pre>
 
 <p>}</p>
 
-<p>.sectiontitle {</p>
+<p>bodyContent .sectiontitle {</p>
 
 <pre><code>margin-top: 2em;
 margin-bottom: 1.3em;
@@ -285,7 +321,7 @@ border-bottom: 1px solid #000;</code></pre>
 
 <p>}</p>
 
-<p>.contenttitle {</p>
+<p>bodyContent .contenttitle {</p>
 
 <pre><code>margin-top: 4em;
 margin-bottom: 1.3em;
@@ -296,7 +332,7 @@ font-weight: bold;</code></pre>
 
 <p>}</p>
 
-<p>.attr-rw {</p>
+<p>bodyContent .attr-rw {</p>
 
 <pre><code>padding-right: 1em;
 text-align: center;
@@ -304,22 +340,22 @@ color: #055;</code></pre>
 
 <p>}</p>
 
-<p>.attr-name {</p>
+<p>bodyContent .attr-name {</p>
 
 <pre><code>font-weight: bold;
 padding-right: 1em;</code></pre>
 
 <p>}</p>
 
-<p>.attr-desc { }</p>
+<p>bodyContent .attr-desc { }</p>
 
-<p>tt {</p>
+<p>bodyContent tt {</p>
 
 <pre><code>font-size: 1.15em;</code></pre>
 
 <p>}</p>
 
-<p>.attr-value {</p>
+<p>bodyContent .attr-value {</p>
 
 <pre><code>font-family: monospace;
 padding-left: 1em;
@@ -327,7 +363,7 @@ font-size: 1.15em;</code></pre>
 
 <p>}</p>
 
-<p>.dyn-source {</p>
+<p>bodyContent .dyn-source {</p>
 
 <pre><code>display: none;
 background: #fffde8;
@@ -338,21 +374,21 @@ padding: 0.5em;</code></pre>
 
 <p>}</p>
 
-<p>.dyn-source .cmt {</p>
+<p>bodyContent .dyn-source .cmt {</p>
 
 <pre><code>color: #00F;
 font-style: italic;</code></pre>
 
 <p>}</p>
 
-<p>.dyn-source .kw {</p>
+<p>bodyContent .dyn-source .kw {</p>
 
 <pre><code>color: #070;
 font-weight: bold;</code></pre>
 
 <p>}</p>
 
-<p>.description pre {</p>
+<p>bodyContent .description pre {</p>
 
 <pre><code>padding: 0.5em;
 background: #EEEEEE;
@@ -361,15 +397,15 @@ overflow-x: scroll;</code></pre>
 
 <p>}</p>
 
-<p>.method {</p>
+<p>bodyContent .method {</p>
 
 <pre><code>margin-bottom: 2em;</code></pre>
 
-<p>} .method .description, .method .sourcecode {</p>
+<p>} bodyContent .method .description, bodyContent .method .sourcecode {</p>
 
 <pre><code>margin-left: 1.2em;</code></pre>
 
-<p>} .method h4 {</p>
+<p>} bodyContent .method h4 {</p>
 
 <pre><code>border-bottom: 1px dotted #999;
 padding: 0 0 0.2em 0;
@@ -377,7 +413,7 @@ margin-bottom: 0.8em;
 font-size: 1.1em;
 color:#333;</code></pre>
 
-<p>} .method .method-title {</p>
+<p>} bodyContent .method .method-title {</p>
 
 <pre><code>border-bottom: 1px dotted #666;
 padding: 0 0 0.15em 0;
@@ -388,7 +424,7 @@ position: relative;</code></pre>
 
 <p>}</p>
 
-<p>.method .method-title a.permalink {</p>
+<p>bodyContent .method .method-title a.permalink {</p>
 
 <pre><code>position: absolute;
 font-size: 0.75em;
@@ -396,14 +432,14 @@ right: 0;</code></pre>
 
 <p>}</p>
 
-<p>.method .sourcecode p.source-link {</p>
+<p>bodyContent .method .sourcecode p.source-link {</p>
 
 <pre><code>text-indent: 0em;
 margin-top: 0.5em;</code></pre>
 
 <p>}</p>
 
-<p>.method .aka {</p>
+<p>bodyContent .method .aka {</p>
 
 <pre><code>margin-top: 0.3em;
 margin-left: 1em;
@@ -412,57 +448,57 @@ text-indent: 2em;</code></pre>
 
 <p>}</p>
 
-<p>.method .source-link {</p>
+<p>bodyContent .method .source-link {</p>
 
 <pre><code>font-size: 0.85em;</code></pre>
 
 <p>}</p>
 
-<p>.ruby-constant {</p>
+<p>bodyContent .ruby-constant {</p>
 
 <pre><code>color: teal;</code></pre>
 
-<p>} .ruby-keyword {</p>
+<p>} bodyContent .ruby-keyword {</p>
 
 <pre><code>color: #000;
 font-weight: bold</code></pre>
 
-<p>} .ruby-title {</p>
+<p>} bodyContent .ruby-title {</p>
 
 <pre><code>color: #900;
 font-weight: bold;</code></pre>
 
-<p>} .ruby-ivar {</p>
+<p>} bodyContent .ruby-ivar {</p>
 
 <pre><code>color: teal;</code></pre>
 
-<p>} .ruby-operator {</p>
+<p>} bodyContent .ruby-operator {</p>
 
 <pre><code>color: #000;
 font-weight: bold</code></pre>
 
-<p>} .ruby-identifier {</p>
+<p>} bodyContent .ruby-identifier {</p>
 
 <pre><code>color: #000;</code></pre>
 
-<p>} .ruby-string, .ruby-node {</p>
+<p>} bodyContent .ruby-string, bodyContent .ruby-node {</p>
 
 <pre><code>color: #D14;</code></pre>
 
-<p>} .ruby-comment {</p>
+<p>} bodyContent .ruby-comment {</p>
 
 <pre><code>color: #998;
 font-style: italic;</code></pre>
 
-<p>} .ruby-regexp {</p>
+<p>} bodyContent .ruby-regexp {</p>
 
 <pre><code>color: #009926;</code></pre>
 
-<p>} .ruby-value {</p>
+<p>} bodyContent .ruby-value {</p>
 
 <pre><code>color: #990073;</code></pre>
 
-<p>} .ruby-number {</p>
+<p>} bodyContent .ruby-number {</p>
 
 <pre><code>color: #40A070;</code></pre>
 
@@ -475,7 +511,7 @@ to { background-color: white; }</code></pre>
 
 <p>}</p>
 
-<p>.highlight {</p>
+<p>bodyContent .highlight {</p>
 
 <pre><code>animation-name: highlight;
 animation-duration: 1s;</code></pre>

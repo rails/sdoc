@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>search_index.rhtml</title>
+    <title>_sidebar.rhtml</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="../../../../../../css/reset.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../../../../../css/main.css" type="text/css" media="screen" />
@@ -50,31 +50,36 @@ $(function() {
         <div class="banner">
         
         <h1>
-            search_index.rhtml
+            _sidebar.rhtml
         </h1>
         <ul class="files">
             
             <li>
-                lib/rdoc/generator/template/rails/search_index.rhtml
+                lib/rdoc/generator/template/rails/_sidebar.rhtml
                 
             </li>
-            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+            <li>Last modified: 2017-09-13 18:51:45 -0500</li>
         </ul>
      </div>
     <div id="content">
   
     <div class="description">
       
-<p>&lt;html&gt;</p>
+<p>&lt;div class=“panel panel_tree” id=“panel”&gt;</p>
 
-<pre><code>&lt;head&gt;File index&lt;/head&gt;
-&lt;body&gt;
-&lt;% @files.each do |file| %&gt;
-  &lt;a href=&quot;../&lt;%= file.path %&gt;&quot;&gt;&lt;%= file.relative_name %&gt;&lt;/a&gt;
-&lt;% end %&gt;
-&lt;/body&gt;</code></pre>
+<pre><code>&lt;div class=&quot;header&quot;&gt;
+  &lt;input type=&quot;text&quot; placeholder=&quot;Search for a class, method, ...&quot; autosave=&quot;searchdoc&quot; results=&quot;10&quot; id=&quot;search&quot; autocomplete=&quot;off&quot; /&gt;
+&lt;/div&gt;
+&lt;div class=&quot;tree&quot;&gt;
+  &lt;ul&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;result&quot;&gt;
+  &lt;ul&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
 
-<p>&lt;/html&gt;</p>
+<p>&lt;/div&gt;</p>
 
     </div>
   

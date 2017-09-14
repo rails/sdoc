@@ -2,7 +2,8 @@
     .panel
     {
         position: absolute;
-        width: 100%;
+        width: 25%;
+        float: left;
         height: 100%;
         top: 0;
         left: 0;
@@ -240,7 +241,6 @@
             line-height: 100%;
         }
 
-
         .panel .tree li .content
         {
             padding-left: 18px;
@@ -268,13 +268,17 @@
             background-size: 10px;
         }
 
-        .panel .tree ul li h1
+        .panel .tree ul li h1, .panel .tree ul li h1 a
         {
             font-size: 13px;
             font-weight: normal;
-            color: #000;
             margin-bottom: 2px;
             white-space: nowrap;
+        }
+
+        .panel .tree ul li h1 a{
+            color: #000;
+            text-decoration: none;
         }
 
         .panel .tree ul li p

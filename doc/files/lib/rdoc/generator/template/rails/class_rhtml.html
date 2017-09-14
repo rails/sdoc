@@ -3,17 +3,51 @@
 <head>
     <title>class.rhtml</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../../../../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../../../../css/reset.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../css/panel.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../../js/search_index.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/searcher.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../panel/tree.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $('#links').hide();
+  var panel = new Searchdoc.Panel($('#panel'), search_data, tree, top.frames[1]);
+  $('#search').focus();
 
+  var s = window.parent.location.search.match(/\?q=([^&]+)/);
+  if (s) {
+    s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
+    if (s.length > 0) {
+      $('#search').val(s);
+      panel.search(s, true);
+    }
+  }
+})
+</script>
 </head>
 
 <body>
-    <div class="banner">
+    <div class="panel panel_tree" id="panel">
+  <div class="header">
+    <input type="text" placeholder="Search for a class, method, ..." autosave="searchdoc" results="10" id="search" autocomplete="off" />
+  </div>
+  <div class="tree">
+    <ul>
+    </ul>
+  </div>
+  <div class="result">
+    <ul>
+    </ul>
+  </div>
+</div>
+    <div id="bodyContent">
+        <div class="banner">
         
         <h1>
             class.rhtml
@@ -24,12 +58,10 @@
                 lib/rdoc/generator/template/rails/class.rhtml
                 
             </li>
-            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+            <li>Last modified: 2017-09-13 18:55:59 -0500</li>
         </ul>
-    </div>
-
-    <div id="bodyContent">
-        <div id="content">
+     </div>
+    <div id="content">
   
     <div class="description">
       
@@ -56,7 +88,9 @@
 
 <p>&lt;body&gt;</p>
 
-<pre><code>  &lt;div class=&quot;banner&quot;&gt;
+<pre><code>  &lt;%= include_template &#39;_sidebar.rhtml&#39; %&gt;
+  &lt;div id=&quot;bodyContent&quot;&gt;
+      &lt;div class=&quot;banner&quot;&gt;
       &lt;% if ENV[&#39;HORO_PROJECT_NAME&#39;] %&gt;
           &lt;span&gt;&lt;%= ERB::Util.html_escape(ENV[&#39;HORO_PROJECT_NAME&#39;]) %&gt; &lt;%= ERB::Util.html_escape(ENV[&#39;HORO_PROJECT_VERSION&#39;]) %&gt;&lt;/span&gt;&lt;br /&gt;
       &lt;% end %&gt;
@@ -79,7 +113,6 @@
           &lt;% end  %&gt;
       &lt;/ul&gt;
   &lt;/div&gt;
-  &lt;div id=&quot;bodyContent&quot;&gt;
       &lt;%= include_template &#39;_context.rhtml&#39;, {:context =&gt; klass, :rel_prefix =&gt; rel_prefix} %&gt;
   &lt;/div&gt;
 &lt;/body&gt;</code></pre>

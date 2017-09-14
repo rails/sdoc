@@ -1,11 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>RDoc Documentation</title>
+  <meta charset="UTF-8">
+  <title>RDoc Documentation</title>
+  <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="css/panel.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/github.css" type="text/css" media="screen" />
+  <script src="js/search_index.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/searcher.js" type="text/javascript" charset="utf-8"></script>
+  <script src="panel/tree.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
+$(function() {
+  $('#links').hide();
+  var panel = new Searchdoc.Panel($('#panel'), search_data, tree, top.frames[1]);
+  $('#search').focus();
+
+  var s = window.parent.location.search.match(/\?q=([^&]+)/);
+  if (s) {
+    s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
+    if (s.length > 0) {
+      $('#search').val(s);
+      panel.search(s, true);
+    }
+  }
+})
+</script>
 </head>
-<frameset cols="300,*" frameborder="1" border="1" bordercolor="#999999" framespacing="1">
-    <frame src="panel/index.html" title="Search" name="panel" />
-    <frame src="files/CHANGELOG_md.html" name="docwin" />
-</frameset>
+
+<body>
+   <div class="panel panel_tree" id="panel">
+  <div class="header">
+    <input type="text" placeholder="Search for a class, method, ..." autosave="searchdoc" results="10" id="search" autocomplete="off" />
+  </div>
+  <div class="tree">
+    <ul>
+    </ul>
+  </div>
+  <div class="result">
+    <ul>
+    </ul>
+  </div>
+</div>
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CHANGELOG.md</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/panel.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/search_index.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/searcher.js" type="text/javascript" charset="utf-8"></script>
+<script src="../panel/tree.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $('#links').hide();
+  var panel = new Searchdoc.Panel($('#panel'), search_data, tree, top.frames[1]);
+  $('#search').focus();
+
+  var s = window.parent.location.search.match(/\?q=([^&]+)/);
+  if (s) {
+    s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
+    if (s.length > 0) {
+      $('#search').val(s);
+      panel.search(s, true);
+    }
+  }
+})
+</script>
+</head>
+
+<body>
+    <div class="panel panel_tree" id="panel">
+  <div class="header">
+    <input type="text" placeholder="Search for a class, method, ..." autosave="searchdoc" results="10" id="search" autocomplete="off" />
+  </div>
+  <div class="tree">
+    <ul>
+    </ul>
+  </div>
+  <div class="result">
+    <ul>
+    </ul>
+  </div>
+</div>
+    <div id="bodyContent">
+        <div class="banner">
+        
+        <h1>
+            CHANGELOG.md
+        </h1>
+        <ul class="files">
+            
+            <li>
+                CHANGELOG.md
+                
+            </li>
+            <li>Last modified: 2017-09-13 10:20:18 -0500</li>
+        </ul>
+     </div>
+    <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-0.4.2">0.4.2</h1>
+
+<p><a href="https://github.com/voloko/sdoc/compare/v0.4.1...v0.4.2">Compare
+v0.4.1…v0.4.2</a></p>
+
+<h1 id="label-0.4.1">0.4.1</h1>
+
+<p><a href="https://github.com/voloko/sdoc/compare/v0.4.0...v0.4.1">Compare
+v0.4.0…v0.4.1</a></p>
+
+<h2 id="label-Breaking+Changes">Breaking Changes</h2>
+
+<p>None.</p>
+
+<h2 id="label-Enhancements">Enhancements</h2>
+<ul><li>
+<p>65e46cb2 Unordered lists inside ordered ones render ordered</p>
+</li><li>
+<p>SDoc::VERSION</p>
+</li><li>
+<p>2fe1a7b8 Move version to separate file, remove require_relative from
+gemspec</p>
+</li><li>
+<p>97e1eda8 Push ./lib to $LOAD_PATH for require SDoc::VERSION</p>
+</li><li>
+<p>ad0a7e1e Initialize <a href="../classes/SDoc.html">SDoc</a> namespace in
+main file</p>
+</li></ul>
+
+<h2 id="label-Bug+Fixes">Bug Fixes</h2>
+<ul><li>
+<p>926ff732 Remove redundany &lt; 5.0 from rdoc dependency specification</p>
+</li><li>
+<p>db99e402 Remove code tags styling under pre elements</p>
+</li><li>
+<p>a1d7e211 Follow up of #68</p>
+</li><li>
+<p>bffc93ef Relax JSON dependency to ~&gt; 1.7, &gt;= 1.7.7</p>
+</li><li>
+<p>404dceb9 GH-72: Extra <code>&lt;p&gt;</code> tags appear in results snippet</p>
+</li></ul>
+
+<h1 id="label-0.4.0">0.4.0</h1>
+
+<p><a href="https://github.com/voloko/sdoc/compare/v0.3.20...v0.4.0">Compare
+v0.3.20…v0.4.0</a></p>
+
+<p>No friendly log for this version yet, but PRs are welcome!</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>
+
+  </body>
 </html>

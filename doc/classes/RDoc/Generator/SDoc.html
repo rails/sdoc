@@ -3,13 +3,33 @@
 <head>
     <title>RDoc::Generator::SDoc</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/panel.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/search_index.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/searcher.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../panel/tree.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  $('#links').hide();
+  var panel = new Searchdoc.Panel($('#panel'), search_data, tree, top.frames[1]);
+  $('#search').focus();
 
+  var s = window.parent.location.search.match(/\?q=([^&]+)/);
+  if (s) {
+    s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
+    if (s.length > 0) {
+      $('#search').val(s);
+      panel.search(s, true);
+    }
+  }
+})
+</script>
 
     <meta property="og:title" value="RDoc::Generator::SDoc">
 
@@ -22,7 +42,21 @@
 </head>
 
 <body>
-    <div class="banner">
+    <div class="panel panel_tree" id="panel">
+  <div class="header">
+    <input type="text" placeholder="Search for a class, method, ..." autosave="searchdoc" results="10" id="search" autocomplete="off" />
+  </div>
+  <div class="tree">
+    <ul>
+    </ul>
+  </div>
+  <div class="result">
+    <ul>
+    </ul>
+  </div>
+</div>
+    <div id="bodyContent">
+        <div class="banner">
         
         <h1>
             <span class="type">Class</span>
@@ -43,7 +77,6 @@
             
         </ul>
     </div>
-    <div id="bodyContent">
         <div id="content">
   
 
@@ -594,10 +627,10 @@
   <span class="ruby-ivar">@json_index</span>.<span class="ruby-identifier">generate_gzipped</span>
   <span class="ruby-identifier">generate_search_index</span>
   <span class="ruby-identifier">generate_class_tree</span>
-
-  <span class="ruby-identifier">generate_index_file</span>
+ 
   <span class="ruby-identifier">generate_file_files</span>
   <span class="ruby-identifier">generate_class_files</span>
+  <span class="ruby-identifier">generate_index_file</span>
 <span class="ruby-keyword">end</span></pre>
               </div>
             </div>
@@ -993,7 +1026,7 @@
   <span class="ruby-identifier">debug_msg</span> <span class="ruby-node">&quot;Generating index file in #@outputdir&quot;</span>
   <span class="ruby-identifier">templatefile</span> = <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;index.rhtml&#39;</span>
   <span class="ruby-identifier">outfile</span>      = <span class="ruby-ivar">@outputdir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;index.html&#39;</span>
-
+  <span class="ruby-identifier">rel_prefix</span>   = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;.&quot;</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">render_template</span>( <span class="ruby-identifier">templatefile</span>, <span class="ruby-identifier">binding</span>(), <span class="ruby-identifier">outfile</span> ) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">dry_run</span>
 <span class="ruby-keyword">end</span></pre>
               </div>

@@ -1,13 +1,1 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="<%= @options.charset %>">
-  <title><%= @options.title %></title>
-  <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix} %>
-</head>
-
-<body>
-   <%= include_template '_sidebar.rhtml' %>
-   <%= include_template @outputdir + index_path %>
-  </body>
-</html>
+<%= include_template @outputdir + index_path %>

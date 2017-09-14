@@ -113,9 +113,9 @@ class RDoc::Generator::SDoc
     debug_msg "Generating index file in #@outputdir"
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
-    rel_prefix   = Pathname.new(".")
     self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
   end
+
 
   ### Generate a documentation file for each class
   def generate_class_files
@@ -140,8 +140,12 @@ class RDoc::Generator::SDoc
     @files.each do |file|
       outfile     = @outputdir + file.path
       debug_msg "  working on %s (%s)" % [ file.full_name, outfile ]
-      rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
-
+      ### When generating the main page, we need to use . for prefix
+      if file.full_name == index_file
+        rel_prefix = Pathname.new(".")
+      else
+        rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
+      end
       debug_msg "  rendering #{outfile}"
       self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
     end
@@ -183,6 +187,12 @@ class RDoc::Generator::SDoc
       tree << item
     end
     tree
+  end
+
+  def index_file 
+    # Use main page for the first static file that is generated 
+    # Full name is prefer for comparison  
+    return @options.main_page || @files.first.full_name
   end
 
   ### Determines index path based on @options.main_page (or lack thereof)

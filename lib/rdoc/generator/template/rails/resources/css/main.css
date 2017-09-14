@@ -6,114 +6,117 @@ body {
   font-size: 15px;
   line-height: 1.25em;
 }
-
-a:link, a:active, a:visited, a:hover {
+#bodyContent{
+    width: 75%; 
+    float: right;
+}
+#bodyContent a:link, #bodyContent a:active, #bodyContent a:visited, #bodyContent a:hover {
   color: #CC0000;
   text-decoration: none;
 }
 
-a:hover {
+#bodyContent a:hover {
   color: #990000;
   text-decoration: underline;
 }
 
-.banner a:hover {
+#bodyContent .banner a:hover {
   color: white;
 }
 
-h1 a, h2 a, .banner a {
+#bodyContent h1 a, #bodyContent h2 a, #bodyContent .banner a {
   color: #fff;
 }
 
-h1 a:hover, h2 a:hover {
+#bodyContent h1 a:hover, #bodyContent h2 a:hover {
   color: #fff;
 }
 
-p {
+#bodyContent p {
   margin-bottom: 1em;
   text-align: justify;
 }
 
-h1 {
+#bodyContent h1 {
     font-size: 2.1em;
     font-weight: normal;
     line-height: 1.2em;
     margin: 1.4em 0 0.7em 0;
 }
 
-h2 {
+#bodyContent h2 {
     font-size: 1.6em;
     margin: 1.8em 0 0.8em 0;
     font-weight: normal;
     line-height: 1.2em;
 }
 
-h3 {
+#bodyContent h3 {
     font-size: 1.4em;
     color:#555;
     margin: 1.4em 0 0.7em 0;
     font-weight: normal;
 }
 
-h4 {
+#bodyContent h4 {
     margin: 1.4em 0 0.5em 0;
     font-size: 1em;
 }
 
-table
+#bodyContent table
 {
     margin-bottom: 1em;
 }
 
-td, th
+#bodyContent td, bodyContent th
 {
     padding: 0 0.7em 0.3em 0;
 }
 
-th
+#bodyContent th
 {
     font-weight: bold;
 }
 
-.clear
+#bodyContent .clear
 {
     clear: both;
     width: 0; height: 0;
 }
 
-dt
+#bodyContent dt
 {
     margin-bottom: 0.3em;
     font-weight: bold;
 }
 
-dd
+#bodyContent dd
 {
     margin-left: 2em;
     margin-bottom: 1em;
 }
 
-dd p
+#bodyContent dd p
 {
     margin-top: 0.6em;
 }
 
-li
+#bodyContent li
 {
     margin: 0 0 0.5em 2em;
 }
 
-ul li
+#bodyContent ul li
 {
     list-style: disc;
 }
 
-ol li
+#bodyContent ol li
 {
     list-style: decimal;
 }
 
-.banner
+#bodyContent .banner
 {
     background: #B61D1D;
     color: #FFF;
@@ -121,48 +124,48 @@ ol li
     padding: 1em;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
-.banner h1
+#bodyContent .banner h1
 {
     font-size: 1.2em;
     margin: 0;
 }
 
-.banner h1 .type
+#bodyContent .banner h1 .type
 {
     font-size: 0.833em;
     display:block;
 }
 
-.banner h1 .type,
-.banner h1 .parent
+#bodyContent .banner h1 .type,
+#bodyContent .banner h1 .parent
 {
     color: #CCC;
 }
 
-.banner ul
+#bodyContent .banner ul
 {
     margin-top: 0.3em;
     margin-bottom: 0;
     font-size: 0.85em;
 }
 
-.banner li
+#bodyContent .banner li
 {
     list-style: none;
     margin-left: 0;
     margin-bottom: 0;
 }
 
-.banner .github_url {
+#bodyContent .banner .github_url {
   color: #CCC;
 }
 
-pre
+#bodyContent pre
 {
     margin-bottom: 1em;
 }
 
-.methods dt
+#bodyContent .methods dt
 {
     width: 1em;
     font-size: 1.5em;
@@ -172,7 +175,7 @@ pre
     margin: 0;
 }
 
-.methods dd
+#bodyContent .methods dd
 {
     margin-left: 2.5em;
     min-height: 1.8em;
@@ -181,7 +184,7 @@ pre
 }
 
 
-.methods ul li
+#bodyContent .methods ul li
 {
     margin-right: 0.7em;
     margin-left: 0;
@@ -189,14 +192,14 @@ pre
     display: inline;
 }
 
-#content {
+#bodyContent #content {
   margin: 2em;
   margin-left: 3.5em;
   margin-right: 3.5em;
 }
 
 
-.sectiontitle {
+#bodyContent .sectiontitle {
   margin-top: 2em;
   margin-bottom: 1.3em;
   margin-left: -1.2em;
@@ -206,7 +209,7 @@ pre
   border-bottom: 1px solid #000;
 }
 
-.contenttitle {
+#bodyContent .contenttitle {
   margin-top: 4em;
   margin-bottom: 1.3em;
   margin-left: -0.9em;
@@ -215,31 +218,31 @@ pre
   font-weight: bold;
 }
 
-.attr-rw {
+#bodyContent .attr-rw {
   padding-right: 1em;
   text-align: center;
   color: #055;
 }
 
-.attr-name {
+#bodyContent .attr-name {
   font-weight: bold;
   padding-right: 1em;
 }
 
-.attr-desc {
+#bodyContent .attr-desc {
 }
 
-tt {
+#bodyContent tt {
   font-size: 1.15em;
 }
 
-.attr-value {
+#bodyContent .attr-value {
   font-family: monospace;
   padding-left: 1em;
   font-size: 1.15em;
 }
 
-.dyn-source {
+#bodyContent .dyn-source {
   display: none;
   background: #fffde8;
   color: #000;
@@ -248,32 +251,32 @@ tt {
   padding: 0.5em;
 }
 
-.dyn-source .cmt {
+#bodyContent .dyn-source .cmt {
   color: #00F;
   font-style: italic;
 }
 
-.dyn-source .kw {
+#bodyContent .dyn-source .kw {
   color: #070;
   font-weight: bold;
 }
 
-.description pre {
+#bodyContent .description pre {
   padding: 0.5em;
   background: #EEEEEE;
   font-size: 15px;
   overflow-x: scroll;
 }
 
-.method {
+#bodyContent .method {
     margin-bottom: 2em;
 }
-.method .description,
-.method .sourcecode
+#bodyContent .method .description,
+#bodyContent .method .sourcecode
 {
     margin-left: 1.2em;
 }
-.method h4
+#bodyContent .method h4
 {
     border-bottom: 1px dotted #999;
     padding: 0 0 0.2em 0;
@@ -281,7 +284,7 @@ tt {
     font-size: 1.1em;
     color:#333;
 }
-.method .method-title {
+#bodyContent .method .method-title {
     border-bottom: 1px dotted #666;
     padding: 0 0 0.15em 0;
     margin: 0 0 0.5em 0;
@@ -290,65 +293,65 @@ tt {
     position: relative;
 }
 
-.method .method-title a.permalink {
+#bodyContent .method .method-title a.permalink {
   position: absolute;
   font-size: 0.75em;
   right: 0;
 }
 
-.method .sourcecode p.source-link {
+#bodyContent .method .sourcecode p.source-link {
   text-indent: 0em;
   margin-top: 0.5em;
 }
 
-.method .aka {
+#bodyContent .method .aka {
   margin-top: 0.3em;
   margin-left: 1em;
   font-style: italic;
   text-indent: 2em;
 }
 
-.method .source-link
+#bodyContent .method .source-link
 {
     font-size: 0.85em;
 }
 
-.ruby-constant {
+#bodyContent .ruby-constant {
   color: teal;
 }
-.ruby-keyword {
+#bodyContent .ruby-keyword {
   color: #000;
   font-weight: bold
 }
-.ruby-title {
+#bodyContent .ruby-title {
   color: #900;
   font-weight: bold;
 }
-.ruby-ivar {
+#bodyContent .ruby-ivar {
   color: teal;
 }
-.ruby-operator {
+#bodyContent .ruby-operator {
   color: #000;
   font-weight: bold
 }
-.ruby-identifier {
+#bodyContent .ruby-identifier {
   color: #000;
 }
-.ruby-string,
-.ruby-node {
+#bodyContent .ruby-string,
+#bodyContent .ruby-node {
   color: #D14;
 }
-.ruby-comment {
+#bodyContent .ruby-comment {
   color: #998;
   font-style: italic;
 }
-.ruby-regexp {
+#bodyContent .ruby-regexp {
   color: #009926;
 }
-.ruby-value {
+#bodyContent .ruby-value {
   color: #990073;
 }
-.ruby-number {
+#bodyContent .ruby-number {
   color: #40A070;
 }
 
@@ -357,7 +360,7 @@ tt {
   to { background-color: white; }
 }
 
-.highlight {
+#bodyContent .highlight {
   animation-name: highlight;
   animation-duration: 1s;
 }

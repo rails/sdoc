@@ -7,7 +7,9 @@
 </head>
 
 <body>
-    <div class="banner">
+    <%= include_template '_sidebar.rhtml' %>
+    <div id="bodyContent">
+        <div class="banner">
         <% if ENV['HORO_PROJECT_NAME'] %>
             <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />
         <% end %>
@@ -26,10 +28,8 @@
             </li>
             <li>Last modified: <%= file.file_stat.mtime %></li>
         </ul>
-    </div>
-
-    <div id="bodyContent">
-        <%= include_template '_context.rhtml', {:context => file, :rel_prefix => rel_prefix} %>
+     </div>
+    <%= include_template '_context.rhtml', {:context => file, :rel_prefix => rel_prefix} %>
     </div>
   </body>
 </html>

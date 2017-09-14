@@ -20,7 +20,9 @@
 </head>
 
 <body>
-    <div class="banner">
+    <%= include_template '_sidebar.rhtml' %>
+    <div id="bodyContent">
+        <div class="banner">
         <% if ENV['HORO_PROJECT_NAME'] %>
             <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />
         <% end %>
@@ -43,7 +45,6 @@
             <% end  %>
         </ul>
     </div>
-    <div id="bodyContent">
         <%= include_template '_context.rhtml', {:context => klass, :rel_prefix => rel_prefix} %>
     </div>
   </body>

@@ -87,10 +87,10 @@ class RDoc::Generator::SDoc
     @json_index.generate_gzipped
     generate_search_index
     generate_class_tree
-
-    generate_index_file
+ 
     generate_file_files
     generate_class_files
+    generate_index_file
   end
 
   def class_dir
@@ -113,7 +113,7 @@ class RDoc::Generator::SDoc
     debug_msg "Generating index file in #@outputdir"
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
-
+    rel_prefix   = Pathname.new(".")
     self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
   end
 

@@ -6,27 +6,22 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1.0
-  - 2.2.0
-  - 2.3.0
-  - 2.4.0
+  - 2.2.9
+  - 2.3.6
+  - 2.4.2
   - 2.5.0
   - ruby-head
-  - jruby-19mode
   - jruby-head
 matrix:
   allow_failures:
     - env: rdoc=master
     - rvm: jruby-head
   include:
-    - { rvm: 1.9.3, env: rdoc=master }
-    - { rvm: 2.0.0, env: rdoc=master }
-    - { rvm: 2.1.0, env: rdoc=master }
-    - { rvm: 2.2.0, env: rdoc=master }
-    - { rvm: 2.3.0, env: rdoc=master }
-    - { rvm: 2.4.0, env: rdoc=master }
+    - { rvm: 2.2.9, env: rdoc=master }
+    - { rvm: 2.3.6, env: rdoc=master }
+    - { rvm: 2.4.2, env: rdoc=master }
     - { rvm: 2.5.0, env: rdoc=master }
     - { rvm: ruby-head, env: rdoc=master }
-    - { rvm: jruby-19mode, env: rdoc=master }
     - { rvm: jruby-head, env: rdoc=master }
 notifications:
   email:

@@ -361,3 +361,13 @@ tt {
   animation-name: highlight;
   animation-duration: 1s;
 }
+
+p code {
+  background: #eeeeee;
+  border-radius: 2px;
+  border: 1px solid #dddddd;
+  font-family: Consolas, Menlo, Courier, monospace;
+  font-size: 14px;
+  margin-bottom: 1px;
+  padding: 0 5px;
+}

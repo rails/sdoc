@@ -78,7 +78,7 @@ Alternatively you can pass this command a path to the project you wish to compil
 
 As mentioned before, SDoc is built on top of the RDoc project.
 
-If you notice any bugs in the output of your documentation, it may be RDoc's fault and should be [reported upstream](https://github.com/rdoc/rdoc/issues/new).
+If you notice any bugs in the output of your documentation, it may be RDoc's fault and should be [reported upstream](https://github.com/ruby/rdoc/issues/new).
 
 An example of an SDoc bug would be:
 

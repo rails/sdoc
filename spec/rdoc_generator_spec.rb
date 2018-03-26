@@ -37,4 +37,12 @@ describe RDoc::Generator::SDoc do
     err.wont_match(/^invalid options/)
     @options.github.must_equal true
   end
+
+  it "should display SDoc version on -v or --version" do
+    out_full  = `./bin/sdoc --version`
+    out_short = `./bin/sdoc -v`
+
+    out_short.strip.must_equal SDoc::VERSION
+    out_full.strip.must_equal SDoc::VERSION
+  end
 end

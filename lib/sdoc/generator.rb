@@ -6,6 +6,7 @@ require 'json'
 require 'sdoc/github'
 require 'sdoc/templatable'
 require 'sdoc/helpers'
+require 'sdoc/version'
 require 'rdoc'
 
 class RDoc::ClassModule
@@ -59,6 +60,10 @@ class RDoc::Generator::SDoc
     end
     opt.separator nil
 
+    opt.on("--version", "-v", "Output current version") do
+      puts SDoc::VERSION
+      exit
+    end
   end
 
   def initialize(store, options)

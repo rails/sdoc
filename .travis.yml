@@ -1,15 +1,16 @@
 language: ruby
 cache: bundler
 before_install:
+  - gem update --system
   - gem install bundler
 rvm:
   - 1.9.3
   - 2.0.0
   - 2.1.0
-  - 2.2.9
-  - 2.3.6
-  - 2.4.2
-  - 2.5.0
+  - 2.2.10
+  - 2.3.7
+  - 2.4.4
+  - 2.5.1
   - ruby-head
   - jruby-head
 matrix:
@@ -17,10 +18,10 @@ matrix:
     - env: rdoc=master
     - rvm: jruby-head
   include:
-    - { rvm: 2.2.9, env: rdoc=master }
-    - { rvm: 2.3.6, env: rdoc=master }
-    - { rvm: 2.4.2, env: rdoc=master }
-    - { rvm: 2.5.0, env: rdoc=master }
+    - { rvm: 2.2.10, env: rdoc=master }
+    - { rvm: 2.3.7, env: rdoc=master }
+    - { rvm: 2.4.4, env: rdoc=master }
+    - { rvm: 2.5.1, env: rdoc=master }
     - { rvm: ruby-head, env: rdoc=master }
     - { rvm: jruby-head, env: rdoc=master }
 notifications:

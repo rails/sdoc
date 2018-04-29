@@ -1,6 +1,6 @@
 # SDoc
 
-[![Build Status](https://travis-ci.org/zzak/sdoc.png?branch=master)](https://travis-ci.org/zzak/sdoc)
+[![Build Status](https://travis-ci.org/zzak/sdoc.svg?branch=master)](https://travis-ci.org/zzak/sdoc)
 
 **Powering http://api.rubyonrails.org/**
 

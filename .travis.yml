@@ -1,7 +1,7 @@
 language: ruby
 cache: bundler
 before_install:
-  - gem update --system
+  - gem update --system || gem update --system 2.7.8
   - gem install bundler
 rvm:
   - 1.9.3

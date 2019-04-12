@@ -118,6 +118,7 @@ class RDoc::Generator::SDoc
     debug_msg "Generating index file in #@outputdir"
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
+    rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
 
     self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
   end
@@ -192,16 +193,23 @@ class RDoc::Generator::SDoc
 
   ### Determines index path based on @options.main_page (or lack thereof)
   def index_path
-    # Break early to avoid a big if block when no main page is specified
-    default = @files.first.path
-    return default unless @options.main_page
-
     # Transform class name to file path
     if @options.main_page.include?("::")
       slashed = @options.main_page.sub(/^::/, "").gsub("::", "/")
       "%s/%s.html" % [ class_dir, slashed ]
-    elsif file = @files.find { |f| f.full_name == @options.main_page }
-      file.path
+    else
+      index.path
+    end
+  end
+
+  ### Determines index page based on @options.main_page (or lack thereof)
+  def index
+    # Break early to avoid a big if block when no main page is specified
+    default = @files.first
+    return default unless @options.main_page
+
+    if file = @files.find { |f| f.full_name == @options.main_page }
+      file
     else
       default
     end

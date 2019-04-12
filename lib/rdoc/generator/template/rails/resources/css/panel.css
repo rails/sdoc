@@ -1,15 +1,14 @@
 /* Panel (begin) */
     .panel
     {
-        position: absolute;
-        width: 100%;
+        position: fixed;
+        width: 300px;
         height: 100%;
-        top: 0;
-        left: 0;
         background: #FFF;
         z-index: 2;
         font-family: "Helvetica Neue", "Arial", sans-serif;
         overflow-x: hidden;
+        border-right: 1px #ccc solid;
     }
 
     .panel_tree .results,
@@ -25,11 +24,11 @@
             background-position: 5px;
             box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
             height: 40px;
-            width: 100%;
-            position: absolute;
+            width: 300px;
+            position: fixed;
             left: 0; top: 0;
             z-index: 300;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .panel .header input
@@ -52,9 +51,9 @@
     /* Results (begin) */
         .panel .result
         {
-            position: absolute;
-            top: 40px;
+            position: relative;
             bottom: 0;
+            top: 40px;
             left: 0;
             width: 100%;
             overflow-y: scroll;
@@ -74,6 +73,7 @@
             overflow: hidden;
             padding: 4px 10px 0 10px;
             cursor: pointer;
+            margin: 0;
         }
 
         .panel .result ul li:nth-child(2n) {
@@ -85,6 +85,7 @@
             font-size: 13px;
             font-weight: normal;
             color: #333;
+            margin-top: 0;
             margin-bottom: 2px;
             white-space: nowrap;
         }
@@ -217,7 +218,7 @@
         .panel .tree
         {
             background: white;
-            position: absolute;
+            position: relative;
             top: 40px;
             bottom: 0;
             left: 0;
@@ -239,6 +240,7 @@
             overflow: hidden;
             height: 30px;
             line-height: 100%;
+            margin: 0;
         }
 
 
@@ -274,6 +276,7 @@
             font-size: 13px;
             font-weight: normal;
             color: #000;
+            margin-top: 0;
             margin-bottom: 2px;
             white-space: nowrap;
         }

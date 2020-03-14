@@ -1,3 +1,15 @@
+1.0.0
+=====
+
+* #110 - Strip out HTML tags from search results description
+* #109 - Add basic SEO tags
+* #108 - Tiny refresh of the Rails theme
+* e6f02b91 - Remove the jQuery effect library
+* 73ace366 - Remove the `--without-search` option
+* b1d429f2 - Produce HTML 5 output
+* 38d06095 - Support only RDoc 5 and up
+* #96 - Require at least Ruby 1.9.3
+
 0.4.2
 =====
 

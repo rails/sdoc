@@ -1,3 +1,9 @@
+1.1.0
+=====
+
+* #138 - Fix panel header overflow on Chrome
+* 39e6cae9 - Display version using `-v` or `--version` flags
+
 1.0.0
 =====
 

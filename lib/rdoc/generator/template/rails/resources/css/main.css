@@ -1,31 +1,25 @@
 body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background: #FFF;
   color: #3B3B3B;
-  margin: 0px;
-  font-size: 15px;
-  line-height: 1.25em;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-a:link, a:active, a:visited, a:hover {
-  color: #CC0000;
+a:link, a:active, a:visited {
+  color: #c00;
   text-decoration: none;
 }
 
 a:hover {
-  color: #990000;
+  color: #900;
   text-decoration: underline;
 }
 
-.banner a:hover {
-  color: white;
-}
-
-h1 a, h2 a, .banner a {
-  color: #fff;
-}
-
-h1 a:hover, h2 a:hover {
+h1 a, h1 a:hover,
+h2 a, h2 a:hover,
+.banner a, .banner a:hover {
   color: #fff;
 }
 
@@ -35,158 +29,140 @@ p {
 }
 
 h1 {
-    font-size: 2.1em;
-    font-weight: normal;
-    line-height: 1.2em;
-    margin: 1.4em 0 0.7em 0;
+  font-size: 2.1em;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 1.4em 0 0.7em 0;
 }
 
 h2 {
-    font-size: 1.6em;
-    margin: 1.8em 0 0.8em 0;
-    font-weight: normal;
-    line-height: 1.2em;
+  font-size: 1.6em;
+  margin: 1.8em 0 0.8em 0;
+  font-weight: normal;
+  line-height: 1.2em;
 }
 
 h3 {
-    font-size: 1.4em;
-    color:#555;
-    margin: 1.4em 0 0.7em 0;
-    font-weight: normal;
+  font-size: 1.4em;
+  color:#555;
+  margin: 1.4em 0 0.7em 0;
+  font-weight: normal;
 }
 
 h4 {
-    margin: 1.4em 0 0.5em 0;
-    font-size: 1em;
+  margin: 1.4em 0 0.5em 0;
+  font-size: 1em;
 }
 
-table
-{
-    margin-bottom: 1em;
+table {
+  margin-bottom: 1em;
 }
 
-td, th
-{
-    padding: 0 0.7em 0.3em 0;
+td, th {
+  padding: 0 0.7em 0.3em 0;
 }
 
-th
-{
-    font-weight: bold;
+th {
+  font-weight: bold;
 }
 
-.clear
-{
-    clear: both;
-    width: 0; height: 0;
+.clear {
+  clear: both;
+  width: 0; height: 0;
 }
 
-dt
-{
-    margin-bottom: 0.3em;
-    font-weight: bold;
+dt {
+  margin-bottom: 0.3em;
+  font-weight: bold;
 }
 
-dd
-{
-    margin-left: 2em;
-    margin-bottom: 1em;
+dd {
+  margin-left: 2em;
+  margin-bottom: 1em;
 }
 
-dd p
-{
-    margin-top: 0.6em;
+dd p {
+  margin-top: 0.6em;
 }
 
-li
-{
-    margin: 0 0 0.5em 2em;
+li {
+  margin: 0 0 0.5em 2em;
 }
 
-ul li
-{
-    list-style: disc;
+ul li {
+  list-style: disc;
 }
 
-ol li
-{
-    list-style: decimal;
+ol li {
+  list-style: decimal;
 }
 
-.banner
-{
-    background: #B61D1D;
-    color: #FFF;
-    border-bottom: 1px solid #9b281c;
-    padding: 1em;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-}
-.banner h1
-{
-    font-size: 1.2em;
-    margin: 0;
+.banner {
+  background: #B61D1D;
+  color: #FFF;
+  border-bottom: 1px solid #9b281c;
+  padding: 1em;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.banner h1 .type
-{
-    font-size: 0.833em;
-    display:block;
+.banner h1 {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.banner h1 .type {
+  font-size: 0.833em;
+  display:block;
 }
 
 .banner h1 .type,
-.banner h1 .parent
-{
-    color: #CCC;
+.banner h1 .parent {
+  color: #CCC;
 }
 
-.banner ul
-{
-    margin-top: 0.3em;
-    margin-bottom: 0;
-    font-size: 0.85em;
+.banner ul {
+  margin-top: 0.3em;
+  margin-bottom: 0;
+  font-size: 0.85em;
 }
 
-.banner li
-{
-    list-style: none;
-    margin-left: 0;
-    margin-bottom: 0;
+.banner li {
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 0;
 }
 
 .banner .github_url {
   color: #CCC;
 }
 
-pre
-{
-    margin-bottom: 1em;
+pre {
+  margin-bottom: 1em;
 }
 
-.methods dt
-{
-    width: 1em;
-    font-size: 1.5em;
-    color:#AAA;
-    position: absolute;
-    font-weight: normal;
-    margin: 0;
+.methods dt {
+  width: 1em;
+  font-size: 1.5em;
+  line-height: 1.15;
+  color:#AAA;
+  position: absolute;
+  font-weight: normal;
+  margin: 0;
 }
 
-.methods dd
-{
-    margin-left: 2.5em;
-    min-height: 1.8em;
-    -height: 1.8em;
-    padding-bottom: 0.8em;
+.methods dd {
+  margin-left: 2.5em;
+  min-height: 1.8em;
+  -height: 1.8em;
+  padding-bottom: 0.8em;
 }
 
 
-.methods ul li
-{
-    margin-right: 0.7em;
-    margin-left: 0;
-    list-style: none;
-    display: inline;
+.methods ul li {
+  margin-right: 0.7em;
+  margin-left: 0;
+  list-style: none;
+  display: inline;
 }
 
 #content {
@@ -195,7 +171,6 @@ pre
   margin-right: 3.5em;
   max-width: 980px;
 }
-
 
 .sectiontitle {
   margin-top: 2em;
@@ -243,10 +218,15 @@ tt {
 .dyn-source {
   display: none;
   background: #fffde8;
-  color: #000;
   border: #ffe0bb dotted 1px;
   margin: 0.5em 2em 0.5em 0;
-  padding: 0.5em;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.dyn-source pre {
+  margin: 0;
 }
 
 .dyn-source .cmt {
@@ -260,35 +240,37 @@ tt {
 }
 
 .description pre {
-  padding: 0.5em;
-  background: #EEEEEE;
-  font-size: 15px;
+  padding: 16px;
+  background: #f6f8fa;
+  font-size: 14px;
+  line-height: 1.45;
   overflow-x: scroll;
 }
 
 .method {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
 }
+
 .method .description,
-.method .sourcecode
-{
-    margin-left: 1.2em;
+.method .sourcecode {
+  margin-left: 1.2em;
 }
-.method h4
-{
-    border-bottom: 1px dotted #999;
-    padding: 0 0 0.2em 0;
-    margin-bottom: 0.8em;
-    font-size: 1.1em;
-    color:#333;
+
+.method h4 {
+  border-bottom: 1px dotted #999;
+  padding: 0 0 0.2em 0;
+  margin-bottom: 0.8em;
+  font-size: 1.1em;
+  color:#333;
 }
+
 .method .method-title {
-    border-bottom: 1px dotted #666;
-    padding: 0 0 0.15em 0;
-    margin: 0 0 0.5em 0;
-    font-size: 1.2em;
-    line-height: 1.25em;
-    position: relative;
+  border-bottom: 1px dotted #666;
+  padding: 0 0 0.15em 0;
+  margin: 0 0 0.5em 0;
+  font-size: 1.2em;
+  line-height: 1.25em;
+  position: relative;
 }
 
 .method .method-title a.permalink {
@@ -309,46 +291,55 @@ tt {
   text-indent: 2em;
 }
 
-.method .source-link
-{
-    font-size: 0.85em;
+.method .source-link {
+  font-size: 0.85em;
 }
 
 .ruby-constant {
   color: teal;
 }
+
 .ruby-keyword {
   color: #000;
   font-weight: bold
 }
+
 .ruby-title {
   color: #900;
   font-weight: bold;
 }
+
 .ruby-ivar {
   color: teal;
 }
+
 .ruby-operator {
   color: #000;
   font-weight: bold
 }
+
 .ruby-identifier {
   color: #000;
 }
+
 .ruby-string,
 .ruby-node {
   color: #D14;
 }
+
 .ruby-comment {
   color: #998;
   font-style: italic;
 }
+
 .ruby-regexp {
   color: #009926;
 }
+
 .ruby-value {
   color: #990073;
 }
+
 .ruby-number {
   color: #40A070;
 }
@@ -363,12 +354,14 @@ tt {
   animation-duration: 1s;
 }
 
+pre, code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
 p code {
-  background: #eeeeee;
-  border-radius: 2px;
-  border: 1px solid #dddddd;
-  font-family: Consolas, Menlo, Courier, monospace;
-  font-size: 14px;
-  margin-bottom: 1px;
-  padding: 0 5px;
+  background: #eee;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-bottom: 0;
+  padding: 0.2em 0.4em;
 }

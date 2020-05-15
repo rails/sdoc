@@ -9,6 +9,7 @@
         font-family: "Helvetica Neue", "Arial", sans-serif;
         overflow-x: hidden;
         border-right: 1px #ccc solid;
+        line-height: 1;
     }
 
     .panel_tree .results,

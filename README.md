@@ -90,6 +90,16 @@ Please feel free to still report issues here for both projects, especially if yo
 
 As maintainer of both projects, I'll see if I can identify the root of the cause :bow: :bow: :bow:
 
+## Contributing
+
+If you'd like to contribute you can generate the Rails documentation by running:
+
+```bash
+rake test:rails
+```
+
+This task will generate documentation for the Rails master branch.
+Since the task doesn't do any file filtering it contains a lot of extra pages.
 
 ### Who?
 

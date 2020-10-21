@@ -6,7 +6,11 @@ module SDoc::Templatable
   ### Both +templatefile+ and +outfile+ should be Pathname-like objects.
   def eval_template(templatefile, context)
     template_src = templatefile.read
-    template = ERB.new( template_src, nil, '<>' )
+    template = if ERB.instance_method(:initialize).parameters.assoc(:key) # Ruby 2.6+
+      ERB.new( template_src, trim_mode: '<>' )
+    else
+      ERB.new( template_src, nil, '<>' )
+    end
     template.filename = templatefile.to_s
 
     begin

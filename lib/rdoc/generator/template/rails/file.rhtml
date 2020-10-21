@@ -3,10 +3,13 @@
 <head>
     <title><%= h file.name %></title>
     <meta charset="<%= @options.charset %>" />
-    <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix} %>
+    <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix, :tree_keys => [] } %>
 </head>
 
 <body>
+
+    <%= include_template '_panel.rhtml' %>
+
     <div class="banner">
         <% if ENV['HORO_PROJECT_NAME'] %>
             <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />

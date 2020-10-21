@@ -1,11 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <meta charset="<%= @options.charset %>">
-    <title><%= @options.title %></title>
+    <title><%= h index.name %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=<%= @options.charset %>" />
+    <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix, tree_keys: []} %>
 </head>
-<frameset cols="300,*" frameborder="1" border="1" bordercolor="#999999" framespacing="1">
-    <frame src="panel/index.html" title="Search" name="panel" />
-    <frame src="<%= index_path %>" name="docwin" />
-</frameset>
+
+<body>
+
+    <%= include_template '_panel.rhtml' %>
+
+    <div class="banner">
+        <% if ENV['HORO_PROJECT_NAME'] %>
+            <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />
+        <% end %>
+        <h1>
+            <%= h index.name %>
+        </h1>
+        <ul class="files">
+            <li><%= h index.relative_name %></li>
+            <li>Last modified: <%= index.last_modified %></li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <%= include_template '_context.rhtml', {:context => index } %>
+    </div>
+  </body>
 </html>
+

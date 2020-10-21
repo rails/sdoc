@@ -1,6 +1,39 @@
-<link rel="stylesheet" href="<%= "#{rel_prefix}/css/reset.css" %>" type="text/css" media="screen" />
-<link rel="stylesheet" href="<%= "#{rel_prefix}/css/main.css" %>" type="text/css" media="screen" />
-<link rel="stylesheet" href="<%= "#{rel_prefix}/css/github.css" %>" type="text/css" media="screen" />
-<script src="<%= "#{rel_prefix}/js/jquery-1.3.2.min.js" %>" type="text/javascript" charset="utf-8"></script>
-<script src="<%= "#{rel_prefix}/js/main.js" %>" type="text/javascript" charset="utf-8"></script>
-<script src="<%= "#{rel_prefix}/js/highlight.pack.js" %>" type="text/javascript" charset="utf-8"></script>
+<%
+  # Turbolinks does not consider relative urls similar, resulting in page
+  # reloads and losing the context of the panel. Emptying the rel_prefix makes
+  # asset paths absolute. This breaks opening the docs locally. Maybe all
+  # generated docs should be in the same folder?
+  rel_prefix = ''
+%>
+<link rel="stylesheet" href="<%= "#{rel_prefix}/css/reset.css" %>" type="text/css" media="screen" data-turbolinks-track="reload" />
+<link rel="stylesheet" href="<%= "#{rel_prefix}/css/panel.css" %>" type="text/css" media="screen" data-turbolinks-track="reload" />
+<link rel="stylesheet" href="<%= "#{rel_prefix}/css/main.css" %>" type="text/css" media="screen" data-turbolinks-track="reload" />
+<link rel="stylesheet" href="<%= "#{rel_prefix}/css/github.css" %>" type="text/css" media="screen" data-turbolinks-track="reload" />
+<script src="<%= "#{rel_prefix}/js/jquery-3.5.1.min.js" %>" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
+<script src="<%= "#{rel_prefix}/js/main.js" %>" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
+<script src="<%= "#{rel_prefix}/js/highlight.pack.js" %>" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
+<script src="<%= rel_prefix %>/js/turbolinks.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
+<script src="<%= rel_prefix %>/js/search_index.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
+<script src="<%= rel_prefix %>/js/searcher.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
+<script src="<%= rel_prefix %>/panel/tree.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
+<script src="<%= rel_prefix %>/js/searchdoc.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
+<script type="text/javascript" charset="utf-8">
+document.addEventListener("turbolinks:load", function() {
+  // Only initialize panel if not yet initialized
+  if(!$('#panel .tree ul li').length) {
+    $('#links').hide();
+    var panel = new Searchdoc.Panel($('#panel'), search_data, tree, '<%= rel_prefix %>/');
+    $('#search').focus();
+    var s = window.location.search.match(/\?q=([^&]+)/);
+    if (s) {
+      s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
+      if (s.length > 0) {
+        $('#search').val(s);
+        panel.search(s, true);
+      }
+    }
+    panel.toggle(<%= tree_keys %>);
+  }
+})
+</script>
+

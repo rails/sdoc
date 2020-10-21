@@ -3,7 +3,7 @@
 <head>
     <title><%= h klass.full_name %></title>
     <meta charset="<%= @options.charset %>" />
-    <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix} %>
+    <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix, :tree_keys => klass.full_name.split('::') } %>
 
     <meta property="og:title" value="<%= klass.full_name %>">
 
@@ -20,6 +20,9 @@
 </head>
 
 <body>
+
+    <%= include_template '_panel.rhtml' %>
+
     <div class="banner">
         <% if ENV['HORO_PROJECT_NAME'] %>
             <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />
@@ -43,6 +46,7 @@
             <% end  %>
         </ul>
     </div>
+
     <div id="bodyContent">
         <%= include_template '_context.rhtml', {:context => klass, :rel_prefix => rel_prefix} %>
     </div>

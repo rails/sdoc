@@ -16,9 +16,9 @@
         <% if ENV['HORO_PROJECT_NAME'] %>
             <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />
         <% end %>
-        <h1>
+        <h2>
             <%= h index.name %>
-        </h1>
+        </h2>
         <ul class="files">
             <li><%= h index.relative_name %></li>
             <li>Last modified: <%= index.last_modified %></li>

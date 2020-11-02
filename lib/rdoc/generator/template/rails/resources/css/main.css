@@ -125,20 +125,20 @@ ol li
     padding: 1em;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
-.banner h1
+.banner h2
 {
     font-size: 1.2em;
     margin: 0;
 }
 
-.banner h1 .type
+.banner h2 .type
 {
     font-size: 0.833em;
     display:block;
 }
 
-.banner h1 .type,
-.banner h1 .parent
+.banner h2 .type,
+.banner h2 .parent
 {
     color: #CCC;
 }

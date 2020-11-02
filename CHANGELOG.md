@@ -1,3 +1,9 @@
+2.0.0
+=====
+
+* #137 Replace frames based implementation with a css
+* #132 Deprecate safe_level of ERB.new in Ruby 2.6
+
 1.1.0
 =====
 

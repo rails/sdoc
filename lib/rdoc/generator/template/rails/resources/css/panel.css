@@ -320,13 +320,13 @@
 
         .panel .tree ul li.current .icon
         {
-            background: url(../i/arrow-right.svg);
+            background: url(../i/arrow-down-current.svg);
             background-size: 10px;
         }
 
         .panel .tree ul li.current.closed .icon
         {
-            background: url(../i/arrow-down.svg);
+            background: url(../i/arrow-right-current.svg);
             background-size: 10px;
         }
 

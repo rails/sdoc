@@ -24,7 +24,7 @@
         <% if ENV['HORO_PROJECT_NAME'] %>
             <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />
         <% end %>
-        <h1>
+        <h2>
             <span class="type"><%= klass.module? ? 'Module' : 'Class' %></span>
             <%= h klass.full_name %>
             <% if klass.type == 'class' %>
@@ -36,7 +36,7 @@
                     <% end %>
                 </span>
             <% end %>
-        </h1>
+        </h2>
         <ul class="files">
             <% klass.in_files.each do |file| %>
             <li><a href="<%= "#{rel_prefix}/#{h file.path}" %>"><%= h file.absolute_name %></a></li>

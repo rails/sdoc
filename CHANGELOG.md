@@ -1,3 +1,10 @@
+2.0.1
+=====
+
+* #142 Fix arrow icons for selected panel items 
+* #141 Always use only one metatag for keywords
+* #140 Use h2 instead of h1 for banner header
+
 2.0.0
 =====
 

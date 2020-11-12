@@ -101,6 +101,14 @@ rake test:rails
 This task will generate documentation for the Rails master branch.
 Since the task doesn't do any file filtering it contains a lot of extra pages.
 
+To view the just generated documentation start up a rack application by running:
+
+```bash
+rackup config.ru
+```
+
+Then open http://localhost:9292 in the browser to view the documentation.
+
 ### Who?
 
 * Vladimir Kolesnikov ([voloko](https://github.com/voloko))

@@ -1,3 +1,8 @@
+2.0.3
+=====
+
+* Use @options.title for the index
+
 2.0.2
 =====
 

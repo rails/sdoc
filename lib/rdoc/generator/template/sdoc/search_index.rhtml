@@ -1,5 +1,7 @@
-<html>
-    <head>File index</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>File index</title>
     <body>
     <% @files.each do |file| %>
       <a href="../<%= file.path %>"><%= file.relative_name %></a>

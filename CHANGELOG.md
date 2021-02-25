@@ -1,7 +1,13 @@
+2.0.4
+=====
+
+* #149 Using HTML5 doctype accross all HTML files. [@MikeRogers0](https://github.com/MikeRogers0)
+* #148 Fix overflow CSS property of panel elements. [@cveneziani](https://github.com/cveneziani)
+
 2.0.3
 =====
 
-* Use @options.title for the index
+* #147 Use @options.title for the index [@p8](https://github.com/p8)
 
 2.0.2
 =====
@@ -11,14 +17,14 @@
 2.0.1
 =====
 
-* #142 Fix arrow icons for selected panel items
-* #141 Always use only one metatag for keywords
-* #140 Use h2 instead of h1 for banner header
+* #142 Fix arrow icons for selected panel items [@p8](https://github.com/p8)
+* #141 Always use only one metatag for keywords [@p8](https://github.com/p8)
+* #140 Use h2 instead of h1 for banner header [@p8](https://github.com/p8)
 
 2.0.0
 =====
 
-* #137 Replace frames based implementation with a css
+* #137 Replace frames based implementation with a css [@p8](https://github.com/p8)
 * #132 Deprecate safe_level of ERB.new in Ruby 2.6
 
 1.1.0

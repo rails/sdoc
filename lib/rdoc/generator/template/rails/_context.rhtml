@@ -101,7 +101,7 @@
 
     <% unless constants.empty? %>
       <!-- Section constants -->
-      <div class="sectiontitle">Constants</div>
+      <h2 class="sectiontitle">Constants</h2>
       <table border='0' cellpadding='5'>
         <% constants.each do |const| %>
           <tr valign='top'>
@@ -122,7 +122,7 @@
 
     <% unless attributes.empty? %>
       <!-- Section attributes -->
-      <div class="sectiontitle">Attributes</div>
+      <h2 class="sectiontitle">Attributes</h2>
       <table border='0' cellpadding='5'>
         <% attributes.each do |attrib| %>
           <tr valign='top'>
@@ -145,17 +145,17 @@
         visibilities.each do |visibility, methods|
           next if methods.empty?
     %>
-      <div class="sectiontitle"><%= type.capitalize %> <%= visibility.to_s.capitalize %> methods</div>
+      <h2 class="sectiontitle"><%= type.capitalize %> <%= visibility.to_s.capitalize %> methods</h2>
       <% methods.each do |method| %>
         <div class="method">
-          <div class="title method-title" id="<%= method.aref %>">
+          <h3 class="title method-title" id="<%= method.aref %>">
             <% if method.call_seq %>
               <b><%= method.call_seq.gsub(/->/, '&rarr;').gsub(/\n(.)/, '<br />\1') %></b>
             <% else %>
               <b><%= h method.name %></b><%= h method.params %>
             <% end %>
             <a href="<%= "#{rel_prefix}/#{context.path}##{method.aref}"%>" name="<%= method.aref %>" class="permalink">Link</a>
-          </div>
+          </h3>
 
           <% if method.comment %>
             <div class="description">

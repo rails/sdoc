@@ -3,6 +3,7 @@
 <head>
     <title><%= h klass.full_name %></title>
     <meta charset="<%= @options.charset %>" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix, :tree_keys => klass.full_name.split('::') } %>
 
     <meta property="og:title" value="<%= klass.full_name %>">

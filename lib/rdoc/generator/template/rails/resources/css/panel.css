@@ -1,7 +1,91 @@
 /* Panel (begin) */
+    .panel_checkbox, .panel_mobile_button, .panel_mobile_button_close
+    {
+        display: none;
+    }
+
+    @media (max-width: 39.99em) {
+        .panel_mobile_button {
+            display: block;
+            height: 40px;
+            position: sticky;
+            top: 0;
+            background: #000;
+            color: #fff;
+            padding-right: 10px;
+            text-align: right;
+            line-height: 40px;
+            cursor: pointer;
+        }
+        .panel_checkbox:checked ~ .panel_mobile_button {
+        }
+
+        .panel_checkbox:checked ~ .panel .panel_mobile_button_close {
+            display: block;
+            height: 40px;
+            position: absolute;
+            top: 0;
+            right: 10px;
+            z-index: 3000;
+            text-align: right;
+            line-height: 40px;
+            cursor: pointer;
+        }
+    }
+
+    .panel_mobile_button span {
+         position: relative;
+         display: inline-block;
+         width: 1em;
+         height: 0.55em;
+         margin-right: 0.3em;
+         border-top: 0.1em solid #fff;
+         border-bottom: 0.1em solid #fff;
+    }
+
+    .panel_mobile_button span:before {
+         content: "";
+         position: absolute;
+         top: 0.25em;
+         left: 0px;
+         width: 100%;
+         border-top: 0.1em solid #fff;
+    }
+
+    .panel_mobile_button_close span {
+         position: relative;
+         display: inline-block;
+         width: 1em;
+         height: 0.625em;
+    }
+
+    .panel_mobile_button_close span:before, .panel_mobile_button_close span:after {
+         content: "";
+         position: absolute;
+         top: 0.2em;
+         left: 0px;
+         width: 100%;
+         border-top: 0.1em solid #000;
+    }
+
+    .panel_mobile_button_close span:before {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .panel_mobile_button_close span:after {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
     .panel
     {
         position: fixed;
+        top: 0;
         width: 300px;
         height: 100%;
         background: #FFF;
@@ -10,6 +94,34 @@
         overflow-x: hidden;
         border-right: 1px #ccc solid;
         line-height: 1;
+    }
+
+    @media (max-width: 39.99em) {
+        .panel
+        {
+            -webkit-transform:translate(-100%, 0);
+            -moz-transform:translate(-100%, 0);
+            -ms-transform:translate(-100%, 0);
+            transform:translate(-100%, 0);
+             -webkit-transition:transform 0s ease-in-out;
+            -moz-transition:transform 0s ease-in-out;
+            -ms-transition:transform 0s ease-in-out;
+            transition:transform 0s ease-in-out;
+            opacity: 0;
+            width: 100%
+        }
+
+        .panel_checkbox:checked ~ .panel {
+            -webkit-transform:translate(0, 0);
+            -moz-transform:translate(0, 0);
+            -ms-transform:translate(0, 0);
+            transform:translate(0, 0);
+            -webkit-transition:transform 0.3s ease-in-out;
+            -moz-transition:transform 0.3s ease-in-out;
+            -ms-transition:transform 0.3s ease-in-out;
+            transition:transform 0.3s ease-in-out;
+            opacity: 1;
+        }
     }
 
     .panel_tree .results,
@@ -27,9 +139,17 @@
             height: 40px;
             width: 300px;
             position: fixed;
+            position: sticky;
             left: 0; top: 0;
             z-index: 300;
             overflow-x: hidden;
+        }
+
+        @media (max-width: 39.99em) {
+            .panel .header
+            {
+                width: 100%;
+            }
         }
 
         .panel .header input
@@ -220,7 +340,6 @@
         {
             background: white;
             position: relative;
-            top: 40px;
             bottom: 0;
             left: 0;
             width: 100%;

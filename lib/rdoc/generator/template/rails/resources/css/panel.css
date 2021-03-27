@@ -94,15 +94,17 @@
     @media (max-width: 39.99em) {
         .panel
         {
-            transition: left 0.3s ease-in-out;
+            transition: left 0s ease-in-out;
             left: -100%;
             width: 100%;
             bottom: 0;
+            visibility: hidden; 
         }
 
         .panel_checkbox:checked ~ .panel {
             left: 0%;
             transition: left 0.3s ease-in-out;
+            visibility: visible;
         }
     }
 

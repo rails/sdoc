@@ -93,15 +93,15 @@
     @media (max-width: 39.99em) {
         .panel
         {
-            transform:translate(-100%, 0);
-            transition:transform 0s ease-in-out;
+            transform: translate(-100%, 0);
+            transition: transform 0s ease-in-out;
             opacity: 0;
             width: 100%
         }
 
         .panel_checkbox:checked ~ .panel {
-            transform:translate(0, 0);
-            transition:transform 0.3s ease-in-out;
+            transform: translate(0, 0);
+            transition: transform 0.3s ease-in-out;
             opacity: 1;
         }
     }

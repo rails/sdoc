@@ -16,6 +16,7 @@
             text-align: right;
             line-height: 40px;
             cursor: pointer;
+            z-index: 2;
         }
         .panel_checkbox:checked ~ .panel_mobile_button {
         }
@@ -83,7 +84,7 @@
         width: 300px;
         height: 100%;
         background: #FFF;
-        z-index: 2;
+        z-index: 10;
         font-family: "Helvetica Neue", "Arial", sans-serif;
         overflow-x: hidden;
         border-right: 1px #ccc solid;
@@ -93,15 +94,15 @@
     @media (max-width: 39.99em) {
         .panel
         {
-            transform: translate(-100%, 0);
-            transition: transform 0s ease-in-out;
+            transition: left 0.3s ease-in-out;
+            left: -100%;
             width: 100%;
             bottom: 0;
         }
 
         .panel_checkbox:checked ~ .panel {
-            transform: translate(0, 0);
-            transition: transform 0.3s ease-in-out;
+            left: 0%;
+            transition: left 0.3s ease-in-out;
         }
     }
 

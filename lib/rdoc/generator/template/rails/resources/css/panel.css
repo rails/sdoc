@@ -69,16 +69,10 @@
     }
 
     .panel_mobile_button_close span:before {
-        -webkit-transform: rotate(45deg);
-        -moz-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
         transform: rotate(45deg);
     }
 
     .panel_mobile_button_close span:after {
-        -webkit-transform: rotate(-45deg);
-        -moz-transform: rotate(-45deg);
-        -ms-transform: rotate(-45deg);
         transform: rotate(-45deg);
     }
 
@@ -99,26 +93,14 @@
     @media (max-width: 39.99em) {
         .panel
         {
-            -webkit-transform:translate(-100%, 0);
-            -moz-transform:translate(-100%, 0);
-            -ms-transform:translate(-100%, 0);
             transform:translate(-100%, 0);
-             -webkit-transition:transform 0s ease-in-out;
-            -moz-transition:transform 0s ease-in-out;
-            -ms-transition:transform 0s ease-in-out;
             transition:transform 0s ease-in-out;
             opacity: 0;
             width: 100%
         }
 
         .panel_checkbox:checked ~ .panel {
-            -webkit-transform:translate(0, 0);
-            -moz-transform:translate(0, 0);
-            -ms-transform:translate(0, 0);
             transform:translate(0, 0);
-            -webkit-transition:transform 0.3s ease-in-out;
-            -moz-transition:transform 0.3s ease-in-out;
-            -ms-transition:transform 0.3s ease-in-out;
             transition:transform 0.3s ease-in-out;
             opacity: 1;
         }

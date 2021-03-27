@@ -109,6 +109,7 @@
 
         .panel_checkbox:checked ~ #bodyContent {
             visibility: hidden;
+            display: none;
         }
     }
 

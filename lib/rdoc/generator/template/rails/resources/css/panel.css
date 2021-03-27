@@ -106,6 +106,10 @@
             transition: left 0.3s ease-in-out;
             visibility: visible;
         }
+
+        .panel_checkbox:checked ~ #bodyContent {
+            visibility: hidden;
+        }
     }
 
     .panel_tree .results,

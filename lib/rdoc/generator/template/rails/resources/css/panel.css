@@ -148,6 +148,14 @@
             outline: none;
         }
 
+        @media (max-width: 39.99em) {
+            .panel .header input
+            {
+                width: 70%;
+                width: calc(100% - 100px);
+            }
+        }
+
     /* Header with search box (end) */
 
 

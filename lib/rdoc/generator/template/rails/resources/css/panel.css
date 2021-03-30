@@ -16,6 +16,7 @@
             text-align: right;
             line-height: 40px;
             cursor: pointer;
+            z-index: 2;
         }
         .panel_checkbox:checked ~ .panel_mobile_button {
         }
@@ -69,16 +70,10 @@
     }
 
     .panel_mobile_button_close span:before {
-        -webkit-transform: rotate(45deg);
-        -moz-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
         transform: rotate(45deg);
     }
 
     .panel_mobile_button_close span:after {
-        -webkit-transform: rotate(-45deg);
-        -moz-transform: rotate(-45deg);
-        -ms-transform: rotate(-45deg);
         transform: rotate(-45deg);
     }
 
@@ -89,7 +84,7 @@
         width: 300px;
         height: 100%;
         background: #FFF;
-        z-index: 2;
+        z-index: 10;
         font-family: "Helvetica Neue", "Arial", sans-serif;
         overflow-x: hidden;
         border-right: 1px #ccc solid;
@@ -99,28 +94,22 @@
     @media (max-width: 39.99em) {
         .panel
         {
-            -webkit-transform:translate(-100%, 0);
-            -moz-transform:translate(-100%, 0);
-            -ms-transform:translate(-100%, 0);
-            transform:translate(-100%, 0);
-             -webkit-transition:transform 0s ease-in-out;
-            -moz-transition:transform 0s ease-in-out;
-            -ms-transition:transform 0s ease-in-out;
-            transition:transform 0s ease-in-out;
-            opacity: 0;
-            width: 100%
+            transition: left 0s ease-in-out;
+            left: -100%;
+            width: 100%;
+            bottom: 0;
+            visibility: hidden; 
         }
 
         .panel_checkbox:checked ~ .panel {
-            -webkit-transform:translate(0, 0);
-            -moz-transform:translate(0, 0);
-            -ms-transform:translate(0, 0);
-            transform:translate(0, 0);
-            -webkit-transition:transform 0.3s ease-in-out;
-            -moz-transition:transform 0.3s ease-in-out;
-            -ms-transition:transform 0.3s ease-in-out;
-            transition:transform 0.3s ease-in-out;
-            opacity: 1;
+            left: 0%;
+            transition: left 0.3s ease-in-out;
+            visibility: visible;
+        }
+
+        .panel_checkbox:checked ~ #bodyContent {
+            visibility: hidden;
+            display: none;
         }
     }
 
@@ -166,6 +155,15 @@
             outline: none;
         }
 
+        @media (max-width: 39.99em) {
+            .panel .header input
+            {
+                width: 70%;
+                width: calc(100% - 100px);
+                font-size: 16px;
+            }
+        }
+
     /* Header with search box (end) */
 
 
@@ -174,7 +172,7 @@
         {
             position: relative;
             bottom: 0;
-            top: 40px;
+            top: 0;
             left: 0;
             width: 100%;
             overflow-y: auto;

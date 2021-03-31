@@ -7,19 +7,18 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         ruby:
-          - 1.9.3
-          - 2.0.0
-          - 2.1.0
-          - 2.2.10
-          - 2.3.7
-          - 2.4.4
-          - 2.5.1
-          - 2.6.0
+          - 2.1
+          - 2.2
+          - 2.3
+          - 2.4
+          - 2.5
+          - 2.6
           - 2.7
+          - 3.0
           - ruby-head
           - jruby-head
 

@@ -7,8 +7,10 @@ body {
   line-height: 1.25em;
 }
 
-.banner, #bodyContent {
-  margin-left: 300px;
+@media (min-width: 40em) {
+  .banner, #bodyContent {
+    margin-left: 300px;
+  }
 }
 
 a:link, a:active, a:visited, a:hover {

@@ -1,6 +1,6 @@
 # SDoc
 
-[![Build Status](https://travis-ci.org/zzak/sdoc.svg?branch=master)](https://travis-ci.org/zzak/sdoc)
+[![Tests](https://github.com/zzak/sdoc/actions/workflows/test.yml/badge.svg)](https://github.com/zzak/sdoc/actions/workflows/test.yml)
 
 **Powering http://api.rubyonrails.org/**
 

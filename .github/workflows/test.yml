@@ -11,7 +11,6 @@ jobs:
     strategy:
       matrix:
         ruby:
-          - '1.9'
           - '2.1'
           - '2.2'
           - '2.3'
@@ -22,6 +21,7 @@ jobs:
           - '3.0'
           - 'ruby-head'
           - 'jruby-head'
+          - 'truffleruby-head'
 
     steps:
       - uses: actions/checkout@v1

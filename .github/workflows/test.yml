@@ -6,21 +6,21 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
         ruby:
-          - 2.1
-          - 2.2
-          - 2.3
-          - 2.4
-          - 2.5
-          - 2.6
-          - 2.7
-          - 3.0
-          - ruby-head
-          - jruby-head
+          - '2.1'
+          - '2.2'
+          - '2.3'
+          - '2.4'
+          - '2.5'
+          - '2.6'
+          - '2.7'
+          - '3.0'
+          - 'ruby-head'
+          - 'jruby-head'
 
     steps:
       - uses: actions/checkout@v1

@@ -1,3 +1,10 @@
+2.1.0
+=====
+
+* #154 Make panel responsive for mobile [@MikeRogers0](https://github.com/MikeRogers0) and [@p8](https://github.com/p8)
+* #153 Add viewport metatag to views for improved Lighthouse score. [@MikeRogers0](https://github.com/MikeRogers0)
+* #150 Use semantic headers for better SEO [@p8](https://github.com/p8)
+
 2.0.4
 =====
 

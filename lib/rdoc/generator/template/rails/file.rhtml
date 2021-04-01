@@ -8,6 +8,8 @@
 </head>
 
 <body>
+    <a class="sr-only sr-only-focusable" href="#content" data-turbolinks="false">Skip to Content</a>
+    <a class="sr-only sr-only-focusable" href="#search" data-turbolinks="false">Skip to Search</a>
 
     <%= include_template '_panel.rhtml' %>
 
@@ -32,8 +34,8 @@
         </ul>
     </div>
 
-    <div id="bodyContent">
+    <main id="bodyContent">
         <%= include_template '_context.rhtml', {:context => file, :rel_prefix => rel_prefix} %>
-    </div>
+    </main>
   </body>
 </html>

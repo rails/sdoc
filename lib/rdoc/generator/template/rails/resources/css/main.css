@@ -374,3 +374,32 @@ p code {
   margin-bottom: 1px;
   padding: 0 5px;
 }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: fixed;
+  top: 10%;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  padding: 2rem;
+  border: 4px solid #990000;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%) !important;
+  left: 40%;
+  z-index: 100;
+  background: #fff;
+  font-size: 2rem;
+}

@@ -98,7 +98,7 @@ If you'd like to contribute you can generate the Rails documentation by running:
 rake test:rails
 ```
 
-This task will generate documentation for the Rails master branch.
+This task will generate documentation for the Rails main branch.
 Since the task doesn't do any file filtering it contains a lot of extra pages.
 
 To view the just generated documentation start up a rack application by running:

@@ -1,3 +1,11 @@
+Master
+======
+
+* #160 Remove outline from reset stylesheet [@p8](https://github.com/p8)
+* #159 Remove TAB override in panel [@p8](https://github.com/p8)
+* #157 Move to GitHub action for tests [@MikeRogers0](https://github.com/MikeRogers0)
+* #155 Fix Ctrl+C copying [Jan Schär](https://github.com/jscissr)
+
 2.1.0
 =====
 

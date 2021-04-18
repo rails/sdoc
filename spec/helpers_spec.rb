@@ -19,14 +19,14 @@ describe SDoc::Helpers do
       ]
 
       strings.each do |(html, stripped)|
-        @helpers.strip_tags(html).must_equal stripped
+        _(@helpers.strip_tags(html)).must_equal stripped
       end
     end
   end
 
   describe "#truncate" do
     it "should truncate the given text around a given length" do
-      @helpers.truncate("Hello world", length: 5).must_equal "Hello."
+      _(@helpers.truncate("Hello world", length: 5)).must_equal "Hello."
     end
   end
 end

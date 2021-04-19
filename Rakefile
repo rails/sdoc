@@ -27,6 +27,9 @@ namespace :test do
     rdoc.rdoc_dir = 'doc/rails'
     rdoc.generator = 'sdoc'
     rdoc.template = 'rails'
+    rdoc.title = 'Ruby on Rails'
+    rdoc.main = 'rails/README.md'
+    rdoc.options << '--exclude=test'
 
     rdoc.rdoc_files.include("rails/")
   end

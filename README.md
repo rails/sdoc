@@ -92,14 +92,19 @@ As maintainer of both projects, I'll see if I can identify the root of the cause
 
 ## Contributing
 
-If you'd like to contribute you can generate the Rails documentation by running:
+If you'd like to contribute you can generate the Rails main branch documentation by running:
 
 ```bash
 rake test:rails
 ```
 
-This task will generate documentation for the Rails main branch.
+You can generate the Ruby default branch documentation by running:
 
+```bash
+rake test:ruby
+```
+
+The generated documentation will be put into `doc/public` directory.
 To view the just generated documentation start up a rack application by running:
 
 ```bash

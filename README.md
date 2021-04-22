@@ -99,7 +99,6 @@ rake test:rails
 ```
 
 This task will generate documentation for the Rails main branch.
-Since the task doesn't do any file filtering it contains a lot of extra pages.
 
 To view the just generated documentation start up a rack application by running:
 

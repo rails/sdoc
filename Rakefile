@@ -21,9 +21,20 @@ directory rails do
 end
 
 namespace :test do
-  task :rails => rails
+  desc 'Deletes all generated test documentation'
+  task :reset_docs do
+    FileUtils.remove_dir(File.expand_path('doc'), force: true)
+  end
 
-  RDoc::Task.new(:rails) do |rdoc|
+  desc 'Generates test rails documentation'
+  task :rails => [rails, :generate_rails] do
+    FileUtils.mv(
+      File.expand_path('doc/rails'),
+      File.expand_path('doc/public')
+    )
+  end
+
+  RDoc::Task.new(:generate_rails) do |rdoc|
     rdoc.rdoc_dir = 'doc/rails'
     rdoc.generator = 'sdoc'
     rdoc.template = 'rails'

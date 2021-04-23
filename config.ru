@@ -5,7 +5,7 @@
 #
 require 'bundler/setup'
 
-root = "doc/rails"
+root = "doc/public"
 unless Dir.exists?(root)
   puts <<~MESSAGE
     Could not find any docs in #{root}.
@@ -21,7 +21,7 @@ use Rack::Static,
 run lambda { |env|
   [
     200,
-    { 
+    {
       'Content-Type'  => 'text/html',
       'Cache-Control' => 'public, max-age=86400'
     },

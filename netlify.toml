@@ -1,6 +1,6 @@
 [build]
-  command = "rake install && sdoc -o doc/rails -T rails -f sdoc"
-  publish = "doc/rails"
+  command = "rake install && sdoc -o doc/public -T rails -f sdoc"
+  publish = "doc/public"
 
 [build.processing]
   skip_processing = false

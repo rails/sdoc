@@ -12,6 +12,7 @@ task :default => :test
 task :spec => :test
 
 require 'sdoc'
+require 'sdoc/merge'
 require 'rdoc/task'
 
 rails = File.expand_path "rails"
@@ -66,5 +67,19 @@ namespace :test do
     rdoc.main = 'ruby/README.md'
 
     rdoc.rdoc_files.include("ruby/")
+  end
+
+  desc 'Generates merged test documentation'
+  task :merged => [rails, :generate_rails, ruby, :generate_ruby, :merge]
+
+  task :merge do
+    SDoc::Merge.new.merge(
+      [
+        '--title', 'Rails + Ruby',
+        '--op', 'doc/public',
+        '--names', 'rails, ruby',
+        'doc/rails', 'doc/ruby'
+      ]
+    )
   end
 end

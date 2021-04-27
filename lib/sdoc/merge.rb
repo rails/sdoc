@@ -5,6 +5,12 @@ require 'json'
 
 require 'sdoc/templatable'
 
+# TODO: changes:
+# - instead of special index with frames put index.html from the first Location
+# - copy index.html from source into target subdirectories
+# - in tree.js add path to index file instead of subdirectory
+# - cleanup unused files
+
 class SDoc::Merge
   include SDoc::Templatable
 

@@ -3,17 +3,7 @@ require 'pathname'
 require 'fileutils'
 require 'json'
 
-require 'sdoc/templatable'
-
-# TODO: changes:
-# - instead of special index with frames put index.html from the first Location
-# - copy index.html from source into target subdirectories
-# - in tree.js add path to index file instead of subdirectory
-# - cleanup unused files
-
 class SDoc::Merge
-  include SDoc::Templatable
-
   FLAG_FILE = "created.rid"
 
   def initialize()
@@ -26,9 +16,6 @@ class SDoc::Merge
 
   def merge(options)
     parse_options options
-
-    @outputdir = Pathname.new( @op_dir )
-
     check_directories
     setup_output_dir
     setup_names
@@ -36,7 +23,7 @@ class SDoc::Merge
     copy_docs if @urls.empty?
     merge_search_index
     merge_tree
-    generate_index_file
+    copy_index_file
   end
 
   def parse_options(options)
@@ -62,7 +49,6 @@ class SDoc::Merge
       end
     end
     opts.parse! options
-    @template_dir = Pathname.new(RDoc::Options.new.template_dir_for 'merge')
     @directories = options.dup
   end
 
@@ -76,7 +62,7 @@ class SDoc::Merge
       subtree = JSON.parse(data, :max_nesting => 0)
       item = [
         name,
-        url + '/' + extract_index_path(dir),
+        url + '/index.html',
         '',
         append_path(subtree, url)
       ]
@@ -143,24 +129,8 @@ class SDoc::Merge
     end
   end
 
-  def extract_index_path dir
-    filename = File.join dir, 'index.html'
-    content = File.open(filename) { |f| f.read }
-    match = content.match(/<frame\s+src="([^"]+)"\s+name="docwin"/mi)
-    if match
-      match[1]
-    else
-      ''
-    end
-  end
-
-  def generate_index_file
-    templatefile = @template_dir + 'index.rhtml'
-    outfile      = @outputdir + 'index.html'
-    url          = @urls.empty? ? @names[0] : @urls[0]
-    index_path   = url + '/' + extract_index_path(@directories[0])
-
-    render_template templatefile, binding(), outfile
+  def copy_index_file
+    FileUtils.cp File.join(@directories[0], 'index.html'), @op_dir
   end
 
   def setup_names
@@ -184,6 +154,7 @@ class SDoc::Merge
           FileUtils.cp_r File.join(dir, item), File.join(@op_dir, name, item), :preserve => true
         end
       end
+      FileUtils.cp File.join(dir, 'index.html'), File.join(@op_dir, name)
     end
   end
 

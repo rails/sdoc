@@ -16,7 +16,7 @@ unless Dir.exists?(root)
 end
 
 use Rack::Static,
-  :urls => ["/files", "/images", "/js", "/css", "/panel", "/i", "/classes"],
+  :urls => ["/files", "/images", "/js", "/css", "/panel", "/i", "/classes", "/ruby", "/rails"],
   :root => root
 run lambda { |env|
   [

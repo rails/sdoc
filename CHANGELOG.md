@@ -1,6 +1,7 @@
 Master
 ======
 
+* #167 Update Merge script to work with sdoc v2 [@mikdiet](https://github.com/mikdiet)
 * #160 Remove outline from reset stylesheet [@p8](https://github.com/p8)
 * #159 Remove TAB override in panel [@p8](https://github.com/p8)
 * #157 Move to GitHub action for tests [@MikeRogers0](https://github.com/MikeRogers0)
@@ -99,4 +100,3 @@ Bug Fixes
 [Compare v0.3.20...v0.4.0](https://github.com/voloko/sdoc/compare/v0.3.20...v0.4.0)
 
 No friendly log for this version yet, but PRs are welcome!
-

@@ -104,6 +104,12 @@ You can generate the Ruby default branch documentation by running:
 rake test:ruby
 ```
 
+You can generate merged Rails and Ruby documentation by running:
+
+```bash
+rake test:merged
+```
+
 The generated documentation will be put into `doc/public` directory.
 To view the just generated documentation start up a rack application by running:
 

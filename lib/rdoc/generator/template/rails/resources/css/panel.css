@@ -98,7 +98,7 @@
             left: -100%;
             width: 100%;
             bottom: 0;
-            visibility: hidden; 
+            visibility: hidden;
         }
 
         .panel_checkbox:checked ~ .panel {
@@ -113,7 +113,7 @@
         }
     }
 
-    .panel_tree .results,
+    .panel_tree .result,
     .panel_results .tree
     {
         display: none;

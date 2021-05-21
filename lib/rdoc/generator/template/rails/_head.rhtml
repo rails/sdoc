@@ -17,23 +17,6 @@
 <script src="<%= rel_prefix %>/js/searcher.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
 <script src="<%= rel_prefix %>/panel/tree.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
 <script src="<%= rel_prefix %>/js/searchdoc.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-<script type="text/javascript" charset="utf-8">
-document.addEventListener("turbolinks:load", function() {
-  // Only initialize panel if not yet initialized
-  if(!$('#panel .tree ul li').length) {
-    $('#links').hide();
-    var panel = new Searchdoc.Panel($('#panel'), search_data, tree, '<%= rel_prefix %>/');
-    $('#search').focus();
-    var s = window.location.search.match(/\?q=([^&]+)/);
-    if (s) {
-      s = decodeURIComponent(s[1]).replace(/\+/g, ' ');
-      if (s.length > 0) {
-        $('#search').val(s);
-        panel.search(s, true);
-      }
-    }
-    panel.toggle(<%= tree_keys %>);
-  }
-})
-</script>
 
+<meta name="data-rel-prefix" content="<%= rel_prefix %>/">
+<meta name="data-tree-keys" content='<%= tree_keys %>'>

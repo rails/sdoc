@@ -1,6 +1,12 @@
 Master
 ======
 
+2.2.0
+=====
+
+* #161 Add 'skip to content' link and improve shortcut keys [@MikeRogers0](https://github.com/MikeRogers0)
+* #170 Fix link hovers in headings [@tlatsas](https://github.com/tlatsas)
+* #169 Fix clearing search results [@mikdiet](https://github.com/mikdiet)
 * #167 Update Merge script to work with sdoc v2 [@mikdiet](https://github.com/mikdiet)
 * #160 Remove outline from reset stylesheet [@p8](https://github.com/p8)
 * #159 Remove TAB override in panel [@p8](https://github.com/p8)

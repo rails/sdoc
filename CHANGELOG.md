@@ -1,6 +1,8 @@
 Master
 ======
 
+* #175 Avoid displaying source toggler for ghost methods
+
 2.2.0
 =====
 

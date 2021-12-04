@@ -195,12 +195,20 @@
                 else
                   false
                 end
+
+                ghost = method.instance_of?(RDoc::GhostMethod)
               %>
               <p class="source-link">
-                Source:
-                <a href="javascript:toggleSource('<%= method.aref %>_source')" id="l_<%= method.aref %>_source">show</a>
+                <% if !ghost || github %> Source: <% end %>
+
+                <% unless ghost %>
+                  <a href="javascript:toggleSource('<%= method.aref %>_source')" id="l_<%= method.aref %>_source">show</a>
+                <% end %>
+
+                <% if !ghost && github %> | <% end %>
+
                 <% if github %>
-                  | <a href="<%= "#{github}#L#{line}" %>" target="_blank" class="github_url">on GitHub</a>
+                  <a href="<%= "#{github}#L#{line}" %>" target="_blank" class="github_url">on GitHub</a>
                 <% end %>
               </p>
               <div id="<%= method.aref %>_source" class="dyn-source">

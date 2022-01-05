@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = ["README.md"]
 
-  s.add_runtime_dependency("rdoc", ">= 5.0")
+  s.add_runtime_dependency("rdoc", ">= 5.0", "< 6.4.0")
 
   s.add_development_dependency("rack")
 

@@ -4,9 +4,9 @@ Master
 2.3.0
 =====
 
-* #178 Don't use rdoc 6.4.0 for now [@p8](https://github.com/p8) 
+* #178 Don't use rdoc 6.4.0 for now [@p8](https://github.com/p8)
 * #177 Remove rake version constraint for ruby head [@p8](https://github.com/p8)
-* #176 Make sidepanel work with relative paths/URLs [@p8](https://github.com/p8) 
+* #176 Make sidepanel work with relative paths/URLs [@p8](https://github.com/p8)
 * #175 Avoid displaying source toggler for ghost methods [Robin Dupret](https://github.com/robin850)
 * #174 Suppress unused variable warnings [Masataka Pocke Kuwabara](https://github.com/pocke)
 

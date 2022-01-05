@@ -1,22 +1,14 @@
-<%
-  # Turbolinks does not consider relative urls similar, resulting in page
-  # reloads and losing the context of the panel. Emptying the rel_prefix makes
-  # asset paths absolute. This breaks opening the docs locally. Maybe all
-  # generated docs should be in the same folder?
-  rel_prefix = ''
-%>
-<link rel="stylesheet" href="<%= "#{rel_prefix}/css/reset.css" %>" type="text/css" media="screen" data-turbolinks-track="reload" />
-<link rel="stylesheet" href="<%= "#{rel_prefix}/css/panel.css" %>" type="text/css" media="screen" data-turbolinks-track="reload" />
-<link rel="stylesheet" href="<%= "#{rel_prefix}/css/main.css" %>" type="text/css" media="screen" data-turbolinks-track="reload" />
-<link rel="stylesheet" href="<%= "#{rel_prefix}/css/github.css" %>" type="text/css" media="screen" data-turbolinks-track="reload" />
-<script src="<%= "#{rel_prefix}/js/jquery-3.5.1.min.js" %>" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-<script src="<%= "#{rel_prefix}/js/main.js" %>" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-<script src="<%= "#{rel_prefix}/js/highlight.pack.js" %>" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-<script src="<%= rel_prefix %>/js/turbolinks.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-<script src="<%= rel_prefix %>/js/search_index.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-<script src="<%= rel_prefix %>/js/searcher.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-<script src="<%= rel_prefix %>/panel/tree.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-<script src="<%= rel_prefix %>/js/searchdoc.js" type="text/javascript" charset="utf-8" data-turbolinks-track="reload"></script>
-
+<link rel="stylesheet" href="<%= rel_prefix %>/css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<%= rel_prefix %>/css/panel.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<%= rel_prefix %>/css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="<%= rel_prefix %>/css/github.css" type="text/css" media="screen" />
+<script src="<%= rel_prefix %>/js/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= rel_prefix %>/js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= rel_prefix %>/js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= rel_prefix %>/js/turbolinks.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= rel_prefix %>/js/search_index.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= rel_prefix %>/js/searcher.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= rel_prefix %>/panel/tree.js" type="text/javascript" charset="utf-8"></script>
+<script src="<%= rel_prefix %>/js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
 <meta name="data-rel-prefix" content="<%= rel_prefix %>/">
 <meta name="data-tree-keys" content='<%= tree_keys %>'>

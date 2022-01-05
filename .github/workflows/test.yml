@@ -32,6 +32,10 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
+      - name: Remove psych 4 for Ruby 2.5
+        if: matrix.ruby == '2.5'
+        run: gem uninstall psych -v '>=4.0'
+
       - name: Test
         run: |
           bundle exec rake

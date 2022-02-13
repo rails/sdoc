@@ -1,6 +1,12 @@
 Master
 ======
 
+2.3.1
+=====
+
+* #183 Remove unsupported browser detection  [@p8](https://github.com/p8)
+* #182 Use window.location instead of Turbolinks.visit if protocol is 'file:' [@p8](https://github.com/p8)
+
 2.3.0
 =====
 

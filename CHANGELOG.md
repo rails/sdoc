@@ -1,6 +1,11 @@
 Master
 ======
 
+2.3.2
+=====
+
+* #184 Add support for rdoc 6.4.0 [@p8](https://github.com/p8)
+
 2.3.1
 =====
 

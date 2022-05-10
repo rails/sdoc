@@ -45,6 +45,9 @@
             <li><a href="<%= "#{rel_prefix}/#{h file.path}" %>"><%= h file.absolute_name %></a></li>
             <% end  %>
         </ul>
+        <% if ENV['HORO_BADGE_VERSION'] %>
+            <div id="version-badge"><%= ENV['HORO_BADGE_VERSION'] %></div>
+        <% end %>
     </div>
 
     <main id="bodyContent">

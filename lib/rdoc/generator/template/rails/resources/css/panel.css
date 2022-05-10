@@ -12,8 +12,7 @@
             top: 0;
             background: #000;
             color: #fff;
-            padding-right: 10px;
-            text-align: right;
+            padding: 0 10px;
             line-height: 40px;
             cursor: pointer;
             z-index: 2;
@@ -84,7 +83,7 @@
         width: 300px;
         height: 100%;
         background: #FFF;
-        z-index: 10;
+        z-index: 200;
         font-family: "Helvetica Neue", "Arial", sans-serif;
         overflow-x: hidden;
         border-right: 1px #ccc solid;

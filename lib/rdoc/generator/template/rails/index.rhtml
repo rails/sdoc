@@ -24,6 +24,9 @@
             <li><%= h index.relative_name %></li>
             <li>Last modified: <%= index.last_modified %></li>
         </ul>
+        <% if ENV['HORO_BADGE_VERSION'] %>
+            <div id="version-badge"><%= ENV['HORO_BADGE_VERSION'] %></div>
+        <% end %>
     </div>
 
     <main id="bodyContent">

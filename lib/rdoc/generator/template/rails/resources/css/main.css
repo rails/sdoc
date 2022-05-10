@@ -403,3 +403,22 @@ p code {
   background: #fff;
   font-size: 2rem;
 }
+
+#version-badge {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100;
+  color: white;
+  transform: rotate(45deg) translate(27.5%, -40%);
+  min-width: 200px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  font-style: italic;
+  line-height: 1.5;
+  text-shadow: 2px 2px 4px #5400007d;
+  text-align: center;
+  box-shadow: 0px 2px 2px 1px #1209096e;
+  background: radial-gradient(circle, rgb(255, 10, 0) 0%, rgb(200, 0, 0) 90%);
+}

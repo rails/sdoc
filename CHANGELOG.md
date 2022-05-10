@@ -1,6 +1,11 @@
 Master
 ======
 
+2.4.0
+=====
+
+* #187 Allow setting CSS based version badge [@p8](https://github.com/p8)
+
 2.3.2
 =====
 

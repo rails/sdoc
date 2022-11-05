@@ -194,7 +194,7 @@ class RDoc::Generator::SDoc
   ### Determines index path based on @options.main_page (or lack thereof)
   def index_path
     # Transform class name to file path
-    if @options.main_page.include?("::")
+    if @options.main_page&.include?("::")
       slashed = @options.main_page.sub(/^::/, "").gsub("::", "/")
       "%s/%s.html" % [ class_dir, slashed ]
     else

@@ -1,6 +1,13 @@
 Master
 ======
 
+2.5.0
+=====
+
+* #192 Add padding and rounded borders to code examples [@p8](https://github.com/p8)
+* #191 Add css class for constant [@p8](https://github.com/p8)
+* #189 `index_path` should handle a nil `main_page` [@ghiculescu](https://github.com/ghiculescu)
+
 2.4.0
 =====
 

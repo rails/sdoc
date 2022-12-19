@@ -262,8 +262,9 @@ tt {
 }
 
 .description pre {
-  padding: 0.5em;
+  padding: 1em 1.2em;
   background: #EEEEEE;
+  border-radius: 10px;
   font-size: 15px;
   overflow-x: scroll;
 }

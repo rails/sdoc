@@ -168,7 +168,7 @@ class SDoc::Merge
   end
 
   def setup_output_dir
-    if File.exists? @op_dir
+    if File.exist? @op_dir
       error "#{@op_dir} already exists"
     end
     FileUtils.mkdir_p @op_dir
@@ -176,9 +176,9 @@ class SDoc::Merge
 
   def check_directories
     @directories.each do |dir|
-      unless File.exists?(File.join(dir, FLAG_FILE)) &&
-      File.exists?(File.join(dir, RDoc::Generator::SDoc::TREE_FILE)) &&
-      File.exists?(File.join(dir, RDoc::Generator::SDoc::SEARCH_INDEX_FILE))
+      unless File.exist?(File.join(dir, FLAG_FILE)) &&
+      File.exist?(File.join(dir, RDoc::Generator::SDoc::TREE_FILE)) &&
+      File.exist?(File.join(dir, RDoc::Generator::SDoc::SEARCH_INDEX_FILE))
         error "#{dir} does not seem to be an sdoc directory"
       end
     end

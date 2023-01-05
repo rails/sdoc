@@ -50,7 +50,7 @@ module SDoc::GitHub
 
   def path_to_git_dir(path)
     while !path.empty? && path != '.'
-      if (File.exists? File.join(path, '.git'))
+      if (File.exist? File.join(path, '.git'))
         return path
       end
       path = File.dirname(path)

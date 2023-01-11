@@ -1,6 +1,11 @@
 Master
 ======
 
+2.6.0
+=====
+
+* #193 Add support for Ruby 3.2 as File.exists? has been removed [@sato11](https://github.com/sato11)
+
 2.5.0
 =====
 

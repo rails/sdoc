@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name = "sdoc"
   s.version = SDoc::VERSION
 
-  s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent", "Jean Mertz", "Zachary Scott"]
+  s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent", "Jean Mertz", "Zachary Scott", "Petrik de Heus"]
   s.description = %q{rdoc generator html with javascript search index.}
   s.summary = %q{rdoc html with javascript search index.}
   s.homepage = %q{https://github.com/zzak/sdoc}

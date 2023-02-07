@@ -1,6 +1,11 @@
 Master
 ======
 
+2.6.1
+=====
+
+* [#194](https://github.com/zzak/sdoc/pull/194) Remove `text-align: justify` on paragraphs [@zzak](https://github.com/zzak)
+
 2.6.0
 =====
 

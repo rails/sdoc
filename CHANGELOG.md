@@ -1,6 +1,8 @@
 Master
 ======
 
+* [#195](https://github.com/zzak/sdoc/pull/195) Replace turbolinks with turbo v7.3.0 [@zzak](https://github.com/zzak)
+
 2.6.1
 =====
 

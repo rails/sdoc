@@ -83,3 +83,18 @@ namespace :test do
     )
   end
 end
+
+ASSETS_PATH = "lib/rdoc/generator/template/rails/resources"
+
+task :vendor_javascript do
+  module Importmap; end
+  require "importmap/packager"
+
+  packager = Importmap::Packager.new(vendor_path: "#{ASSETS_PATH}/js")
+  imports = packager.import("@hotwired/turbo", from: "unpkg")
+  imports.each do |package, url|
+    umd_url = url.gsub("esm.js", "umd.js")
+    puts %(Vendoring "#{package}" to #{packager.vendor_path}/#{package}.js via download from #{umd_url})
+    packager.download(package, umd_url)
+  end
+end

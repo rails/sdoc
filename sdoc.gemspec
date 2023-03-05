@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name = "sdoc"
   s.version = SDoc::VERSION
 
-  s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent", "Jean Mertz", "Zachary Scott", "Petrik de Heus"]
+  s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent", "Jean Mertz", "Petrik de Heus", "zzak"]
   s.description = %q{rdoc generator html with javascript search index.}
   s.summary = %q{rdoc html with javascript search index.}
   s.homepage = %q{https://github.com/zzak/sdoc}
-  s.email = %q{voloko@gmail.com mail@zzak.io}
+  s.email = %q{zzakscott@gmail.com petrik@deheus.net}
   s.license = 'MIT'
 
   s.require_path = 'lib'

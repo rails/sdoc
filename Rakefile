@@ -13,6 +13,7 @@ task :spec => :test
 
 require 'sdoc'
 require 'rdoc/task'
+require 'rails/api/task'
 
 rails = File.expand_path "rails"
 ruby = File.expand_path "ruby"
@@ -23,6 +24,28 @@ end
 
 directory ruby do
   sh "git clone --depth=1 https://github.com/ruby/ruby"
+end
+
+class RailsTask < Rails::API::EdgeTask
+  def configure_sdoc
+    options << "--root" << "rails"
+    super
+  end
+
+  def rails_version
+    Dir.chdir "rails" do
+      super
+    end
+  end
+
+  def api_dir
+    "doc/rails"
+  end
+
+  def component_root_dir(component)
+    path = File.join("rails", component)
+    return path
+  end
 end
 
 namespace :test do
@@ -39,16 +62,7 @@ namespace :test do
     )
   end
 
-  RDoc::Task.new(:generate_rails) do |rdoc|
-    rdoc.rdoc_dir = 'doc/rails'
-    rdoc.generator = 'sdoc'
-    rdoc.template = 'rails'
-    rdoc.title = 'Ruby on Rails'
-    rdoc.main = 'rails/README.md'
-    rdoc.options << '--exclude=test'
-
-    rdoc.rdoc_files.include("rails/")
-  end
+  RailsTask.new(:generate_rails)
 
   desc 'Generates test ruby documentation'
   task :ruby => [ruby, :generate_ruby] do

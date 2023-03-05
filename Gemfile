@@ -16,3 +16,4 @@ if ENV["rdoc"] == "master"
 end
 
 gem "importmap-rails"
+gem "railties"

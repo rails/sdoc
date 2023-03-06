@@ -8,11 +8,6 @@
 
 SDoc is an HTML template built on top of the RDoc documentation generator for Ruby code.
 
-Provided are two command-line tools you get when you installing the gem:
-
-* `sdoc` - command line tool to run rdoc with `generator=shtml` (searchable HTML)
-* `sdoc-merge` - command line tool to merge multiple sdoc folders into a single documentation site
-
 ### Getting Started
 
 ```bash
@@ -33,23 +28,6 @@ Example:
 
 ```bash
 sdoc -o doc/rails -T direct rails
-```
-
-### sdoc-merge
-
-`sdoc-merge` is useful tool for combining multiple projects documentation into one HTML website. See `sdoc-merge --help` for more details.
-
-```
-Usage: sdoc-merge [options] directories
-    -n, --names [NAMES]              Names of merged repositories. Comma separated
-    -o, --op [DIRECTORY]             Set the output directory
-    -t, --title [TITLE]              Set the title of merged file
-```
-
-Example:
-
-```bash
-sdoc-merge --title "Ruby v1.9, Rails v2.3.2.1" --op merged --names "Ruby,Rails" ruby-v1.9 rails-v2.3.2.1
 ```
 
 ### Rake Task
@@ -82,13 +60,10 @@ If you notice any bugs in the output of your documentation, it may be RDoc's fau
 
 An example of an SDoc bug would be:
 
-* Exception is raised when merging project documentation (ala `sdoc-merge`)
 * Error or warning in JavaScript or HTML found in your browser
 * Generation fails with some exception (likely due to incompatibility with RDoc)
 
-Please feel free to still report issues here for both projects, especially if you aren't sure.
-
-As maintainer of both projects, I'll see if I can identify the root of the cause :bow: :bow: :bow:
+Please feel free to still report issues here for both projects, especially if you aren't sure. We will try to redirect to the proper place if necessary.
 
 ## Contributing
 
@@ -104,12 +79,6 @@ You can generate the Ruby default branch documentation by running:
 rake test:ruby
 ```
 
-You can generate merged Rails and Ruby documentation by running:
-
-```bash
-rake test:merged
-```
-
 The generated documentation will be put into `doc/public` directory.
 To view the just generated documentation start up a rack application by running:
 
@@ -123,4 +92,5 @@ Then open http://localhost:9292 in the browser to view the documentation.
 
 * Vladimir Kolesnikov ([voloko](https://github.com/voloko))
 * Nathan Broadbent ([ndbroadbent](https://github.com/ndbroadbent))
-* Zachary Scott ([zzak](https://github.com/zzak))
+* Petrik de Heus ([p8](https://github.com/p8))
+* ([zzak](https://github.com/zzak))

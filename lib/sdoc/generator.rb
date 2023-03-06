@@ -30,10 +30,7 @@ class RDoc::Generator::SDoc
   include SDoc::Templatable
   include SDoc::Helpers
 
-  GENERATOR_DIRS = [File.join('sdoc', 'generator')]
-
   TREE_FILE = File.join 'panel', 'tree.js'
-  SEARCH_INDEX_FILE = File.join 'js', 'search_index.js'
 
   FILE_DIR = 'files'
   CLASS_DIR = 'classes'
@@ -189,17 +186,6 @@ class RDoc::Generator::SDoc
       tree << item
     end
     tree
-  end
-
-  ### Determines index path based on @options.main_page (or lack thereof)
-  def index_path
-    # Transform class name to file path
-    if @options.main_page&.include?("::")
-      slashed = @options.main_page.sub(/^::/, "").gsub("::", "/")
-      "%s/%s.html" % [ class_dir, slashed ]
-    else
-      index.path
-    end
   end
 
   ### Determines index page based on @options.main_page (or lack thereof)

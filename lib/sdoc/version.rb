@@ -1,3 +1,3 @@
 module SDoc
-  VERSION = '2.6.1'
+  VERSION = '3.0.0.alpha'
 end

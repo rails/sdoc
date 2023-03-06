@@ -12,3 +12,6 @@
 <script src="<%= rel_prefix %>/js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
 <meta name="data-rel-prefix" content="<%= rel_prefix %>/">
 <meta name="data-tree-keys" content='<%= tree_keys %>'>
+<% if ENV['HORO_CANONICAL_URL'] %>
+<link rel="canonical" href="<%= horo_canonical_url(ENV['HORO_CANONICAL_URL'], context) %>" />
+<% end %>

@@ -37,6 +37,14 @@ module SDoc::Helpers
     end
   end
 
+  def horo_canonical_url(canonical_url, context)
+    if context == :index
+      return "#{canonical_url}/"
+    end
+
+    return "#{canonical_url}/#{context.as_href("")}"
+  end
+
 protected
   def group_name name
     if match = name.match(/^([a-z])/i)

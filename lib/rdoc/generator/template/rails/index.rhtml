@@ -4,7 +4,7 @@
     <title><%= @options.title %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=<%= @options.charset %>" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= include_template '_head.rhtml', {:rel_prefix => rel_prefix, tree_keys: []} %>
+    <%= include_template '_head.rhtml', {:context => :index, :rel_prefix => rel_prefix, tree_keys: []} %>
 </head>
 
 <body>

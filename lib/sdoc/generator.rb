@@ -73,13 +73,14 @@ class RDoc::Generator::SDoc
     @github_url_cache = {}
 
     @template_dir = Pathname.new(options.template_dir)
-    @base_dir = Pathname.pwd.expand_path
+    @base_dir = options.root
 
     @json_index = RDoc::Generator::JsonIndex.new self, options
   end
 
   def generate
     @outputdir = Pathname.new(@options.op_dir).expand_path(@base_dir)
+    FileUtils.mkdir_p @outputdir
     @files = @store.all_files.sort
     @classes = @store.all_classes_and_modules.sort
 
@@ -112,7 +113,7 @@ class RDoc::Generator::SDoc
 
   ### Create index.html with frameset
   def generate_index_file
-    debug_msg "Generating index file in #@outputdir"
+    debug_msg "Generating index file in #{@outputdir}"
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
     rel_prefix = rel_prefix  = @outputdir.relative_path_from( outfile.dirname )
@@ -122,7 +123,7 @@ class RDoc::Generator::SDoc
 
   ### Generate a documentation file for each class
   def generate_class_files
-    debug_msg "Generating class documentation in #@outputdir"
+    debug_msg "Generating class documentation in #{@outputdir}"
     templatefile = @template_dir + 'class.rhtml'
 
     @classes.each do |klass|
@@ -137,7 +138,7 @@ class RDoc::Generator::SDoc
 
   ### Generate a documentation file for each file
   def generate_file_files
-    debug_msg "Generating file documentation in #@outputdir"
+    debug_msg "Generating file documentation in #{@outputdir}"
     templatefile = @template_dir + 'file.rhtml'
 
     @files.each do |file|
@@ -152,7 +153,7 @@ class RDoc::Generator::SDoc
 
   ### Generate file with links for the search engine
   def generate_search_index
-    debug_msg "Generating search engine index in #@outputdir"
+    debug_msg "Generating search engine index in #{@outputdir}"
     templatefile = @template_dir + 'search_index.rhtml'
     outfile      = @outputdir + 'panel/links.html'
 
@@ -164,8 +165,9 @@ class RDoc::Generator::SDoc
     debug_msg "Generating class tree"
     topclasses = @classes.select {|klass| !(RDoc::ClassModule === klass.parent) }
     tree = generate_file_tree + generate_class_tree_level(topclasses)
-    debug_msg "  writing class tree to %s" % TREE_FILE
-    File.open(TREE_FILE, "w", 0644) do |f|
+    file = @outputdir + TREE_FILE
+    debug_msg "  writing class tree to %s" % file
+    File.open(file, "w", 0644) do |f|
       f.write('var tree = '); f.write(tree.to_json(:max_nesting => 0))
     end unless @options.dry_run
   end
@@ -194,9 +196,15 @@ class RDoc::Generator::SDoc
     default = @files.first
     return default unless @options.main_page
 
-    if file = @files.find { |f| f.full_name == @options.main_page }
+    # TODO: Total hack to strip the source directory from the main page
+    # Since the file list does not include the root source path
+    clean_main = @options.main_page.gsub("rails/", "")
+
+    if file = @files.find { |f| f.full_name == clean_main }
+      debug_msg "Found main at #{file}"
       file
     else
+      debug_msg "Falling back to default main at #{default}"
       default
     end
   end

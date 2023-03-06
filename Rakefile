@@ -51,9 +51,10 @@ class RailsTask < Rails::API::EdgeTask
     return path
   end
 
-  def canonical_url
+  def setup_horo_variables
+    super
     if ENV['NETLIFY']
-      return ENV.fetch('DEPLOY_PRIME_URL', 'https://edgeapi.rubyonrails.org')
+      ENV['HORO_CANONICAL_URL'] = ENV.fetch('DEPLOY_PRIME_URL', 'https://edgeapi.rubyonrails.org')
     end
   end
 end

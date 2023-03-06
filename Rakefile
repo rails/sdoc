@@ -42,6 +42,10 @@ class RailsTask < Rails::API::EdgeTask
     "doc/rails"
   end
 
+  def api_main
+    "rails/railties/RDOC_MAIN.md"
+  end
+
   def component_root_dir(component)
     path = File.join("rails", component)
     return path

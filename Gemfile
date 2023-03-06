@@ -7,7 +7,6 @@ gem "rake"
 gem "hoe"
 gem "minitest"
 
-
 if RUBY_VERSION.to_f <= 2.5
   gem "psych", "< 4.0"
 end

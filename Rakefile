@@ -50,6 +50,12 @@ class RailsTask < Rails::API::EdgeTask
     path = File.join("rails", component)
     return path
   end
+
+  def canonical_url
+    if ENV['NETLIFY']
+      return ENV.fetch('DEPLOY_PRIME_URL', 'https://edgeapi.rubyonrails.org')
+    end
+  end
 end
 
 namespace :test do

@@ -1,5 +1,5 @@
 [build]
-  command = "rake install && sdoc -o doc/public -T rails -f sdoc"
+  command = "bundle exec rake test:rails"
   publish = "doc/public"
 
 [build.processing]

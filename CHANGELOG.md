@@ -1,6 +1,8 @@
-Master
-======
+Main (3.0.0.alpha)
+==================
 
+* [#198](https://github.com/zzak/sdoc/pull/198) Bump version to 3.0.0.alpha [@zzak](https://github.com/zzak)
+* [#197](https://github.com/zzak/sdoc/pull/197) Remove sdoc-merge and sdoc template [@zzak](https://github.com/zzak)
 * [#195](https://github.com/zzak/sdoc/pull/195) Replace turbolinks with turbo v7.3.0 [@zzak](https://github.com/zzak)
 
 2.6.1

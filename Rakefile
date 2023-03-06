@@ -61,7 +61,7 @@ namespace :test do
   desc 'Generates test rails documentation'
   task :rails => [rails, :generate_rails] do
     FileUtils.mv(
-      File.expand_path('doc/rails'),
+      File.expand_path('rails/doc/rails'),
       File.expand_path('doc/public')
     )
   end

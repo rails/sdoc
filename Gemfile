@@ -15,3 +15,5 @@ end
 if ENV["rdoc"] == "master"
   gem "rdoc", :github => "ruby/rdoc"
 end
+
+gem "importmap-rails"

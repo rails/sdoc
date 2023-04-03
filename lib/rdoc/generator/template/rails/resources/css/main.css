@@ -1,3 +1,6 @@
+html {
+  height: 100%;
+}
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
   background: #FFF;
@@ -5,10 +8,40 @@ body {
   margin: 0px;
   font-size: 15px;
   line-height: 1.25em;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: min-content min-content auto min-content;
+}
+
+nav {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+div.banner {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+#bodyContent {
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+footer {
+  grid-row-start: 4;
+  grid-row-end: 5;
+}
+
+#footerContent {
+  margin: 2em;
+  margin-left: 3.5em;
+  margin-right: 3.5em;
+  max-width: 980px;
 }
 
 @media (min-width: 40em) {
-  .banner, #bodyContent {
+  .banner, #bodyContent, footer {
     margin-left: 300px;
   }
 }
@@ -140,20 +173,6 @@ ol li
     color: #CCC;
 }
 
-.banner ul
-{
-    margin-top: 0.3em;
-    margin-bottom: 0;
-    font-size: 0.85em;
-}
-
-.banner li
-{
-    list-style: none;
-    margin-left: 0;
-    margin-bottom: 0;
-}
-
 .banner .github_url {
   color: #CCC;
 }
@@ -197,7 +216,6 @@ pre
   max-width: 980px;
 }
 
-
 .sectiontitle {
   margin-top: 2em;
   margin-bottom: 1.3em;
@@ -215,6 +233,18 @@ pre
   font-size: 1.6em;
   padding: 0 0 0.25em 0;
   font-weight: bold;
+}
+
+#footerContent a {
+  color: #999999;
+}
+
+#footerContent summary {
+  margin-bottom: 1.3em;
+}
+
+#footerContent ul {
+  font-size: 0.85em;
 }
 
 .attr-rw {

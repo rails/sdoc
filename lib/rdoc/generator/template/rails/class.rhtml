@@ -40,11 +40,6 @@
                 </span>
             <% end %>
         </h2>
-        <ul class="files">
-            <% klass.in_files.each do |file| %>
-            <li><a href="<%= "#{rel_prefix}/#{h file.path}" %>"><%= h file.absolute_name %></a></li>
-            <% end  %>
-        </ul>
         <% if ENV['HORO_BADGE_VERSION'] %>
             <div id="version-badge"><%= ENV['HORO_BADGE_VERSION'] %></div>
         <% end %>
@@ -53,5 +48,18 @@
     <main id="bodyContent">
         <%= include_template '_context.rhtml', {:context => klass, :rel_prefix => rel_prefix} %>
     </main>
+
+    <footer>
+        <div id="footerContent">
+            <details>
+                <summary class="sectiontitle">Appears in</summary>
+                <ul class="files">
+                    <% klass.in_files.each do |file| %>
+                    <li><a href="<%= "#{rel_prefix}/#{h file.path}" %>"><%= h file.absolute_name %></a></li>
+                    <% end  %>
+                </ul>
+            </details>
+        </div>
+    </footer>
   </body>
 </html>

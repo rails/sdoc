@@ -1,3 +1,4 @@
+
 # SDoc
 
 [![Tests](https://github.com/zzak/sdoc/actions/workflows/test.yml/badge.svg)](https://github.com/zzak/sdoc/actions/workflows/test.yml)

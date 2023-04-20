@@ -102,21 +102,39 @@
     <% unless constants.empty? %>
       <!-- Section constants -->
       <h2 class="sectiontitle">Constants</h2>
-      <table border='0' cellpadding='5'>
         <% constants.each do |const| %>
-          <tr valign='top'>
-            <td class="attr-name"><%= h const.name %></td>
-            <td>=</td>
-            <td class="attr-value"><%= h const.value %></td>
-          </tr>
-          <% if const.comment %>
-            <tr valign='top'>
-              <td>&nbsp;</td>
-              <td colspan="2" class="attr-desc"><%= const.description.strip %></td>
-            </tr>
-          <% end %>
+          <div class="constant">
+            <h3 class="title constant-title">
+              <%= h const.name %>
+            </h3>
+            <% if const.comment && !const.is_alias_for %>
+              <div class="description">
+                <%= const.description.strip %></td>
+              </div>
+            <% end %>
+            <% markup = const.value %>
+            <div class="sourcecode">
+              <%
+                # generate github link
+                github = if options.github
+                  github_link(markup)
+                else
+                  false
+                end
+
+                ghost = false
+                source_id = "#{h const.name}_source"
+              %>
+              <p class="source-link">
+                <% if !ghost || github %> Value: <% end %>
+                <%= source_link(source_id, github, ghost) %>
+              </p>
+              <div id="<%= source_id %>" class="dyn-source">
+                <pre><%= markup %></pre>
+              </div>
+            </div>
+          </div>
         <% end %>
-      </table>
     <% end %>
 
 
@@ -187,31 +205,19 @@
               <%
                 # generate github link
                 github = if options.github
-                  if markup =~ /File\s(\S+), line (\d+)/
-                    path = $1
-                    line = $2.to_i
-                  end
-                  path && github_url(path)
+                  github_link(markup)
                 else
                   false
                 end
 
                 ghost = method.instance_of?(RDoc::GhostMethod)
+                source_id = "#{method.aref}_source"
               %>
               <p class="source-link">
                 <% if !ghost || github %> Source: <% end %>
-
-                <% unless ghost %>
-                  <a href="javascript:toggleSource('<%= method.aref %>_source')" id="l_<%= method.aref %>_source">show</a>
-                <% end %>
-
-                <% if !ghost && github %> | <% end %>
-
-                <% if github %>
-                  <a href="<%= "#{github}#L#{line}" %>" target="_blank" class="github_url">on GitHub</a>
-                <% end %>
+                <%= source_link(source_id, github, ghost) %>
               </p>
-              <div id="<%= method.aref %>_source" class="dyn-source">
+              <div id="<%= source_id %>" class="dyn-source">
                 <pre><%= markup %></pre>
               </div>
             </div>

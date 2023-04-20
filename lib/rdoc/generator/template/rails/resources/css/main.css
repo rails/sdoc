@@ -293,9 +293,18 @@ tt {
 .description pre {
   padding: 1em 1.2em;
   background: #EEEEEE;
-  border-radius: 10px;
-  font-size: 15px;
+  border-radius: 10px 15px;
   overflow-x: scroll;
+}
+
+.constant .constant-title {
+  border-bottom: 1px dotted #666;
+}
+
+.constant .description,
+.constant .sourcecode
+{
+  margin-left: 1.2em;
 }
 
 .method {
@@ -315,6 +324,7 @@ tt {
     font-size: 1.1em;
     color:#333;
 }
+
 .method .method-title {
     border-bottom: 1px dotted #666;
     padding: 0 0 0.15em 0;

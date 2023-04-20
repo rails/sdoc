@@ -45,6 +45,29 @@ module SDoc::Helpers
     return "#{canonical_url}/#{context.as_href("")}"
   end
 
+  def github_link(markup)
+    if markup =~ /File\s(\S+), line (\d+)/
+      path = $1
+      line = $2.to_i
+    end
+    path && github_url(path)
+  end
+
+  def source_link(source_id, github, ghost)
+    link = ""
+
+    unless ghost
+      link << "<a href=\"javascript:toggleSource('#{source_id}')\" id=\"l_#{source_id}\">show</a>"
+    end
+
+    link << " | " if !ghost && github
+
+    if github
+      github_link_url = "#{github}#L#{line}"
+      link << "<a href=\"#{github_link_url}\" target=\"_blank\" class=\"github_url\">on GitHub</a>"
+    end
+    link
+  end
 protected
   def group_name name
     if match = name.match(/^([a-z])/i)

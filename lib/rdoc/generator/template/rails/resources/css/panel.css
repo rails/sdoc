@@ -5,6 +5,10 @@
     }
 
     @media (max-width: 599px) {
+        html {
+            scroll-padding-top: 50px;
+        }
+
         .panel_mobile_button {
             display: block;
             height: 40px;

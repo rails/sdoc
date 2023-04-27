@@ -31,15 +31,17 @@
 
   <% unless context.classes_and_modules.empty? %>
     <!-- Namespace -->
-    <div class="sectiontitle">Namespace</div>
-    <ul>
-      <% (context.modules.sort + context.classes.sort).each do |mod| %>
-        <li>
-          <span class="type"><%= mod.type.upcase %></span>
-          <a href="<%= context.aref_to mod.path %>"><%= mod.full_name %></a>
-        </li>
-      <% end %>
-    </ul>
+    <details>
+      <summary class="sectiontitle">Namespace</summary>
+      <ul>
+        <% (context.modules.sort + context.classes.sort).each do |mod| %>
+          <li>
+            <span class="type"><%= mod.type.upcase %></span>
+            <a href="<%= context.aref_to mod.path %>"><%= mod.full_name %></a>
+          </li>
+        <% end %>
+      </ul>
+    </details>
   <% end %>
 
 

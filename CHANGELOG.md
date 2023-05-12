@@ -5,6 +5,7 @@ Main (3.0.0.alpha)
 * [#197](https://github.com/zzak/sdoc/pull/197) Remove sdoc-merge and sdoc template [@zzak](https://github.com/zzak)
 * [#195](https://github.com/zzak/sdoc/pull/195) Replace turbolinks with turbo v7.3.0 [@zzak](https://github.com/zzak)
 * [#200](https://github.com/zzak/sdoc/pull/200) Add canonical url link to all pages [@zzak](https://github.com/zzak)
+* [#222](https://github.com/zzak/sdoc/pull/222) Add NameList for building a static file of classes and methods [@zzak](https://github.com/zzak)
 
 2.6.1
 =====

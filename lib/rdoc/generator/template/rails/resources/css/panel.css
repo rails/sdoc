@@ -118,6 +118,16 @@
         display: none;
     }
 
+    .panel .logo {
+      text-align: center;
+    }
+
+    @media (max-width: 39.99em) {
+      .panel .logo img {
+        width: 50%;
+      }
+    }
+
     /* Header with search box (begin) */
         .panel .header
         {

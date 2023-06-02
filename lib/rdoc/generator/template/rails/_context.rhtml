@@ -108,7 +108,7 @@
     <% unless attributes.empty? %>
       <!-- Section attributes -->
       <h2 class="sectiontitle">Attributes</h2>
-      <table border='0' cellpadding='5'>
+      <table border='0' cellpadding='5' width="100%">
         <% attributes.each do |attrib| %>
           <tr valign='top'>
             <td class='attr-rw'>
@@ -116,6 +116,7 @@
             </td>
             <td class='attr-name'><%= h attrib.name %></td>
             <td class='attr-desc'><%= attrib.description.strip %></td>
+            <td class='attr-link'><a href="<%= "#{rel_prefix}/#{context.path}##{attrib.aref}"%>" name="<%= attrib.aref %>" class="permalink">Link</a></td>
           </tr>
         <% end %>
       </table>

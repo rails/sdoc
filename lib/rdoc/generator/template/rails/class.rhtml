@@ -21,7 +21,7 @@
     <a class="sr-only sr-only-focusable" href="#content" data-turbo="false">Skip to Content</a>
     <a class="sr-only sr-only-focusable" href="#search" data-turbo="false">Skip to Search</a>
 
-    <%= include_template '_panel.rhtml' %>
+    <%= include_template '_panel.rhtml', {:rel_prefix => rel_prefix} %>
 
     <div class="banner">
         <% if ENV['HORO_PROJECT_NAME'] %>

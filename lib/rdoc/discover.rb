@@ -1,5 +1,5 @@
 begin
   gem 'rdoc', '>= 5.0'
-  require File.join(File.dirname(__FILE__), '/../sdoc')
+  require_relative "../sdoc" unless defined?(SDoc)
 rescue Gem::LoadError
 end

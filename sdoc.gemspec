@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors = ["Vladimir Kolesnikov", "Nathan Broadbent", "Jean Mertz", "Petrik de Heus", "zzak"]
   s.description = %q{rdoc generator html with javascript search index.}
   s.summary = %q{rdoc html with javascript search index.}
-  s.homepage = %q{https://github.com/zzak/sdoc}
+  s.homepage = %q{https://github.com/rails/sdoc}
   s.email = %q{zzakscott@gmail.com petrik@deheus.net}
   s.license = 'MIT'
 

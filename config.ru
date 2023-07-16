@@ -6,7 +6,7 @@
 require 'bundler/setup'
 
 root = "doc/public"
-unless Dir.exists?(root)
+unless Dir.exist?(root)
   puts <<~MESSAGE
     Could not find any docs in #{root}.
     Run the following command to generate sample documentation:

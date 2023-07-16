@@ -313,7 +313,7 @@ tt {
   background: #EEEEEE;
   border-radius: 10px;
   font-size: 15px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .method {

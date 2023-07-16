@@ -29,4 +29,26 @@ describe SDoc::Helpers do
       _(@helpers.truncate("Hello world", length: 5)).must_equal "Hello."
     end
   end
+
+  describe "#base_tag_for_context" do
+    it "returns an idempotent <base> tag for the :index context" do
+      _(@helpers.base_tag_for_context(:index)).
+        must_equal %(<base href="./" data-current-path=".">)
+    end
+
+    it "returns a <base> tag with an appropriate path for the given RDoc::Context" do
+      top_level = rdoc_top_level_for <<~RUBY
+        module Foo; module Bar; module Qux; end; end; end
+      RUBY
+
+      _(@helpers.base_tag_for_context(top_level.find_module_named("Foo"))).
+        must_equal %(<base href="../" data-current-path="classes/Foo.html">)
+
+      _(@helpers.base_tag_for_context(top_level.find_module_named("Foo::Bar"))).
+        must_equal %(<base href="../../" data-current-path="classes/Foo/Bar.html">)
+
+      _(@helpers.base_tag_for_context(top_level.find_module_named("Foo::Bar::Qux"))).
+        must_equal %(<base href="../../../" data-current-path="classes/Foo/Bar/Qux.html">)
+    end
+  end
 end

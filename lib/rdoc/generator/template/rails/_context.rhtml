@@ -139,7 +139,7 @@
               <b><%= h method.name %></b><%= h method.params %>
             <% end %>
           </h3>
-          <a href="<%= "#{rel_prefix}/#{context.path}##{method.aref}"%>" name="<%= method.aref %>" class="permalink">Link</a>
+          <a href="<%= "/#{context.path}##{method.aref}"%>" name="<%= method.aref %>" class="permalink">Link</a>
 
           <% if method.comment %>
             <div class="description">

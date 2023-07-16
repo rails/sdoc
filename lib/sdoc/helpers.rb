@@ -37,6 +37,15 @@ module SDoc::Helpers
     end
   end
 
+  def base_tag_for_context(context)
+    if context == :index
+      %(<base href="./" data-current-path=".">)
+    else
+      relative_root = "../" * context.path.count("/")
+      %(<base href="#{relative_root}" data-current-path="#{context.path}">)
+    end
+  end
+
   def horo_canonical_url(canonical_url, context)
     if context == :index
       return "#{canonical_url}/"

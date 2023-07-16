@@ -2,6 +2,33 @@ require "spec_helper"
 
 describe SDoc::Postprocessor do
   describe "#process" do
+    it "adjusts URLs" do
+      rendered = <<~HTML
+        <base href="../../" data-current-path="foo/bar/current.html">
+
+        <link href="/stylesheet.css" rel="stylesheet">
+        <script src="/javascript.js"></script>
+
+        <a href="#section">Link</a>
+        <img src="image.png">
+      HTML
+
+      expected_head = <<~HTML
+        <link href="stylesheet.css" rel="stylesheet">
+        <script src="javascript.js"></script>
+      HTML
+
+      expected_body = <<~HTML
+        <a href="foo/bar/current.html#section">Link</a>
+        <img src="foo/bar/image.png">
+      HTML
+
+      postprocessed = SDoc::Postprocessor.process(rendered)
+
+      _(postprocessed).must_include expected_head
+      _(postprocessed).must_include expected_body
+    end
+
     it "highlights code blocks" do
       rendered = <<~HTML
         <div class="description">
@@ -46,6 +73,38 @@ describe SDoc::Postprocessor do
       HTML
 
       _(SDoc::Postprocessor.process(rendered)).must_include expected
+    end
+  end
+
+  describe "#adjust_url" do
+    it "does not adjust full URLs" do
+      [
+        "//example.com/hoge/fuga",
+        "https://example.com/hoge/fuga",
+        "http://example.com/hoge/fuga",
+        "javascript:alert('hoge')",
+        "data:,hoge",
+      ].each do |url|
+        _(SDoc::Postprocessor.adjust_url(url, "foo/bar/qux.html")).must_equal url
+      end
+    end
+
+    it "adjusts absolute paths to be relative (to the expected <base> element)" do
+      _(SDoc::Postprocessor.adjust_url("/hoge/fuga.html", "foo/bar/qux.html")).
+        must_equal "hoge/fuga.html"
+    end
+
+    it "expands relative paths" do
+      _(SDoc::Postprocessor.adjust_url("hoge/fuga.html", "foo/bar/qux.html")).
+        must_equal "foo/bar/hoge/fuga.html"
+
+      _(SDoc::Postprocessor.adjust_url("../hoge/fuga.html", "foo/bar/qux.html")).
+        must_equal "foo/hoge/fuga.html"
+    end
+
+    it "expands fragments" do
+      _(SDoc::Postprocessor.adjust_url("#hoge", "foo/bar/qux.html")).
+        must_equal "foo/bar/qux.html#hoge"
     end
   end
 

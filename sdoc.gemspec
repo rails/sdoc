@@ -15,9 +15,7 @@ Gem::Specification.new do |s|
 
   s.require_path = 'lib'
 
-  s.required_ruby_version = Gem::Requirement.new('>= 1.9.3')
-  s.required_rubygems_version = Gem::Requirement.new(">= 1.3.6") if
-    s.respond_to? :required_rubygems_version=
+  s.required_ruby_version = ">= 2.7"
 
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = ["README.md"]

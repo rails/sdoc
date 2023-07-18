@@ -405,13 +405,13 @@ tt {
   color: #40A070;
 }
 
-@keyframes highlight {
+@keyframes spotlight {
   from { background-color: yellow; }
   to { background-color: white; }
 }
 
-.highlight {
-  animation-name: highlight;
+.spotlight {
+  animation-name: spotlight;
   animation-duration: 1s;
 }
 

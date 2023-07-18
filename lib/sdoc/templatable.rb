@@ -1,4 +1,5 @@
 require 'erb'
+require_relative "postprocessor"
 
 module SDoc::Templatable
   ### Load and render the erb template in the given +templatefile+ within the
@@ -32,7 +33,7 @@ module SDoc::Templatable
   ### specified +context+ (a Binding object) and write it out to +outfile+.
   ### Both +templatefile+ and +outfile+ should be Pathname-like objects.
   def render_template( templatefile, context, outfile )
-    output = eval_template(templatefile, context)
+    output = SDoc::Postprocessor.process(eval_template(templatefile, context))
 
     unless $dryrun
       outfile.dirname.mkpath

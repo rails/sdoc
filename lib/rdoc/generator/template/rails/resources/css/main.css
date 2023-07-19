@@ -303,6 +303,10 @@ tt {
   background: #EEEEEE;
   border-radius: 10px;
   font-size: 15px;
+}
+
+.description pre,
+.sourcecode pre {
   overflow-x: auto;
 }
 

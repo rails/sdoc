@@ -135,6 +135,28 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#link_to_external" do
+    it "sets class='external-link' and target='_blank' by default" do
+      _(@helpers.link_to_external("foo", "bar")).
+        must_equal %(<a href="bar" target="_blank" class="external-link">foo</a>)
+    end
+
+    it "supports additional classes" do
+      _(@helpers.link_to_external("foo", "bar", class: "qux")).
+        must_equal %(<a href="bar" target="_blank" class="qux external-link">foo</a>)
+    end
+
+    it "supports overriding target" do
+      _(@helpers.link_to_external("foo", "bar", target: "_self")).
+        must_equal %(<a href="bar" target="_self" class="external-link">foo</a>)
+    end
+
+    it "supports additional attributes" do
+      _(@helpers.link_to_external("foo", "bar", "data-hoge": "fuga")).
+        must_equal %(<a href="bar" target="_blank" class="external-link" data-hoge="fuga">foo</a>)
+    end
+  end
+
   describe "#base_tag_for_context" do
     it "returns an idempotent <base> tag for the :index context" do
       _(@helpers.base_tag_for_context(:index)).

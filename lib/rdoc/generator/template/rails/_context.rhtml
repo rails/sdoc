@@ -159,32 +159,25 @@
           <% end %>
 
           <% source_code, source_url = method_source_code_and_url(method) %>
-          <% if source_code || source_url %>
-            <div class="sourcecode">
-              <p class="source-link">
-                Source:
-
-                <% if source_code %>
-                  <a href="javascript:toggleSource('<%= method.aref %>_source')" id="l_<%= method.aref %>_source">show</a>
-                <% end %>
-
-                <% if source_code && source_url %> | <% end %>
-
+          <% if source_code %>
+            <details class="sourcecode">
+              <summary>
+                <span class="label">Source code</span>
                 <% if source_url %>
-                  <a href="<%= source_url %>" target="_blank" class="github_url">on GitHub</a>
+                  <%= link_to_external "GitHub", source_url %>
                 <% end %>
-              </p>
+              </summary>
 
-              <% if source_code %>
-                <div id="<%= method.aref %>_source" class="dyn-source">
-                  <pre><code class="ruby"><%= source_code %></code></pre>
-                </div>
-              <% end %>
-            </div>
-            <% end %>
-          </div>
-        <% end %><%# methods.each %>
-      <% end %><%# visibilities.each %>
+              <div class="dyn-source">
+                <pre><code class="ruby"><%= source_code %></code></pre>
+              </div>
+            </details>
+          <% elsif source_url %>
+            <p><%= link_to_external "GitHub", source_url %></p>
+          <% end %>
+        </div>
+      <% end %><%# methods.each %>
+    <% end %><%# visibilities.each %>
     <% end %><%# context.methods_by_type %>
   <% end %><%# context.each_section %>
 

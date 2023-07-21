@@ -12,6 +12,10 @@ body {
   display: grid;
   grid-template-rows: min-content min-content auto min-content;
   grid-template-columns: 300px auto;
+
+  --link-color: #CC0000;
+  --link-hover-color: #990000;
+  --icon-color: #777777;
 }
 
 body {
@@ -61,12 +65,12 @@ body {
 }
 
 a:link, a:active, a:visited, a:hover {
-  color: #CC0000;
+  color: var(--link-color);
   text-decoration: none;
 }
 
 a:hover {
-  color: #990000;
+  color: var(--link-hover-color);
   text-decoration: underline;
 }
 
@@ -76,6 +80,13 @@ a:hover {
 
 h1 a, h2 a, .banner a {
   color: #fff;
+}
+
+.external-link {
+  padding-left: 1.3em;
+  background-image: url('../i/external-link.svg');
+  background-repeat: no-repeat;
+  background-size: 1.1em;
 }
 
 p {
@@ -290,7 +301,6 @@ tt {
 }
 
 .dyn-source {
-  display: none;
   background: #fffde8;
   color: #000;
   border: #ffe0bb dotted 1px;
@@ -343,19 +353,40 @@ tt {
   top: 0;
 }
 
-.method .sourcecode p.source-link {
-  text-indent: 0em;
-  margin-top: 0.5em;
-}
-
 .method .aka {
   margin-left: 1.2em;
   font-style: italic;
 }
 
-.method .source-link
-{
-    font-size: 0.85em;
+.sourcecode {
+  width: fit-content; /* Reduce clickable area when collapsed */
+}
+
+.sourcecode[open] {
+  width: auto;
+}
+
+.sourcecode summary {
+  cursor: pointer;
+}
+
+.sourcecode summary::marker {
+  font-size: 1.25em;
+  color: var(--icon-color);
+}
+
+.sourcecode summary .label {
+  margin-left: -0.4em;
+  font-weight: bold;
+  color: var(--link-color);
+}
+
+.sourcecode summary .label:hover {
+  color: var(--link-hover-color);
+}
+
+.sourcecode summary .external-link {
+  margin-left: 1em;
 }
 
 @keyframes spotlight {

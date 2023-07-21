@@ -33,6 +33,14 @@ module SDoc::Helpers
     %(<a href="#{h url}"#{attribute_string}>#{h text}</a>)
   end
 
+  def link_to_external(text, url, html_attributes = {})
+    html_attributes = html_attributes.transform_keys(&:to_s)
+    html_attributes = { "target" => "_blank", "class" => nil }.merge(html_attributes)
+    html_attributes["class"] = [*html_attributes["class"], "external-link"].join(" ")
+
+    link_to(text, url, html_attributes)
+  end
+
   def base_tag_for_context(context)
     if context == :index
       %(<base href="./" data-current-path=".">)

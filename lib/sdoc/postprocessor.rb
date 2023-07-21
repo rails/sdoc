@@ -13,11 +13,11 @@ module SDoc::Postprocessor
   end
 
   def highlight_code_blocks!(document)
-    document.css(".description pre > code").each do |element|
+    document.css(".description pre > code, .sourcecode pre > code").each do |element|
       code = element.inner_text
-      language = guess_code_language(code)
+      language = element.classes.include?("ruby") ? "ruby" : guess_code_language(code)
       element.inner_html = highlight_code(code, language)
-      element.append_class("highlight").append_class(language)
+      element.add_class("highlight").add_class(language)
     end
   end
 

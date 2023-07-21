@@ -23,6 +23,30 @@ describe SDoc::Postprocessor do
 
       _(SDoc::Postprocessor.process(rendered)).must_include expected
     end
+
+    it "highlights method source code" do
+      rendered = <<~HTML
+        <div class="sourcecode">
+          <pre><code class="ruby"><span class="ruby-comment"># highlighted by RDoc</span></code></pre>
+        </div>
+
+        <div class="sourcecode">
+          <pre><code class="ruby">DELETE FROM 'tricky_ruby'</code></pre>
+        </div>
+      HTML
+
+      expected = <<~HTML
+        <div class="sourcecode">
+          <pre><code class="ruby highlight">#{SDoc::Postprocessor.highlight_code("# highlighted by RDoc", "ruby")}</code></pre>
+        </div>
+
+        <div class="sourcecode">
+          <pre><code class="ruby highlight">#{SDoc::Postprocessor.highlight_code("DELETE FROM 'tricky_ruby'", "ruby")}</code></pre>
+        </div>
+      HTML
+
+      _(SDoc::Postprocessor.process(rendered)).must_include expected
+    end
   end
 
   describe "#highlight_code" do

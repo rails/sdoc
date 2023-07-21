@@ -298,16 +298,6 @@ tt {
   padding: 0.5em;
 }
 
-.dyn-source .cmt {
-  color: #00F;
-  font-style: italic;
-}
-
-.dyn-source .kw {
-  color: #070;
-  font-weight: bold;
-}
-
 .description pre {
   padding: 1em 1.2em;
   background: #EEEEEE;
@@ -364,45 +354,6 @@ tt {
 .method .source-link
 {
     font-size: 0.85em;
-}
-
-.ruby-constant {
-  color: teal;
-}
-.ruby-keyword {
-  color: #000;
-  font-weight: bold
-}
-.ruby-title {
-  color: #900;
-  font-weight: bold;
-}
-.ruby-ivar {
-  color: teal;
-}
-.ruby-operator {
-  color: #000;
-  font-weight: bold
-}
-.ruby-identifier {
-  color: #000;
-}
-.ruby-string,
-.ruby-node {
-  color: #D14;
-}
-.ruby-comment {
-  color: #998;
-  font-style: italic;
-}
-.ruby-regexp {
-  color: #009926;
-}
-.ruby-value {
-  color: #990073;
-}
-.ruby-number {
-  color: #40A070;
 }
 
 @keyframes spotlight {

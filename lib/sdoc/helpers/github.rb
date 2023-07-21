@@ -1,7 +1,8 @@
 module SDoc::Helpers::GitHub
-  def github_url(relative_path)
+  def github_url(relative_path, line: nil)
     return unless github?
-    "https://github.com/#{github_repository}/blob/#{git_head_sha1}/#{relative_path}"
+    line = "#L#{line}" if line
+    "https://github.com/#{github_repository}/blob/#{git_head_sha1}/#{relative_path}#{line}"
   end
 
   def github?

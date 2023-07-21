@@ -37,6 +37,15 @@ module SDoc::Helpers
     end
   end
 
+  def link_to(text, url, html_attributes = {})
+    return h(text) if url.nil?
+
+    url = "/#{url.path}" if url.is_a?(RDoc::CodeObject)
+    attribute_string = html_attributes.map { |name, value| %( #{name}="#{h value}") }.join
+
+    %(<a href="#{h url}"#{attribute_string}>#{h text}</a>)
+  end
+
   def base_tag_for_context(context)
     if context == :index
       %(<base href="./" data-current-path=".">)

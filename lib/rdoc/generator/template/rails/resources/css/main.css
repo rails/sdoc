@@ -349,10 +349,8 @@ tt {
 }
 
 .method .aka {
-  margin-top: 0.3em;
-  margin-left: 1em;
+  margin-left: 1.2em;
   font-style: italic;
-  text-indent: 2em;
 }
 
 .method .source-link

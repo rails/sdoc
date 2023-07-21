@@ -155,4 +155,28 @@ describe SDoc::Helpers do
       end
     end
   end
+
+  describe "#group_by_first_letter" do
+    it "groups RDoc objects by the first letter of their #name" do
+      context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        module Foo
+          def bar; end
+          def _bar; end
+          def baa; end
+
+          def qux; end
+          def _qux; end
+          def Qux; end
+        end
+      RUBY
+
+      expected = {
+        "#" => [context.find_method("_bar", false), context.find_method("_qux", false)],
+        "B" => [context.find_method("baa", false), context.find_method("bar", false)],
+        "Q" => [context.find_method("Qux", false), context.find_method("qux", false)],
+      }
+
+      _(@helpers.group_by_first_letter(context.method_list)).must_equal expected
+    end
+  end
 end

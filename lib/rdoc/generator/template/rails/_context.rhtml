@@ -32,13 +32,13 @@
     <!-- Method ref -->
     <div class="sectiontitle">Methods</div>
     <dl class="methods">
-      <% each_letter_group(context.method_list) do |group| %>
-        <dt><%= group[:name] %></dt>
+      <% group_by_first_letter(context.method_list).each do |letter, methods| %>
+        <dt><%= letter %></dt>
         <dd>
           <ul>
-            <% group[:methods].each_with_index do |method, i|  %>
+            <% methods.each_with_index do |method, i| %>
               <%
-                comma = group[:methods].size == i+1 ? '' : ','
+                comma = methods.size == i+1 ? '' : ','
               %>
               <li><%= link_to method.name, method %><%= comma %></li>
             <% end %>

@@ -4,6 +4,14 @@ require 'sdoc'
 
 require 'minitest/autorun'
 
+def with_env(env, &block)
+  original_env = ENV.to_h
+  ENV.replace(env)
+  block.call
+ensure
+  ENV.replace(original_env)
+end
+
 # Returns an RDoc::TopLevel instance for the given Ruby code.
 def rdoc_top_level_for(ruby_code)
   # RDoc has a lot of internal state that needs to be initialized. The most

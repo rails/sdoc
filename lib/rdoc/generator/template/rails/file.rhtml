@@ -22,12 +22,9 @@
             <%= h file.name %>
         </h2>
         <ul class="files">
-            <%
-                github = github_url(file.relative_name) if options.github
-            %>
             <li>
                 <%= h file.relative_name %>
-                <% if github %>
+                <% if github = github_url(file.relative_name) %>
                     <a href="<%= github %>" target="_blank" class="github_url">on GitHub</a>
                 <% end %>
             </li>

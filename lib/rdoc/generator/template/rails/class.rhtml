@@ -31,11 +31,11 @@
         <h2>
             <span class="type"><%= klass.module? ? 'Module' : 'Class' %></span>
             <%= h klass.full_name %>
-            <% if klass.type == 'class' %>
+            <% if klass.type == "class" && klass.superclass %>
                 <span class="parent">&lt;
                     <% if klass.superclass.is_a?(String) %>
                     <%= klass.superclass %>
-                    <% elsif klass.superclass %>
+                    <% else %>
                     <%= link_to klass.superclass.full_name, klass.superclass %>
                     <% end %>
                 </span>

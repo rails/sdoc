@@ -158,39 +158,28 @@
             </div>
           <% end %>
 
-          <% if method.token_stream %>
-            <% markup = method.markup_code %>
+          <% source_code, source_url = method_source_code_and_url(method) %>
+          <% if source_code || source_url %>
             <div class="sourcecode">
-              <%
-                # generate github link
-                github = if options.github
-                  if markup =~ /File\s(\S+), line (\d+)/
-                    path = $1
-                    line = $2.to_i
-                  end
-                  path && github_url(path)
-                else
-                  false
-                end
-
-                ghost = method.instance_of?(RDoc::GhostMethod)
-              %>
               <p class="source-link">
-                <% if !ghost || github %> Source: <% end %>
+                Source:
 
-                <% unless ghost %>
+                <% if source_code %>
                   <a href="javascript:toggleSource('<%= method.aref %>_source')" id="l_<%= method.aref %>_source">show</a>
                 <% end %>
 
-                <% if !ghost && github %> | <% end %>
+                <% if source_code && source_url %> | <% end %>
 
-                <% if github %>
-                  <a href="<%= "#{github}#L#{line}" %>" target="_blank" class="github_url">on GitHub</a>
+                <% if source_url %>
+                  <a href="<%= source_url %>" target="_blank" class="github_url">on GitHub</a>
                 <% end %>
               </p>
-              <div id="<%= method.aref %>_source" class="dyn-source">
-                <pre><code class="ruby"><%= markup %></code></pre>
-              </div>
+
+              <% if source_code %>
+                <div id="<%= method.aref %>_source" class="dyn-source">
+                  <pre><code class="ruby"><%= source_code %></code></pre>
+                </div>
+              <% end %>
             </div>
             <% end %>
           </div>

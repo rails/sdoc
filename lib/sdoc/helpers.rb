@@ -1,20 +1,4 @@
 module SDoc::Helpers
-  def each_letter_group(methods, &block)
-    group = {:name => '', :methods => []}
-    methods.sort{ |a, b| a.name <=> b.name }.each do |method|
-      gname = group_name method.name
-      if gname != group[:name]
-        yield group unless group[:methods].size == 0
-        group = {
-          :name => gname,
-          :methods => []
-        }
-      end
-      group[:methods].push(method)
-    end
-    yield group unless group[:methods].size == 0
-  end
-
   # Strips out HTML tags from a given string.
   #
   # Example:
@@ -77,12 +61,9 @@ module SDoc::Helpers
     @html_safe_badge_version ||= h(ENV["HORO_BADGE_VERSION"]) if ENV["HORO_BADGE_VERSION"]
   end
 
-protected
-  def group_name name
-    if match = name.match(/^([a-z])/i)
-      match[1].upcase
-    else
-      '#'
+  def group_by_first_letter(rdoc_objects)
+    rdoc_objects.sort_by(&:name).group_by do |object|
+      object.name[/^[a-z]/i]&.upcase || "#"
     end
   end
 end

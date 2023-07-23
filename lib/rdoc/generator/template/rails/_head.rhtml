@@ -1,15 +1,15 @@
-<link rel="stylesheet" href="<%= rel_prefix %>/css/reset.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<%= rel_prefix %>/css/panel.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<%= rel_prefix %>/css/main.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<%= rel_prefix %>/css/highlight.css" type="text/css" media="screen" />
-<script src="<%= rel_prefix %>/js/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%= rel_prefix %>/js/main.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%= rel_prefix %>/js/@hotwired--turbo.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%= rel_prefix %>/js/search_index.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%= rel_prefix %>/js/searcher.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%= rel_prefix %>/panel/tree.js" type="text/javascript" charset="utf-8"></script>
-<script src="<%= rel_prefix %>/js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
-<meta name="data-rel-prefix" content="<%= rel_prefix %>/">
+<%= base_tag_for_context(context) %>
+<link rel="stylesheet" href="/css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/css/panel.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/css/highlight.css" type="text/css" media="screen" />
+<script src="/js/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/@hotwired--turbo.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/search_index.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/searcher.js" type="text/javascript" charset="utf-8"></script>
+<script src="/panel/tree.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
 <meta name="data-tree-keys" content='<%= tree_keys %>'>
 <% if ENV['HORO_CANONICAL_URL'] %>
 <link rel="canonical" href="<%= horo_canonical_url(ENV['HORO_CANONICAL_URL'], context) %>" />

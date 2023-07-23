@@ -1,4 +1,5 @@
 require "nokogiri"
+require "pathname"
 require "rouge"
 
 module SDoc::Postprocessor
@@ -7,9 +8,41 @@ module SDoc::Postprocessor
   def process(rendered)
     document = Nokogiri::HTML.parse(rendered)
 
+    adjust_urls!(document)
     highlight_code_blocks!(document)
 
     document.to_s
+  end
+
+  TAG_ATTRIBUTES_AFFECTED_BY_BASE_TAG = {
+    link: :href,
+    script: :src,
+    a: :href,
+    img: :src,
+  }
+
+  def adjust_urls!(document)
+    current_path = document.at_css("base")&.attr("data-current-path")
+    return unless current_path
+
+    TAG_ATTRIBUTES_AFFECTED_BY_BASE_TAG.each do |tag, attr|
+      document.css("#{tag}[#{attr}]").each do |element|
+        element[attr] = adjust_url(element[attr], current_path)
+      end
+    end
+  end
+
+  def adjust_url(url, current_path)
+    case
+    when url.start_with?("//", "https:", "http:", "javascript:", "data:")
+      url
+    when url.start_with?("/")
+      url[1..]
+    when url.start_with?("#")
+      current_path + url
+    else
+      Pathname(current_path).dirname.join(url).cleanpath.to_s
+    end
   end
 
   def highlight_code_blocks!(document)

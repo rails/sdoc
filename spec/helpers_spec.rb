@@ -5,7 +5,11 @@ describe SDoc::Helpers do
     @helpers = Class.new do
       include ERB::Util
       include SDoc::Helpers
+
+      attr_accessor :options
     end.new
+
+    @helpers.options = RDoc::Options.new
   end
 
   describe "#strip_tags" do
@@ -28,6 +32,64 @@ describe SDoc::Helpers do
   describe "#truncate" do
     it "should truncate the given text around a given length" do
       _(@helpers.truncate("Hello world", length: 5)).must_equal "Hello."
+    end
+  end
+
+  describe "#github_url" do
+    before :each do
+      @helpers.options.github = true
+    end
+
+    it "returns the URL for a given path in the project's GitHub repository at the current SHA1" do
+      @helpers.git_bin_path = "path/to/git"
+      @helpers.git_origin_url = "git@github.com:user/repo.git"
+      @helpers.git_head_sha1 = "1337c0d3"
+
+      _(@helpers.github_url("foo/bar/qux.rb")).
+        must_equal "https://github.com/user/repo/blob/1337c0d3/foo/bar/qux.rb"
+    end
+
+    it "detects the GitHub repository name and current SHA1 (smoke test)" do
+      _(@helpers.github_url("foo/bar/qux.rb")).
+        must_match %r"\Ahttps://github.com/[^/]+/sdoc/blob/[0-9a-f]{40}/foo/bar/qux\.rb\z"
+    end
+
+    it "supports HTTPS remote URL" do
+      @helpers.git_origin_url = "https://github.com/user/repo.git"
+
+      _(@helpers.github_url("foo/bar/qux.rb")).
+        must_match %r"\Ahttps://github.com/user/repo/blob/[0-9a-f]{40}/foo/bar/qux\.rb\z"
+    end
+
+    it "supports HTTPS remote URL without .git extension" do
+      @helpers.git_origin_url = "https://github.com/user/repo"
+
+      _(@helpers.github_url("foo/bar/qux.rb")).
+        must_match %r"\Ahttps://github.com/user/repo/blob/[0-9a-f]{40}/foo/bar/qux\.rb\z"
+    end
+
+    it "returns nil when options.github is false" do
+      @helpers.options.github = false
+
+      _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
+    end
+
+    it "returns nil when git is not installed" do
+      @helpers.git_bin_path = ""
+
+      _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
+    end
+
+    it "returns nil when 'origin' remote is not present" do
+      @helpers.git_origin_url = ""
+
+      _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
+    end
+
+    it "returns nil when 'origin' remote is not recognized" do
+      @helpers.git_origin_url = "git@gitlab.com:user/repo.git"
+
+      _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
     end
   end
 

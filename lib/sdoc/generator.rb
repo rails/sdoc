@@ -3,7 +3,6 @@ require 'pathname'
 require 'fileutils'
 require 'json'
 
-require 'sdoc/github'
 require 'sdoc/templatable'
 require 'sdoc/helpers'
 require 'sdoc/version'
@@ -26,7 +25,6 @@ class RDoc::Generator::SDoc
   DESCRIPTION = 'Searchable HTML documentation'
 
   include ERB::Util
-  include SDoc::GitHub
   include SDoc::Templatable
   include SDoc::Helpers
 
@@ -70,7 +68,6 @@ class RDoc::Generator::SDoc
       @options.diagram = false
     end
     @options.pipe = true
-    @github_url_cache = {}
 
     @template_dir = Pathname.new(options.template_dir)
     @base_dir = options.root

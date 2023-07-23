@@ -1,4 +1,7 @@
 module SDoc::Helpers
+  require_relative "helpers/github"
+  include SDoc::Helpers::GitHub
+
   # Strips out HTML tags from a given string.
   #
   # Example:

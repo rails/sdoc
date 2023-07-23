@@ -55,12 +55,26 @@ module SDoc::Helpers
     end
   end
 
-  def horo_canonical_url(canonical_url, context)
-    if context == :index
-      return "#{canonical_url}/"
+  def canonical_url(context)
+    if ENV["HORO_CANONICAL_URL"]
+      if context == :index
+        "#{ENV["HORO_CANONICAL_URL"]}/"
+      else
+        "#{ENV["HORO_CANONICAL_URL"]}/#{context.as_href("")}"
+      end
     end
+  end
 
-    return "#{canonical_url}/#{context.as_href("")}"
+  def project_name
+    @html_safe_project_name ||= h(ENV["HORO_PROJECT_NAME"]) if ENV["HORO_PROJECT_NAME"]
+  end
+
+  def project_version
+    @html_safe_project_version ||= h(ENV["HORO_PROJECT_VERSION"]) if ENV["HORO_PROJECT_VERSION"]
+  end
+
+  def badge_version
+    @html_safe_badge_version ||= h(ENV["HORO_BADGE_VERSION"]) if ENV["HORO_BADGE_VERSION"]
   end
 
 protected

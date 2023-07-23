@@ -137,24 +137,24 @@
           </h3>
           <%= link_to "Link", method, class: "permalink", name: method.aref %>
 
-          <% if method.comment %>
-            <div class="description">
-              <%= method.description.strip %>
-            </div>
-          <% end %>
-
           <% unless method.aliases.empty? %>
-            <div class="aka">
+            <p class="aka">
               Also aliased as:
               <%# Sometimes a parent cannot be determined. See ruby/rdoc@85ebfe13dc. %>
-              <%= method.aliases.map { |aka| link_to aka.name, (aka if aka.parent) }.join(", ") %>
-            </div>
+              <%= method.aliases.map { |aka| link_to aka.name, (aka if aka.parent) }.join(", ") %>.
+            </p>
           <% end %>
 
           <% if alias_for = method.is_alias_for then %>
-            <div class="aka">
+            <p class="aka">
               Alias for:
-              <%= link_to alias_for.name, alias_for %>
+              <%= link_to alias_for.name, alias_for %>.
+            </p>
+          <% end %>
+
+          <% if method.comment %>
+            <div class="description">
+              <%= method.description.strip %>
             </div>
           <% end %>
 

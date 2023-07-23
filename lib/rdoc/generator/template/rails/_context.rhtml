@@ -23,7 +23,7 @@
     <div class="sectiontitle">Sections</div>
     <ul>
       <% sections.each do |section| %>
-        <li><a href="#<%= section.aref %>"><%= h section.title %></a></li>
+        <li><%= link_to section.title, "##{section.aref}" %></li>
       <% end %>
     </ul>
   <% end %>
@@ -40,9 +40,7 @@
               <%
                 comma = group[:methods].size == i+1 ? '' : ','
               %>
-              <li>
-                <a href="#<%= method.aref %>"><%= h method.name %></a><%= comma %>
-              </li>
+              <li><%= link_to method.name, method %><%= comma %></li>
             <% end %>
           </ul>
         </dd>
@@ -56,12 +54,10 @@
     <ul>
       <% context.includes.each do |inc| %>
         <li>
-          <% unless String === inc.module %>
-            <a href="<%= context.aref_to inc.module.path %>">
-              <%= h inc.module.full_name %>
-            </a>
-          <% else %>
+          <% if inc.module.is_a?(String) %>
             <%= h inc.name %>
+          <% else %>
+            <%= link_to inc.module.full_name, inc.module %>
           <% end %>
         </li>
       <% end %>
@@ -139,7 +135,7 @@
               <b><%= h method.name %></b><%= h method.params %>
             <% end %>
           </h3>
-          <a href="<%= "/#{context.path}##{method.aref}"%>" name="<%= method.aref %>" class="permalink">Link</a>
+          <%= link_to "Link", method, class: "permalink", name: method.aref %>
 
           <% if method.comment %>
             <div class="description">
@@ -149,19 +145,16 @@
 
           <% unless method.aliases.empty? %>
             <div class="aka">
-              Also aliased as: <%= method.aliases.map do |aka|
-                if aka.parent then # HACK lib/rexml/encodings
-                  %{<a href="#{context.aref_to aka.path}">#{h aka.name}</a>}
-                else
-                  h aka.name
-                end
-              end.join ", " %>
+              Also aliased as:
+              <%# Sometimes a parent cannot be determined. See ruby/rdoc@85ebfe13dc. %>
+              <%= method.aliases.map { |aka| link_to aka.name, (aka if aka.parent) }.join(", ") %>
             </div>
           <% end %>
 
-          <% if method.is_alias_for then %>
+          <% if alias_for = method.is_alias_for then %>
             <div class="aka">
-              Alias for: <a href="<%= context.aref_to method.is_alias_for.path %>"><%= h method.is_alias_for.name %></a>
+              Alias for:
+              <%= link_to alias_for.name, alias_for %>
             </div>
           <% end %>
 
@@ -213,7 +206,7 @@
       <% (context.modules.sort + context.classes.sort).each do |mod| %>
         <li>
           <span class="type"><%= mod.type.upcase %></span>
-          <a href="<%= context.aref_to mod.path %>"><%= mod.full_name %></a>
+          <%= link_to mod.full_name, mod %>
         </li>
       <% end %>
     </ul>

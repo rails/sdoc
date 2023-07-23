@@ -32,10 +32,10 @@
             <%= h klass.full_name %>
             <% if klass.type == 'class' %>
                 <span class="parent">&lt;
-                    <% if String === klass.superclass %>
+                    <% if klass.superclass.is_a?(String) %>
                     <%= klass.superclass %>
-                    <% elsif !klass.superclass.nil? %>
-                    <a href="<%= klass.aref_to klass.superclass.path %>"><%= h klass.superclass.full_name %></a>
+                    <% elsif klass.superclass %>
+                    <%= link_to klass.superclass.full_name, klass.superclass %>
                     <% end %>
                 </span>
             <% end %>
@@ -55,8 +55,8 @@
                 <summary class="sectiontitle">Appears in</summary>
                 <ul class="files">
                     <% klass.in_files.each do |file| %>
-                    <li><a href="/<%= h file.path %>"><%= h file.absolute_name %></a></li>
-                    <% end  %>
+                    <li><%= link_to file.absolute_name, file %></li>
+                    <% end %>
                 </ul>
             </details>
         </div>

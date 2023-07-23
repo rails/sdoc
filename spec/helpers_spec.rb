@@ -3,6 +3,7 @@ require "spec_helper"
 describe SDoc::Helpers do
   before :each do
     @helpers = Class.new do
+      include ERB::Util
       include SDoc::Helpers
     end.new
   end
@@ -27,6 +28,43 @@ describe SDoc::Helpers do
   describe "#truncate" do
     it "should truncate the given text around a given length" do
       _(@helpers.truncate("Hello world", length: 5)).must_equal "Hello."
+    end
+  end
+
+  describe "#link_to" do
+    it "returns a link tag" do
+      _(@helpers.link_to("Foo::Bar::Qux", "foo/bar/qux.html")).
+        must_equal %(<a href="foo/bar/qux.html">Foo::Bar::Qux</a>)
+    end
+
+    it "supports HTML attributes" do
+      _(@helpers.link_to("foo", "bar", class: "qux", "data-hoge": "fuga")).
+        must_equal %(<a href="bar" class="qux" data-hoge="fuga">foo</a>)
+    end
+
+    it "escapes the link text and attributes" do
+      _(@helpers.link_to("Bar < Foo", "qux", title: "Foo > Bar")).
+        must_equal %(<a href="qux" title="Foo &gt; Bar">Bar &lt; Foo</a>)
+    end
+
+    it "returns the escaped text when URL argument is nil" do
+      _(@helpers.link_to("Bar < Foo", nil, title: "Foo > Bar")).
+        must_equal %(Bar &lt; Foo)
+    end
+
+    it "returns an appropriate link when URL argument is an RDoc::CodeObject that responds to #path" do
+      top_level = rdoc_top_level_for <<~RUBY
+        module Foo; class Bar; def qux; end; end; end
+      RUBY
+
+      _(@helpers.link_to("perma", top_level.find_module_named("Foo"))).
+        must_equal %(<a href="/classes/Foo.html">perma</a>)
+
+      _(@helpers.link_to("perma", top_level.find_module_named("Foo::Bar"))).
+        must_equal %(<a href="/classes/Foo/Bar.html">perma</a>)
+
+      _(@helpers.link_to("perma", top_level.find_module_named("Foo::Bar").find_method("qux", false))).
+        must_equal %(<a href="/classes/Foo/Bar.html#method-i-qux">perma</a>)
     end
   end
 

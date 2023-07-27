@@ -1,6 +1,7 @@
 require "nokogiri"
 require "pathname"
 require "rouge"
+require "uri"
 
 module SDoc::Postprocessor
   extend self
@@ -8,7 +9,8 @@ module SDoc::Postprocessor
   def process(rendered)
     document = Nokogiri::HTML.parse(rendered)
 
-    adjust_urls!(document)
+    rebase_urls!(document)
+    version_rails_guides_urls!(document)
     highlight_code_blocks!(document)
 
     document.to_s
@@ -21,18 +23,18 @@ module SDoc::Postprocessor
     img: :src,
   }
 
-  def adjust_urls!(document)
+  def rebase_urls!(document)
     current_path = document.at_css("base")&.attr("data-current-path")
     return unless current_path
 
     TAG_ATTRIBUTES_AFFECTED_BY_BASE_TAG.each do |tag, attr|
       document.css("#{tag}[#{attr}]").each do |element|
-        element[attr] = adjust_url(element[attr], current_path)
+        element[attr] = rebase_url(element[attr], current_path)
       end
     end
   end
 
-  def adjust_url(url, current_path)
+  def rebase_url(url, current_path)
     case
     when url.start_with?("//", "https:", "http:", "javascript:", "data:")
       url
@@ -43,6 +45,28 @@ module SDoc::Postprocessor
     else
       Pathname(current_path).dirname.join(url).cleanpath.to_s
     end
+  end
+
+  def version_rails_guides_urls!(document)
+    if ENV["HORO_PROJECT_NAME"] == "Ruby on Rails" && version = ENV["HORO_PROJECT_VERSION"]
+      document.css("a[href^='https://guides.rubyonrails.org/']").each do |element|
+        element["href"] = version_url(element["href"], version)
+      end
+    end
+  end
+
+  def version_url(url, version)
+    uri = URI(url)
+
+    unless uri.path.match?(%r"\A/v\d")
+      if version.match?(/\A[.0-9]+\z/)
+        uri.path = "/v#{version}#{uri.path}"
+      else
+        uri.host = "edge#{uri.host}"
+      end
+    end
+
+    uri.to_s
   end
 
   def highlight_code_blocks!(document)

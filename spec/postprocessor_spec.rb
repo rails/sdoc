@@ -61,6 +61,36 @@ describe SDoc::Postprocessor do
       end
     end
 
+    it "unlinks unintentional autolinked code ref links in descriptions" do
+      rendered = <<~HTML
+        <base href="../" data-current-path="classes/Foo.html">
+
+        <div class="description">
+          <a href="Rails.html"><code>Rails</code></a>
+          <a href="ERB.html"><code>ERB</code></a>
+
+          <a href="Rails.html"><code>::Rails</code></a>
+          <a href="FooBar.html"><code>FooBar</code></a>
+        </div>
+
+        <a href="Nav.html"><code>Nav</code></a>
+      HTML
+
+      expected = <<~HTML
+        <div class="description">
+          Rails
+          ERB
+
+          <a href="classes/Rails.html"><code>::Rails</code></a>
+          <a href="classes/FooBar.html"><code>FooBar</code></a>
+        </div>
+
+        <a href="classes/Nav.html"><code>Nav</code></a>
+      HTML
+
+      _(SDoc::Postprocessor.process(rendered)).must_include expected
+    end
+
     it "highlights code blocks" do
       rendered = <<~HTML
         <div class="description">

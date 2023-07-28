@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe SDoc::Postprocessor do
   describe "#process" do
-    it "adjusts URLs" do
+    it "rebases URLs" do
       rendered = <<~HTML
         <base href="../../" data-current-path="foo/bar/current.html">
 
@@ -27,6 +27,38 @@ describe SDoc::Postprocessor do
 
       _(postprocessed).must_include expected_head
       _(postprocessed).must_include expected_body
+    end
+
+    it "versions Rails guides URLs based on ENV['HORO_PROJECT_VERSION']" do
+      rendered = <<~HTML
+        <a href="https://guides.rubyonrails.org/testing.html">Testing</a>
+      HTML
+
+      with_env("HORO_PROJECT_VERSION" => "3.2.1", "HORO_PROJECT_NAME" => "Ruby on Rails") do
+        _(SDoc::Postprocessor.process(rendered)).
+          must_include %(<a href="https://guides.rubyonrails.org/v3.2.1/testing.html">Testing</a>)
+      end
+
+      with_env("HORO_PROJECT_VERSION" => "main@1337c0d3", "HORO_PROJECT_NAME" => "Ruby on Rails") do
+        _(SDoc::Postprocessor.process(rendered)).
+          must_include %(<a href="https://edgeguides.rubyonrails.org/testing.html">Testing</a>)
+      end
+
+      with_env("HORO_PROJECT_VERSION" => nil, "HORO_PROJECT_NAME" => "Ruby on Rails") do
+        _(SDoc::Postprocessor.process(rendered)).
+          must_include %(<a href="https://guides.rubyonrails.org/testing.html">Testing</a>)
+      end
+    end
+
+    it "does not version Rails guides URLs when ENV['HORO_PROJECT_NAME'] is not Ruby on Rails" do
+      rendered = <<~HTML
+        <a href="https://guides.rubyonrails.org/testing.html">Testing</a>
+      HTML
+
+      with_env("HORO_PROJECT_VERSION" => "3.2.1", "HORO_PROJECT_NAME" => "My Rails Gem") do
+        _(SDoc::Postprocessor.process(rendered)).
+          must_include %(<a href="https://guides.rubyonrails.org/testing.html">Testing</a>)
+      end
     end
 
     it "highlights code blocks" do
@@ -76,8 +108,8 @@ describe SDoc::Postprocessor do
     end
   end
 
-  describe "#adjust_url" do
-    it "does not adjust full URLs" do
+  describe "#rebase_url" do
+    it "does not change full URLs" do
       [
         "//example.com/hoge/fuga",
         "https://example.com/hoge/fuga",
@@ -85,26 +117,49 @@ describe SDoc::Postprocessor do
         "javascript:alert('hoge')",
         "data:,hoge",
       ].each do |url|
-        _(SDoc::Postprocessor.adjust_url(url, "foo/bar/qux.html")).must_equal url
+        _(SDoc::Postprocessor.rebase_url(url, "foo/bar/qux.html")).must_equal url
       end
     end
 
-    it "adjusts absolute paths to be relative (to the expected <base> element)" do
-      _(SDoc::Postprocessor.adjust_url("/hoge/fuga.html", "foo/bar/qux.html")).
+    it "changes absolute paths to relative (to the expected <base> element)" do
+      _(SDoc::Postprocessor.rebase_url("/hoge/fuga.html", "foo/bar/qux.html")).
         must_equal "hoge/fuga.html"
     end
 
     it "expands relative paths" do
-      _(SDoc::Postprocessor.adjust_url("hoge/fuga.html", "foo/bar/qux.html")).
+      _(SDoc::Postprocessor.rebase_url("hoge/fuga.html", "foo/bar/qux.html")).
         must_equal "foo/bar/hoge/fuga.html"
 
-      _(SDoc::Postprocessor.adjust_url("../hoge/fuga.html", "foo/bar/qux.html")).
+      _(SDoc::Postprocessor.rebase_url("../hoge/fuga.html", "foo/bar/qux.html")).
         must_equal "foo/hoge/fuga.html"
     end
 
     it "expands fragments" do
-      _(SDoc::Postprocessor.adjust_url("#hoge", "foo/bar/qux.html")).
+      _(SDoc::Postprocessor.rebase_url("#hoge", "foo/bar/qux.html")).
         must_equal "foo/bar/qux.html#hoge"
+    end
+  end
+
+  describe "#version_url" do
+    it "prepends the version number to the URL's path" do
+      _(SDoc::Postprocessor.version_url("https://example.com/foo/bar.html", "3.2.1")).
+        must_equal "https://example.com/v3.2.1/foo/bar.html"
+    end
+
+    it "does not prepend the version number when the URL is already versioned" do
+      [
+        "https://example.com/v1/foo/bar.html",
+        "https://example.com/v1.2/foo/bar.html",
+        "https://example.com/v1.2.3/foo/bar.html",
+        "https://example.com/v1.2.3.4/foo/bar.html",
+      ].each do |url|
+        _(SDoc::Postprocessor.version_url(url, "3.2.1")).must_equal url
+      end
+    end
+
+    it "prepends 'edge' to the URL's host when the version is not a number" do
+      _(SDoc::Postprocessor.version_url("https://api.example.com/foo/bar.html", "main@1337c0d3")).
+        must_equal "https://edgeapi.example.com/foo/bar.html"
     end
   end
 

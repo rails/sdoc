@@ -72,6 +72,10 @@ module SDoc::Helpers
     @html_safe_badge_version ||= h(ENV["HORO_BADGE_VERSION"]) if ENV["HORO_BADGE_VERSION"]
   end
 
+  def page_title(title = nil)
+    h [title, @options.title].compact.join(" - ")
+  end
+
   def group_by_first_letter(rdoc_objects)
     rdoc_objects.sort_by(&:name).group_by do |object|
       object.name[/^[a-z]/i]&.upcase || "#"

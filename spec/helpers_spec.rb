@@ -245,6 +245,21 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#page_title" do
+    it "includes options.title" do
+      @helpers.options.title = "My Docs"
+
+      _(@helpers.page_title).must_equal "My Docs"
+      _(@helpers.page_title("Foo")).must_equal "Foo - My Docs"
+    end
+
+    it "escapes the title" do
+      @helpers.options.title = "Docs & Stuff"
+
+      _(@helpers.page_title("Foo<Bar>")).must_equal "Foo&lt;Bar&gt; - Docs &amp; Stuff"
+    end
+  end
+
   describe "#group_by_first_letter" do
     it "groups RDoc objects by the first letter of their #name" do
       context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")

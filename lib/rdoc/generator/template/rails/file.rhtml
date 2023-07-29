@@ -5,6 +5,8 @@
     <title><%= page_title file.name %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= include_template '_head.rhtml', {:context => file, :tree_keys => [] } %>
+
+    <meta property="og:title" value="<%= og_title file.name %>">
 </head>
 
 <body>

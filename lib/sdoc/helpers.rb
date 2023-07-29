@@ -61,19 +61,24 @@ module SDoc::Helpers
   end
 
   def project_name
-    @html_safe_project_name ||= h(ENV["HORO_PROJECT_NAME"]) if ENV["HORO_PROJECT_NAME"]
+    h(ENV["HORO_PROJECT_NAME"]) if ENV["HORO_PROJECT_NAME"]
   end
 
   def project_version
-    @html_safe_project_version ||= h(ENV["HORO_PROJECT_VERSION"]) if ENV["HORO_PROJECT_VERSION"]
+    h(ENV["HORO_PROJECT_VERSION"]) if ENV["HORO_PROJECT_VERSION"]
   end
 
   def badge_version
-    @html_safe_badge_version ||= h(ENV["HORO_BADGE_VERSION"]) if ENV["HORO_BADGE_VERSION"]
+    h(ENV["HORO_BADGE_VERSION"]) if ENV["HORO_BADGE_VERSION"]
   end
 
   def page_title(title = nil)
     h [title, @options.title].compact.join(" - ")
+  end
+
+  def og_title(title)
+    project = [project_name, badge_version].join(" ").strip
+    "#{h title}#{" (#{project})" unless project.empty?}"
   end
 
   def group_by_first_letter(rdoc_objects)

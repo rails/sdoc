@@ -260,6 +260,32 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#og_title" do
+    it "includes ENV['HORO_PROJECT_NAME'] and ENV['HORO_BADGE_VERSION']" do
+      with_env("HORO_PROJECT_NAME" => "My Gem", "HORO_BADGE_VERSION" => "v2.0") do
+        _(@helpers.og_title("Foo")).must_equal "Foo (My Gem v2.0)"
+      end
+
+      with_env("HORO_PROJECT_NAME" => "My Gem", "HORO_BADGE_VERSION" => nil) do
+        _(@helpers.og_title("Foo")).must_equal "Foo (My Gem)"
+      end
+
+      with_env("HORO_PROJECT_NAME" => nil, "HORO_BADGE_VERSION" => "v2.0") do
+        _(@helpers.og_title("Foo")).must_equal "Foo (v2.0)"
+      end
+
+      with_env("HORO_PROJECT_NAME" => nil, "HORO_BADGE_VERSION" => nil) do
+        _(@helpers.og_title("Foo")).must_equal "Foo"
+      end
+    end
+
+    it "escapes the title" do
+      with_env("HORO_PROJECT_NAME" => "Ruby & Rails", "HORO_BADGE_VERSION" => "~> 1.0.0") do
+        _(@helpers.og_title("Foo<Bar>")).must_equal "Foo&lt;Bar&gt; (Ruby &amp; Rails ~&gt; 1.0.0)"
+      end
+    end
+  end
+
   describe "#group_by_first_letter" do
     it "groups RDoc objects by the first letter of their #name" do
       context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")

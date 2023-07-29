@@ -44,4 +44,28 @@ describe RDoc::Generator::SDoc do
       _(parse_options("-g").github).must_equal true
     end
   end
+
+  describe "options.title" do
+    it "includes ENV['HORO_PROJECT_NAME'] and ENV['HORO_BADGE_VERSION'] by default" do
+      with_env("HORO_PROJECT_NAME" => "My Gem", "HORO_BADGE_VERSION" => "v2.0") do
+        _(parse_options().title).must_equal "My Gem v2.0 API documentation"
+      end
+
+      with_env("HORO_PROJECT_NAME" => "My Gem", "HORO_BADGE_VERSION" => nil) do
+        _(parse_options().title).must_equal "My Gem API documentation"
+      end
+
+      with_env("HORO_PROJECT_NAME" => nil, "HORO_BADGE_VERSION" => "v2.0") do
+        _(parse_options().title).must_equal "v2.0 API documentation"
+      end
+
+      with_env("HORO_PROJECT_NAME" => nil, "HORO_BADGE_VERSION" => nil) do
+        _(parse_options().title).must_equal "API documentation"
+      end
+    end
+
+    it "can be overridden" do
+      _(parse_options("--title", "Docs Docs Docs!").title).must_equal "Docs Docs Docs!"
+    end
+  end
 end

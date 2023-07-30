@@ -12,29 +12,6 @@ describe SDoc::Helpers do
     @helpers.options = RDoc::Options.new
   end
 
-  describe "#strip_tags" do
-    it "should strip out HTML tags from the given string" do
-      strings = [
-        [ %(<strong>Hello world</strong>),                                      "Hello world"          ],
-        [ %(<a href="Streams.html">Streams</a> are great),                      "Streams are great"    ],
-        [ %(<a href="https://github.com?x=1&y=2#123">zzak/sdoc</a> Standalone), "zzak/sdoc Standalone" ],
-        [ %(<h1 id="module-AR::Cb-label-Foo+Bar">AR Cb</h1>),                   "AR Cb"                ],
-        [ %(<a href="../Base.html">Base</a>),                                   "Base"                 ],
-        [ %(Some<br>\ntext),                                                    "Some\ntext"           ]
-      ]
-
-      strings.each do |(html, stripped)|
-        _(@helpers.strip_tags(html)).must_equal stripped
-      end
-    end
-  end
-
-  describe "#truncate" do
-    it "should truncate the given text around a given length" do
-      _(@helpers.truncate("Hello world", length: 5)).must_equal "Hello."
-    end
-  end
-
   describe "#github_url" do
     before :each do
       @helpers.options.github = true
@@ -283,6 +260,66 @@ describe SDoc::Helpers do
       with_env("HORO_PROJECT_NAME" => "Ruby & Rails", "HORO_BADGE_VERSION" => "~> 1.0.0") do
         _(@helpers.og_title("Foo<Bar>")).must_equal "Foo&lt;Bar&gt; (Ruby &amp; Rails ~&gt; 1.0.0)"
       end
+    end
+  end
+
+  describe "#page_description" do
+    it "extracts the description from the leading paragraph" do
+      _(@helpers.page_description(<<~HTML)).must_equal "leading"
+        <p>leading</p>
+        <p>other</p>
+      HTML
+
+      _(@helpers.page_description(<<~HTML)).must_equal "paragraph"
+        <h1>headline</h1>
+        <p>paragraph</p>
+      HTML
+    end
+
+    it "returns nil when there is no leading paragraph" do
+      _(@helpers.page_description(<<~HTML)).must_be_nil
+        <pre><code>code</code></pre>
+        <p>other</p>
+      HTML
+
+      _(@helpers.page_description("")).must_be_nil
+      _(@helpers.page_description(nil)).must_be_nil
+    end
+
+    it "strips HTML tags" do
+      _(@helpers.page_description(<<~HTML)).must_equal "emphatic text"
+        <p><em>emphatic</em> text</p>
+      HTML
+    end
+
+    it "escapes the text" do
+      _(@helpers.page_description(<<~HTML)).must_equal "x &lt; y"
+        <p>x &lt; y</p>
+      HTML
+    end
+
+    it "truncates at word boundaries" do
+      leading_html = "<p>12345 78. 12, 5 - 9.</p>"
+
+      {
+         8..10 => "12345...",
+        11..14 => "12345 78...",
+        15..17 => "12345 78. 12...",
+        18..19 => "12345 78. 12, 5...",
+        20..25 => "12345 78. 12, 5 - 9.",
+      }.each do |range, expected|
+        range.each do |max_length|
+          _(@helpers.page_description(leading_html, max_length: max_length)).must_equal expected
+        end
+      end
+    end
+
+    it "truncates to 160 characters by default" do
+      _(@helpers.page_description("<p>#{"x" * 150}123 567 9.</p>")).
+        must_equal "#{"x" * 150}123 567 9."
+
+      _(@helpers.page_description("<p>#{"x" * 150}123 567 xxx.</p>")).
+        must_equal "#{"x" * 150}123 567..."
     end
   end
 

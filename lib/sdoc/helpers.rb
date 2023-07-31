@@ -1,6 +1,6 @@
 module SDoc::Helpers
-  require_relative "helpers/github"
-  include SDoc::Helpers::GitHub
+  require_relative "helpers/git"
+  include SDoc::Helpers::Git
 
   def link_to(text, url, html_attributes = {})
     return h(text) if url.nil?
@@ -48,6 +48,10 @@ module SDoc::Helpers
   def og_title(title)
     project = [project_name, badge_version].join(" ").strip
     "#{h title}#{" (#{project})" unless project.empty?}"
+  end
+
+  def og_modified_time
+    git_head_timestamp if git?
   end
 
   def page_description(leading_html, max_length: 160)

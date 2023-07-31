@@ -1,4 +1,4 @@
-module SDoc::Helpers::GitHub
+module SDoc::Helpers::Git
   def github_url(relative_path, line: nil)
     return unless github?
     line = "#L#{line}" if line
@@ -21,6 +21,14 @@ module SDoc::Helpers::GitHub
   def git_head_sha1
     @git_head_sha1 ||= Dir.chdir(@options.root) do
       `git rev-parse HEAD`.chomp
+    end
+  end
+
+  attr_writer :git_head_timestamp
+
+  def git_head_timestamp
+    @git_head_timestamp ||= Dir.chdir(@options.root) do
+      `git show -s --format=%cI HEAD` .chomp
     end
   end
 

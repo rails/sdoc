@@ -1,8 +1,10 @@
 <%= base_tag_for_context(context) %>
+
 <link rel="stylesheet" href="/css/reset.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="/css/panel.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="/css/highlight.css" type="text/css" media="screen" />
+
 <script src="/js/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/main.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/@hotwired--turbo.js" type="text/javascript" charset="utf-8"></script>
@@ -11,6 +13,10 @@
 <script src="/panel/tree.js" type="text/javascript" charset="utf-8"></script>
 <script src="/js/searchdoc.js" type="text/javascript" charset="utf-8"></script>
 <meta name="data-tree-keys" content='<%= tree_keys %>'>
+
 <% if canonical = canonical_url(context) %>
 <link rel="canonical" href="<%= canonical %>" />
+<meta property="og:url" content="<%= canonical %>">
+<meta property="og:image" content="<%= canonical_url("/i/logo.svg") %>">
 <% end %>
+<meta property="og:type" content="article">

@@ -24,8 +24,9 @@ module SDoc::Helpers
     %(<base href="./#{relative_root}" data-current-path="#{context&.path}">)
   end
 
-  def canonical_url(context)
-    "#{ENV["HORO_CANONICAL_URL"]}/#{context&.path}" if ENV["HORO_CANONICAL_URL"]
+  def canonical_url(path = nil)
+    path = path.path if path.is_a?(RDoc::Context)
+    "#{ENV["HORO_CANONICAL_URL"]}/#{path&.delete_prefix("/")}" if ENV["HORO_CANONICAL_URL"]
   end
 
   def project_name

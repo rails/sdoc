@@ -270,6 +270,26 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#og_modified_time" do
+    it "returns the commit time of the most recent commit in HEAD" do
+      @helpers.git_bin_path = "path/to/git"
+      @helpers.git_head_timestamp = "1999-12-31T12:34:56Z"
+
+      _(@helpers.og_modified_time).must_equal "1999-12-31T12:34:56Z"
+    end
+
+    it "returns the commit time of the most recent commit in HEAD (smoke test)" do
+      _(@helpers.og_modified_time).
+        must_match %r"\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[-+]\d{2}:\d{2}\z"
+    end
+
+    it "returns nil when git is not installed" do
+      @helpers.git_bin_path = ""
+
+      _(@helpers.og_modified_time).must_be_nil
+    end
+  end
+
   describe "#page_description" do
     it "extracts the description from the leading paragraph" do
       _(@helpers.page_description(<<~HTML)).must_equal "leading"

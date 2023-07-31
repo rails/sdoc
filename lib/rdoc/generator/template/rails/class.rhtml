@@ -7,12 +7,9 @@
     <%= include_template '_head.rhtml', {:context => klass, :tree_keys => klass.full_name.split('::') } %>
 
     <meta property="og:title" value="<%= og_title klass.full_name %>">
-
     <% if description = page_description(klass.description) %>
     <meta name="description" property="og:description" content="<%= description %>">
     <% end %>
-
-    <meta name="keywords" content="<%= klass.full_name %> class, <%= klass.method_list.map(&:name).join(", ") %>">
 </head>
 
 <body>

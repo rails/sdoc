@@ -167,7 +167,14 @@ describe SDoc::Helpers do
       end
     end
 
-    it "returns a URL based on ENV['HORO_CANONICAL_URL'] for nil context" do
+    it "returns a URL based on ENV['HORO_CANONICAL_URL'] for a path" do
+      with_env("HORO_CANONICAL_URL" => "https://canonical") do
+        _(@helpers.canonical_url("/path/to/foo")).must_equal "https://canonical/path/to/foo"
+        _(@helpers.canonical_url("path/to/foo")).must_equal "https://canonical/path/to/foo"
+      end
+    end
+
+    it "returns a URL based on ENV['HORO_CANONICAL_URL'] for nil" do
       with_env("HORO_CANONICAL_URL" => "https://canonical") do
         _(@helpers.canonical_url(nil)).must_equal "https://canonical/"
       end

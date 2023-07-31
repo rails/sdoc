@@ -135,9 +135,9 @@ describe SDoc::Helpers do
   end
 
   describe "#base_tag_for_context" do
-    it "returns an idempotent <base> tag for the :index context" do
-      _(@helpers.base_tag_for_context(:index)).
-        must_equal %(<base href="./" data-current-path=".">)
+    it "returns an idempotent <base> tag for nil context" do
+      _(@helpers.base_tag_for_context(nil)).
+        must_equal %(<base href="./" data-current-path="">)
     end
 
     it "returns a <base> tag with an appropriate path for the given RDoc::Context" do
@@ -146,13 +146,13 @@ describe SDoc::Helpers do
       RUBY
 
       _(@helpers.base_tag_for_context(top_level.find_module_named("Foo"))).
-        must_equal %(<base href="../" data-current-path="classes/Foo.html">)
+        must_equal %(<base href="./../" data-current-path="classes/Foo.html">)
 
       _(@helpers.base_tag_for_context(top_level.find_module_named("Foo::Bar"))).
-        must_equal %(<base href="../../" data-current-path="classes/Foo/Bar.html">)
+        must_equal %(<base href="./../../" data-current-path="classes/Foo/Bar.html">)
 
       _(@helpers.base_tag_for_context(top_level.find_module_named("Foo::Bar::Qux"))).
-        must_equal %(<base href="../../../" data-current-path="classes/Foo/Bar/Qux.html">)
+        must_equal %(<base href="./../../../" data-current-path="classes/Foo/Bar/Qux.html">)
     end
   end
 
@@ -167,15 +167,15 @@ describe SDoc::Helpers do
       end
     end
 
-    it "returns a URL based on ENV['HORO_CANONICAL_URL'] for the :index context" do
+    it "returns a URL based on ENV['HORO_CANONICAL_URL'] for nil context" do
       with_env("HORO_CANONICAL_URL" => "https://canonical") do
-        _(@helpers.canonical_url(:index)).must_equal "https://canonical/"
+        _(@helpers.canonical_url(nil)).must_equal "https://canonical/"
       end
     end
 
     it "returns nil when ENV['HORO_CANONICAL_URL'] is not set" do
       with_env("HORO_CANONICAL_URL" => nil) do
-        _(@helpers.canonical_url(:index)).must_be_nil
+        _(@helpers.canonical_url(nil)).must_be_nil
       end
     end
   end

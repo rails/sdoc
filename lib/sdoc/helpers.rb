@@ -20,22 +20,12 @@ module SDoc::Helpers
   end
 
   def base_tag_for_context(context)
-    if context == :index
-      %(<base href="./" data-current-path=".">)
-    else
-      relative_root = "../" * context.path.count("/")
-      %(<base href="#{relative_root}" data-current-path="#{context.path}">)
-    end
+    relative_root = "../" * context.path.count("/") if context
+    %(<base href="./#{relative_root}" data-current-path="#{context&.path}">)
   end
 
   def canonical_url(context)
-    if ENV["HORO_CANONICAL_URL"]
-      if context == :index
-        "#{ENV["HORO_CANONICAL_URL"]}/"
-      else
-        "#{ENV["HORO_CANONICAL_URL"]}/#{context.as_href("")}"
-      end
-    end
+    "#{ENV["HORO_CANONICAL_URL"]}/#{context&.path}" if ENV["HORO_CANONICAL_URL"]
   end
 
   def project_name

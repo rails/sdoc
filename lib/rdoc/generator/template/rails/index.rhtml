@@ -14,9 +14,10 @@
     <%= include_template '_panel.rhtml' %>
 
     <div class="banner">
-        <% if ENV['HORO_PROJECT_NAME'] %>
-            <span><%= ERB::Util.html_escape(ENV['HORO_PROJECT_NAME']) %> <%= ERB::Util.html_escape(ENV['HORO_PROJECT_VERSION']) %></span><br />
+        <% if project_name %>
+            <div><%= project_name %> <%= project_version %></div>
         <% end %>
+
         <h2>
             <%= h index.name %>
         </h2>
@@ -24,8 +25,8 @@
             <li><%= h index.relative_name %></li>
             <li>Last modified: <%= index.last_modified %></li>
         </ul>
-        <% if ENV['HORO_BADGE_VERSION'] %>
-            <div id="version-badge"><%= ENV['HORO_BADGE_VERSION'] %></div>
+        <% if badge_version %>
+            <div id="version-badge"><%= badge_version %></div>
         <% end %>
     </div>
 

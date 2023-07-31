@@ -1,48 +1,47 @@
 require File.join(File.dirname(__FILE__), '/spec_helper')
 
 describe RDoc::Generator::SDoc do
-  before :each do
-    @options = RDoc::Options.new
-    @options.setup_generator 'sdoc'
-    @parser = @options.option_parser
+  def parse_options(*options)
+    rdoc_options = nil
+
+    _stdout, stderr = capture_io do
+      rdoc_options = RDoc::Options.new.parse(["--format=sdoc", *options.flatten])
+    end
+
+    assert_empty stderr
+
+    rdoc_options
   end
 
-  it "should find sdoc generator" do
+  it "is registered in RDoc::RDoc::GENERATORS" do
     _(RDoc::RDoc::GENERATORS).must_include 'sdoc'
   end
 
-  it "should use sdoc generator" do
-    _(@options.generator).must_equal RDoc::Generator::SDoc
-    _(@options.generator_name).must_equal 'sdoc'
+  it "is activated via --format=sdoc" do
+    options = parse_options()
+    _(options.generator).must_equal RDoc::Generator::SDoc
+    _(options.generator_name).must_equal "sdoc"
   end
 
-  it "should parse github option" do
-    assert !@options.github
+  it "displays SDoc's version via --version" do
+    _(`./bin/sdoc --version`.strip).must_equal SDoc::VERSION
+  end
 
-    _, err = capture_io do
-      @parser.parse %w[--github]
+  it "displays SDoc's version via -v" do
+    _(`./bin/sdoc -v`.strip).must_equal SDoc::VERSION
+  end
+
+  describe "options.github" do
+    it "is disabled by default" do
+      _(parse_options().github).must_be_nil
     end
 
-    _(err).wont_match(/^invalid options/)
-    _(@options.github).must_equal true
-  end
-
-  it "should parse github short-hand option" do
-    assert !@options.github
-
-    _, err = capture_io do
-      @parser.parse %w[-g]
+    it "is enabled via --github" do
+      _(parse_options("--github").github).must_equal true
     end
 
-    _(err).wont_match(/^invalid options/)
-    _(@options.github).must_equal true
-  end
-
-  it "should display SDoc version on -v or --version" do
-    out_full  = `./bin/sdoc --version`
-    out_short = `./bin/sdoc -v`
-
-    _(out_short.strip).must_equal SDoc::VERSION
-    _(out_full.strip).must_equal SDoc::VERSION
+    it "is enabled via -g" do
+      _(parse_options("-g").github).must_equal true
+    end
   end
 end

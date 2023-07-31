@@ -11,6 +11,7 @@ module SDoc::Postprocessor
 
     rebase_urls!(document)
     version_rails_guides_urls!(document)
+    unlink_unintentional_ref_links!(document)
     highlight_code_blocks!(document)
 
     document.to_s
@@ -67,6 +68,14 @@ module SDoc::Postprocessor
     end
 
     uri.to_s
+  end
+
+  def unlink_unintentional_ref_links!(document)
+    document.css(".description a[href^='classes/'] > code:only-child > text()").each do |text_node|
+      if text_node.inner_text.match?(/\A[A-Z](?:[A-Z]+|[a-z]+)\z/)
+        text_node.parent.parent.replace(text_node)
+      end
+    end
   end
 
   def highlight_code_blocks!(document)

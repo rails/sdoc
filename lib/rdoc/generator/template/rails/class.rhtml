@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="<%= @options.charset %>">
-    <title><%= h klass.full_name %></title>
+    <title><%= page_title klass.full_name %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= include_template '_head.rhtml', {:context => klass, :tree_keys => klass.full_name.split('::') } %>
 

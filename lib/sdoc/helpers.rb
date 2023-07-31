@@ -2,28 +2,6 @@ module SDoc::Helpers
   require_relative "helpers/github"
   include SDoc::Helpers::GitHub
 
-  # Strips out HTML tags from a given string.
-  #
-  # Example:
-  #
-  #   strip_tags("<strong>Hello world</strong>") => "Hello world"
-  def strip_tags(text)
-    text.gsub(%r{</?[^>]+?>}, "")
-  end
-
-  # Truncates a given string. It tries to take whole sentences to have
-  # a meaningful description for SEO tags.
-  #
-  # The only available option is +:length+ which defaults to 200.
-  def truncate(text, options = {})
-    if text
-      length = options.fetch(:length, 200)
-      stop   = text.rindex(".", length - 1) || length
-
-      "#{text[0, stop]}."
-    end
-  end
-
   def link_to(text, url, html_attributes = {})
     return h(text) if url.nil?
 
@@ -79,6 +57,20 @@ module SDoc::Helpers
   def og_title(title)
     project = [project_name, badge_version].join(" ").strip
     "#{h title}#{" (#{project})" unless project.empty?}"
+  end
+
+  def page_description(leading_html, max_length: 160)
+    return if leading_html.nil? || !leading_html.include?("</p>")
+
+    text = Nokogiri::HTML.fragment(leading_html).at_css("h1 + p, p:first-child")&.inner_text
+    return unless text
+
+    if text.length > max_length
+      # `+ 1 - 3` because we remove at least one character and replace it with "...".
+      text = text[0, max_length + 1 - 3].sub(/(?:\W+|\W*\w+)\Z/, "...")
+    end
+
+    h text
   end
 
   def group_by_first_letter(rdoc_objects)

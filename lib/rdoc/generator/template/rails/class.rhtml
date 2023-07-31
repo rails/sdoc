@@ -8,11 +8,9 @@
 
     <meta property="og:title" value="<%= og_title klass.full_name %>">
 
-  <% unless (description = klass.description).empty? %>
-    <% human_desc = truncate(strip_tags(description.gsub("\n", " ").strip)) %>
-    <meta name="description" content="<%= human_desc %>">
-    <meta property="og:description" content="<%= human_desc %>">
-  <% end %>
+    <% if description = page_description(klass.description) %>
+    <meta name="description" property="og:description" content="<%= description %>">
+    <% end %>
 
     <meta name="keywords" content="<%= klass.full_name %> class, <%= klass.method_list.map(&:name).join(", ") %>">
 </head>

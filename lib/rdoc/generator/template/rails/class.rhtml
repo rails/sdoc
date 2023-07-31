@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= include_template '_head.rhtml', {:context => klass, :tree_keys => klass.full_name.split('::') } %>
 
-    <meta property="og:title" value="<%= klass.full_name %>">
+    <meta property="og:title" value="<%= og_title klass.full_name %>">
 
   <% unless (description = klass.description).empty? %>
     <% human_desc = truncate(strip_tags(description.gsub("\n", " ").strip)) %>

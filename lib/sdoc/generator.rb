@@ -46,19 +46,23 @@ class RDoc::Generator::SDoc
 
   def self.setup_options(options)
     opt = options.option_parser
+
     opt.separator nil
     opt.separator "SDoc generator options:"
+
     opt.separator nil
     opt.on("--github", "-g",
             "Generate links to github.") do |value|
       options.github = true
     end
-    opt.separator nil
 
+    opt.separator nil
     opt.on("--version", "-v", "Output current version") do
       puts SDoc::VERSION
       exit
     end
+
+    options.title = [ENV["HORO_PROJECT_NAME"], ENV["HORO_BADGE_VERSION"], "API documentation"].compact.join(" ")
   end
 
   def initialize(store, options)

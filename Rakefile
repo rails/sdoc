@@ -30,6 +30,7 @@ class RailsTask < Rails::API::EdgeTask
   def configure_sdoc
     options << "--root" << "rails"
     super
+    self.title = nil # Use default title for local testing.
   end
 
   def rails_version

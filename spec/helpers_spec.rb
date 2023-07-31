@@ -312,10 +312,10 @@ describe SDoc::Helpers do
         end
       RUBY
 
-      source_code, source_url = @helpers.method_source_code_and_url(method)
+      source_code, _source_url = @helpers.method_source_code_and_url(method)
 
       _(source_code).must_be_nil
-      # Unfortunately, source_url is also nil because RDoc does not provide the
+      # Unfortunately, _source_url is also nil because RDoc does not provide the
       # source code location in this case.
     end
 

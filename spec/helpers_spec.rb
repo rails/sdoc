@@ -208,23 +208,15 @@ describe SDoc::Helpers do
       end
     end
 
-    it "returns nil when ENV['HORO_PROJECT_VERSION'] is not set" do
-      with_env("HORO_PROJECT_VERSION" => nil) do
+    it "prioritizes ENV['HORO_BADGE_VERSION'] over ENV['HORO_PROJECT_VERSION']" do
+      with_env("HORO_BADGE_VERSION" => "badge", "HORO_PROJECT_VERSION" => "project") do
+        _(@helpers.project_version).must_equal "badge"
+      end
+    end
+
+    it "returns nil when neither ENV['HORO_BADGE_VERSION'] nor ENV['HORO_PROJECT_VERSION'] are set" do
+      with_env("HORO_BADGE_VERSION" => nil, "HORO_PROJECT_VERSION" => nil) do
         _(@helpers.project_version).must_be_nil
-      end
-    end
-  end
-
-  describe "#badge_version" do
-    it "returns escaped version from ENV['HORO_BADGE_VERSION']" do
-      with_env("HORO_BADGE_VERSION" => "~> 1.0.0") do
-        _(@helpers.badge_version).must_equal "~&gt; 1.0.0"
-      end
-    end
-
-    it "returns nil when ENV['HORO_BADGE_VERSION'] is not set" do
-      with_env("HORO_BADGE_VERSION" => nil) do
-        _(@helpers.badge_version).must_be_nil
       end
     end
   end
@@ -265,26 +257,26 @@ describe SDoc::Helpers do
   end
 
   describe "#og_title" do
-    it "includes ENV['HORO_PROJECT_NAME'] and ENV['HORO_BADGE_VERSION']" do
-      with_env("HORO_PROJECT_NAME" => "My Gem", "HORO_BADGE_VERSION" => "v2.0") do
+    it "includes ENV['HORO_PROJECT_NAME'] and ENV['HORO_PROJECT_VERSION']" do
+      with_env("HORO_PROJECT_NAME" => "My Gem", "HORO_PROJECT_VERSION" => "v2.0") do
         _(@helpers.og_title("Foo")).must_equal "Foo (My Gem v2.0)"
       end
 
-      with_env("HORO_PROJECT_NAME" => "My Gem", "HORO_BADGE_VERSION" => nil) do
+      with_env("HORO_PROJECT_NAME" => "My Gem", "HORO_PROJECT_VERSION" => nil) do
         _(@helpers.og_title("Foo")).must_equal "Foo (My Gem)"
       end
 
-      with_env("HORO_PROJECT_NAME" => nil, "HORO_BADGE_VERSION" => "v2.0") do
+      with_env("HORO_PROJECT_NAME" => nil, "HORO_PROJECT_VERSION" => "v2.0") do
         _(@helpers.og_title("Foo")).must_equal "Foo (v2.0)"
       end
 
-      with_env("HORO_PROJECT_NAME" => nil, "HORO_BADGE_VERSION" => nil) do
+      with_env("HORO_PROJECT_NAME" => nil, "HORO_PROJECT_VERSION" => nil) do
         _(@helpers.og_title("Foo")).must_equal "Foo"
       end
     end
 
     it "escapes the title" do
-      with_env("HORO_PROJECT_NAME" => "Ruby & Rails", "HORO_BADGE_VERSION" => "~> 1.0.0") do
+      with_env("HORO_PROJECT_NAME" => "Ruby & Rails", "HORO_PROJECT_VERSION" => "~> 1.0.0") do
         _(@helpers.og_title("Foo<Bar>")).must_equal "Foo&lt;Bar&gt; (Ruby &amp; Rails ~&gt; 1.0.0)"
       end
     end

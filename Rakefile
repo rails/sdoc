@@ -54,6 +54,9 @@ class RailsTask < Rails::API::EdgeTask
 
   def setup_horo_variables
     super
+
+    ENV["HORO_BADGE_VERSION"] ||= "edge" if ENV["HORO_PROJECT_VERSION"]&.include?("@")
+
     if ENV['NETLIFY']
       ENV['HORO_CANONICAL_URL'] = ENV.fetch('DEPLOY_PRIME_URL', 'https://edgeapi.rubyonrails.org')
     end

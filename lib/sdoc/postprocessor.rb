@@ -61,8 +61,8 @@ module SDoc::Postprocessor
     uri = URI(url)
 
     unless uri.path.match?(%r"\A/v\d")
-      if version.match?(/\A[.0-9]+\z/)
-        uri.path = "/v#{version}#{uri.path}"
+      if version.match?(/\Av?[.0-9]+\z/)
+        uri.path = "/#{version.sub(/\Av?/, "v")}#{uri.path}"
       else
         uri.host = "edge#{uri.host}"
       end

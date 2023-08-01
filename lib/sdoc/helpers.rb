@@ -34,11 +34,8 @@ module SDoc::Helpers
   end
 
   def project_version
-    h(ENV["HORO_PROJECT_VERSION"]) if ENV["HORO_PROJECT_VERSION"]
-  end
-
-  def badge_version
-    h(ENV["HORO_BADGE_VERSION"]) if ENV["HORO_BADGE_VERSION"]
+    version = ENV["HORO_BADGE_VERSION"] || ENV["HORO_PROJECT_VERSION"]
+    h version if version
   end
 
   def project_git_head
@@ -50,7 +47,7 @@ module SDoc::Helpers
   end
 
   def og_title(title)
-    project = [project_name, badge_version].join(" ").strip
+    project = [project_name, project_version].join(" ").strip
     "#{h title}#{" (#{project})" unless project.empty?}"
   end
 

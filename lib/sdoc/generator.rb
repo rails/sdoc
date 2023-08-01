@@ -19,6 +19,16 @@ class RDoc::Options
   attr_accessor :search_index
 end
 
+module RDoc::Generator::Markup
+  def comment_title
+    @comment_title ||= @comment.to_s.match(/\A[=#] (.*)$/) {|match| match[1] }
+  end
+
+  def title
+    comment_title || full_name
+  end
+end
+
 class RDoc::Generator::SDoc
   RDoc::RDoc.add_generator self
 

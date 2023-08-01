@@ -20,6 +20,12 @@ module SDoc::Helpers::Git
     Dir.chdir(@options.root) { `git #{command}`.chomp } if git?
   end
 
+  attr_writer :git_head_branch
+
+  def git_head_branch
+    @git_head_branch ||= git_command("rev-parse --abbrev-ref HEAD")
+  end
+
   attr_writer :git_head_sha1
 
   def git_head_sha1

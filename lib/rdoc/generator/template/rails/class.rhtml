@@ -13,31 +13,21 @@
 </head>
 
 <body>
-    <a class="sr-only sr-only-focusable" href="#content" data-turbo="false">Skip to Content</a>
+    <a class="sr-only sr-only-focusable" href="#context" data-turbo="false">Skip to Content</a>
     <a class="sr-only sr-only-focusable" href="#search" data-turbo="false">Skip to Search</a>
 
     <%= include_template '_panel.rhtml' %>
 
-    <div class="banner">
-        <% if project_name %>
-            <div>
-                <%= project_name %>
-                <span title="<%= project_git_head %>"><%= project_version %></span>
-            </div>
-        <% end %>
+    <main id="content">
+        <div class="content__full-name">
+          <span class="qualifier"><%= klass.type %></span>
+          <%= full_name klass %>
+          <% if !klass.module? && superclass = klass.superclass %>
+            <span class="qualifier">&lt;</span>
+            <%= superclass.is_a?(String) ? full_name(superclass) : link_to(superclass) %>
+          <% end %>
+        </div>
 
-        <h2>
-            <span class="type"><%= klass.module? ? 'Module' : 'Class' %></span>
-            <%= full_name klass %>
-            <% if klass.type == "class" && superclass = klass.superclass %>
-                <span class="parent">
-                    &lt; <%= superclass.is_a?(String) ? full_name(superclass) : link_to(superclass) %>
-                </span>
-            <% end %>
-        </h2>
-    </div>
-
-    <main id="bodyContent">
         <%= include_template '_context.rhtml', {:context => klass} %>
 
         <div class="sectiontitle">Definition files</div>

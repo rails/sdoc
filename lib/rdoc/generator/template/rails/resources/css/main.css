@@ -10,8 +10,6 @@ body {
   line-height: 1.25em;
   min-height: 100%;
   display: grid;
-  grid-template-rows: min-content min-content auto min-content;
-  grid-template-columns: 300px auto;
 
   --link-color: #CC0000;
   --link-hover-color: #990000;
@@ -19,41 +17,41 @@ body {
 }
 
 body {
-  grid-template-rows: min-content min-content auto min-content;
+  grid-template-rows: min-content min-content min-content;
   grid-template-columns: 100%;
 }
 
 @media (min-width: 600px) {
   body {
-    grid-template-rows: min-content min-content auto min-content;
+    grid-template-rows: min-content min-content min-content;
     grid-template-columns: 300px auto;
   }
 
   nav {
     grid-row-start: 1;
-    grid-row-end: 4;
+    grid-row-end: 3;
     grid-column-start: 1;
     grid-column-end: 1;
   }
 
   div.banner {
-    grid-row-start: 2;
-    grid-row-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
     grid-column-start: 2;
     grid-column-end: 2;
   }
 
   #bodyContent {
-    grid-row-start: 3;
-    grid-row-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
     grid-column-start: 2;
     grid-column-end: 2;
     min-width: 0;
   }
 
   footer {
-    grid-row-start: 4;
-    grid-row-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 3;
     grid-column-start: 2;
     grid-column-end: 2;
   }

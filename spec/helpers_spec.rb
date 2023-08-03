@@ -447,6 +447,39 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#more_less_ul" do
+    def ul(items)
+      ["<ul>", *items.map { |item| "<li>#{item}</li>" }, "</ul>"].join
+    end
+
+    it "returns a single list when the number of items is <= hard limit" do
+      _(@helpers.more_less_ul(1..7, 7)).must_equal ul(1..7)
+      _(@helpers.more_less_ul(1..7, 8)).must_equal ul(1..7)
+
+      _(@helpers.more_less_ul(1..7, 6..7)).must_equal ul(1..7)
+      _(@helpers.more_less_ul(1..7, 6..8)).must_equal ul(1..7)
+
+      _(@helpers.more_less_ul(1..7, 7..9)).must_equal ul(1..7)
+      _(@helpers.more_less_ul(1..7, 8..9)).must_equal ul(1..7)
+    end
+
+    it "returns split lists when the number of items is > hard limit" do
+      _(@helpers.more_less_ul(1..7, 6)).must_match %r"#{ul 1..6}.*<details.+#{ul 7..7}.*</details>"m
+      _(@helpers.more_less_ul(1..7, 5)).must_match %r"#{ul 1..5}.*<details.+#{ul 6..7}.*</details>"m
+
+      _(@helpers.more_less_ul(1..7, 5..6)).must_match %r"#{ul 1..5}.*<details.+#{ul 6..7}.*</details>"m
+      _(@helpers.more_less_ul(1..7, 4..6)).must_match %r"#{ul 1..4}.*<details.+#{ul 5..7}.*</details>"m
+    end
+
+    it "specifies the number of hidden items" do
+      _(@helpers.more_less_ul(1..7, 4)).must_match %r"\b3 More\b"
+    end
+
+    it "does not escape items" do
+      _(@helpers.more_less_ul(["<a>link</a>"], 1)).must_include "<a>link</a>"
+    end
+  end
+
   describe "#method_source_code_and_url" do
     before :each do
       @helpers.options.github = true

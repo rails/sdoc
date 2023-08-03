@@ -51,7 +51,7 @@ module SDoc::Helpers
   end
 
   def og_modified_time
-    git_head_timestamp if git?
+    git_head_timestamp
   end
 
   def page_description(leading_html, max_length: 160)

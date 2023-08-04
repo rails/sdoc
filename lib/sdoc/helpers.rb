@@ -2,13 +2,24 @@ module SDoc::Helpers
   require_relative "helpers/git"
   include SDoc::Helpers::Git
 
-  def link_to(text, url, html_attributes = {})
-    return h(text) if url.nil?
-
-    url = "/#{url.path}" if url.is_a?(RDoc::CodeObject)
+  def link_to(text, url = nil, html_attributes = {})
+    url, html_attributes = nil, url if url.is_a?(Hash)
+    url ||= text
     attribute_string = html_attributes.map { |name, value| %( #{name}="#{h value}") }.join
 
-    %(<a href="#{h url}"#{attribute_string}>#{h text}</a>)
+    %(<a href="#{_link_url url}"#{attribute_string}>#{_link_body text}</a>)
+  end
+
+  def _link_url(url)
+    h(url.is_a?(RDoc::CodeObject) ? "/#{url.path}" : url)
+  end
+
+  def _link_body(text)
+    text.is_a?(RDoc::CodeObject) ? full_name(text) : h(text)
+  end
+
+  def link_to_if(condition, text, *args)
+    condition ? link_to(text, *args) : _link_body(text)
   end
 
   def link_to_external(text, url, html_attributes = {})
@@ -17,6 +28,11 @@ module SDoc::Helpers
     html_attributes["class"] = [*html_attributes["class"], "external-link"].join(" ")
 
     link_to(text, url, html_attributes)
+  end
+
+  def full_name(named)
+    named = named.full_name if named.is_a?(RDoc::CodeObject)
+    named.split(%r"(?<=./|.::)").map { |part| h part }.join("<wbr>")
   end
 
   def base_tag_for_context(context)

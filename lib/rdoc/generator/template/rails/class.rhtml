@@ -28,14 +28,10 @@
 
         <h2>
             <span class="type"><%= klass.module? ? 'Module' : 'Class' %></span>
-            <%= h klass.full_name %>
-            <% if klass.type == "class" && klass.superclass %>
-                <span class="parent">&lt;
-                    <% if klass.superclass.is_a?(String) %>
-                    <%= klass.superclass %>
-                    <% else %>
-                    <%= link_to klass.superclass.full_name, klass.superclass %>
-                    <% end %>
+            <%= full_name klass %>
+            <% if klass.type == "class" && superclass = klass.superclass %>
+                <span class="parent">
+                    &lt; <%= superclass.is_a?(String) ? full_name(superclass) : link_to(superclass) %>
                 </span>
             <% end %>
         </h2>
@@ -51,7 +47,7 @@
                 <summary class="sectiontitle">Appears in</summary>
                 <ul class="files">
                     <% klass.in_files.each do |file| %>
-                    <li><%= link_to file.absolute_name, file %></li>
+                    <li><%= link_to file %></li>
                     <% end %>
                 </ul>
             </details>

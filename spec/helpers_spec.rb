@@ -91,24 +91,61 @@ describe SDoc::Helpers do
         must_equal %(<a href="qux" title="Foo &gt; Bar">Bar &lt; Foo</a>)
     end
 
-    it "returns the escaped text when URL argument is nil" do
-      _(@helpers.link_to("Bar < Foo", nil, title: "Foo > Bar")).
-        must_equal %(Bar &lt; Foo)
+    it "uses the first argument as the URL when no URL is specified" do
+      _(@helpers.link_to("foo/bar/qux.html")).
+        must_equal %(<a href="foo/bar/qux.html">foo/bar/qux.html</a>)
+
+      _(@helpers.link_to("foo/bar/qux.html", "data-hoge": "fuga")).
+        must_equal %(<a href="foo/bar/qux.html" data-hoge="fuga">foo/bar/qux.html</a>)
     end
 
-    it "returns an appropriate link when URL argument is an RDoc::CodeObject that responds to #path" do
+    it "uses #full_name when the text argument is an RDoc::CodeObject" do
       top_level = rdoc_top_level_for <<~RUBY
         module Foo; class Bar; def qux; end; end; end
       RUBY
 
-      _(@helpers.link_to("perma", top_level.find_module_named("Foo"))).
-        must_equal %(<a href="/classes/Foo.html">perma</a>)
+      [
+        top_level,
+        top_level.find_module_named("Foo"),
+        top_level.find_module_named("Foo::Bar"),
+        top_level.find_module_named("Foo::Bar").find_method("qux", false),
+      ].each do |code_object|
+        _(@helpers.link_to(code_object, "url")).
+          must_equal %(<a href="url">#{@helpers.full_name(code_object)}</a>)
+      end
+    end
 
-      _(@helpers.link_to("perma", top_level.find_module_named("Foo::Bar"))).
-        must_equal %(<a href="/classes/Foo/Bar.html">perma</a>)
+    it "uses RDoc::CodeObject#path as the URL when URL argument is an RDoc::CodeObject" do
+      top_level = rdoc_top_level_for <<~RUBY
+        module Foo; class Bar; def qux; end; end; end
+      RUBY
 
-      _(@helpers.link_to("perma", top_level.find_module_named("Foo::Bar").find_method("qux", false))).
-        must_equal %(<a href="/classes/Foo/Bar.html#method-i-qux">perma</a>)
+      [
+        top_level,
+        top_level.find_module_named("Foo"),
+        top_level.find_module_named("Foo::Bar"),
+        top_level.find_module_named("Foo::Bar").find_method("qux", false),
+      ].each do |code_object|
+        _(@helpers.link_to("text", code_object)).
+          must_equal %(<a href="/#{code_object.path}">text</a>)
+      end
+    end
+  end
+
+  describe "#link_to_if" do
+    it "returns the link's HTML when the condition is true" do
+      args = ["Bar < Foo", "qux", title: "Foo > Bar"]
+      _(@helpers.link_to_if(true, *args)).must_equal @helpers.link_to(*args)
+    end
+
+    it "returns the link's inner HTML when the condition is false" do
+      _(@helpers.link_to_if(false, "Bar < Foo", "url")).must_equal ERB::Util.h("Bar < Foo")
+
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo::Bar")
+        module Foo; class Bar; end; end
+      RUBY
+
+      _(@helpers.link_to_if(false, rdoc_module, "url")).must_equal @helpers.full_name(rdoc_module)
     end
   end
 
@@ -131,6 +168,30 @@ describe SDoc::Helpers do
     it "supports additional attributes" do
       _(@helpers.link_to_external("foo", "bar", "data-hoge": "fuga")).
         must_equal %(<a href="bar" target="_blank" class="external-link" data-hoge="fuga">foo</a>)
+    end
+  end
+
+  describe "#full_name" do
+    it "inserts word-break opportunities into module names" do
+      _(@helpers.full_name("Foo::Bar::Qux")).must_equal "Foo::<wbr>Bar::<wbr>Qux"
+      _(@helpers.full_name("::Foo::Bar::Qux")).must_equal "::Foo::<wbr>Bar::<wbr>Qux"
+    end
+
+    it "inserts word-break opportunities into file paths" do
+      _(@helpers.full_name("path/to/file.rb")).must_equal "path/<wbr>to/<wbr>file.rb"
+      _(@helpers.full_name("/path/to/file.rb")).must_equal "/path/<wbr>to/<wbr>file.rb"
+    end
+
+    it "escapes name parts" do
+      _(@helpers.full_name("ruby & rails/file.rb")).must_equal "ruby &amp; rails/<wbr>file.rb"
+    end
+
+    it "uses RDoc::CodeObject#full_name when argument is an RDoc::CodeObject" do
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo::Bar::Qux")
+        module Foo; module Bar; class Qux; end; end; end
+      RUBY
+
+      _(@helpers.full_name(rdoc_module)).must_equal "Foo::<wbr>Bar::<wbr>Qux"
     end
   end
 

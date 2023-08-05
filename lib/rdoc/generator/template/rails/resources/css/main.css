@@ -23,7 +23,7 @@ body {
   grid-template-columns: 100%;
 }
 
-@media (min-width: 40em) {
+@media (min-width: 600px) {
   body {
     grid-template-rows: min-content min-content auto min-content;
     grid-template-columns: 300px auto;
@@ -238,7 +238,7 @@ pre
   margin: 1em;
 }
 
-@media (min-width: 40em) {
+@media (min-width: 600px) {
   #content {
     max-width: 980px;
     margin: 2em 3.5em;

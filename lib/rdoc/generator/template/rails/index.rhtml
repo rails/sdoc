@@ -13,23 +13,6 @@
 
     <%= include_template '_panel.rhtml' %>
 
-    <div class="banner">
-        <% if project_name %>
-            <div>
-                <%= project_name %>
-                <span title="<%= project_git_head %>"><%= project_version %></span>
-            </div>
-        <% end %>
-
-        <h2>
-            <%= h index.name %>
-        </h2>
-        <ul class="files">
-            <li><%= h index.relative_name %></li>
-            <li>Last modified: <%= index.last_modified %></li>
-        </ul>
-    </div>
-
     <main id="bodyContent">
         <%= include_template '_context.rhtml', {:context => index } %>
     </main>

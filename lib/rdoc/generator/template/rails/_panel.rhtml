@@ -1,4 +1,8 @@
 <a href="#" class="back-to-top"></a>
+<% if project_version %>
+  <div id="version-badge"><%= project_version %></div>
+<% end %>
+
 <input type="checkbox" id="hamburger" class="panel_checkbox">
 <label class="panel_mobile_button" for="hamburger"><span></span> Menu</label>
 <nav class="panel panel_tree" id="panel" data-turbo-permanent>

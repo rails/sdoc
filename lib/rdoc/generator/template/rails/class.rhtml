@@ -39,19 +39,9 @@
 
     <main id="bodyContent">
         <%= include_template '_context.rhtml', {:context => klass} %>
-    </main>
 
-    <footer>
-        <div id="footerContent">
-            <details>
-                <summary class="sectiontitle">Appears in</summary>
-                <ul class="files">
-                    <% klass.in_files.each do |file| %>
-                    <li><%= link_to file %></li>
-                    <% end %>
-                </ul>
-            </details>
-        </div>
-    </footer>
+        <div class="sectiontitle">Definition files</div>
+        <%= more_less_ul klass.in_files.map { |file| link_to file }, 5..9 %>
+    </main>
   </body>
 </html>

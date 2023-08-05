@@ -91,6 +91,26 @@ module SDoc::Helpers
     end
   end
 
+  def more_less_ul(items, limit)
+    soft_limit, hard_limit = (limit.is_a?(Range) ? limit : [limit]).minmax
+    items = items.map { |item| "<li>#{item}</li>" }
+
+    if items.length > hard_limit
+      <<~HTML
+        <ul>#{items[0...soft_limit].join}</ul>
+        <details class="more-less">
+          <summary>
+            <span class="more-less__more">#{items.length - soft_limit} More</span>
+            <span class="more-less__less">Less</span>
+          </summary>
+          <ul>#{items[soft_limit..].join}</ul>
+        </details>
+      HTML
+    else
+      "<ul>#{items.join}</ul>"
+    end
+  end
+
   def method_source_code_and_url(rdoc_method)
     source_code = rdoc_method.markup_code if rdoc_method.token_stream
 

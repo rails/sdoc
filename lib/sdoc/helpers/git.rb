@@ -16,28 +16,26 @@ module SDoc::Helpers::Git
     !@git_bin_path.empty?
   end
 
+  def git_command(command)
+    Dir.chdir(@options.root) { `git #{command}`.chomp } if git?
+  end
+
   attr_writer :git_head_sha1
 
   def git_head_sha1
-    @git_head_sha1 ||= Dir.chdir(@options.root) do
-      `git rev-parse HEAD`.chomp
-    end
+    @git_head_sha1 ||= git_command("rev-parse HEAD")
   end
 
   attr_writer :git_head_timestamp
 
   def git_head_timestamp
-    @git_head_timestamp ||= Dir.chdir(@options.root) do
-      `git show -s --format=%cI HEAD` .chomp
-    end
+    @git_head_timestamp ||= git_command("show -s --format=%cI HEAD")
   end
 
   attr_writer :git_origin_url
 
   def git_origin_url
-    @git_origin_url ||= Dir.chdir(@options.root) do
-      `git config --get remote.origin.url`.chomp
-    end
+    @git_origin_url ||= git_command("config --get remote.origin.url")
   end
 
   def github_repository

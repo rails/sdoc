@@ -91,6 +91,42 @@ describe SDoc::Postprocessor do
       _(SDoc::Postprocessor.process(rendered)).must_include expected
     end
 
+    it "styles unstyled code ref links in descriptions" do
+      rendered = <<~HTML
+        <base href="../" data-current-path="classes/Foo.html">
+
+        <div class="description">
+          <a href="/classes/Bar/Qux.html">Qux</a>
+          <a href="Bar/Qux.html">Qux</a>
+          <a href="#method-i-bar-3F.html">Foo#bar?(qux, &amp;block)</a>
+          <a href="#method-i-2A_bar-21.html">*_bar!</a>
+
+          <a href="https://example.com/Qux.html">Qux</a>
+          <a href="Bar/Qux.html">Not Code</a>
+          <a href="Bar/Qux.html">(also) not code</a>
+        </div>
+
+        <a href="/classes/Permalink.html">Permalink</a>
+      HTML
+
+      expected = <<~HTML
+        <div class="description">
+          <a href="classes/Bar/Qux.html"><code>Qux</code></a>
+          <a href="classes/Bar/Qux.html"><code>Qux</code></a>
+          <a href="classes/Foo.html#method-i-bar-3F.html"><code>Foo#bar?(qux, &amp;block)</code></a>
+          <a href="classes/Foo.html#method-i-2A_bar-21.html"><code>*_bar!</code></a>
+
+          <a href="https://example.com/Qux.html">Qux</a>
+          <a href="classes/Bar/Qux.html">Not Code</a>
+          <a href="classes/Bar/Qux.html">(also) not code</a>
+        </div>
+
+        <a href="classes/Permalink.html">Permalink</a>
+      HTML
+
+      _(SDoc::Postprocessor.process(rendered)).must_include expected
+    end
+
     it "highlights code blocks" do
       rendered = <<~HTML
         <div class="description">

@@ -20,7 +20,10 @@
 
     <div class="banner">
         <% if project_name %>
-            <div><%= project_name %> <%= project_version %></div>
+            <div>
+                <%= project_name %>
+                <span title="<%= project_git_head %>"><%= badge_version || project_version %></span>
+            </div>
         <% end %>
 
         <h2>

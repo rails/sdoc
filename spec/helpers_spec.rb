@@ -229,6 +229,26 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#project_git_head" do
+    it "returns the branch name and abbreviated SHA1 of the most recent commit in HEAD" do
+      @helpers.git_bin_path = "path/to/git"
+      @helpers.git_head_branch = "1-0-stable"
+      @helpers.git_head_sha1 = "1337c0d3d00d" * 3
+
+      _(@helpers.project_git_head).must_equal "1-0-stable@1337c0d3d00d"
+    end
+
+    it "returns the branch name and abbreviated SHA1 of the most recent commit in HEAD (smoke test)" do
+      _(@helpers.project_git_head).must_match %r"\A.+@[[:xdigit:]]{12}\z"
+    end
+
+    it "returns nil when git is not installed" do
+      @helpers.git_bin_path = ""
+
+      _(@helpers.project_git_head).must_be_nil
+    end
+  end
+
   describe "#page_title" do
     it "includes options.title" do
       @helpers.options.title = "My Docs"

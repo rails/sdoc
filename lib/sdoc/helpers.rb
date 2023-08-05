@@ -41,6 +41,10 @@ module SDoc::Helpers
     h(ENV["HORO_BADGE_VERSION"]) if ENV["HORO_BADGE_VERSION"]
   end
 
+  def project_git_head
+    h "#{git_head_branch}@#{git_head_sha1[0, 12]}" if git?
+  end
+
   def page_title(title = nil)
     h [title, @options.title].compact.join(" - ")
   end

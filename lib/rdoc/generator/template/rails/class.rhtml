@@ -22,7 +22,7 @@
         <% if project_name %>
             <div>
                 <%= project_name %>
-                <span title="<%= project_git_head %>"><%= badge_version || project_version %></span>
+                <span title="<%= project_git_head %>"><%= project_version %></span>
             </div>
         <% end %>
 
@@ -40,8 +40,8 @@
             <% end %>
         </h2>
 
-        <% if badge_version %>
-            <div id="version-badge"><%= badge_version %></div>
+        <% if project_version %>
+            <div id="version-badge"><%= project_version %></div>
         <% end %>
     </div>
 

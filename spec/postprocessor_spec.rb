@@ -34,19 +34,16 @@ describe SDoc::Postprocessor do
         <a href="https://guides.rubyonrails.org/testing.html">Testing</a>
       HTML
 
-      with_env("HORO_PROJECT_VERSION" => "3.2.1", "HORO_PROJECT_NAME" => "Ruby on Rails") do
-        _(SDoc::Postprocessor.process(rendered)).
-          must_include %(<a href="https://guides.rubyonrails.org/v3.2.1/testing.html">Testing</a>)
-      end
-
-      with_env("HORO_PROJECT_VERSION" => "main@1337c0d3", "HORO_PROJECT_NAME" => "Ruby on Rails") do
-        _(SDoc::Postprocessor.process(rendered)).
-          must_include %(<a href="https://edgeguides.rubyonrails.org/testing.html">Testing</a>)
-      end
-
-      with_env("HORO_PROJECT_VERSION" => nil, "HORO_PROJECT_NAME" => "Ruby on Rails") do
-        _(SDoc::Postprocessor.process(rendered)).
-          must_include %(<a href="https://guides.rubyonrails.org/testing.html">Testing</a>)
+      {
+        "3.2.1" => %(<a href="https://guides.rubyonrails.org/v3.2.1/testing.html">Testing</a>),
+        "v3.2.1" => %(<a href="https://guides.rubyonrails.org/v3.2.1/testing.html">Testing</a>),
+        "main@1337c0d3" => %(<a href="https://edgeguides.rubyonrails.org/testing.html">Testing</a>),
+        "edge" => %(<a href="https://edgeguides.rubyonrails.org/testing.html">Testing</a>),
+        nil => %(<a href="https://guides.rubyonrails.org/testing.html">Testing</a>),
+      }.each do |version, expected|
+        with_env("HORO_PROJECT_VERSION" => version, "HORO_PROJECT_NAME" => "Ruby on Rails") do
+          _(SDoc::Postprocessor.process(rendered)).must_include expected
+        end
       end
     end
 

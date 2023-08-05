@@ -72,7 +72,11 @@ class RDoc::Generator::SDoc
       exit
     end
 
-    options.title = [ENV["HORO_PROJECT_NAME"], ENV["HORO_BADGE_VERSION"], "API documentation"].compact.join(" ")
+    options.title = [
+      ENV["HORO_PROJECT_NAME"],
+      ENV["HORO_BADGE_VERSION"] || ENV["HORO_PROJECT_VERSION"],
+      "API documentation"
+    ].compact.join(" ")
   end
 
   def initialize(store, options)

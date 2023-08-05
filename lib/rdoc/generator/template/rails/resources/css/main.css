@@ -1,10 +1,20 @@
+:root {
+  --text-color: #3B3B3B;
+  --background-color: #fff;
+  --border-color: #ccc;
+  --code-background-color: #eee;
+  --source-background-color: #fffde8;
+  --method-heading-color: #555;
+}
+
 html {
   height: 100%;
 }
+
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
-  background: #FFF;
-  color: #3B3B3B;
+  background: var(--background-color);
+  color: var(--text-color);
   margin: 0px;
   font-size: 15px;
   line-height: 1.25em;
@@ -95,7 +105,7 @@ h2 {
 
 h3 {
     font-size: 1.4em;
-    color:#555;
+    color: var(--method-heading-color);
     margin: 1.4em 0 0.7em 0;
     font-weight: normal;
 }
@@ -238,7 +248,7 @@ pre
   font-size: 1.2em;
   padding: 0 0 0.25em 0;
   font-weight: bold;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .contenttitle {
@@ -275,7 +285,7 @@ tt {
 }
 
 .dyn-source {
-  background: #fffde8;
+  background: var(--source-background-color);
   color: #000;
   border: #ffe0bb dotted 1px;
   margin: 0.5em 2em 0.5em 0;
@@ -284,7 +294,7 @@ tt {
 
 .description pre {
   padding: 1em 1.2em;
-  background: #EEEEEE;
+  background: var(--code-background-color);
   border-radius: 10px;
   font-size: 15px;
 }
@@ -309,7 +319,7 @@ tt {
     padding: 0 0 0.2em 0;
     margin-bottom: 0.8em;
     font-size: 1.1em;
-    color:#333;
+    color: var(--heading-color);
 }
 .method .method-title {
     border-bottom: 1px dotted #666;
@@ -374,9 +384,8 @@ tt {
 }
 
 p code {
-  background: #eeeeee;
-  border-radius: 2px;
-  border: 1px solid #dddddd;
+  background: var(--code-background-color);
+  border-radius: 5px;
   font-family: Consolas, Menlo, Courier, monospace;
   font-size: 14px;
   margin-bottom: 1px;
@@ -447,7 +456,6 @@ a.back-to-top.show {
   visibility: visible;
 }
 
-
 /*
  * More-Less widget
  */
@@ -484,4 +492,19 @@ details.more-less[open] summary::marker {
 details.more-less:not([open]) .more-less__less,
 details.more-less[open] .more-less__more {
   display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #ddd;
+    --background-color: #222222;
+    --border-color: #444;
+    --code-background-color: #000000;
+    --source-background-color: #000000;
+    --method-heading-color: #ccc;
+  }
+
+  body {
+    --link-color: #ee3f3f;
+  }
 }

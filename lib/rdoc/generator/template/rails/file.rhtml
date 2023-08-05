@@ -28,7 +28,7 @@
         </h2>
         <ul class="files">
             <li>
-                <%= h file.relative_name %>
+                <%= full_name file %>
                 <% if github = github_url(file.relative_name) %>
                     <a href="<%= github %>" target="_blank" class="github_url">on GitHub</a>
                 <% end %>

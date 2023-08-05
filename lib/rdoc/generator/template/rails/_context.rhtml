@@ -14,7 +14,7 @@
     <div class="sectiontitle">Required Files</div>
     <ul>
       <% context.requires.each do |req| %>
-        <li><%= h req.name %></li>
+        <li><%= full_name req.name %></li>
       <% end %>
     </ul>
   <% end %>
@@ -58,9 +58,9 @@
       <% context.includes.each do |inc| %>
         <li>
           <% if inc.module.is_a?(String) %>
-            <%= h inc.name %>
+            <%= full_name inc.name %>
           <% else %>
-            <%= link_to inc.module.full_name, inc.module %>
+            <%= link_to inc.module %>
           <% end %>
         </li>
       <% end %>
@@ -144,7 +144,7 @@
             <p class="aka">
               Also aliased as:
               <%# Sometimes a parent cannot be determined. See ruby/rdoc@85ebfe13dc. %>
-              <%= method.aliases.map { |aka| link_to aka.name, (aka if aka.parent) }.join(", ") %>.
+              <%= method.aliases.map { |aka| link_to_if aka.parent, aka.name, aka }.join(", ") %>.
             </p>
           <% end %>
 
@@ -191,7 +191,7 @@
       <% (context.modules.sort + context.classes.sort).each do |mod| %>
         <li>
           <span class="type"><%= mod.type.upcase %></span>
-          <%= link_to mod.full_name, mod %>
+          <%= link_to mod %>
         </li>
       <% end %>
     </ul>

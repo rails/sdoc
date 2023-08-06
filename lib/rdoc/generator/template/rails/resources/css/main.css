@@ -468,7 +468,14 @@ details.more-less summary:hover {
   color: inherit;
 }
 
-details.more-less summary::marker {
+details.more-less summary {
+  list-style-type: none;
+}
+details.more-less summary::-webkit-details-marker {
+  display: none;
+}
+
+details.more-less summary::before {
   font-size: 1.15em;
   content: "+";
 }
@@ -477,7 +484,7 @@ details.more-less[open] summary {
   top: calc(100% + 0.5em);
 }
 
-details.more-less[open] summary::marker {
+details.more-less[open] summary::before {
   content: "-";
 }
 

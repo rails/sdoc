@@ -18,7 +18,7 @@ describe RDoc::Generator::Markup do
 
     it "should ignore lower level titles" do
       @module.comment = RDoc::Comment.new '== Some Title'
-      _(@module.comment_title).must_equal nil
+      _(@module.comment_title).must_be_nil
     end
   end
 

@@ -1,6 +1,8 @@
 * { box-sizing: border-box; }
 
 :root {
+  --line-height: 1.5;
+
   --text-color: #3b3b3b;
   --link-color: #cc0000;
   --link-hover-color: #990000;
@@ -28,12 +30,12 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  line-height: var(--line-height);
+
   background: var(--body-bg);
   color: var(--text-color);
+
   margin: 0px;
-  font-size: 15px;
-  line-height: 1.25em;
   min-height: 100%;
 }
 
@@ -214,10 +216,6 @@ pre
 .attr-desc {
 }
 
-tt {
-  font-size: 1.15em;
-}
-
 .attr-value {
   font-family: monospace;
   padding-left: 1em;
@@ -236,7 +234,6 @@ tt {
   padding: 1em 1.2em;
   background: var(--code-bg);
   border-radius: 10px;
-  font-size: 15px;
 }
 
 .description pre,
@@ -326,8 +323,6 @@ tt {
 p code {
   background: var(--code-bg);
   border-radius: 5px;
-  font-family: Consolas, Menlo, Courier, monospace;
-  font-size: 14px;
   margin-bottom: 1px;
   padding: 0 5px;
 }
@@ -369,7 +364,6 @@ p code {
   color: white;
   transform: rotate(45deg) translate(27.5%, -40%);
   min-width: 200px;
-  font-family: Helvetica, Arial, sans-serif;
   font-size: 30px;
   font-weight: bold;
   font-style: italic;

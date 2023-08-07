@@ -9,6 +9,7 @@
     /* Results (begin) */
         .panel .result
         {
+            font-family: "Helvetica Neue", Arial, sans-serif;
             line-height: 1;
         }
 
@@ -164,6 +165,11 @@
     /* Results (end) */
 
     /* Tree (begin) */ /**/
+        .panel .tree
+        {
+          font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
         .panel .tree ul:first-child
         {
             background: url(../i/tree_bg.svg);

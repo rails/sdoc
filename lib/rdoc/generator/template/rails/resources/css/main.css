@@ -12,9 +12,9 @@
   --link-hover-color: #990000;
   --icon-color: #777777;
 
-  --body-bg: #fff;
-  --code-bg: #eee;
-  --source-code-bg: #fffde8;
+  --body-bg: #ffffff;
+  --code-bg: #f1f1f1;
+  --source-code-bg: #f1f1e1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -149,14 +149,6 @@ dt
   font-size: 1.15em;
 }
 
-.dyn-source {
-  background: var(--source-code-bg);
-  color: #000;
-  border: #ffe0bb dotted 1px;
-  margin: 0.5em 2em 0.5em 0;
-  padding: 0.5em;
-}
-
 .description pre {
   padding: 1em 1.2em;
   background: var(--code-bg);
@@ -164,18 +156,12 @@ dt
 }
 
 .description pre,
-.sourcecode pre {
+.method__source pre {
   overflow-x: auto;
 }
 
 .method {
-    margin-bottom: 2em;
     position: relative;
-}
-.method .description,
-.method .sourcecode
-{
-    margin-left: 1.2em;
 }
 .method h4
 {
@@ -185,56 +171,12 @@ dt
     font-size: 1.1em;
     color: var(--heading-color);
 }
-.method .method-title {
-    border-bottom: 1px dotted #666;
-    padding: 0 0 0.15em 0;
-    margin: 0 0 0.5em 0;
-    font-size: 1.2em;
-    line-height: 1.25em;
-    position: relative;
-}
 
 .method a.permalink {
   position: absolute;
   font-size: 0.9em;
   right: 0;
   top: 0;
-}
-
-.method .aka {
-  margin-left: 1.2em;
-  font-style: italic;
-}
-
-.sourcecode {
-  width: fit-content; /* Reduce clickable area when collapsed */
-}
-
-.sourcecode[open] {
-  width: auto;
-}
-
-.sourcecode summary {
-  cursor: pointer;
-}
-
-.sourcecode summary::marker {
-  font-size: 1.25em;
-  color: var(--icon-color);
-}
-
-.sourcecode summary .label {
-  margin-left: -0.4em;
-  font-weight: bold;
-  color: var(--link-color);
-}
-
-.sourcecode summary .label:hover {
-  color: var(--link-hover-color);
-}
-
-.sourcecode summary .external-link {
-  margin-left: 1em;
 }
 
 @keyframes spotlight {
@@ -526,6 +468,67 @@ html {
 
 .content__section-title + .content__divider {
   margin-top: var(--space);
+}
+
+
+/*
+ * Method
+ */
+
+.method {
+  margin-top: var(--space-xl);
+}
+
+.content__divider + .method {
+  margin-top: var(--space-lg);
+}
+
+.method__signature {
+  font-size: 1.1em;
+  font-weight: normal;
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--code-bg);
+}
+
+.method__aka {
+  font-style: italic;
+}
+
+.method__source {
+  width: fit-content; /* Reduce clickable area when collapsed */
+}
+
+.method__source[open] {
+  width: auto;
+}
+
+.method__source summary {
+  cursor: pointer;
+}
+
+.method__source summary::marker {
+  color: var(--icon-color);
+}
+
+.method__source summary .label {
+  margin-left: -0.2em;
+  color: var(--link-color);
+}
+
+.method__source summary .label:hover {
+  color: var(--link-hover-color);
+}
+
+.method__source summary .external-link {
+  margin-left: 1em;
+}
+
+.method__source pre {
+  margin-top: var(--space-sm);
+  padding: 0.5em 1em;
+  border-radius: 8px;
+
+  background: var(--source-code-bg);
 }
 
 

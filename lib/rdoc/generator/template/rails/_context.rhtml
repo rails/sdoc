@@ -131,7 +131,7 @@
       <h2 class="content__divider"><%= visibility.to_s.capitalize %> <%= type %> methods</h2>
       <% methods.each do |method| %>
         <div class="method">
-          <h3 class="title method-title" id="<%= method.aref %>">
+          <h3 class="method__signature" id="<%= method.aref %>">
             <% if method.call_seq %>
               <b><%= method.call_seq.gsub(/->/, '&rarr;').gsub(/\n(.)/, '<br />\1') %></b>
             <% else %>
@@ -141,7 +141,7 @@
           <%= link_to "Link", method, class: "permalink", name: method.aref %>
 
           <% unless method.aliases.empty? %>
-            <p class="aka">
+            <p class="method__aka">
               Also aliased as:
               <%# Sometimes a parent cannot be determined. See ruby/rdoc@85ebfe13dc. %>
               <%= method.aliases.map { |aka| link_to_if aka.parent, short_name(aka), aka }.join(", ") %>.
@@ -149,7 +149,7 @@
           <% end %>
 
           <% if alias_for = method.is_alias_for then %>
-            <p class="aka">
+            <p class="method__aka">
               Alias for:
               <%= link_to short_name(alias_for), alias_for %>.
             </p>
@@ -163,7 +163,7 @@
 
           <% source_code, source_url = method_source_code_and_url(method) %>
           <% if source_code %>
-            <details class="sourcecode">
+            <details class="method__source">
               <summary>
                 <span class="label">Source code</span>
                 <% if source_url %>
@@ -171,12 +171,10 @@
                 <% end %>
               </summary>
 
-              <div class="dyn-source">
-                <pre><code class="ruby"><%= source_code %></code></pre>
-              </div>
+              <pre><code class="ruby"><%= source_code %></code></pre>
             </details>
           <% elsif source_url %>
-            <p><%= link_to_external "GitHub", source_url %></p>
+            <p class="method__source"><%= link_to_external "GitHub", source_url %></p>
           <% end %>
         </div>
       <% end %><%# methods.each %>

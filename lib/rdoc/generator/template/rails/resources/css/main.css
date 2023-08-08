@@ -274,6 +274,10 @@ pre
 .attr-desc {
 }
 
+.attr-link {
+  position: relative;
+}
+
 tt {
   font-size: 1.15em;
 }
@@ -330,7 +334,7 @@ tt {
     position: relative;
 }
 
-.method a.permalink {
+.method a.permalink, .attr-link a.permalink {
   position: absolute;
   font-size: 0.9em;
   right: 0;

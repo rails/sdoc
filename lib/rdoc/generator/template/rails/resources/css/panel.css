@@ -1,4 +1,10 @@
 /* Panel (begin) */
+:root {
+  --panel-hover-background-color: #d0d0d0;
+  --panel-alternate-background-color: #F0EFEF;
+  --panel-current-background-color: #B61D1D;
+  --panel-highlight-color: #000;
+}
     .panel_checkbox, .panel_mobile_button, .panel_mobile_button_close
     {
         display: none;
@@ -86,11 +92,11 @@
         top: 0;
         width: 300px;
         height: 100%;
-        background: #FFF;
+        background: var(--background-color);
         z-index: 200;
         font-family: "Helvetica Neue", "Arial", sans-serif;
         overflow-x: hidden;
-        border-right: 1px #ccc solid;
+        border-right: 1px solid var(--border-color);
         line-height: 1;
     }
 
@@ -135,7 +141,7 @@
     /* Header with search box (begin) */
         .panel .header
         {
-            background: white url(../i/search.svg) no-repeat;
+            background: var(--background-color) url(../i/search.svg) no-repeat;
             background-position: 5px;
             box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
             height: 40px;
@@ -166,6 +172,8 @@
             margin: 0;
             margin-left: 25px;
             outline: none;
+            background: var(--background-color);
+            color: var(--text-color);
         }
 
         @media (max-width: 599px) {
@@ -209,14 +217,14 @@
         }
 
         .panel .result ul li:nth-child(2n) {
-            background: #F0EFEF;
+            background: var(--panel-alternate-background-color);
         }
 
         .panel .result ul li h1
         {
             font-size: 13px;
             font-weight: normal;
-            color: #333;
+            color: var(--text-color);
             margin-top: 0;
             margin-bottom: 2px;
             white-space: nowrap;
@@ -225,7 +233,7 @@
         .panel .result ul li p
         {
             font-size: 11px;
-            color: #333;
+            color: var(--text-color);
             margin-bottom: 2px;
             white-space: nowrap;
         }
@@ -238,12 +246,12 @@
 
         .panel .result ul li b
         {
-            color: #000;
+            color: var(--panel-highlight-color);
         }
 
         .panel .result ul li.current
         {
-            background: #B61D1D;
+            background: var(--panel-current-background-color);
         }
 
         .panel .result ul li.current h1,
@@ -267,12 +275,12 @@
         .panel .result ul li:hover,
         .panel .result ul li.selected
         {
-            background: #d0d0d0;
+            background: var(--panel-hover-background-color);
         }
 
         .panel .result ul li.current:hover
         {
-            background: #B61D1D;
+            background: var(--panel-current-background-color);
         }
 
         .panel .result ul li .badge
@@ -349,7 +357,7 @@
     /* Tree (begin) */ /**/
         .panel .tree
         {
-            background: white;
+            background: var(--background-color);
             position: relative;
             bottom: 0;
             left: 0;
@@ -406,7 +414,7 @@
         {
             font-size: 13px;
             font-weight: normal;
-            color: #000;
+            color: var(--text-color);
             margin-top: 0;
             margin-bottom: 2px;
             white-space: nowrap;
@@ -445,7 +453,7 @@
 
         .panel .tree ul li.current
         {
-            background: #B61D1D;
+            background: var(--panel-current-background-color);
         }
 
         .panel .tree ul li.current .icon
@@ -478,18 +486,32 @@
 
         .panel .tree ul li:hover
         {
-            background: #d0d0d0;
+            background: var(--panel-hover-background-color);
         }
 
         .panel .tree ul li.current:hover
         {
-            background: #B61D1D;
+            background: var(--panel-current-background-color);
         }
 
         .panel .tree .stopper
         {
             display: none;
         }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --panel-hover-background-color: #3b3b3b;
+                --panel-alternate-background-color: #000000;
+                --panel-highlight-color: #fff;
+            }
+
+            .panel .tree ul:first-child {
+                background: url(../i/dark/tree_bg.svg);
+                background-size: 1px 60px;
+            }
+        }
+
     /* Tree (end) */ /**/
 
 /* Panel (end) */

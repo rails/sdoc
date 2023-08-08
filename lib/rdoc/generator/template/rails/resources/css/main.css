@@ -160,9 +160,6 @@ dt
   overflow-x: auto;
 }
 
-.method {
-    position: relative;
-}
 .method h4
 {
     border-bottom: 1px dotted #999;
@@ -170,13 +167,6 @@ dt
     margin-bottom: 0.8em;
     font-size: 1.1em;
     color: var(--heading-color);
-}
-
-.method a.permalink {
-  position: absolute;
-  font-size: 0.9em;
-  right: 0;
-  top: 0;
 }
 
 @keyframes spotlight {
@@ -485,10 +475,27 @@ html {
 
 .method__signature {
   font-size: 1.1em;
-  font-weight: normal;
-  white-space: pre-wrap;
   padding-bottom: var(--space-sm);
   border-bottom: 2px solid var(--code-bg);
+
+  display: flex;
+  align-items: baseline;
+}
+
+.method__signature h3 {
+  font-size: 1em;
+  font-weight: normal;
+  white-space: pre-wrap;
+}
+
+.method__permalink {
+  margin: 0 0 0 0.5em;
+}
+
+.method__permalink img {
+  font-family: monospace; /* Make em equivalent to <code>'s em */
+  height: 1em;
+  vertical-align: middle;
 }
 
 .method__aka {

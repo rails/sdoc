@@ -131,8 +131,11 @@
       <h2 class="content__divider"><%= visibility.to_s.capitalize %> <%= type %> methods</h2>
       <% methods.each do |method| %>
         <div class="method" id="<%= method.aref %>">
-          <h3 class="method__signature"><%= method_signature method %></h3>
-          <%= link_to "Link", method, class: "permalink", name: method.aref %>
+          <div class="method__signature">
+            <h3><%= method_signature method %></h3>
+            <%= link_to %(<img src="/i/link.svg" alt="Permalink">), method,
+                  class: "method__permalink", title: "Permalink" %>
+          </div>
 
           <% unless method.aliases.empty? %>
             <p class="method__aka">

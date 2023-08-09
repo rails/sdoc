@@ -62,27 +62,6 @@ a:hover {
   display: none;
 }
 
-h1 {
-    font-size: 2.1em;
-    font-weight: normal;
-    line-height: 1.2em;
-}
-
-h2 {
-    font-size: 1.6em;
-    font-weight: normal;
-    line-height: 1.2em;
-}
-
-h3 {
-    font-size: 1.4em;
-    font-weight: normal;
-}
-
-h4 {
-    font-size: 1em;
-}
-
 td, th
 {
     padding: 0 0.7em 0.3em 0;
@@ -99,18 +78,12 @@ th
     width: 0; height: 0;
 }
 
-dt
-{
-    font-weight: bold;
-}
-
 .methods dt
 {
     width: 1em;
     font-size: 1.5em;
     color:#AAA;
     position: absolute;
-    font-weight: normal;
 }
 
 .methods dd
@@ -149,26 +122,6 @@ dt
   font-size: 1.15em;
 }
 
-.description pre {
-  padding: 1em 1.2em;
-  background: var(--code-bg);
-  border-radius: 10px;
-}
-
-.description pre,
-.method__source pre {
-  overflow-x: auto;
-}
-
-.method h4
-{
-    border-bottom: 1px dotted #999;
-    padding: 0 0 0.2em 0;
-    margin-bottom: 0.8em;
-    font-size: 1.1em;
-    color: var(--heading-color);
-}
-
 @keyframes spotlight {
   from { background-color: yellow; }
   to { background-color: white; }
@@ -177,13 +130,6 @@ dt
 .spotlight {
   animation-name: spotlight;
   animation-duration: 1s;
-}
-
-p code {
-  background: var(--code-bg);
-  border-radius: 5px;
-  margin-bottom: 1px;
-  padding: 0 5px;
 }
 
 .sr-only {
@@ -533,10 +479,74 @@ html {
 
 .method__source pre {
   margin-top: var(--space-sm);
+  background: var(--source-code-bg);
+}
+
+.method__source pre,
+.description pre {
   padding: 0.5em 1em;
   border-radius: 8px;
+  overflow-x: auto;
+}
 
-  background: var(--source-code-bg);
+
+/*
+ * Description of method or module
+ */
+
+.description :is(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.25;
+  padding: 0.125em 0;
+}
+
+.description :not(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: var(--space-lg);
+}
+
+.description h1 {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.description h2 {
+  font-size: 1.6em;
+  font-weight: normal;
+}
+
+.description h3 {
+  font-size: 1.3em;
+  font-weight: normal;
+}
+
+.description h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.description h5 {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.description h6 {
+  font-size: 1em;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.description pre,
+.description p code {
+  background: var(--code-bg);
+}
+
+.description p code {
+  padding: 0 0.15em;
+  border-radius: 2px;
+}
+
+.description dt {
+  font-weight: bold;
 }
 
 

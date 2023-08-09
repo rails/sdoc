@@ -15,6 +15,9 @@
 
         .panel .result ul
         {
+            list-style: none;
+            margin: 0;
+            padding: 0;
             font-size: 0.8em;
         }
 
@@ -44,6 +47,7 @@
         {
             font-size: 11px;
             color: var(--text-color);
+            margin-top: 0;
             margin-bottom: 2px;
             white-space: nowrap;
         }
@@ -176,6 +180,12 @@
             background-size: 1px 60px;
         }
 
+        .panel .tree ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
         .panel .tree li
         {
             cursor: pointer;
@@ -185,7 +195,7 @@
         }
 
 
-        .panel .tree li .content
+        .panel .tree li .entry
         {
             padding-left: 18px;
             padding-top: 5px;

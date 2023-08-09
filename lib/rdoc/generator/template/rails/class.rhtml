@@ -30,7 +30,7 @@
 
         <%= include_template '_context.rhtml', {:context => klass} %>
 
-        <div class="sectiontitle">Definition files</div>
+        <div class="content__divider">Definition files</div>
         <%= more_less_ul klass.in_files.map { |file| link_to file }, 5..9 %>
     </main>
   </body>

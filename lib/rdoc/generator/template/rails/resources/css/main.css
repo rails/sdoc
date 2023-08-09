@@ -2,12 +2,15 @@
 
 :root {
   --line-height: 1.5;
+  --space: calc(var(--line-height) * 0.50 * 1rem);
+  --space-sm: calc(var(--space) / 2);
+  --space-lg: calc(var(--space) * 2);
+  --space-xl: calc(var(--space) * 4);
 
   --text-color: #3b3b3b;
   --link-color: #cc0000;
   --link-hover-color: #990000;
   --icon-color: #777777;
-  --border-color: color-mix(in srgb, currentColor 25%, transparent);
 
   --body-bg: #fff;
   --code-bg: #eee;
@@ -59,38 +62,25 @@ a:hover {
   display: none;
 }
 
-p {
-  margin-bottom: 1em;
-}
-
 h1 {
     font-size: 2.1em;
     font-weight: normal;
     line-height: 1.2em;
-    margin: 1.4em 0 0.7em 0;
 }
 
 h2 {
     font-size: 1.6em;
-    margin: 1.8em 0 0.8em 0;
     font-weight: normal;
     line-height: 1.2em;
 }
 
 h3 {
     font-size: 1.4em;
-    margin: 1.4em 0 0.7em 0;
     font-weight: normal;
 }
 
 h4 {
-    margin: 1.4em 0 0.5em 0;
     font-size: 1em;
-}
-
-table
-{
-    margin-bottom: 1em;
 }
 
 td, th
@@ -111,39 +101,7 @@ th
 
 dt
 {
-    margin-bottom: 0.3em;
     font-weight: bold;
-}
-
-dd
-{
-    margin-left: 2em;
-    margin-bottom: 1em;
-}
-
-dd p
-{
-    margin-top: 0.6em;
-}
-
-li
-{
-    margin: 0 0 0.5em 2em;
-}
-
-ul li
-{
-    list-style: disc;
-}
-
-ol li
-{
-    list-style: decimal;
-}
-
-pre
-{
-    margin-bottom: 1em;
 }
 
 .methods dt
@@ -153,15 +111,13 @@ pre
     color:#AAA;
     position: absolute;
     font-weight: normal;
-    margin: 0;
 }
 
 .methods dd
 {
-    margin-left: 2.5em;
+    margin-top: var(--space);
     min-height: 1.8em;
     -height: 1.8em;
-    padding-bottom: 0.8em;
 }
 
 
@@ -171,35 +127,6 @@ pre
     margin-left: 0;
     list-style: none;
     display: inline;
-}
-
-#content {
-  padding: 1em;
-}
-
-@media (min-width: 600px) {
-  #content {
-    padding: 2em 3.5em;
-  }
-}
-
-.sectiontitle {
-  margin-top: 2em;
-  margin-bottom: 1.3em;
-  margin-left: -1.2em;
-  font-size: 1.2em;
-  padding: 0 0 0.25em 0;
-  font-weight: bold;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.contenttitle {
-  margin-top: 4em;
-  margin-bottom: 1.3em;
-  margin-left: -0.9em;
-  font-size: 1.6em;
-  padding: 0 0 0.25em 0;
-  font-weight: bold;
 }
 
 .attr-rw {
@@ -390,19 +317,6 @@ a.back-to-top.show {
   visibility: visible;
 }
 
-.content__full-name {
-  font-family: monospace;
-  font-size: 1.4rem;
-  line-height: 1.4;
-  margin-top: 0;
-  margin-left: 1em;
-  text-indent: -1em;
-}
-
-.content__full-name .qualifier {
-  font-weight: bold;
-}
-
 
 /*
  * Navigation panel
@@ -534,7 +448,7 @@ html {
 
   .panel__tray {
     min-height: 100dvh;
-    border-right: 1px solid var(--border-color);
+    border-right: 1px solid color-mix(in srgb, currentColor 25%, transparent);
   }
 
   .panel__tree .tree {
@@ -544,16 +458,93 @@ html {
 
 
 /*
+ * Main content
+ */
+
+#content {
+  padding: 1em;
+}
+
+@media (min-width: 600px) {
+  #content {
+    padding: var(--space-lg) var(--space-xl);
+  }
+}
+
+:where(#content) *,
+:where(#content) :is(br, wbr) {
+  margin: 0;
+}
+
+:where(#content) * + * {
+  margin-top: var(--space);
+}
+
+:where(#content) :is(ol, ul, dd) {
+  padding: 0 0 0 1.25em;
+}
+
+:where(#content) * + :is(li, dd) {
+  margin-top: var(--space-sm);
+}
+
+:where(#content) code {
+  font-style: normal;
+}
+
+.content__full-name {
+  font-family: monospace;
+  font-size: 1.4em;
+  line-height: 1.25;
+  padding: 0.125em 0;
+
+  margin-left: 1em;
+  text-indent: -1em;
+}
+
+.content__full-name .qualifier {
+  font-weight: bold;
+}
+
+.content__section-title {
+  margin: var(--space-xl) 0 0 0;
+
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.content__divider {
+  margin: var(--space-xl) 0 0 0;
+
+  font-size: 1.4em;
+  font-weight: bold;
+  font-variant: small-caps;
+  text-transform: capitalize;
+
+  border-bottom: 1px solid;
+}
+
+.content__section-title + .content__divider {
+  margin-top: var(--space);
+}
+
+
+/*
  * More-Less widget
  */
 
 details.more-less {
+  margin-top: var(--space-sm);
   position: relative;
+}
+
+details.more-less > ul {
+  margin-top: 0;
 }
 
 details.more-less summary {
   position: absolute;
-  padding-left: 1em;
+  padding-left: 0.25em;
   font-weight: bold;
   color: var(--icon-color);
 }
@@ -576,7 +567,7 @@ details.more-less summary::before {
 }
 
 details.more-less[open] summary {
-  top: calc(100% + 0.5em);
+  top: calc(100% + var(--space-sm));
 }
 
 details.more-less[open] summary::before {

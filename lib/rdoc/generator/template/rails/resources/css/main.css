@@ -1,5 +1,10 @@
 * { box-sizing: border-box; }
 
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
 :root {
   --line-height: 1.5;
   --space: calc(var(--line-height) * 0.50 * 1rem);
@@ -30,18 +35,11 @@
   }
 }
 
-html {
-  height: 100%;
-}
-
 body {
   line-height: var(--line-height);
 
   background: var(--body-bg);
   color: var(--text-color);
-
-  margin: 0px;
-  min-height: 100%;
 }
 
 a {
@@ -73,6 +71,10 @@ a code {
   display: none;
 }
 
+table {
+  border-collapse: collapse;
+}
+
 td, th
 {
     padding: 0 0.7em 0.3em 0;
@@ -81,12 +83,6 @@ td, th
 th
 {
     font-weight: bold;
-}
-
-.clear
-{
-    clear: both;
-    width: 0; height: 0;
 }
 
 .methods dt

@@ -15,7 +15,7 @@ module SDoc::Helpers
   end
 
   def _link_body(text)
-    text.is_a?(RDoc::CodeObject) ? full_name(text) : h(text)
+    text.is_a?(RDoc::CodeObject) ? full_name(text) : text
   end
 
   def link_to_if(condition, text, *args)
@@ -33,6 +33,11 @@ module SDoc::Helpers
   def full_name(named)
     named = named.full_name if named.is_a?(RDoc::CodeObject)
     "<code>#{named.split(%r"(?<=./|.::)").map { |part| h part }.join("<wbr>")}</code>"
+  end
+
+  def short_name(named)
+    named = named.name if named.is_a?(RDoc::CodeObject)
+    "<code>#{h named}</code>"
   end
 
   def base_tag_for_context(context)

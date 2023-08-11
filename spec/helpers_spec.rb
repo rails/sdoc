@@ -86,9 +86,14 @@ describe SDoc::Helpers do
         must_equal %(<a href="bar" class="qux" data-hoge="fuga">foo</a>)
     end
 
-    it "escapes the link text and attributes" do
-      _(@helpers.link_to("Bar < Foo", "qux", title: "Foo > Bar")).
-        must_equal %(<a href="qux" title="Foo &gt; Bar">Bar &lt; Foo</a>)
+    it "escapes the HTML attributes" do
+      _(@helpers.link_to("Foo", "foo", title: "Foo < Object")).
+        must_equal %(<a href="foo" title="Foo &lt; Object">Foo</a>)
+    end
+
+    it "does not escape the link body" do
+      _(@helpers.link_to("<code>Foo</code>", "foo")).
+        must_equal %(<a href="foo"><code>Foo</code></a>)
     end
 
     it "uses the first argument as the URL when no URL is specified" do
@@ -134,12 +139,12 @@ describe SDoc::Helpers do
 
   describe "#link_to_if" do
     it "returns the link's HTML when the condition is true" do
-      args = ["Bar < Foo", "qux", title: "Foo > Bar"]
+      args = ["<code>Foo</code>", "foo", title: "Foo < Object"]
       _(@helpers.link_to_if(true, *args)).must_equal @helpers.link_to(*args)
     end
 
     it "returns the link's inner HTML when the condition is false" do
-      _(@helpers.link_to_if(false, "Bar < Foo", "url")).must_equal ERB::Util.h("Bar < Foo")
+      _(@helpers.link_to_if(false, "<code>Foo</code>", "url")).must_equal "<code>Foo</code>"
 
       rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo::Bar")
         module Foo; class Bar; end; end
@@ -196,6 +201,24 @@ describe SDoc::Helpers do
       RUBY
 
       _(@helpers.full_name(rdoc_module)).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
+    end
+  end
+
+  describe "#short_name" do
+    it "wraps name in <code>" do
+      _(@helpers.short_name("foo")).must_equal "<code>foo</code>"
+    end
+
+    it "escapes the name" do
+      _(@helpers.short_name("<=>")).must_equal "<code>&lt;=&gt;</code>"
+    end
+
+    it "uses RDoc::CodeObject#name when argument is an RDoc::CodeObject" do
+      rdoc_method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)
+        module Foo; def bar; end; end
+      RUBY
+
+      _(@helpers.short_name(rdoc_method)).must_equal "<code>bar</code>"
     end
   end
 

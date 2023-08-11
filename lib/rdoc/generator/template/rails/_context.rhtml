@@ -26,7 +26,7 @@
     <div class="sectiontitle">Sections</div>
     <ul>
       <% sections.each do |section| %>
-        <li><%= link_to section.title, "##{section.aref}" %></li>
+        <li><%= link_to h(section.title), "##{section.aref}" %></li>
       <% end %>
     </ul>
   <% end %>
@@ -43,7 +43,7 @@
               <%
                 comma = methods.size == i+1 ? '' : ','
               %>
-              <li><%= link_to method.name, method %><%= comma %></li>
+              <li><%= link_to short_name(method), method %><%= comma %></li>
             <% end %>
           </ul>
         </dd>
@@ -89,7 +89,7 @@
       <table border='0' cellpadding='5'>
         <% constants.each do |const| %>
           <tr valign='top'>
-            <td class="attr-name"><%= h const.name %></td>
+            <td class="attr-name"><%= short_name const %></td>
             <td>=</td>
             <td class="attr-value"><%= h const.value %></td>
           </tr>
@@ -113,7 +113,7 @@
             <td class='attr-rw'>
               [<%= attrib.rw %>]
             </td>
-            <td class='attr-name'><%= h attrib.name %></td>
+            <td class='attr-name'><%= short_name attrib %></td>
             <td class='attr-desc'><%= attrib.description.strip %></td>
           </tr>
         <% end %>
@@ -144,14 +144,14 @@
             <p class="aka">
               Also aliased as:
               <%# Sometimes a parent cannot be determined. See ruby/rdoc@85ebfe13dc. %>
-              <%= method.aliases.map { |aka| link_to_if aka.parent, aka.name, aka }.join(", ") %>.
+              <%= method.aliases.map { |aka| link_to_if aka.parent, short_name(aka), aka }.join(", ") %>.
             </p>
           <% end %>
 
           <% if alias_for = method.is_alias_for then %>
             <p class="aka">
               Alias for:
-              <%= link_to alias_for.name, alias_for %>.
+              <%= link_to short_name(alias_for), alias_for %>.
             </p>
           <% end %>
 

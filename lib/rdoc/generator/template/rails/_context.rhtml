@@ -130,14 +130,8 @@
     %>
       <h2 class="content__divider"><%= visibility.to_s.capitalize %> <%= type %> methods</h2>
       <% methods.each do |method| %>
-        <div class="method">
-          <h3 class="method__signature" id="<%= method.aref %>">
-            <% if method.call_seq %>
-              <b><%= method.call_seq.gsub(/->/, '&rarr;').gsub(/\n(.)/, '<br />\1') %></b>
-            <% else %>
-              <b><%= h method.name %></b><%= h method.params %>
-            <% end %>
-          </h3>
+        <div class="method" id="<%= method.aref %>">
+          <h3 class="method__signature"><%= method_signature method %></h3>
           <%= link_to "Link", method, class: "permalink", name: method.aref %>
 
           <% unless method.aliases.empty? %>

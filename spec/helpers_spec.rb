@@ -502,6 +502,50 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#method_signature" do
+    it "returns the method signature wrapped in <code>" do
+      method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)
+        module Foo; def bar(qux); end; end
+      RUBY
+
+      _(@helpers.method_signature(method)).must_equal "<code>bar(qux)</code>"
+    end
+
+    it "escapes the method signature" do
+      method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)
+        module Foo; def bar(op = :<, &block); end; end
+      RUBY
+
+      _(@helpers.method_signature(method)).must_equal "<code>bar(op = :&lt;, &amp;block)</code>"
+    end
+
+    it "handles :call-seq: documentation" do
+      mod = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        module Foo
+          # :call-seq:
+          #   bar(op = :<)
+          #   bar(&block)
+          def bar(*args, &block); end
+
+          # :call-seq:
+          #   qux(&block) -> self
+          #   qux -> Enumerator
+          def qux(&block); end
+        end
+      RUBY
+
+      _(@helpers.method_signature(mod.find_method("bar", false))).must_equal <<~HTML.chomp
+        <code>bar(op = :&lt;)</code>
+        <code>bar(&amp;block)</code>
+      HTML
+
+      _(@helpers.method_signature(mod.find_method("qux", false))).must_equal <<~HTML.chomp
+        <code>qux(&amp;block)</code> &rarr; <code>self</code>
+        <code>qux</code> &rarr; <code>Enumerator</code>
+      HTML
+    end
+  end
+
   describe "#method_source_code_and_url" do
     before :each do
       @helpers.options.github = true

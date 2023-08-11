@@ -486,6 +486,7 @@ html {
 .method__signature {
   font-size: 1.1em;
   font-weight: normal;
+  white-space: pre-wrap;
   padding-bottom: var(--space-sm);
   border-bottom: 2px solid var(--code-bg);
 }

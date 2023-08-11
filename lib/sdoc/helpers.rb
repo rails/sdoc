@@ -116,6 +116,17 @@ module SDoc::Helpers
     end
   end
 
+  def method_signature(rdoc_method)
+    if rdoc_method.call_seq
+      rdoc_method.call_seq.split(/\n+/).map do |line|
+        # Support specifying a call-seq like `to_s -> string`
+        line.split(" -> ").map { |side| "<code>#{h side}</code>" }.join(" &rarr; ")
+      end.join("\n")
+    else
+      "<code>#{h rdoc_method.name}#{h rdoc_method.params}</code>"
+    end
+  end
+
   def method_source_code_and_url(rdoc_method)
     source_code = rdoc_method.markup_code if rdoc_method.token_stream
 

@@ -7,7 +7,7 @@ module SDoc::Postprocessor
   extend self
 
   def process(rendered)
-    document = Nokogiri::HTML.parse(rendered)
+    document = Nokogiri::HTML5.parse(rendered)
 
     rebase_urls!(document)
     version_rails_guides_urls!(document)

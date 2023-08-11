@@ -7,9 +7,11 @@
   --space-lg: calc(var(--space) * 2);
   --space-xl: calc(var(--space) * 4);
 
+  --brand-color: #b61d1d;
+
   --text-color: #3b3b3b;
-  --link-color: #cc0000;
-  --link-hover-color: #990000;
+  --link-color: var(--brand-color);
+  --link-hover-color: var(--text-color);
   --icon-color: #777777;
 
   --body-bg: #ffffff;
@@ -42,14 +44,23 @@ body {
   min-height: 100%;
 }
 
-a:link, a:active, a:visited, a:hover {
+a {
   color: var(--link-color);
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: var(--link-hover-color);
+  }
+}
+
+a:has(> code:only-child) {
   text-decoration: none;
 }
 
-a:hover {
-  color: var(--link-hover-color);
-  text-decoration: underline;
+/* TODO: Remove this hack when Firefox supports `:has()` */
+a code {
+  text-decoration: underline var(--body-bg);
 }
 
 .external-link {
@@ -220,7 +231,7 @@ html {
 
 .banner {
   height: var(--banner-height);
-  background-color: #B61D1D;
+  background-color: var(--brand-color);
 }
 
 .banner__segment {
@@ -444,6 +455,13 @@ html {
   vertical-align: middle;
 }
 
+@media (hover: hover) {
+  .method__permalink:hover img {
+    filter: brightness(0) invert(1);
+    mix-blend-mode: difference;
+  }
+}
+
 .method__aka {
   font-style: italic;
 }
@@ -469,8 +487,10 @@ html {
   color: var(--link-color);
 }
 
-.method__source summary .label:hover {
-  color: var(--link-hover-color);
+@media (hover: hover) {
+  .method__source summary .label:hover {
+    color: var(--link-hover-color);
+  }
 }
 
 .method__source summary .external-link {
@@ -540,9 +560,20 @@ html {
   background: var(--code-bg);
 }
 
+/* TODO: Remove this hack when Firefox supports `:has()` */
+.description a code {
+  text-decoration: underline var(--code-bg);
+}
+
 .description p code {
   padding: 0 0.15em;
   border-radius: 2px;
+}
+
+@media (hover: hover) {
+  .description a:hover code {
+    box-shadow: 0 0 0 1px;
+  }
 }
 
 .description dt {
@@ -570,9 +601,11 @@ details.more-less summary {
   color: var(--icon-color);
 }
 
-details.more-less summary:hover {
-  cursor: pointer;
-  color: inherit;
+@media (hover: hover) {
+  details.more-less summary:hover {
+    cursor: pointer;
+    color: inherit;
+  }
 }
 
 details.more-less summary {

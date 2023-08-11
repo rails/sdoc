@@ -172,18 +172,22 @@ describe SDoc::Helpers do
   end
 
   describe "#full_name" do
+    it "wraps name in <code>" do
+      _(@helpers.full_name("Foo")).must_equal "<code>Foo</code>"
+    end
+
     it "inserts word-break opportunities into module names" do
-      _(@helpers.full_name("Foo::Bar::Qux")).must_equal "Foo::<wbr>Bar::<wbr>Qux"
-      _(@helpers.full_name("::Foo::Bar::Qux")).must_equal "::Foo::<wbr>Bar::<wbr>Qux"
+      _(@helpers.full_name("Foo::Bar::Qux")).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
+      _(@helpers.full_name("::Foo::Bar::Qux")).must_equal "<code>::Foo::<wbr>Bar::<wbr>Qux</code>"
     end
 
     it "inserts word-break opportunities into file paths" do
-      _(@helpers.full_name("path/to/file.rb")).must_equal "path/<wbr>to/<wbr>file.rb"
-      _(@helpers.full_name("/path/to/file.rb")).must_equal "/path/<wbr>to/<wbr>file.rb"
+      _(@helpers.full_name("path/to/file.rb")).must_equal "<code>path/<wbr>to/<wbr>file.rb</code>"
+      _(@helpers.full_name("/path/to/file.rb")).must_equal "<code>/path/<wbr>to/<wbr>file.rb</code>"
     end
 
     it "escapes name parts" do
-      _(@helpers.full_name("ruby & rails/file.rb")).must_equal "ruby &amp; rails/<wbr>file.rb"
+      _(@helpers.full_name("ruby&rails/file.rb")).must_equal "<code>ruby&amp;rails/<wbr>file.rb</code>"
     end
 
     it "uses RDoc::CodeObject#full_name when argument is an RDoc::CodeObject" do
@@ -191,7 +195,7 @@ describe SDoc::Helpers do
         module Foo; module Bar; class Qux; end; end; end
       RUBY
 
-      _(@helpers.full_name(rdoc_module)).must_equal "Foo::<wbr>Bar::<wbr>Qux"
+      _(@helpers.full_name(rdoc_module)).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
     end
   end
 

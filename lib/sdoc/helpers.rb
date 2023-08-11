@@ -32,7 +32,7 @@ module SDoc::Helpers
 
   def full_name(named)
     named = named.full_name if named.is_a?(RDoc::CodeObject)
-    named.split(%r"(?<=./|.::)").map { |part| h part }.join("<wbr>")
+    "<code>#{named.split(%r"(?<=./|.::)").map { |part| h part }.join("<wbr>")}</code>"
   end
 
   def base_tag_for_context(context)

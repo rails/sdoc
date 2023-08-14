@@ -10,33 +10,21 @@
 </head>
 
 <body>
-    <a class="sr-only sr-only-focusable" href="#content" data-turbo="false">Skip to Content</a>
+    <a class="sr-only sr-only-focusable" href="#context" data-turbo="false">Skip to Content</a>
     <a class="sr-only sr-only-focusable" href="#search" data-turbo="false">Skip to Search</a>
 
     <%= include_template '_panel.rhtml' %>
 
-    <div class="banner">
-        <% if project_name %>
-            <div>
-                <%= project_name %>
-                <span title="<%= project_git_head %>"><%= project_version %></span>
-            </div>
+    <main id="content">
+        <h1 class="content__full-name">
+          <span class="qualifier">File</span>
+          <%= full_name file %>
+        </h1>
+
+        <% if source_url = github_url(file.relative_name) %>
+          <p><%= link_to_external "View on GitHub", source_url %></p>
         <% end %>
 
-        <h2>
-            <%= h file.name %>
-        </h2>
-        <ul class="files">
-            <li>
-                <%= full_name file %>
-                <% if github = github_url(file.relative_name) %>
-                    <a href="<%= github %>" target="_blank" class="github_url">on GitHub</a>
-                <% end %>
-            </li>
-        </ul>
-    </div>
-
-    <main id="bodyContent">
         <%= include_template '_context.rhtml', {:context => file} %>
     </main>
   </body>

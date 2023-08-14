@@ -5,212 +5,21 @@
   --panel-current-background-color: #B61D1D;
   --panel-highlight-color: #000;
 }
-    .panel_checkbox, .panel_mobile_button, .panel_mobile_button_close
-    {
-        display: none;
-    }
-
-    @media (max-width: 599px) {
-        html {
-            scroll-padding-top: 50px;
-        }
-
-        .panel_mobile_button {
-            display: block;
-            height: 40px;
-            position: sticky;
-            top: 0;
-            background: #000;
-            color: #fff;
-            padding: 0 10px;
-            line-height: 40px;
-            cursor: pointer;
-            z-index: 2;
-        }
-        .panel_checkbox:checked ~ .panel_mobile_button {
-        }
-
-        .panel_checkbox:checked ~ .panel .panel_mobile_button_close {
-            display: block;
-            height: 40px;
-            position: absolute;
-            top: 0;
-            right: 10px;
-            z-index: 3000;
-            text-align: right;
-            line-height: 40px;
-            cursor: pointer;
-        }
-    }
-
-    .panel_mobile_button span {
-         position: relative;
-         display: inline-block;
-         width: 1em;
-         height: 0.55em;
-         margin-right: 0.3em;
-         border-top: 0.1em solid #fff;
-         border-bottom: 0.1em solid #fff;
-    }
-
-    .panel_mobile_button span:before {
-         content: "";
-         position: absolute;
-         top: 0.25em;
-         left: 0px;
-         width: 100%;
-         border-top: 0.1em solid #fff;
-    }
-
-    .panel_mobile_button_close span {
-         position: relative;
-         display: inline-block;
-         width: 1em;
-         height: 0.625em;
-    }
-
-    .panel_mobile_button_close span:before, .panel_mobile_button_close span:after {
-         content: "";
-         position: absolute;
-         top: 0.2em;
-         left: 0px;
-         width: 100%;
-         border-top: 0.1em solid #000;
-    }
-
-    .panel_mobile_button_close span:before {
-        transform: rotate(45deg);
-    }
-
-    .panel_mobile_button_close span:after {
-        transform: rotate(-45deg);
-    }
-
-    .panel
-    {
-        position: fixed;
-        top: 0;
-        width: 300px;
-        height: 100%;
-        background: var(--background-color);
-        z-index: 200;
-        font-family: "Helvetica Neue", "Arial", sans-serif;
-        overflow-x: hidden;
-        border-right: 1px solid var(--border-color);
-        line-height: 1;
-    }
-
-    @media (max-width: 599px) {
-        .panel
-        {
-            transition: left 0s ease-in-out;
-            left: -100%;
-            width: 100%;
-            bottom: 0;
-            visibility: hidden;
-        }
-
-        .panel_checkbox:checked ~ .panel {
-            left: 0%;
-            transition: left 0.3s ease-in-out;
-            visibility: visible;
-        }
-
-        .panel_checkbox:checked ~ #bodyContent {
-            visibility: hidden;
-            display: none;
-        }
-    }
-
-    .panel_tree .result,
-    .panel_results .tree
-    {
-        display: none;
-    }
-
-    .panel .logo {
-      text-align: center;
-    }
-
-    @media (max-width: 599px) {
-      .panel .logo img {
-        width: 50%;
-      }
-    }
-
-    /* Header with search box (begin) */
-        .panel .header
-        {
-            background: var(--background-color) url(../i/search.svg) no-repeat;
-            background-position: 5px;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-            height: 40px;
-            width: 300px;
-            position: fixed;
-            position: sticky;
-            left: 0; top: 0;
-            z-index: 300;
-            overflow-x: hidden;
-        }
-
-        @media (max-width: 599px) {
-            .panel .header
-            {
-                width: 100%;
-            }
-        }
-
-        .panel .header input
-        {
-            border: 0;
-            box-sizing: border-box;
-            display: inline-block;
-            font-size: 14px;
-            height: 40px;
-            width: 100%;
-            padding: 0 5px;
-            margin: 0;
-            margin-left: 25px;
-            outline: none;
-            background: var(--background-color);
-            color: var(--text-color);
-        }
-
-        @media (max-width: 599px) {
-            .panel .header input
-            {
-                width: 70%;
-                width: calc(100% - 100px);
-                font-size: 16px;
-            }
-        }
-
-    /* Header with search box (end) */
-
 
     /* Results (begin) */
         .panel .result
         {
-            position: relative;
-            bottom: 0;
-            top: 0;
-            left: 0;
-            width: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-            z-index: 2;
+            line-height: 1;
         }
 
         .panel .result ul
         {
             font-size: 0.8em;
-            width: 100%;
         }
 
         .panel .result ul li
         {
-            height: 46px;
-            overflow: hidden;
+            height: 50px;
             padding: 4px 10px 0 10px;
             cursor: pointer;
             margin: 0;
@@ -355,18 +164,6 @@
     /* Results (end) */
 
     /* Tree (begin) */ /**/
-        .panel .tree
-        {
-            background: var(--background-color);
-            position: relative;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-            z-index: 30;
-        }
-
         .panel .tree ul:first-child
         {
             background: url(../i/tree_bg.svg);
@@ -376,7 +173,6 @@
         .panel .tree li
         {
             cursor: pointer;
-            overflow: hidden;
             height: 30px;
             line-height: 100%;
             margin: 0;
@@ -388,7 +184,6 @@
             padding-left: 18px;
             padding-top: 5px;
             height: 18px;
-            overflow: hidden;
             position: relative;
         }
 

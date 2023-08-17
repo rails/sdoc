@@ -8,6 +8,14 @@ require 'sdoc/helpers'
 require 'sdoc/version'
 require 'rdoc'
 
+RDoc::TopLevel.prepend(Module.new do
+  attr_writer :path
+
+  def path
+    @path ||= super
+  end
+end)
+
 class RDoc::ClassModule
   def with_documentation?
     document_self_or_methods || classes_and_modules.any?{ |c| c.with_documentation? }
@@ -122,10 +130,16 @@ class RDoc::Generator::SDoc
 
   ### Determines index page based on @options.main_page (or lack thereof)
   def index
-    path = @original_dir.join(@options.main_page || @options.files.first || "")
-    file = @files.find { |file| @options.root.join(file.full_name) == path }
-    raise "Could not find main page #{path.to_s.inspect} among rendered files" if !file
-    file
+    @index ||= begin
+      path = @original_dir.join(@options.main_page || @options.files.first || "")
+      file = @files.find { |file| @options.root.join(file.full_name) == path }
+      raise "Could not find main page #{path.to_s.inspect} among rendered files" if !file
+
+      file = file.dup
+      file.path = ""
+
+      file
+    end
   end
 
   protected

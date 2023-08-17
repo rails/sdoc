@@ -36,8 +36,8 @@ module SDoc::Helpers
   end
 
   def base_tag_for_context(context)
-    relative_root = "../" * context.path.count("/") if context
-    %(<base href="./#{relative_root}" data-current-path="#{context&.path}">)
+    relative_root = "../" * context.path.count("/")
+    %(<base href="./#{relative_root}" data-current-path="#{context.path}">)
   end
 
   def canonical_url(path = nil)

@@ -196,11 +196,6 @@ describe SDoc::Helpers do
   end
 
   describe "#base_tag_for_context" do
-    it "returns an idempotent <base> tag for nil context" do
-      _(@helpers.base_tag_for_context(nil)).
-        must_equal %(<base href="./" data-current-path="">)
-    end
-
     it "returns a <base> tag with an appropriate path for the given RDoc::Context" do
       top_level = rdoc_top_level_for <<~RUBY
         module Foo; module Bar; module Qux; end; end; end

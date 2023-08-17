@@ -123,5 +123,13 @@ describe RDoc::Generator::SDoc do
       sdoc = rdoc_dry_run("--main", @files.first, "--files", *@files).generator
       _(sdoc.index.absolute_name).must_equal @files.first
     end
+
+    it "overrides RDoc::TopLevel#path" do
+      Dir.chdir(@dir) do
+        sdoc = rdoc_dry_run("--files", *@files).generator
+        _(sdoc.index.path).must_equal ""
+        sdoc.store.all_files.each { |file| _(file.path).wont_equal "" }
+      end
+    end
   end
 end

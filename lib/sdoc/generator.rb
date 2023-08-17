@@ -87,6 +87,7 @@ class RDoc::Generator::SDoc
     end
     @options.pipe = true
 
+    @original_dir = Pathname.pwd
     @template_dir = Pathname.new(options.template_dir)
     @base_dir = options.root
 
@@ -117,6 +118,14 @@ class RDoc::Generator::SDoc
 
   def file_dir
     FILE_DIR
+  end
+
+  ### Determines index page based on @options.main_page (or lack thereof)
+  def index
+    path = @original_dir.join(@options.main_page || @options.files.first || "")
+    file = @files.find { |file| @options.root.join(file.full_name) == path }
+    raise "Could not find main page #{path.to_s.inspect} among rendered files" if !file
+    file
   end
 
   protected
@@ -200,25 +209,6 @@ class RDoc::Generator::SDoc
       tree << item
     end
     tree
-  end
-
-  ### Determines index page based on @options.main_page (or lack thereof)
-  def index
-    # Break early to avoid a big if block when no main page is specified
-    default = @files.first
-    return default unless @options.main_page
-
-    # TODO: Total hack to strip the source directory from the main page
-    # Since the file list does not include the root source path
-    clean_main = @options.main_page.gsub("rails/", "")
-
-    if file = @files.find { |f| f.full_name == clean_main }
-      debug_msg "Found main at #{file}"
-      file
-    else
-      debug_msg "Falling back to default main at #{default}"
-      default
-    end
   end
 
   ### Copy all the resource files to output dir

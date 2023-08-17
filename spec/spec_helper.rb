@@ -12,13 +12,17 @@ ensure
   ENV.replace(original_env)
 end
 
+def rdoc_dry_run(*options)
+  RDoc::RDoc.new.tap do |rdoc|
+    rdoc.document(%W[--dry-run --quiet --format=sdoc --template=rails] + options.flatten)
+  end
+end
+
 # Returns an RDoc::TopLevel instance for the given Ruby code.
 def rdoc_top_level_for(ruby_code)
   # RDoc has a lot of internal state that needs to be initialized. The most
   # foolproof way to initialize it is by simply running it with a dummy file.
-  $rdoc_for_specs ||= RDoc::RDoc.new.tap do |rdoc|
-    rdoc.document(%W[--dry-run --quiet --format=sdoc --template=rails --files #{__FILE__}])
-  end
+  $rdoc_for_specs ||= rdoc_dry_run("--files", __FILE__)
 
   $rdoc_for_specs.store = RDoc::Store.new
 

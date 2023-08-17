@@ -74,4 +74,54 @@ describe RDoc::Generator::SDoc do
       _(parse_options("--title", "Docs Docs Docs!").title).must_equal "Docs Docs Docs!"
     end
   end
+
+  describe "#index" do
+    before do
+      @dir = File.expand_path("../lib", __dir__)
+      @files = ["sdoc.rb", "sdoc/version.rb"].sort.reverse
+    end
+
+    it "defaults to the first --files value" do
+      Dir.chdir(@dir) do
+        sdoc = rdoc_dry_run("--files", *@files).generator
+        _(sdoc.index.absolute_name).must_equal @files.first
+      end
+    end
+
+    it "raises when the default value is not a file" do
+      sdoc = rdoc_dry_run("--files", @dir, "--exclude=(js|css|svg)$").generator
+      error = _{ sdoc.index }.must_raise
+      _(error.message).must_include @dir
+    end
+
+    it "uses the value of --main" do
+      Dir.chdir(@dir) do
+        sdoc = rdoc_dry_run("--main", @files.first, "--files", *@files).generator
+        _(sdoc.index.absolute_name).must_equal @files.first
+      end
+    end
+
+    it "raises when the main page is not among the rendered files" do
+      Dir.chdir(@dir) do
+        sdoc = rdoc_dry_run("--main", @files.first, "--files", @files.last).generator
+        error = _{ sdoc.index }.must_raise
+        _(error.message).must_include @files.first
+      end
+    end
+
+    it "works when --root is specified" do
+      Dir.chdir(File.dirname(@dir)) do
+        root = File.basename(@dir)
+        @files.map! { |file| File.join(root, file) }
+        sdoc = rdoc_dry_run("--root", root, "--main", @files.first, "--files", *@files).generator
+        _(sdoc.index.absolute_name).must_equal @files.first
+      end
+    end
+
+    it "works with absolute paths" do
+      @files.map! { |file| File.join(@dir, file) }
+      sdoc = rdoc_dry_run("--main", @files.first, "--files", *@files).generator
+      _(sdoc.index.absolute_name).must_equal @files.first
+    end
+  end
 end

@@ -127,6 +127,17 @@ module SDoc::Helpers
     "<code>#{crumbs.join("::<wbr>")}</code>"
   end
 
+  def module_ancestors(rdoc_module)
+    ancestors = rdoc_module.includes.map { |inc| ["module", inc.module] }
+
+    if !rdoc_module.module? && superclass = rdoc_module.superclass
+      superclass_name = superclass.is_a?(String) ? superclass : superclass.full_name
+      ancestors.unshift(["class", superclass]) unless superclass_name == "Object"
+    end
+
+    ancestors
+  end
+
   def method_signature(rdoc_method)
     if rdoc_method.call_seq
       rdoc_method.call_seq.split(/\n+/).map do |line|

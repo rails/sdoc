@@ -13,6 +13,7 @@ module SDoc::Postprocessor
     version_rails_guides_urls!(document)
     unlink_unintentional_ref_links!(document)
     style_ref_links!(document)
+    unify_h1_headings!(document)
     highlight_code_blocks!(document)
 
     document.to_s
@@ -84,6 +85,15 @@ module SDoc::Postprocessor
       text = element.inner_text
       if !text.include?(" ") || text.match?(/\S\(/)
         element.inner_html = "<code>#{element.inner_html}</code>"
+      end
+    end
+  end
+
+  def unify_h1_headings!(document)
+    if h1 = document.at_css("#context > .description h1:first-child")
+      if hgroup = document.at_css("#content > hgroup")
+        h1.remove
+        hgroup.add_child(%(<p>#{h1.inner_html}</p>))
       end
     end
   end

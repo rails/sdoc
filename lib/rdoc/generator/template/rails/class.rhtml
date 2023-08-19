@@ -19,14 +19,9 @@
     <%= include_template '_panel.rhtml' %>
 
     <main id="content">
-        <div class="content__full-name">
-          <span class="qualifier"><%= klass.type %></span>
-          <%= module_breadcrumbs klass %>
-          <% if !klass.module? && superclass = klass.superclass %>
-            <span class="qualifier">&lt;</span>
-            <%= superclass.is_a?(String) ? full_name(superclass) : link_to(superclass) %>
-          <% end %>
-        </div>
+        <hgroup class="content__title">
+          <h1><span class="kind"><%= klass.type %></span> <%= module_breadcrumbs klass %></h1>
+        </hgroup>
 
         <%= include_template '_context.rhtml', {:context => klass} %>
 

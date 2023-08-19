@@ -1,20 +1,31 @@
 <div id="context">
   <% unless (description = context.description).empty? %>
-    <% unless context.comment_title %>
-      <h1><%= context.title %></h1>
-    <% end %>
     <div class="description">
       <%= description %>
     </div>
   <% end %>
 
 
+  <%# File only: requires %>
   <% unless context.requires.empty? %>
-    <!-- File only: requires -->
     <div class="content__divider">Required Files</div>
     <ul>
       <% context.requires.each do |req| %>
         <li><%= full_name req.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+
+  <%# Module only: ancestors %>
+  <% unless context.is_a?(RDoc::TopLevel) || (ancestors = module_ancestors(context)).empty? %>
+    <div class="content__divider">Inherits From</div>
+    <ul>
+      <% ancestors.each do |kind, ancestor| %>
+        <li>
+          <span class="kind"><%= kind %></span>
+          <%= ancestor.is_a?(String) ? full_name(ancestor) : link_to(ancestor) %>
+        </li>
       <% end %>
     </ul>
   <% end %>
@@ -49,22 +60,6 @@
         </dd>
       <% end %>
     </dl>
-  <% end %>
-
-  <% unless context.includes.empty? %>
-    <!-- Includes -->
-    <div class="content__divider">Included Modules</div>
-    <ul>
-      <% context.includes.each do |inc| %>
-        <li>
-          <% if inc.module.is_a?(String) %>
-            <%= full_name inc.name %>
-          <% else %>
-            <%= link_to inc.module %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
   <% end %>
 
 
@@ -185,7 +180,7 @@
     <ul>
       <% (context.modules.sort + context.classes.sort).each do |mod| %>
         <li>
-          <span class="type"><%= mod.type.upcase %></span>
+          <span class="kind"><%= mod.type %></span>
           <%= link_to mod %>
         </li>
       <% end %>

@@ -86,9 +86,14 @@ describe SDoc::Helpers do
         must_equal %(<a href="bar" class="qux" data-hoge="fuga">foo</a>)
     end
 
-    it "escapes the link text and attributes" do
-      _(@helpers.link_to("Bar < Foo", "qux", title: "Foo > Bar")).
-        must_equal %(<a href="qux" title="Foo &gt; Bar">Bar &lt; Foo</a>)
+    it "escapes the HTML attributes" do
+      _(@helpers.link_to("Foo", "foo", title: "Foo < Object")).
+        must_equal %(<a href="foo" title="Foo &lt; Object">Foo</a>)
+    end
+
+    it "does not escape the link body" do
+      _(@helpers.link_to("<code>Foo</code>", "foo")).
+        must_equal %(<a href="foo"><code>Foo</code></a>)
     end
 
     it "uses the first argument as the URL when no URL is specified" do
@@ -134,12 +139,12 @@ describe SDoc::Helpers do
 
   describe "#link_to_if" do
     it "returns the link's HTML when the condition is true" do
-      args = ["Bar < Foo", "qux", title: "Foo > Bar"]
+      args = ["<code>Foo</code>", "foo", title: "Foo < Object"]
       _(@helpers.link_to_if(true, *args)).must_equal @helpers.link_to(*args)
     end
 
     it "returns the link's inner HTML when the condition is false" do
-      _(@helpers.link_to_if(false, "Bar < Foo", "url")).must_equal ERB::Util.h("Bar < Foo")
+      _(@helpers.link_to_if(false, "<code>Foo</code>", "url")).must_equal "<code>Foo</code>"
 
       rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo::Bar")
         module Foo; class Bar; end; end
@@ -172,18 +177,22 @@ describe SDoc::Helpers do
   end
 
   describe "#full_name" do
+    it "wraps name in <code>" do
+      _(@helpers.full_name("Foo")).must_equal "<code>Foo</code>"
+    end
+
     it "inserts word-break opportunities into module names" do
-      _(@helpers.full_name("Foo::Bar::Qux")).must_equal "Foo::<wbr>Bar::<wbr>Qux"
-      _(@helpers.full_name("::Foo::Bar::Qux")).must_equal "::Foo::<wbr>Bar::<wbr>Qux"
+      _(@helpers.full_name("Foo::Bar::Qux")).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
+      _(@helpers.full_name("::Foo::Bar::Qux")).must_equal "<code>::Foo::<wbr>Bar::<wbr>Qux</code>"
     end
 
     it "inserts word-break opportunities into file paths" do
-      _(@helpers.full_name("path/to/file.rb")).must_equal "path/<wbr>to/<wbr>file.rb"
-      _(@helpers.full_name("/path/to/file.rb")).must_equal "/path/<wbr>to/<wbr>file.rb"
+      _(@helpers.full_name("path/to/file.rb")).must_equal "<code>path/<wbr>to/<wbr>file.rb</code>"
+      _(@helpers.full_name("/path/to/file.rb")).must_equal "<code>/path/<wbr>to/<wbr>file.rb</code>"
     end
 
     it "escapes name parts" do
-      _(@helpers.full_name("ruby & rails/file.rb")).must_equal "ruby &amp; rails/<wbr>file.rb"
+      _(@helpers.full_name("ruby&rails/file.rb")).must_equal "<code>ruby&amp;rails/<wbr>file.rb</code>"
     end
 
     it "uses RDoc::CodeObject#full_name when argument is an RDoc::CodeObject" do
@@ -191,7 +200,25 @@ describe SDoc::Helpers do
         module Foo; module Bar; class Qux; end; end; end
       RUBY
 
-      _(@helpers.full_name(rdoc_module)).must_equal "Foo::<wbr>Bar::<wbr>Qux"
+      _(@helpers.full_name(rdoc_module)).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
+    end
+  end
+
+  describe "#short_name" do
+    it "wraps name in <code>" do
+      _(@helpers.short_name("foo")).must_equal "<code>foo</code>"
+    end
+
+    it "escapes the name" do
+      _(@helpers.short_name("<=>")).must_equal "<code>&lt;=&gt;</code>"
+    end
+
+    it "uses RDoc::CodeObject#name when argument is an RDoc::CodeObject" do
+      rdoc_method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)
+        module Foo; def bar; end; end
+      RUBY
+
+      _(@helpers.short_name(rdoc_method)).must_equal "<code>bar</code>"
     end
   end
 
@@ -472,6 +499,50 @@ describe SDoc::Helpers do
 
     it "does not escape items" do
       _(@helpers.more_less_ul(["<a>link</a>"], 1)).must_include "<a>link</a>"
+    end
+  end
+
+  describe "#method_signature" do
+    it "returns the method signature wrapped in <code>" do
+      method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)
+        module Foo; def bar(qux); end; end
+      RUBY
+
+      _(@helpers.method_signature(method)).must_equal "<code>bar(qux)</code>"
+    end
+
+    it "escapes the method signature" do
+      method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)
+        module Foo; def bar(op = :<, &block); end; end
+      RUBY
+
+      _(@helpers.method_signature(method)).must_equal "<code>bar(op = :&lt;, &amp;block)</code>"
+    end
+
+    it "handles :call-seq: documentation" do
+      mod = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        module Foo
+          # :call-seq:
+          #   bar(op = :<)
+          #   bar(&block)
+          def bar(*args, &block); end
+
+          # :call-seq:
+          #   qux(&block) -> self
+          #   qux -> Enumerator
+          def qux(&block); end
+        end
+      RUBY
+
+      _(@helpers.method_signature(mod.find_method("bar", false))).must_equal <<~HTML.chomp
+        <code>bar(op = :&lt;)</code>
+        <code>bar(&amp;block)</code>
+      HTML
+
+      _(@helpers.method_signature(mod.find_method("qux", false))).must_equal <<~HTML.chomp
+        <code>qux(&amp;block)</code> &rarr; <code>self</code>
+        <code>qux</code> &rarr; <code>Enumerator</code>
+      HTML
     end
   end
 

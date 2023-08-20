@@ -7,7 +7,7 @@ module SDoc::Postprocessor
   extend self
 
   def process(rendered)
-    document = Nokogiri::HTML.parse(rendered)
+    document = Nokogiri::HTML5.parse(rendered)
 
     rebase_urls!(document)
     version_rails_guides_urls!(document)
@@ -89,7 +89,7 @@ module SDoc::Postprocessor
   end
 
   def highlight_code_blocks!(document)
-    document.css(".description pre > code, .sourcecode pre > code").each do |element|
+    document.css(".description pre > code, .method__source pre > code").each do |element|
       code = element.inner_text
       language = element.classes.include?("ruby") ? "ruby" : guess_code_language(code)
       element.inner_html = highlight_code(code, language)

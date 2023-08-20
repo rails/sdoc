@@ -148,21 +148,21 @@ describe SDoc::Postprocessor do
 
     it "highlights method source code" do
       rendered = <<~HTML
-        <div class="sourcecode">
+        <div class="method__source">
           <pre><code class="ruby"><span class="ruby-comment"># highlighted by RDoc</span></code></pre>
         </div>
 
-        <div class="sourcecode">
+        <div class="method__source">
           <pre><code class="ruby">DELETE FROM 'tricky_ruby'</code></pre>
         </div>
       HTML
 
       expected = <<~HTML
-        <div class="sourcecode">
+        <div class="method__source">
           <pre><code class="ruby highlight">#{SDoc::Postprocessor.highlight_code("# highlighted by RDoc", "ruby")}</code></pre>
         </div>
 
-        <div class="sourcecode">
+        <div class="method__source">
           <pre><code class="ruby highlight">#{SDoc::Postprocessor.highlight_code("DELETE FROM 'tricky_ruby'", "ruby")}</code></pre>
         </div>
       HTML

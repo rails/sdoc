@@ -9,11 +9,15 @@
     /* Results (begin) */
         .panel .result
         {
+            font-family: "Helvetica Neue", Arial, sans-serif;
             line-height: 1;
         }
 
         .panel .result ul
         {
+            list-style: none;
+            margin: 0;
+            padding: 0;
             font-size: 0.8em;
         }
 
@@ -43,6 +47,7 @@
         {
             font-size: 11px;
             color: var(--text-color);
+            margin-top: 0;
             margin-bottom: 2px;
             white-space: nowrap;
         }
@@ -164,10 +169,21 @@
     /* Results (end) */
 
     /* Tree (begin) */ /**/
+        .panel .tree
+        {
+          font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
         .panel .tree ul:first-child
         {
             background: url(../i/tree_bg.svg);
             background-size: 1px 60px;
+        }
+
+        .panel .tree ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .panel .tree li
@@ -179,7 +195,7 @@
         }
 
 
-        .panel .tree li .content
+        .panel .tree li .entry
         {
             padding-left: 18px;
             padding-top: 5px;

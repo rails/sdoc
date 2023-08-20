@@ -11,7 +11,7 @@
 
   <% unless context.requires.empty? %>
     <!-- File only: requires -->
-    <div class="sectiontitle">Required Files</div>
+    <div class="content__divider">Required Files</div>
     <ul>
       <% context.requires.each do |req| %>
         <li><%= full_name req.name %></li>
@@ -23,17 +23,17 @@
   <% sections = context.sections.select { |s| s.title }.sort_by{ |s| s.title.to_s } %>
   <% unless sections.empty? then %>
     <!-- Sections -->
-    <div class="sectiontitle">Sections</div>
+    <div class="content__divider">Sections</div>
     <ul>
       <% sections.each do |section| %>
-        <li><%= link_to section.title, "##{section.aref}" %></li>
+        <li><%= link_to h(section.title), "##{section.aref}" %></li>
       <% end %>
     </ul>
   <% end %>
 
   <% unless context.method_list.empty? %>
     <!-- Method ref -->
-    <div class="sectiontitle">Methods</div>
+    <div class="content__divider">Methods</div>
     <dl class="methods">
       <% group_by_first_letter(context.method_list).each do |letter, methods| %>
         <dt><%= letter %></dt>
@@ -43,7 +43,7 @@
               <%
                 comma = methods.size == i+1 ? '' : ','
               %>
-              <li><%= link_to method.name, method %><%= comma %></li>
+              <li><%= link_to short_name(method), method %><%= comma %></li>
             <% end %>
           </ul>
         </dd>
@@ -53,7 +53,7 @@
 
   <% unless context.includes.empty? %>
     <!-- Includes -->
-    <div class="sectiontitle">Included Modules</div>
+    <div class="content__divider">Included Modules</div>
     <ul>
       <% context.includes.each do |inc| %>
         <li>
@@ -72,7 +72,7 @@
   <% context.each_section do |section, constants, attributes| %>
 
     <% if section.title then %>
-      <div class="contenttitle" id="<%= h section.aref %>">
+      <div class="content__section-title" id="<%= h section.aref %>">
         <%= h section.title %>
       </div>
     <% end %>
@@ -85,11 +85,11 @@
 
     <% unless constants.empty? %>
       <!-- Section constants -->
-      <h2 class="sectiontitle">Constants</h2>
+      <h2 class="content__divider">Constants</h2>
       <table border='0' cellpadding='5'>
         <% constants.each do |const| %>
           <tr valign='top'>
-            <td class="attr-name"><%= h const.name %></td>
+            <td class="attr-name"><%= short_name const %></td>
             <td>=</td>
             <td class="attr-value"><%= h const.value %></td>
           </tr>
@@ -106,14 +106,14 @@
 
     <% unless attributes.empty? %>
       <!-- Section attributes -->
-      <h2 class="sectiontitle">Attributes</h2>
+      <h2 class="content__divider">Attributes</h2>
       <table border='0' cellpadding='5'>
         <% attributes.each do |attrib| %>
           <tr valign='top'>
             <td class='attr-rw'>
               [<%= attrib.rw %>]
             </td>
-            <td class='attr-name'><%= h attrib.name %></td>
+            <td class='attr-name'><%= short_name attrib %></td>
             <td class='attr-desc'><%= attrib.description.strip %></td>
           </tr>
         <% end %>
@@ -128,42 +128,39 @@
         visibilities.each do |visibility, methods|
           next if methods.empty?
     %>
-      <h2 class="sectiontitle"><%= type.capitalize %> <%= visibility.to_s.capitalize %> methods</h2>
+      <h2 class="content__divider"><%= visibility.to_s.capitalize %> <%= type %> methods</h2>
       <% methods.each do |method| %>
-        <div class="method">
-          <h3 class="title method-title" id="<%= method.aref %>">
-            <% if method.call_seq %>
-              <b><%= method.call_seq.gsub(/->/, '&rarr;').gsub(/\n(.)/, '<br />\1') %></b>
-            <% else %>
-              <b><%= h method.name %></b><%= h method.params %>
-            <% end %>
-          </h3>
-          <%= link_to "Link", method, class: "permalink", name: method.aref %>
+        <div class="method" id="<%= method.aref %>">
+          <div class="method__signature">
+            <h3><%= method_signature method %></h3>
+            <%= link_to %(<img src="/i/link.svg" alt="Permalink">), method,
+                  class: "method__permalink", title: "Permalink" %>
+          </div>
 
           <% unless method.aliases.empty? %>
-            <p class="aka">
+            <p class="method__aka">
               Also aliased as:
               <%# Sometimes a parent cannot be determined. See ruby/rdoc@85ebfe13dc. %>
-              <%= method.aliases.map { |aka| link_to_if aka.parent, aka.name, aka }.join(", ") %>.
+              <%= method.aliases.map { |aka| link_to_if aka.parent, short_name(aka), aka }.join(", ") %>.
             </p>
           <% end %>
 
           <% if alias_for = method.is_alias_for then %>
-            <p class="aka">
+            <p class="method__aka">
               Alias for:
-              <%= link_to alias_for.name, alias_for %>.
+              <%= link_to short_name(alias_for), alias_for %>.
             </p>
           <% end %>
 
           <% if method.comment %>
             <div class="description">
-              <%= method.description.strip %>
+              <%= method.description %>
             </div>
           <% end %>
 
           <% source_code, source_url = method_source_code_and_url(method) %>
           <% if source_code %>
-            <details class="sourcecode">
+            <details class="method__source">
               <summary>
                 <span class="label">Source code</span>
                 <% if source_url %>
@@ -171,12 +168,10 @@
                 <% end %>
               </summary>
 
-              <div class="dyn-source">
-                <pre><code class="ruby"><%= source_code %></code></pre>
-              </div>
+              <pre><code class="ruby"><%= source_code %></code></pre>
             </details>
           <% elsif source_url %>
-            <p><%= link_to_external "GitHub", source_url %></p>
+            <p class="method__source"><%= link_to_external "GitHub", source_url %></p>
           <% end %>
         </div>
       <% end %><%# methods.each %>
@@ -186,7 +181,7 @@
 
   <% unless context.classes_and_modules.empty? %>
     <!-- Namespace -->
-    <div class="sectiontitle">Namespace</div>
+    <div class="content__divider">Namespace</div>
     <ul>
       <% (context.modules.sort + context.classes.sort).each do |mod| %>
         <li>

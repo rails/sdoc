@@ -21,7 +21,7 @@
     <main id="content">
         <div class="content__full-name">
           <span class="qualifier"><%= klass.type %></span>
-          <%= full_name klass %>
+          <%= module_breadcrumbs klass %>
           <% if !klass.module? && superclass = klass.superclass %>
             <span class="qualifier">&lt;</span>
             <%= superclass.is_a?(String) ? full_name(superclass) : link_to(superclass) %>

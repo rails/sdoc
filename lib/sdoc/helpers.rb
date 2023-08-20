@@ -116,6 +116,17 @@ module SDoc::Helpers
     end
   end
 
+  def module_breadcrumbs(rdoc_module)
+    crumbs = [h(rdoc_module.name)]
+
+    rdoc_module.each_parent do |parent|
+      break if parent.is_a?(RDoc::TopLevel)
+      crumbs.unshift(link_to(h(parent.name), parent))
+    end
+
+    "<code>#{crumbs.join("::<wbr>")}</code>"
+  end
+
   def method_signature(rdoc_method)
     if rdoc_method.call_seq
       rdoc_method.call_seq.split(/\n+/).map do |line|

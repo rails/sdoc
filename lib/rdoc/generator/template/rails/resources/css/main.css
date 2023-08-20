@@ -55,6 +55,9 @@ a {
 a:has(> code:only-child) {
   text-decoration: none;
 }
+code a {
+  text-decoration: none;
+}
 
 /* TODO: Remove this hack when Firefox supports `:has()` */
 a code {

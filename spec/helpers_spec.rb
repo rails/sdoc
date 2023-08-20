@@ -502,6 +502,27 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#module_breadcrumbs" do
+    it "renders links for each of the module's parents" do
+      top_level = rdoc_top_level_for <<~RUBY
+        module Foo; module Bar; module Qux; end; end; end
+      RUBY
+
+      foo = top_level.find_module_named("Foo")
+      bar = top_level.find_module_named("Foo::Bar")
+      qux = top_level.find_module_named("Foo::Bar::Qux")
+
+      _(@helpers.module_breadcrumbs(foo)).
+        must_equal "<code>Foo</code>"
+
+      _(@helpers.module_breadcrumbs(bar)).
+        must_equal "<code>#{@helpers.link_to "Foo", foo}::<wbr>Bar</code>"
+
+      _(@helpers.module_breadcrumbs(qux)).
+        must_equal "<code>#{@helpers.link_to "Foo", foo}::<wbr>#{@helpers.link_to "Bar", bar}::<wbr>Qux</code>"
+    end
+  end
+
   describe "#method_signature" do
     it "returns the method signature wrapped in <code>" do
       method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)

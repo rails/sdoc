@@ -3,18 +3,12 @@ require 'pathname'
 require 'fileutils'
 require 'json'
 
+require "rdoc"
+require_relative "rdoc_monkey_patches"
+
 require 'sdoc/templatable'
 require 'sdoc/helpers'
 require 'sdoc/version'
-require 'rdoc'
-
-RDoc::TopLevel.prepend(Module.new do
-  attr_writer :path
-
-  def path
-    @path ||= super
-  end
-end)
 
 class RDoc::ClassModule
   def with_documentation?

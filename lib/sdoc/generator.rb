@@ -8,6 +8,7 @@ require_relative "rdoc_monkey_patches"
 
 require 'sdoc/templatable'
 require 'sdoc/helpers'
+require 'sdoc/search_index'
 require 'sdoc/version'
 
 class RDoc::ClassModule
@@ -82,8 +83,6 @@ class RDoc::Generator::SDoc
     @original_dir = Pathname.pwd
     @template_dir = Pathname.new(options.template_dir)
     @base_dir = options.root
-
-    @json_index = RDoc::Generator::JsonIndex.new self, options
   end
 
   def generate
@@ -94,8 +93,7 @@ class RDoc::Generator::SDoc
 
     # Now actually write the output
     copy_resources
-    @json_index.generate
-    @json_index.generate_gzipped
+    generate_search_index
     generate_file_links
     generate_class_tree
 
@@ -207,6 +205,19 @@ class RDoc::Generator::SDoc
       tree << item
     end
     tree
+  end
+
+  def generate_search_index
+    debug_msg "Generating search index"
+    unless @options.dry_run
+      index = SDoc::SearchIndex.generate(@store.all_classes_and_modules)
+
+      @outputdir.join("js/search-index.js").open("w") do |file|
+        file.write("export default ")
+        JSON.dump(index, file)
+        file.write(";")
+      end
+    end
   end
 
   ### Copy all the resource files to output dir

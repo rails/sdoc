@@ -31,6 +31,17 @@ describe RDoc::Generator::SDoc do
     _(`./bin/sdoc -v`.strip).must_equal SDoc::VERSION
   end
 
+  it "generates a search index" do
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        rdoc_run("--files", "#{__dir__}/../README.md", "#{__dir__}/../lib/sdoc/version.rb")
+        contents = File.read("doc/js/search-index.js")
+        index = JSON.parse(contents.delete_prefix!("export default ").delete_suffix!(";"))
+        _(index.keys.sort).must_equal ["bigrams", "entries", "weights"]
+      end
+    end
+  end
+
   describe "options.dry_run" do
     it "prevents files from being rendered" do
       Dir.mktmpdir do |dir|

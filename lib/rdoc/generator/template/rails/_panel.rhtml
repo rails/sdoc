@@ -14,14 +14,13 @@
   <input id="panel__state" type="checkbox">
 
   <div id="panel__tray" class="panel__tray" data-turbo-permanent>
-    <input id="search" type="text" autocomplete="off" tabindex="-1" autosave="searchdoc" results="10"
+    <input id="search" class="panel__search" type="text"
+      tabindex="-1" autocomplete="off" autosave="searchdoc"
       placeholder="Search (/) for a class, method, ...">
 
+    <div id="results" class="panel__results"></div>
+
     <div class="panel__tree">
-      <div class="result hidden">
-        <ul>
-        </ul>
-      </div>
       <div class="tree">
         <ul>
         </ul>

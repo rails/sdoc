@@ -102,7 +102,7 @@ class RDoc::Generator::SDoc
     copy_resources
     @json_index.generate
     @json_index.generate_gzipped
-    generate_search_index
+    generate_file_links
     generate_class_tree
 
     generate_index_file
@@ -177,10 +177,10 @@ class RDoc::Generator::SDoc
   end
 
   ### Generate file with links for the search engine
-  def generate_search_index
+  def generate_file_links
     debug_msg "Generating search engine index in #{@outputdir}"
-    templatefile = @template_dir + 'search_index.rhtml'
-    outfile      = @outputdir + 'panel/links.html'
+    templatefile = @template_dir + 'file_links.rhtml'
+    outfile      = @outputdir + 'panel/file_links.html'
 
     self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
   end

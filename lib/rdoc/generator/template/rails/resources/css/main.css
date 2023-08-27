@@ -518,8 +518,8 @@ html {
 
 .method__source pre,
 .description pre {
-  padding: 0.5em 1em;
-  border-radius: 8px;
+  padding: 0.5ch 1ch;
+  border-radius: 4px;
   overflow-x: auto;
 }
 

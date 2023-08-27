@@ -130,7 +130,7 @@ module SDoc::Postprocessor
       else
         "yaml"
       end
-    when /^ *<[%a-z]/i
+    when /^ *<[%a-z]|%>$|<\/\w+>$/i
       "erb" # also highlights HTML
     else
       "ruby"

@@ -401,6 +401,10 @@ describe SDoc::Postprocessor do
       ERB
 
       _(SDoc::Postprocessor.guess_code_language(<<~ERB)).must_equal "erb"
+        1 + 1 = <%= 1 + 1 %>
+      ERB
+
+      _(SDoc::Postprocessor.guess_code_language(<<~ERB)).must_equal "erb"
         <% x = 1 + 1 %>
       ERB
 
@@ -412,6 +416,10 @@ describe SDoc::Postprocessor do
     it "guesses erb for HTML" do
       _(SDoc::Postprocessor.guess_code_language(<<~HTML)).must_equal "erb"
         <p>1 + 1 = 2</p>
+      HTML
+
+      _(SDoc::Postprocessor.guess_code_language(<<~HTML)).must_equal "erb"
+        1 + 1 = <span>2</span>
       HTML
     end
 
@@ -430,6 +438,11 @@ describe SDoc::Postprocessor do
     it "guesses ruby for Ruby return value comment" do
       _(SDoc::Postprocessor.guess_code_language(<<~RUBY)).must_equal "ruby"
         Object.new # => #<Object>
+      RUBY
+
+      _(SDoc::Postprocessor.guess_code_language(<<~RUBY)).must_equal "ruby"
+        Pathname("/span")
+        # => #<Pathname:/span>
       RUBY
 
       _(SDoc::Postprocessor.guess_code_language(<<~RUBY)).must_equal "ruby"

@@ -599,19 +599,22 @@ html {
  */
 
 details.more-less {
-  margin-top: var(--space-sm);
+  margin-top: 0;
+  padding-bottom: calc(var(--line-height) * 1em + var(--space-sm));
   position: relative;
 }
 
 details.more-less > ul {
-  margin-top: 0;
+  margin-top: var(--space-sm);
 }
 
 details.more-less summary {
   position: absolute;
-  padding-left: 0.25em;
+  bottom: 0;
+
   font-weight: bold;
   color: var(--icon-color);
+  padding-left: 0.25em;
 }
 
 @media (hover: hover) {
@@ -629,12 +632,7 @@ details.more-less summary::-webkit-details-marker {
 }
 
 details.more-less summary::before {
-  font-size: 1.15em;
   content: "+";
-}
-
-details.more-less[open] summary {
-  top: calc(100% + var(--space-sm));
 }
 
 details.more-less[open] summary::before {

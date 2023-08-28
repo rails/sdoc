@@ -382,6 +382,11 @@ html {
   margin-top: var(--space-sm);
 }
 
+/* Increase top margin for list items when any item has more than one paragraph */
+:where(#content :is(ol, ul):has(> li > p:not(:only-child))) * + li {
+  margin-top: var(--space);
+}
+
 :where(#content) code {
   font-style: normal;
 }

@@ -55,9 +55,6 @@ a {
 a:has(> code:only-child) {
   text-decoration: none;
 }
-code a {
-  text-decoration: none;
-}
 
 /* TODO: Remove this hack when Firefox supports `:has()` */
 a code {
@@ -72,6 +69,15 @@ a code {
 
 .hidden {
   display: none;
+}
+
+.kind {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.kind::after {
+  content: " "; /* Ensure trailing space has width of 1 monospace char */
 }
 
 table {
@@ -380,18 +386,22 @@ html {
   font-style: normal;
 }
 
-.content__full-name {
-  font-family: monospace;
-  font-size: 1.4em;
+.content__title :is(h1, p) {
+  font-size: 1.6em;
   line-height: 1.25;
-  padding: 0.125em 0;
+}
+
+.content__title h1 {
+  font-weight: normal;
 
   margin-left: 1em;
   text-indent: -1em;
 }
 
-.content__full-name .qualifier {
-  font-weight: bold;
+.content__title p {
+  font-style: italic;
+
+  margin-top: 0;
 }
 
 .content__section-title {
@@ -512,6 +522,10 @@ html {
 /*
  * Description of method or module
  */
+
+#context > .description {
+  margin-top: var(--space-lg);
+}
 
 .description :is(h1, h2, h3, h4, h5, h6) {
   line-height: 1.25;

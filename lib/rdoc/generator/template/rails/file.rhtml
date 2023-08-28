@@ -16,10 +16,9 @@
     <%= include_template '_panel.rhtml' %>
 
     <main id="content">
-        <h1 class="content__full-name">
-          <span class="qualifier">File</span>
-          <%= full_name file %>
-        </h1>
+        <hgroup class="content__title">
+          <h1><span class="kind">File</span> <%= full_name file %></h1>
+        </hgroup>
 
         <% if source_url = github_url(file.relative_name) %>
           <p><%= link_to_external "View on GitHub", source_url %></p>

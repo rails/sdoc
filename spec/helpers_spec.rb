@@ -523,6 +523,44 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#module_ancestors" do
+    it "returns a list with the base class (if applicable) and included modules" do
+      # RDoc chokes on ";" when parsing includes, so replace with "\n".
+      top_level = rdoc_top_level_for <<~RUBY.gsub(";", "\n")
+        module M1; end
+        module M2; end
+        class C1; end
+
+        module Foo; include M1; include M2; end
+        class Bar < C1; include M2; include M1; end
+        class Qux < Cx; include Foo; include Mx; end
+      RUBY
+
+      m1, m2, c1, foo, bar, qux = %w[M1 M2 C1 Foo Bar Qux].map { |name| top_level.find_module_named(name) }
+
+      _(@helpers.module_ancestors(foo)).must_equal [["module", m1], ["module", m2]]
+      _(@helpers.module_ancestors(bar)).must_equal [["class", c1], ["module", m2], ["module", m1]]
+      _(@helpers.module_ancestors(qux)).must_equal [["class", "Cx"], ["module", foo], ["module", "Mx"]]
+    end
+
+    it "excludes the default base class (Object) from the result" do
+      # RDoc chokes on ";" when parsing includes, so replace with "\n".
+      top_level = rdoc_top_level_for <<~RUBY.gsub(";", "\n")
+        class Object; end
+        class Foo; include M1; end
+      RUBY
+
+      _(@helpers.module_ancestors(top_level.find_module_named("Object"))).must_equal [["class", "BasicObject"]]
+      _(@helpers.module_ancestors(top_level.find_module_named("Foo"))).must_equal [["module", "M1"]]
+
+      top_level = rdoc_top_level_for <<~RUBY.gsub(";", "\n")
+        class Foo; include M1; end
+      RUBY
+
+      _(@helpers.module_ancestors(top_level.find_module_named("Foo"))).must_equal [["module", "M1"]]
+    end
+  end
+
   describe "#method_signature" do
     it "returns the method signature wrapped in <code>" do
       method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)

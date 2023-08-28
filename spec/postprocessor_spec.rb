@@ -124,6 +124,59 @@ describe SDoc::Postprocessor do
       _(SDoc::Postprocessor.process(rendered)).must_include expected
     end
 
+    it "unifies <h1> headings for a context" do
+      rendered = <<~HTML
+        <div id="content">
+          <hgroup><h1>module Foo</h1></hgroup>
+
+          <div id="context">
+            <div class="description"><h1>The Foo</h1><p>Lorem ipsum.</p></div>
+          </div>
+        </div>
+      HTML
+
+      expected = <<~HTML
+        <div id="content">
+          <hgroup><h1>module Foo</h1><p>The Foo</p></hgroup>
+
+          <div id="context">
+            <div class="description"><p>Lorem ipsum.</p></div>
+          </div>
+        </div>
+      HTML
+
+      _(SDoc::Postprocessor.process(rendered)).must_include expected
+    end
+
+    it "does not relocate non-leading <h1> headings" do
+      rendered = <<~HTML
+        <div id="content">
+          <hgroup><h1>module Foo</h1></hgroup>
+
+          <div id="context">
+            <div class="description"><p>Lorem ipsum.</p><h1>Red Herring</h1></div>
+            <div class="method">
+              <div class="description"><h1>Red Herring</h1></div>
+            </div>
+          </div>
+        </div>
+      HTML
+
+      _(SDoc::Postprocessor.process(rendered)).must_include rendered
+    end
+
+    it "does not relocate <h1> headings when <hgroup> is not present" do
+      rendered = <<~HTML
+        <div id="content">
+          <div id="context">
+            <div class="description"><h1>Main Page</h1></div>
+          </div>
+        </div>
+      HTML
+
+      _(SDoc::Postprocessor.process(rendered)).must_include rendered
+    end
+
     it "highlights code blocks" do
       rendered = <<~HTML
         <div class="description">

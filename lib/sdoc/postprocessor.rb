@@ -11,8 +11,6 @@ module SDoc::Postprocessor
 
     rebase_urls!(document)
     version_rails_guides_urls!(document)
-    unlink_unintentional_ref_links!(document)
-    style_ref_links!(document)
     unify_h1_headings!(document)
     highlight_code_blocks!(document)
 
@@ -70,23 +68,6 @@ module SDoc::Postprocessor
     end
 
     uri.to_s
-  end
-
-  def unlink_unintentional_ref_links!(document)
-    document.css(".description a[href^='classes/'] > code:only-child > text()").each do |text_node|
-      if text_node.inner_text.match?(/\A[A-Z](?:[A-Z]+|[a-z]+)\z/)
-        text_node.parent.parent.replace(text_node)
-      end
-    end
-  end
-
-  def style_ref_links!(document)
-    document.css(".description a[href^='classes/']:has(> text():only-child)").each do |element|
-      text = element.inner_text
-      if !text.include?(" ") || text.match?(/\S\(/)
-        element.inner_html = "<code>#{element.inner_html}</code>"
-      end
-    end
   end
 
   def unify_h1_headings!(document)

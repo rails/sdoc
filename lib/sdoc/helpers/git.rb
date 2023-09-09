@@ -9,11 +9,11 @@ module SDoc::Helpers::Git
     @options.github && git? && github_repository
   end
 
-  attr_writer :git_bin_path
+  attr_writer :git_repo_path
 
   def git?
-    @git_bin_path ||= `sh -c 'command -v git'`.chomp
-    !@git_bin_path.empty?
+    @git_repo_path ||= Dir.chdir(@options.root) { `git rev-parse --show-toplevel 2> /dev/null`.chomp }
+    !@git_repo_path.empty?
   end
 
   def git_command(command)

@@ -12,13 +12,29 @@ describe SDoc::Helpers do
     @helpers.options = RDoc::Options.new
   end
 
+  describe "#git?" do
+    it "returns false when git is not installed" do
+      with_env("PATH" => "") do
+        _(@helpers.git?).must_equal false
+      end
+    end
+
+    it "returns false when project is not a git repository" do
+      Dir.mktmpdir do |dir|
+        @helpers.options.root = dir
+
+        _(@helpers.git?).must_equal false
+      end
+    end
+  end
+
   describe "#github_url" do
     before :each do
       @helpers.options.github = true
     end
 
     it "returns the URL for a given path in the project's GitHub repository at the current SHA1" do
-      @helpers.git_bin_path = "path/to/git"
+      @helpers.git_repo_path = "path/to/repo"
       @helpers.git_origin_url = "git@github.com:user/repo.git"
       @helpers.git_head_sha1 = "1337c0d3"
 
@@ -51,8 +67,8 @@ describe SDoc::Helpers do
       _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
     end
 
-    it "returns nil when git is not installed" do
-      @helpers.git_bin_path = ""
+    it "returns nil when git is not installed or project is not a git repository" do
+      @helpers.git_repo_path = ""
 
       _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
     end
@@ -306,7 +322,7 @@ describe SDoc::Helpers do
 
   describe "#project_git_head" do
     it "returns the branch name and abbreviated SHA1 of the most recent commit in HEAD" do
-      @helpers.git_bin_path = "path/to/git"
+      @helpers.git_repo_path = "path/to/repo"
       @helpers.git_head_branch = "1-0-stable"
       @helpers.git_head_sha1 = "1337c0d3d00d" * 3
 
@@ -317,8 +333,8 @@ describe SDoc::Helpers do
       _(@helpers.project_git_head).must_match %r"\A.+@[[:xdigit:]]{12}\z"
     end
 
-    it "returns nil when git is not installed" do
-      @helpers.git_bin_path = ""
+    it "returns nil when git is not installed or project is not a git repository" do
+      @helpers.git_repo_path = ""
 
       _(@helpers.project_git_head).must_be_nil
     end
@@ -367,7 +383,7 @@ describe SDoc::Helpers do
 
   describe "#og_modified_time" do
     it "returns the commit time of the most recent commit in HEAD" do
-      @helpers.git_bin_path = "path/to/git"
+      @helpers.git_repo_path = "path/to/repo"
       @helpers.git_head_timestamp = "1999-12-31T12:34:56Z"
 
       _(@helpers.og_modified_time).must_equal "1999-12-31T12:34:56Z"
@@ -378,8 +394,8 @@ describe SDoc::Helpers do
         must_match %r"\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[-+]\d{2}:\d{2}\z"
     end
 
-    it "returns nil when git is not installed" do
-      @helpers.git_bin_path = ""
+    it "returns nil when git is not installed or project is not a git repository" do
+      @helpers.git_repo_path = ""
 
       _(@helpers.og_modified_time).must_be_nil
     end

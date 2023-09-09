@@ -118,6 +118,14 @@ describe RDoc::Generator::SDoc do
       end
     end
 
+    it "works with unresolved paths" do
+      Dir.chdir(@dir) do
+        @files.map! { |file| File.join("..", File.basename(@dir), ".", file) }
+        sdoc = rdoc_dry_run("--main", @files.first, "--files", *@files).generator
+        _(sdoc.index.absolute_name).must_equal @files.first
+      end
+    end
+
     it "works with absolute paths" do
       @files.map! { |file| File.join(@dir, file) }
       sdoc = rdoc_dry_run("--main", @files.first, "--files", *@files).generator

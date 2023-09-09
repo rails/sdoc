@@ -12,10 +12,14 @@ ensure
   ENV.replace(original_env)
 end
 
-def rdoc_dry_run(*options)
+def rdoc_run(*options)
   RDoc::RDoc.new.tap do |rdoc|
-    rdoc.document(%W[--dry-run --quiet --format=sdoc --template=rails] + options.flatten)
+    rdoc.document(%W[--quiet --format=sdoc --template=rails] + options.flatten)
   end
+end
+
+def rdoc_dry_run(*options)
+  rdoc_run("--dry-run", *options)
 end
 
 # Returns an RDoc::TopLevel instance for the given Ruby code.

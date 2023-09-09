@@ -139,7 +139,7 @@ class RDoc::Generator::SDoc
     templatefile = @template_dir + 'index.rhtml'
     outfile      = @outputdir + 'index.html'
 
-    self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
+    render_template(templatefile, binding, outfile)
   end
 
   ### Generate a documentation file for each class
@@ -152,7 +152,7 @@ class RDoc::Generator::SDoc
       outfile     = @outputdir + klass.path
 
       debug_msg "  rendering #{outfile}"
-      self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
+      render_template(templatefile, binding, outfile)
     end
   end
 
@@ -166,7 +166,7 @@ class RDoc::Generator::SDoc
       debug_msg "  working on %s (%s)" % [ file.full_name, outfile ]
 
       debug_msg "  rendering #{outfile}"
-      self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
+      render_template(templatefile, binding, outfile)
     end
   end
 
@@ -176,7 +176,7 @@ class RDoc::Generator::SDoc
     templatefile = @template_dir + 'file_links.rhtml'
     outfile      = @outputdir + 'panel/file_links.html'
 
-    self.render_template( templatefile, binding(), outfile ) unless @options.dry_run
+    render_template(templatefile, binding, outfile)
   end
 
   ### Create class tree structure and write it as json

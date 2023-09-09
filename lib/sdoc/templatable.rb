@@ -32,17 +32,10 @@ module SDoc::Templatable
   ### Load and render the erb template in the given +templatefile+ within the
   ### specified +context+ (a Binding object) and write it out to +outfile+.
   ### Both +templatefile+ and +outfile+ should be Pathname-like objects.
-  def render_template( templatefile, context, outfile )
+  def render_template(templatefile, context, outfile)
+    return if @options.dry_run
     output = SDoc::Postprocessor.process(eval_template(templatefile, context))
-
-    unless $dryrun
-      outfile.dirname.mkpath
-      outfile.open( 'w', 0644 ) do |file|
-        file.print( output )
-      end
-    else
-      debug_msg "  would have written %d bytes to %s" %
-      [ output.length, outfile ]
-    end
+    outfile.dirname.mkpath
+    outfile.write(output)
   end
 end

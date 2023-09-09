@@ -31,6 +31,19 @@ describe RDoc::Generator::SDoc do
     _(`./bin/sdoc -v`.strip).must_equal SDoc::VERSION
   end
 
+  describe "options.dry_run" do
+    it "prevents files from being rendered" do
+      Dir.mktmpdir do |dir|
+        rdoc_dry_run(
+          "--files", "#{__dir__}/../README.md", "#{__dir__}/../lib/sdoc/version.rb",
+          "--output", dir
+        )
+
+        _(Dir.glob("**/*", base: dir)).must_be_empty
+      end
+    end
+  end
+
   describe "options.github" do
     it "is disabled by default" do
       _(parse_options().github).must_be_nil

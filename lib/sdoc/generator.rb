@@ -115,7 +115,7 @@ class RDoc::Generator::SDoc
   ### Determines index page based on @options.main_page (or lack thereof)
   def index
     @index ||= begin
-      path = @original_dir.join(@options.main_page || @options.files.first || "")
+      path = @original_dir.join(@options.main_page || @options.files.first || "").expand_path
       file = @files.find { |file| @options.root.join(file.full_name) == path }
       raise "Could not find main page #{path.to_s.inspect} among rendered files" if !file
 

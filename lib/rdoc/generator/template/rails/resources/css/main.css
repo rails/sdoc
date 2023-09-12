@@ -461,12 +461,13 @@ html {
   font-style: normal;
 }
 
-.content__title :is(h1, p) {
+.content__title {
   font-size: 1.6em;
   line-height: 1.25;
 }
 
 .content__title h1 {
+  font-size: inherit;
   font-weight: normal;
 
   margin-left: 1em;
@@ -477,6 +478,10 @@ html {
   font-style: italic;
 
   margin-top: 0;
+}
+
+.content__source-link {
+  margin-top: var(--space-sm);
 }
 
 .content__section-title {
@@ -598,7 +603,7 @@ html {
  * Description of method or module
  */
 
-#context > .description {
+.content__title ~ #context > .description {
   margin-top: var(--space-lg);
 }
 

@@ -424,6 +424,7 @@ html {
 
 #content {
   padding: 1em;
+  overflow-x: auto;
 }
 
 @media (min-width: 600px) {

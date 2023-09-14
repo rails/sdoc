@@ -2,6 +2,9 @@ module SDoc::Helpers
   require_relative "helpers/git"
   include SDoc::Helpers::Git
 
+  LEADING_PARAGRAPH_XPATH =
+    "./*[not(self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6)][1][self::p]"
+
   def link_to(text, url = nil, html_attributes = {})
     url, html_attributes = nil, url if url.is_a?(Hash)
     url ||= text
@@ -79,7 +82,7 @@ module SDoc::Helpers
   def page_description(leading_html, max_length: 160)
     return if leading_html.nil? || !leading_html.include?("</p>")
 
-    text = Nokogiri::HTML.fragment(leading_html).at_css("h1 + p, p:first-child")&.inner_text
+    text = Nokogiri::HTML.fragment(leading_html).at(LEADING_PARAGRAPH_XPATH)&.inner_text
     return unless text
 
     if text.length > max_length

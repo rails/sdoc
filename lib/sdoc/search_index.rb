@@ -1,5 +1,6 @@
 require "base64"
 require "nokogiri"
+require_relative "helpers"
 
 module SDoc::SearchIndex
   extend self
@@ -120,7 +121,7 @@ module SDoc::SearchIndex
 
   def truncate_description(description, limit)
     return if description.empty?
-    leading_paragraph = Nokogiri::HTML.fragment(description).at_css("h1 + p, p:first-child")
+    leading_paragraph = Nokogiri::HTML.fragment(description).at(SDoc::Helpers::LEADING_PARAGRAPH_XPATH)
     return unless leading_paragraph
 
     # Treat <code> elements as a whole when truncating

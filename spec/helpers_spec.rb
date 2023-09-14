@@ -412,11 +412,21 @@ describe SDoc::Helpers do
         <h1>headline</h1>
         <p>paragraph</p>
       HTML
+
+      _(@helpers.page_description(<<~HTML)).must_equal "paragraph"
+        <h1>1</h1><h2>2</h2><h3>3</h3><h4>4</h4><h5>5</h5><h6>6</h6>
+        <p>paragraph</p>
+      HTML
     end
 
     it "returns nil when there is no leading paragraph" do
       _(@helpers.page_description(<<~HTML)).must_be_nil
         <pre><code>code</code></pre>
+        <p>other</p>
+      HTML
+
+      _(@helpers.page_description(<<~HTML)).must_be_nil
+        <ul><li><p>item</p></li></ul>
         <p>other</p>
       HTML
 

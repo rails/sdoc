@@ -16,12 +16,14 @@
     <%= include_template '_panel.rhtml' %>
 
     <main id="content">
-        <hgroup class="content__title">
-          <h1><span class="kind">File</span> <%= full_name file %></h1>
-        </hgroup>
+        <div class="content__title">
+          <%= "<h1>" if file.comment.empty? %>
+            <%= full_name file %>
+          <%= "</h1>" if file.comment.empty? %>
+        </div>
 
         <% if source_url = github_url(file.relative_name) %>
-          <p><%= link_to_external "View on GitHub", source_url %></p>
+          <p class="content__source-link"><%= link_to_external "View on GitHub", source_url %></p>
         <% end %>
 
         <%= include_template '_context.rhtml', {:context => file} %>

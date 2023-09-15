@@ -534,6 +534,10 @@ html {
   white-space: pre-wrap;
 }
 
+.method__name {
+  font-weight: bold;
+}
+
 .method__permalink {
   margin: 0 0 0 0.5em;
 }

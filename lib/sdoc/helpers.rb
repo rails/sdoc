@@ -148,7 +148,7 @@ module SDoc::Helpers
         line.split(" -> ").map { |side| "<code>#{h side}</code>" }.join(" &rarr; ")
       end.join("\n")
     else
-      "<code>#{h rdoc_method.name}#{h rdoc_method.params}</code>"
+      %Q(<code><span class="method__name">#{h rdoc_method.name}</span>#{h rdoc_method.params}</code>)
     end
   end
 

@@ -593,7 +593,8 @@ describe SDoc::Helpers do
         module Foo; def bar(qux); end; end
       RUBY
 
-      _(@helpers.method_signature(method)).must_equal "<code>bar(qux)</code>"
+      _(@helpers.method_signature(method)).
+        must_equal %(<code><span class="method__name">bar</span>(qux)</code>)
     end
 
     it "escapes the method signature" do
@@ -601,7 +602,8 @@ describe SDoc::Helpers do
         module Foo; def bar(op = :<, &block); end; end
       RUBY
 
-      _(@helpers.method_signature(method)).must_equal "<code>bar(op = :&lt;, &amp;block)</code>"
+      _(@helpers.method_signature(method)).
+        must_equal %(<code><span class="method__name">bar</span>(op = :&lt;, &amp;block)</code>)
     end
 
     it "handles :call-seq: documentation" do

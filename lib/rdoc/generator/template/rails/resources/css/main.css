@@ -26,11 +26,11 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: #ddd;
+    --text-color: #dddddd;
     --link-color: #ee3f3f;
 
-    --body-bg: #222222;
-    --code-bg: #000000;
+    --body-bg: #0c0c0c;
+    --code-bg: #1b1b1b;
     --source-code-bg: #000000;
   }
 }

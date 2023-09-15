@@ -4,17 +4,17 @@
     <meta charset="<%= @options.charset %>">
     <title><%= page_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= include_template '_head.rhtml', {:context => index, tree_keys: []} %>
+    <%= render "_head.rhtml", {tree_keys: []} %>
 </head>
 
 <body>
     <a class="sr-only sr-only-focusable" href="#context" data-turbo="false">Skip to Content</a>
     <a class="sr-only sr-only-focusable" href="#search" data-turbo="false">Skip to Search</a>
 
-    <%= include_template '_panel.rhtml' %>
+    <%= render "_panel.rhtml" %>
 
     <main id="content">
-        <%= include_template '_context.rhtml', {:context => index } %>
+        <%= render "_context.rhtml" %>
     </main>
   </body>
 </html>

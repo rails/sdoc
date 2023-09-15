@@ -1,4 +1,3 @@
-require 'erb'
 require 'pathname'
 require 'fileutils'
 require 'json'
@@ -6,10 +5,10 @@ require 'json'
 require "rdoc"
 require_relative "rdoc_monkey_patches"
 
-require 'sdoc/templatable'
-require 'sdoc/helpers'
-require 'sdoc/search_index'
-require 'sdoc/version'
+require "sdoc/postprocessor"
+require "sdoc/renderer"
+require "sdoc/search_index"
+require "sdoc/version"
 
 class RDoc::ClassModule
   def with_documentation?
@@ -27,18 +26,12 @@ class RDoc::Generator::SDoc
 
   DESCRIPTION = 'Searchable HTML documentation'
 
-  include ERB::Util
-  include SDoc::Templatable
-  include SDoc::Helpers
-
   TREE_FILE = File.join 'panel', 'tree.js'
 
   FILE_DIR = 'files'
   CLASS_DIR = 'classes'
 
   RESOURCES_DIR = File.join('resources', '.')
-
-  attr_reader :base_dir
 
   attr_reader :options
 
@@ -81,17 +74,15 @@ class RDoc::Generator::SDoc
     @options.pipe = true
 
     @original_dir = Pathname.pwd
-    @template_dir = Pathname.new(options.template_dir)
-    @base_dir = options.root
+    @template_dir = Pathname(options.template_dir)
+    @output_dir = Pathname(@options.op_dir).expand_path(options.root)
   end
 
   def generate
-    @outputdir = Pathname.new(@options.op_dir).expand_path(@base_dir)
-    FileUtils.mkdir_p @outputdir
     @files = @store.all_files.sort
     @classes = @store.all_classes_and_modules.sort
 
-    # Now actually write the output
+    FileUtils.mkdir_p(@output_dir)
     copy_resources
     generate_search_index
     generate_file_links
@@ -131,50 +122,45 @@ class RDoc::Generator::SDoc
     $stderr.puts( *msg )
   end
 
+  def render_file(template_path, output_path, context = nil)
+    return if @options.dry_run
+
+    result = SDoc::Renderer.new(context, @options).render(template_path)
+    result = SDoc::Postprocessor.process(result)
+
+    output_path = @output_dir.join(output_path)
+    output_path.dirname.mkpath
+    output_path.write(result)
+  end
+
   ### Create index.html with frameset
   def generate_index_file
-    debug_msg "Generating index file in #{@outputdir}"
-    templatefile = @template_dir + 'index.rhtml'
-    outfile      = @outputdir + 'index.html'
-
-    render_template(templatefile, binding, outfile)
+    debug_msg "Generating index file in #{@output_dir}"
+    render_file("index.rhtml", "index.html", index)
   end
 
   ### Generate a documentation file for each class
   def generate_class_files
-    debug_msg "Generating class documentation in #{@outputdir}"
-    templatefile = @template_dir + 'class.rhtml'
-
+    debug_msg "Generating class documentation in #{@output_dir}"
     @classes.each do |klass|
-      debug_msg "  working on %s (%s)" % [ klass.full_name, klass.path ]
-      outfile     = @outputdir + klass.path
-
-      debug_msg "  rendering #{outfile}"
-      render_template(templatefile, binding, outfile)
+      debug_msg "  rendering #{klass.path}"
+      render_file("class.rhtml", klass.path, klass)
     end
   end
 
   ### Generate a documentation file for each file
   def generate_file_files
-    debug_msg "Generating file documentation in #{@outputdir}"
-    templatefile = @template_dir + 'file.rhtml'
-
+    debug_msg "Generating file documentation in #{@output_dir}"
     @files.each do |file|
-      outfile     = @outputdir + file.path
-      debug_msg "  working on %s (%s)" % [ file.full_name, outfile ]
-
-      debug_msg "  rendering #{outfile}"
-      render_template(templatefile, binding, outfile)
+      debug_msg "  rendering #{file.path}"
+      render_file("file.rhtml", file.path, file)
     end
   end
 
   ### Generate file with links for the search engine
   def generate_file_links
-    debug_msg "Generating search engine index in #{@outputdir}"
-    templatefile = @template_dir + 'file_links.rhtml'
-    outfile      = @outputdir + 'panel/file_links.html'
-
-    render_template(templatefile, binding, outfile)
+    debug_msg "Generating search engine index in #{@output_dir}"
+    render_file("file_links.rhtml", "panel/file_links.html", @files)
   end
 
   ### Create class tree structure and write it as json
@@ -182,7 +168,7 @@ class RDoc::Generator::SDoc
     debug_msg "Generating class tree"
     topclasses = @classes.select {|klass| !(RDoc::ClassModule === klass.parent) }
     tree = generate_file_tree + generate_class_tree_level(topclasses)
-    file = @outputdir + TREE_FILE
+    file = @output_dir + TREE_FILE
     debug_msg "  writing class tree to %s" % file
     File.open(file, "w", 0644) do |f|
       f.write('var tree = '); f.write(tree.to_json(:max_nesting => 0))
@@ -212,7 +198,7 @@ class RDoc::Generator::SDoc
     unless @options.dry_run
       index = SDoc::SearchIndex.generate(@store.all_classes_and_modules)
 
-      @outputdir.join("js/search-index.js").open("w") do |file|
+      @output_dir.join("js/search-index.js").open("w") do |file|
         file.write("export default ")
         JSON.dump(index, file)
         file.write(";")
@@ -223,8 +209,8 @@ class RDoc::Generator::SDoc
   ### Copy all the resource files to output dir
   def copy_resources
     resources_path = @template_dir + RESOURCES_DIR
-    debug_msg "Copying #{resources_path}/** to #{@outputdir}/**"
-    FileUtils.cp_r resources_path.to_s, @outputdir.to_s unless @options.dry_run
+    debug_msg "Copying #{resources_path}/** to #{@output_dir}/**"
+    FileUtils.cp_r resources_path.to_s, @output_dir.to_s unless @options.dry_run
   end
 
   class FilesTree

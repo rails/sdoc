@@ -4,17 +4,17 @@
     <meta charset="<%= @options.charset %>">
     <title><%= page_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= render "_head.rhtml", {tree_keys: []} %>
+    <% inline "_head.rhtml", {tree_keys: []} %>
 </head>
 
 <body>
     <a class="sr-only sr-only-focusable" href="#context" data-turbo="false">Skip to Content</a>
     <a class="sr-only sr-only-focusable" href="#search" data-turbo="false">Skip to Search</a>
 
-    <%= render "_panel.rhtml" %>
+    <% inline "_panel.rhtml" %>
 
     <main id="content">
-        <%= render "_context.rhtml" %>
+        <% inline "_context.rhtml" %>
     </main>
   </body>
 </html>

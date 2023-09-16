@@ -4,7 +4,7 @@
     <meta charset="<%= @options.charset %>">
     <title><%= page_title @context.full_name %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= render "_head.rhtml", { :tree_keys => @context.full_name.split('::') } %>
+    <% inline "_head.rhtml", { :tree_keys => @context.full_name.split('::') } %>
 
     <meta property="og:title" value="<%= og_title @context.full_name %>">
 </head>
@@ -13,14 +13,14 @@
     <a class="sr-only sr-only-focusable" href="#context" data-turbo="false">Skip to Content</a>
     <a class="sr-only sr-only-focusable" href="#search" data-turbo="false">Skip to Search</a>
 
-    <%= render "_panel.rhtml" %>
+    <% inline "_panel.rhtml" %>
 
     <main id="content">
         <hgroup class="content__title">
           <h1><span class="kind"><%= @context.type %></span> <%= module_breadcrumbs @context %></h1>
         </hgroup>
 
-        <%= render "_context.rhtml" %>
+        <% inline "_context.rhtml" %>
 
         <div class="content__divider">Definition files</div>
         <%= more_less_ul @context.in_files.map { |file| link_to file }, 5..9 %>

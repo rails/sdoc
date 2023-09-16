@@ -4,7 +4,7 @@
     <meta charset="<%= @options.charset %>">
     <title><%= page_title @context.name %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <% inline "_head.rhtml", { :tree_keys => [] } %>
+    <% inline "_head.rhtml" %>
 
     <meta property="og:title" value="<%= og_title @context.name %>">
 </head>
@@ -13,9 +13,9 @@
     <a class="sr-only sr-only-focusable" href="#context" data-turbo="false">Skip to Content</a>
     <a class="sr-only sr-only-focusable" href="#search" data-turbo="false">Skip to Search</a>
 
-    <% inline "_panel.rhtml" %>
+    <% inline("_panel.rhtml") { inline("_file_nav.rhtml") } %>
 
-    <main id="content">
+    <main id="content" class="content">
         <div class="content__title">
           <%= "<h1>" if @context.comment.empty? %>
             <%= full_name @context %>

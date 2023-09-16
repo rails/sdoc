@@ -1,0 +1,10 @@
+<div class="nav__outline">
+  <%= outline(@context) %>
+</div>
+
+<div class="nav__heading">Modules</div>
+<ul class="nav__list">
+  <% top_modules(@context.store).each do |rdoc_module| %>
+    <li><%= link_to rdoc_module %></li>
+  <% end %>
+</ul>

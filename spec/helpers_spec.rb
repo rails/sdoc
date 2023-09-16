@@ -191,6 +191,30 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#button_to_search" do
+    it "renders a button with the given query" do
+      _(@helpers.button_to_search("Foo#<<")).must_equal <<~HTML.chomp
+        <button class="query-button" data-query="Foo#&lt;&lt; ">Search <code>Foo#&lt;&lt;</code></button>
+      HTML
+    end
+
+    it "uses RDoc::CodeObject#full_name for the query when given an RDoc::CodeObject" do
+      rdoc_method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("<<", false)
+        module Foo; def <<(*); end; end
+      RUBY
+
+      _(@helpers.button_to_search(rdoc_method)).must_equal <<~HTML.chomp
+        <button class="query-button" data-query="Foo#&lt;&lt; ">Search <code>Foo#&lt;&lt;</code></button>
+      HTML
+    end
+
+    it "supports overriding the displayed name" do
+      _(@helpers.button_to_search("Foo::Bar", display_name: "<i>Bar<i>")).must_equal <<~HTML.chomp
+        <button class="query-button" data-query="Foo::Bar ">Search <i>Bar<i></button>
+      HTML
+    end
+  end
+
   describe "#full_name" do
     it "wraps name in <code>" do
       _(@helpers.full_name("Foo")).must_equal "<code>Foo</code>"
@@ -470,27 +494,96 @@ describe SDoc::Helpers do
     end
   end
 
-  describe "#group_by_first_letter" do
-    it "groups RDoc objects by the first letter of their #name" do
-      context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
-        module Foo
-          def bar; end
-          def _bar; end
-          def baa; end
+  describe "#outline" do
+    def expected(html, context:)
+      html.gsub(/\s/, "").gsub(/<li>([^<]+)/, '<li><a href="#' + context.aref + '-label-\1">\1</a>')
+    end
 
-          def qux; end
-          def _qux; end
-          def Qux; end
-        end
+    it "renders a nested list of heading links" do
+      context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        # == L2-1
+        # == L2-2
+        # === L3-1
+        # ==== L4-1
+        # ===== L5-1
+        # ====== L6-1
+        # == L2-3
+        module Foo; end
       RUBY
 
-      expected = {
-        "#" => [context.find_method("_bar", false), context.find_method("_qux", false)],
-        "B" => [context.find_method("baa", false), context.find_method("bar", false)],
-        "Q" => [context.find_method("Qux", false), context.find_method("qux", false)],
-      }
+      _(@helpers.outline(context)).must_equal expected(<<~HTML, context: context)
+        <ul>
+          <li>L2-1</li>
+          <li>L2-2 <ul>
+            <li>L3-1 <ul>
+              <li>L4-1 <ul>
+                <li>L5-1 <ul>
+                  <li>L6-1</li>
+                </ul></li>
+              </ul></li>
+            </ul></li>
+          </ul></li>
+          <li>L2-3</li>
+        </ul>
+      HTML
+    end
 
-      _(@helpers.group_by_first_letter(context.method_list)).must_equal expected
+    it "handles skipped heading levels" do
+      context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        # === L3-1
+        # ===== L5-1
+        # == L2-1
+        # ==== L4-1
+        module Foo; end
+      RUBY
+
+      _(@helpers.outline(context)).must_equal expected(<<~HTML, context: context)
+        <ul>
+          <li>L3-1 <ul>
+            <li>L5-1</li>
+          </ul></li>
+          <li>L2-1 <ul>
+            <li>L4-1</li>
+          </ul></li>
+        </ul>
+      HTML
+    end
+
+    it "omits the h1 heading when it is primary" do
+      context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        # = L1-1
+        # == L2-1
+        # === L3-1
+        # == L2-2
+        module Foo; end
+      RUBY
+
+      _(@helpers.outline(context)).must_equal expected(<<~HTML, context: context)
+        <ul>
+          <li>L2-1 <ul>
+            <li>L3-1</li>
+          </ul></li>
+          <li>L2-2</li>
+        </ul>
+      HTML
+    end
+
+    it "preserves all h1 headings when any are non-primary" do
+      context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        # = L1-1
+        # == L2-1
+        # = L1-2
+        module Foo; end
+      RUBY
+
+      _(@helpers.outline(context)).must_equal expected(<<~HTML, context: context)
+        <ul>
+          <li>L1-1 <ul>
+            <li>L2-1</li>
+          </ul></li>
+          <li>L1-2</li>
+        </ul>
+      HTML
     end
   end
 
@@ -524,6 +617,28 @@ describe SDoc::Helpers do
 
     it "does not escape items" do
       _(@helpers.more_less_ul(["<a>link</a>"], 1)).must_include "<a>link</a>"
+    end
+  end
+
+  describe "#top_modules" do
+    it "returns top-level classes and modules in sorted order" do
+      top_level = rdoc_top_level_for <<~RUBY
+        class Foo; module Hoge; end; end
+        module Bar; class Fuga; end; end
+      RUBY
+
+      _(@helpers.top_modules(top_level.store)).
+        must_equal [top_level.find_module_named("Bar"), top_level.find_module_named("Foo")]
+    end
+
+    it "handles flattened class and module declarations" do
+      top_level = rdoc_top_level_for <<~RUBY
+        class Foo::Hoge; end
+        module Bar::Fuga; end
+      RUBY
+
+      _(@helpers.top_modules(top_level.store)).
+        must_equal [top_level.find_module_named("Bar"), top_level.find_module_named("Foo")]
     end
   end
 
@@ -596,6 +711,28 @@ describe SDoc::Helpers do
       RUBY
 
       _(@helpers.module_ancestors(top_level.find_module_named("Foo"))).must_equal [["module", "M1"]]
+    end
+  end
+
+  describe "#module_methods" do
+    it "returns all methods of a given module, sorted by definition scope and name" do
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        module Foo
+          def foo; end
+          class << self
+            private def foo; end
+          end
+          private def bar; end
+          def self.bar; end
+        end
+      RUBY
+
+      _(@helpers.module_methods(rdoc_module)).must_equal [
+        rdoc_module.find_method("bar", true),
+        rdoc_module.find_method("foo", true),
+        rdoc_module.find_method("bar", false),
+        rdoc_module.find_method("foo", false),
+      ]
     end
   end
 

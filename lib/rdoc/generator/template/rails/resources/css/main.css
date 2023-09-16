@@ -67,6 +67,27 @@ a code {
   background-size: 1.1em;
 }
 
+.query-button {
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  font-size: 1em;
+
+  background: url('../i/filter.svg') no-repeat;
+  background-position-y: 1px;
+  background-size: 1.1em;
+  padding: 0 0 0 1.3em;
+  color: var(--link-color);
+
+  word-break: break-word;
+}
+
+@media (hover: hover) {
+  .query-button:hover {
+    color: var(--link-hover-color);
+  }
+}
+
 .kind {
   font-family: monospace;
 }
@@ -87,30 +108,6 @@ td, th
 th
 {
     font-weight: bold;
-}
-
-.methods dt
-{
-    width: 1em;
-    font-size: 1.5em;
-    color:#AAA;
-    position: absolute;
-}
-
-.methods dd
-{
-    margin-top: var(--space);
-    min-height: 1.8em;
-    -height: 1.8em;
-}
-
-
-.methods ul li
-{
-    margin-right: 0.7em;
-    margin-left: 0;
-    list-style: none;
-    display: inline;
 }
 
 .attr-rw {
@@ -289,7 +286,7 @@ html {
   box-shadow: 1px 1px 4px color-mix(in srgb, currentColor 50%, transparent) inset;
 }
 
-.panel__results, .panel__tree {
+.panel__results, .panel__nav {
   position: relative;
   height: calc(100dvh - var(--banner-height) - var(--search-height));
   width: var(--panel-width);
@@ -300,7 +297,7 @@ html {
 }
 
 /* Force scrolling in order to always contain scroll events (on mobile) */
-:is(.panel__results, .panel__tree)::after {
+:is(.panel__results, .panel__nav)::after {
   content: "";
   height: 1px;
   width: 1px;
@@ -311,17 +308,13 @@ html {
 
 .panel__results:not(.active),
 .panel__search:placeholder-shown ~ .panel__results,
-.panel__search:not(:placeholder-shown) ~ .panel__results.active ~ .panel__tree {
+.panel__search:not(:placeholder-shown) ~ .panel__results.active ~ .panel__nav {
   /* `display: none` disables animations, so simulate it instead */
   max-height: 0;
   max-width: 0;
   padding: 0;
 
   opacity: 0;
-}
-
-.panel__tree {
-  overflow-x: hidden;
 }
 
 
@@ -389,6 +382,69 @@ html {
 
 
 /*
+ * Navigation panel - Page nav
+ */
+
+.panel__nav {
+  padding: var(--space);
+  font-size: 0.95em;
+  line-height: calc(0.85 * var(--line-height));
+}
+
+
+* + .nav__outline {
+  margin-top: var(--space-lg);
+}
+
+.nav__outline ul {
+  margin-top: var(--space-sm);
+  padding-left: 1em;
+}
+
+.nav__outline ul ul ul {
+  display: none; /* Only show two levels deep */
+}
+
+.nav__outline li {
+  word-break: break-word;
+}
+
+.nav__outline a {
+  text-decoration: underline;
+}
+
+
+.nav__heading {
+  margin-top: var(--space-lg);
+  font-size: 1.3em;
+}
+
+.nav__heading + .nav__list {
+  margin-top: var(--space-sm);
+}
+
+
+.nav__list {
+  padding: 0;
+  list-style: none;
+}
+
+.nav__list li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.nav__method-link code::before {
+  content: "#";
+}
+
+.nav__method-link--singleton code::before {
+  content: "::";
+}
+
+
+/*
  * Navigation panel on desktop
  */
 
@@ -411,7 +467,7 @@ html {
     width: 60ch;
   }
 
-  :is(.panel__results, .panel__tree)::after {
+  :is(.panel__results, .panel__nav)::after {
     display: none;
   }
 }
@@ -434,29 +490,29 @@ html {
   }
 }
 
-:where(#content) *,
-:where(#content) :is(br, wbr) {
+:where(.content) *,
+:where(.content) :is(br, wbr) {
   margin: 0;
 }
 
-:where(#content) * + * {
+:where(.content) * + * {
   margin-top: var(--space);
 }
 
-:where(#content) :is(ol, ul, dd) {
+:where(.content) :is(ol, ul, dd) {
   padding: 0 0 0 1.25em;
 }
 
-:where(#content) * + :is(li, dd) {
+:where(.content) * + :is(li, dd) {
   margin-top: var(--space-sm);
 }
 
 /* Increase top margin for list items when any item has more than one paragraph */
-:where(#content :is(ol, ul):has(> li > p:not(:only-child))) * + li {
+:where(.content :is(ol, ul):has(> li > p:not(:only-child))) * + li {
   margin-top: var(--space);
 }
 
-:where(#content) code {
+:where(.content) code {
   font-style: normal;
 }
 

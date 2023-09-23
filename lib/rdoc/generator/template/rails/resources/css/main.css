@@ -69,7 +69,6 @@ a code {
 
 .kind {
   font-family: monospace;
-  font-weight: bold;
 }
 
 .kind::after {

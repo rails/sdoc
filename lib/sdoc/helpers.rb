@@ -143,12 +143,12 @@ module SDoc::Helpers
 
   def method_signature(rdoc_method)
     if rdoc_method.call_seq
-      rdoc_method.call_seq.split(/\n+/).map do |line|
-        # Support specifying a call-seq like `to_s -> string`
-        line.split(" -> ").map { |side| "<code>#{h side}</code>" }.join(" &rarr; ")
-      end.join("\n")
+      # Support specifying a call-seq like `to_s -> string`
+      rdoc_method.call_seq.gsub(/^\s*([^(\s]+)(.*?)(?: -> (.+))?$/) do
+        "<code><b>#{h $1}</b>#{h $2}</code>#{" &rarr; <code>#{h $3}</code>" if $3}"
+      end
     else
-      "<code>#{h rdoc_method.name}#{h rdoc_method.params}</code>"
+      "<code><b>#{h rdoc_method.name}</b>#{h rdoc_method.params}</code>"
     end
   end
 

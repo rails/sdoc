@@ -547,6 +547,19 @@ describe SDoc::Helpers do
       _(@helpers.module_breadcrumbs(qux)).
         must_equal "<code>#{@helpers.link_to "Foo", foo}::<wbr>#{@helpers.link_to "Bar", bar}::<wbr>Qux</code>"
     end
+
+    it "handles flattened class declarations" do
+      top_level = rdoc_top_level_for <<~RUBY
+        class Foo::Bar::Qux; end
+      RUBY
+
+      foo = top_level.find_module_named("Foo")
+      bar = top_level.find_module_named("Foo::Bar")
+      qux = top_level.find_module_named("Foo::Bar::Qux")
+
+      _(@helpers.module_breadcrumbs(qux)).
+        must_equal "<code>#{@helpers.link_to "Foo", foo}::<wbr>#{@helpers.link_to "Bar", bar}::<wbr>Qux</code>"
+    end
   end
 
   describe "#module_ancestors" do

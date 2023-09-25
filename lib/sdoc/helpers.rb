@@ -120,14 +120,14 @@ module SDoc::Helpers
   end
 
   def module_breadcrumbs(rdoc_module)
-    crumbs = [h(rdoc_module.name)]
+    parent_names = rdoc_module.full_name.split("::")[0...-1]
 
-    rdoc_module.each_parent do |parent|
-      break if parent.is_a?(RDoc::TopLevel)
-      crumbs.unshift(link_to(h(parent.name), parent))
+    crumbs = parent_names.each_with_index.map do |name, i|
+      parent = rdoc_module.store.find_module_named(parent_names[0..i].join("::"))
+      parent ? link_to(h(name), parent) : h(name)
     end
 
-    "<code>#{crumbs.join("::<wbr>")}</code>"
+    "<code>#{[*crumbs, h(rdoc_module.name)].join("::<wbr>")}</code>"
   end
 
   def module_ancestors(rdoc_module)

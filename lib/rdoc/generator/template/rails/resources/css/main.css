@@ -26,11 +26,11 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: #ddd;
+    --text-color: #dddddd;
     --link-color: #ee3f3f;
 
-    --body-bg: #222222;
-    --code-bg: #000000;
+    --body-bg: #0c0c0c;
+    --code-bg: #1b1b1b;
     --source-code-bg: #000000;
   }
 }
@@ -69,7 +69,6 @@ a code {
 
 .kind {
   font-family: monospace;
-  font-weight: bold;
 }
 
 .kind::after {
@@ -520,7 +519,6 @@ html {
 }
 
 .method__signature {
-  font-size: 1.1em;
   padding-bottom: var(--space-sm);
   border-bottom: 2px solid var(--code-bg);
 
@@ -529,7 +527,7 @@ html {
 }
 
 .method__signature h3 {
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: normal;
   white-space: pre-wrap;
 }

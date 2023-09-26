@@ -593,7 +593,7 @@ describe SDoc::Helpers do
         module Foo; def bar(qux); end; end
       RUBY
 
-      _(@helpers.method_signature(method)).must_equal "<code>bar(qux)</code>"
+      _(@helpers.method_signature(method)).must_equal "<code><b>bar</b>(qux)</code>"
     end
 
     it "escapes the method signature" do
@@ -601,7 +601,7 @@ describe SDoc::Helpers do
         module Foo; def bar(op = :<, &block); end; end
       RUBY
 
-      _(@helpers.method_signature(method)).must_equal "<code>bar(op = :&lt;, &amp;block)</code>"
+      _(@helpers.method_signature(method)).must_equal "<code><b>bar</b>(op = :&lt;, &amp;block)</code>"
     end
 
     it "handles :call-seq: documentation" do
@@ -620,13 +620,13 @@ describe SDoc::Helpers do
       RUBY
 
       _(@helpers.method_signature(mod.find_method("bar", false))).must_equal <<~HTML.chomp
-        <code>bar(op = :&lt;)</code>
-        <code>bar(&amp;block)</code>
+        <code><b>bar</b>(op = :&lt;)</code>
+        <code><b>bar</b>(&amp;block)</code>
       HTML
 
       _(@helpers.method_signature(mod.find_method("qux", false))).must_equal <<~HTML.chomp
-        <code>qux(&amp;block)</code> &rarr; <code>self</code>
-        <code>qux</code> &rarr; <code>Enumerator</code>
+        <code><b>qux</b>(&amp;block)</code> &rarr; <code>self</code>
+        <code><b>qux</b></code> &rarr; <code>Enumerator</code>
       HTML
     end
   end

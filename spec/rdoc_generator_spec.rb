@@ -55,6 +55,16 @@ describe RDoc::Generator::SDoc do
     end
   end
 
+  describe "options.core_ext_pattern" do
+    it "is /core_ext/ by default" do
+      _(parse_options().core_ext_pattern).must_equal %r"core_ext"
+    end
+
+    it "can be set via --core-ext" do
+      _(parse_options("--core-ext", "foo.*bar").core_ext_pattern).must_equal %r"foo.*bar"
+    end
+  end
+
   describe "options.github" do
     it "is disabled by default" do
       _(parse_options().github).must_be_nil

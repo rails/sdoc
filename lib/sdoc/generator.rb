@@ -11,6 +11,12 @@ require "sdoc/search_index"
 require "sdoc/version"
 
 class RDoc::Options
+  attr_writer :core_ext_pattern
+
+  def core_ext_pattern
+    @core_ext_pattern ||= /core_ext/
+  end
+
   attr_accessor :github
   attr_accessor :search_index
 end
@@ -37,6 +43,12 @@ class RDoc::Generator::SDoc
 
     opt.separator nil
     opt.separator "SDoc generator options:"
+
+    opt.separator nil
+    opt.on("--core-ext=PATTERN", Regexp, "Regexp pattern indicating files that define core extensions. " \
+      "Defaults to 'core_ext'.") do |pattern|
+      options.core_ext_pattern = pattern
+    end
 
     opt.separator nil
     opt.on("--github", "-g",

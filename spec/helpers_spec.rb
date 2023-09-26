@@ -640,6 +640,32 @@ describe SDoc::Helpers do
       _(@helpers.top_modules(top_level.store)).
         must_equal [top_level.find_module_named("Bar"), top_level.find_module_named("Foo")]
     end
+
+    it "excludes core extensions (based on options.core_ext_pattern)" do
+      top_level = rdoc_top_level_for <<~RUBY
+        module Foo; end
+      RUBY
+
+      @helpers.options.core_ext_pattern = /#{Regexp.escape top_level.name}/
+
+      _(@helpers.top_modules(top_level.store)).must_be_empty
+    end
+  end
+
+  describe "#core_extensions" do
+    it "returns top-level core extensions in sorted order (based on options.core_ext_pattern)" do
+      top_level = rdoc_top_level_for <<~RUBY
+        class Foo; module Hoge; end; end
+        module Bar; class Fuga; end; end
+      RUBY
+
+      _(@helpers.core_extensions(top_level.store)).must_be_empty
+
+      @helpers.options.core_ext_pattern = /#{Regexp.escape top_level.name}/
+
+      _(@helpers.core_extensions(top_level.store)).
+        must_equal [top_level.find_module_named("Bar"), top_level.find_module_named("Foo")]
+    end
   end
 
   describe "#module_breadcrumbs" do

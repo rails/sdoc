@@ -148,9 +148,28 @@ module SDoc::Helpers
   end
 
   def top_modules(rdoc_store)
+    _top_modules(rdoc_store).reject { |rdoc_module| _core_ext?(rdoc_module) }
+  end
+
+  def core_extensions(rdoc_store)
+    _top_modules(rdoc_store).select { |rdoc_module| _core_ext?(rdoc_module) }
+  end
+
+  def _top_modules(rdoc_store)
     rdoc_store.all_classes_and_modules.select do |rdoc_module|
       !rdoc_module.full_name.include?("::")
     end.sort
+  end
+
+  def _core_ext?(rdoc_module)
+    # HACK There is currently a bug in RDoc v6.5.0 that causes the value of
+    # RDoc::ClassModule#in_files for `Object` to become polluted. The cause is
+    # unclear, but it might be related to setting global constants (for example,
+    # setting `APP_PATH = "..."` outside of a class or module). To work around
+    # this bug, we always treat `Object` as a core extension.
+    rdoc_module.full_name == "Object" ||
+
+    rdoc_module.in_files.all? { |rdoc_file| @options.core_ext_pattern.match?(rdoc_file.full_name) }
   end
 
   def module_breadcrumbs(rdoc_module)

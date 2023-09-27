@@ -47,4 +47,32 @@ describe "RDoc monkey patches" do
       _(description).must_match %r"and <a href=.+?>qux \(also\) cannot</a>"
     end
   end
+
+  describe RDoc::Parser::Ruby do
+    it "does not pollute RDoc::ClassModule#in_files when parsing constants" do
+      Dir.mktmpdir do |dir|
+        Dir.chdir(dir) do
+          File.write("float_ext.rb", <<~RUBY)
+            class Float
+              def ext; end
+            end
+          RUBY
+
+          File.write("foo.rb", <<~RUBY)
+            class Foo
+              def foo; Float::INFINITY; end
+            end
+          RUBY
+
+          rdoc_store = rdoc_dry_run("--files", "float_ext.rb", "foo.rb").store
+
+          _(rdoc_store.find_class_or_module("Float").in_files).
+            must_equal [rdoc_store.find_file_named("float_ext.rb")]
+
+          _(rdoc_store.find_file_named("foo.rb").classes_and_modules).
+            must_equal [rdoc_store.find_class_or_module("Foo")]
+        end
+      end
+    end
+  end
 end

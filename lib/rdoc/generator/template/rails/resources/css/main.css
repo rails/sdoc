@@ -646,18 +646,19 @@ html {
   font-style: italic;
 }
 
-.description :is(code, pre) {
+.description pre {
   background: var(--code-bg);
+}
+
+:is(.description p, p.description) code {
+  background: var(--code-bg);
+  padding: 0 0.15em;
+  border-radius: 2px;
 }
 
 /* TODO: Remove this hack when Firefox supports `:has()` */
 .description a code {
   text-decoration: underline var(--code-bg);
-}
-
-.description p code {
-  padding: 0 0.15em;
-  border-radius: 2px;
 }
 
 @media (hover: hover) {

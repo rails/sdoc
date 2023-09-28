@@ -117,12 +117,12 @@ class RDoc::Generator::SDoc
 
   protected
   ### Output progress information if debugging is enabled
-  def debug_msg( *msg )
-    return unless $DEBUG_RDOC
-    $stderr.puts( *msg )
+  def debug_msg(*msg)
+    $stderr.puts(*msg) if $DEBUG_RDOC
   end
 
   def render_file(template_path, output_path, context = nil)
+    debug_msg "Rendering #{output_path}"
     return if @options.dry_run
 
     result = SDoc::Renderer.new(context, @options).render(template_path)
@@ -133,33 +133,23 @@ class RDoc::Generator::SDoc
     output_path.write(result)
   end
 
-  ### Create index.html with frameset
+  ### Generate index.html
   def generate_index_file
-    debug_msg "Generating index file in #{@output_dir}"
     render_file("index.rhtml", "index.html", index)
   end
 
   ### Generate a documentation file for each class
   def generate_class_files
-    debug_msg "Generating class documentation in #{@output_dir}"
-    @classes.each do |klass|
-      debug_msg "  rendering #{klass.path}"
-      render_file("class.rhtml", klass.path, klass)
-    end
+    @classes.each { |klass| render_file("class.rhtml", klass.path, klass) }
   end
 
   ### Generate a documentation file for each file
   def generate_file_files
-    debug_msg "Generating file documentation in #{@output_dir}"
-    @files.each do |file|
-      debug_msg "  rendering #{file.path}"
-      render_file("file.rhtml", file.path, file)
-    end
+    @files.each { |file| render_file("file.rhtml", file.path, file) }
   end
 
   ### Generate file with links for the search engine
   def generate_file_links
-    debug_msg "Generating search engine index in #{@output_dir}"
     render_file("file_links.rhtml", "panel/file_links.html", @files)
   end
 

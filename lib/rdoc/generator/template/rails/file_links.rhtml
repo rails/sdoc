@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
     <body>
-    <% @files.each do |file| %>
+    <% @context.each do |file| %>
       <a href="../<%= file.path %>"><%= file.relative_name %></a>
     <% end %>
     </body>

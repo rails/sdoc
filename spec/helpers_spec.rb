@@ -3,7 +3,6 @@ require "spec_helper"
 describe SDoc::Helpers do
   before :each do
     @helpers = Class.new do
-      include ERB::Util
       include SDoc::Helpers
 
       attr_accessor :options

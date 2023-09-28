@@ -2,31 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="<%= @options.charset %>">
-    <title><%= page_title file.name %></title>
+    <title><%= page_title @context.name %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= include_template '_head.rhtml', {:context => file, :tree_keys => [] } %>
+    <%= render "_head.rhtml", { :tree_keys => [] } %>
 
-    <meta property="og:title" value="<%= og_title file.name %>">
+    <meta property="og:title" value="<%= og_title @context.name %>">
 </head>
 
 <body>
     <a class="sr-only sr-only-focusable" href="#context" data-turbo="false">Skip to Content</a>
     <a class="sr-only sr-only-focusable" href="#search" data-turbo="false">Skip to Search</a>
 
-    <%= include_template '_panel.rhtml' %>
+    <%= render "_panel.rhtml" %>
 
     <main id="content">
         <div class="content__title">
-          <%= "<h1>" if file.comment.empty? %>
-            <%= full_name file %>
-          <%= "</h1>" if file.comment.empty? %>
+          <%= "<h1>" if @context.comment.empty? %>
+            <%= full_name @context %>
+          <%= "</h1>" if @context.comment.empty? %>
         </div>
 
-        <% if source_url = github_url(file.relative_name) %>
+        <% if source_url = github_url(@context.relative_name) %>
           <p class="content__source-link"><%= link_to_external "View on GitHub", source_url %></p>
         <% end %>
 
-        <%= include_template '_context.rhtml', {:context => file} %>
+        <%= render "_context.rhtml" %>
     </main>
   </body>
 </html>

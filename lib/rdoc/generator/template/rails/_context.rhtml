@@ -1,5 +1,5 @@
 <div id="context">
-  <% unless (description = context.description).empty? %>
+  <% unless (description = @context.description).empty? %>
     <div class="description">
       <%= description %>
     </div>
@@ -7,10 +7,10 @@
 
 
   <%# File only: requires %>
-  <% unless context.requires.empty? %>
+  <% unless @context.requires.empty? %>
     <div class="content__divider">Required Files</div>
     <ul>
-      <% context.requires.each do |req| %>
+      <% @context.requires.each do |req| %>
         <li><%= full_name req.name %></li>
       <% end %>
     </ul>
@@ -18,7 +18,7 @@
 
 
   <%# Module only: ancestors %>
-  <% unless context.is_a?(RDoc::TopLevel) || (ancestors = module_ancestors(context)).empty? %>
+  <% unless @context.is_a?(RDoc::TopLevel) || (ancestors = module_ancestors(@context)).empty? %>
     <div class="content__divider">Inherits From</div>
     <ul>
       <% ancestors.each do |kind, ancestor| %>
@@ -31,7 +31,7 @@
   <% end %>
 
 
-  <% sections = context.sections.select { |s| s.title }.sort_by{ |s| s.title.to_s } %>
+  <% sections = @context.sections.select { |s| s.title }.sort_by{ |s| s.title.to_s } %>
   <% unless sections.empty? then %>
     <!-- Sections -->
     <div class="content__divider">Sections</div>
@@ -42,11 +42,11 @@
     </ul>
   <% end %>
 
-  <% unless context.method_list.empty? %>
+  <% unless @context.method_list.empty? %>
     <!-- Method ref -->
     <div class="content__divider">Methods</div>
     <dl class="methods">
-      <% group_by_first_letter(context.method_list).each do |letter, methods| %>
+      <% group_by_first_letter(@context.method_list).each do |letter, methods| %>
         <dt><%= letter %></dt>
         <dd>
           <ul>
@@ -64,7 +64,7 @@
 
 
 
-  <% context.each_section do |section, constants, attributes| %>
+  <% @context.each_section do |section, constants, attributes| %>
 
     <% if section.title then %>
       <div class="content__section-title" id="<%= h section.aref %>">
@@ -117,7 +117,7 @@
 
     <!-- Methods -->
     <%
-      context.methods_by_type(section).each do |type, visibilities|
+      @context.methods_by_type(section).each do |type, visibilities|
         next if visibilities.empty?
 
         visibilities.each do |visibility, methods|
@@ -174,11 +174,11 @@
     <% end %><%# context.methods_by_type %>
   <% end %><%# context.each_section %>
 
-  <% unless context.classes_and_modules.empty? %>
+  <% unless @context.classes_and_modules.empty? %>
     <!-- Namespace -->
     <div class="content__divider">Namespace</div>
     <ul>
-      <% (context.modules.sort + context.classes.sort).each do |mod| %>
+      <% (@context.modules.sort + @context.classes.sort).each do |mod| %>
         <li>
           <span class="kind"><%= mod.type %></span>
           <%= link_to mod %>

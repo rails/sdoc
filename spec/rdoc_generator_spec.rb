@@ -113,8 +113,7 @@ describe RDoc::Generator::SDoc do
     end
 
     it "raises when the default value is not a file" do
-      sdoc = rdoc_dry_run("--files", @dir, "--exclude=(js|css|svg)$").generator
-      error = _{ sdoc.index }.must_raise
+      error = _{ rdoc_dry_run("--files", @dir, "--exclude=(js|css|svg)$") }.must_raise
       _(error.message).must_include @dir
     end
 
@@ -127,8 +126,7 @@ describe RDoc::Generator::SDoc do
 
     it "raises when the main page is not among the rendered files" do
       Dir.chdir(@dir) do
-        sdoc = rdoc_dry_run("--main", @files.first, "--files", @files.last).generator
-        error = _{ sdoc.index }.must_raise
+        error = _{ rdoc_dry_run("--main", @files.first, "--files", @files.last) }.must_raise
         _(error.message).must_include @files.first
       end
     end

@@ -1,4 +1,4 @@
-<%= base_tag_for_context(context) %>
+<%= base_tag_for_context(@context) %>
 
 <link rel="stylesheet" href="/css/panel.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" />
@@ -11,13 +11,13 @@
 <script src="/js/searchdoc.js" type="text/javascript"></script>
 <meta name="data-tree-keys" content='<%= tree_keys %>'>
 
-<% if canonical = canonical_url(context) %>
+<% if canonical = canonical_url(@context) %>
 <link rel="canonical" href="<%= canonical %>" />
 <meta property="og:url" content="<%= canonical %>">
 <meta property="og:image" content="<%= canonical_url("/i/logo.svg") %>">
 <% end %>
 <meta property="og:type" content="article">
 <meta property="article:modified_time" content="<%= og_modified_time %>">
-<% if description = page_description(context.description) %>
+<% if description = page_description(@context.description) %>
 <meta name="description" property="og:description" content="<%= description %>">
 <% end %>

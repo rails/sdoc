@@ -88,8 +88,6 @@ class RDoc::Generator::SDoc
     FileUtils.mkdir_p(@output_dir)
     copy_resources
     generate_search_index
-    generate_file_links
-
     generate_index_file
     generate_file_files
     generate_class_files
@@ -135,24 +133,16 @@ class RDoc::Generator::SDoc
     output_path.write(result)
   end
 
-  ### Generate index.html
   def generate_index_file
     render_file("index.rhtml", "index.html", index)
   end
 
-  ### Generate a documentation file for each class
   def generate_class_files
     @classes.each { |klass| render_file("class.rhtml", klass.path, klass) }
   end
 
-  ### Generate a documentation file for each file
   def generate_file_files
     @files.each { |file| render_file("file.rhtml", file.path, file) }
-  end
-
-  ### Generate file with links for the search engine
-  def generate_file_links
-    render_file("file_links.rhtml", "panel/file_links.html", @files)
   end
 
   def generate_search_index

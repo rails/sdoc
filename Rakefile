@@ -101,6 +101,7 @@ end
 
 ASSETS_PATH = "lib/rdoc/generator/template/rails/resources"
 
+desc "Download and vendor JavaScript assets"
 task :vendor_javascript do
   module Importmap; end
   require "importmap/packager"

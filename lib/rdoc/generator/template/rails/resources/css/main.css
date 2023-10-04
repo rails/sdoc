@@ -264,20 +264,6 @@ html {
   height: 100dvh;
 }
 
-.panel__search {
-  height: var(--search-height);
-  width: 100%;
-
-  background: url('../i/search.svg') no-repeat;
-  background-position: 0.5em center;
-  padding-left: calc(0.5em + 16px + 0.5em);
-
-  color: inherit;
-
-  border: 0;
-  box-shadow: 1px 1px 4px color-mix(in srgb, currentColor 50%, transparent) inset;
-}
-
 .panel__results, .panel__nav {
   position: relative;
   height: calc(100dvh - var(--banner-height) - var(--search-height));
@@ -307,6 +293,30 @@ html {
   padding: 0;
 
   opacity: 0;
+}
+
+
+/*
+ * Navigation panel - Search input
+ */
+
+.panel__search {
+  height: var(--search-height);
+  width: 100%;
+
+  background: url('../i/search.svg') no-repeat;
+  background-position: 0.5em center;
+  padding-left: calc(0.5em + 16px + 0.5em);
+
+  color: inherit;
+
+  border: 0;
+  box-shadow: 1px 1px 4px color-mix(in srgb, currentColor 50%, transparent) inset;
+}
+
+/* Hide native magnifying glass icon in Webkit-based browsers (in favor of our icon) */
+.panel__search::-webkit-search-results-button {
+  -webkit-appearance: none;
 }
 
 

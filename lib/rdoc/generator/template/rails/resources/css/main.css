@@ -320,6 +320,21 @@ html {
   -webkit-appearance: none;
 }
 
+/* Display "clear search" button consistently across (Webkit-based) browsers */
+.panel__search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+
+  margin-right: 0.5em;
+  height: 1.3em;
+  width: 1.3em;
+  background: url('../i/close.svg') no-repeat;
+  background-size: contain;
+}
+
+.panel__search:not(:focus)::-webkit-search-cancel-button {
+  display: none;
+}
+
 
 /*
  * Navigation panel - Search results

@@ -132,16 +132,6 @@ th
   font-size: 1.15em;
 }
 
-@keyframes spotlight {
-  from { background-color: yellow; }
-  to { background-color: white; }
-}
-
-.spotlight {
-  animation-name: spotlight;
-  animation-duration: 1s;
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -588,6 +578,18 @@ html {
   font-size: 1rem;
   font-weight: normal;
   white-space: pre-wrap;
+
+  position: relative;
+}
+
+:target .method__signature h3::before {
+  content: " ";
+
+  position: absolute;
+  left: calc(-5px - var(--space-sm));
+  border-left: 5px solid var(--link-color);
+  border-radius: 5px;
+  height: 100%;
 }
 
 .method__permalink {

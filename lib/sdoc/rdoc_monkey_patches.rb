@@ -22,3 +22,19 @@ RDoc::Markup::ToHtmlCrossref.prepend(Module.new do
     super
   end
 end)
+
+
+RDoc::Parser::Ruby.prepend(Module.new do
+  def get_class_or_module(container, ignore_constants = false)
+    @ignoring_constants ||= nil
+    original_ignoring_constants, @ignoring_constants = @ignoring_constants, ignore_constants
+    super
+  ensure
+    @ignoring_constants = original_ignoring_constants
+  end
+
+  def record_location(*)
+    @ignoring_constants ||= nil
+    super unless @ignoring_constants
+  end
+end)

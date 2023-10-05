@@ -1,0 +1,17 @@
+<%= button_to_search @context, display_name: short_name(@context) %>
+
+<% if outline = outline(@context) %>
+  <div class="nav__outline">
+    <%= outline %>
+  </div>
+<% end %>
+
+<% unless (methods = module_methods(@context)).empty? %>
+  <div class="nav__heading">Methods</div>
+  <ul class="nav__list">
+    <% methods.each do |rdoc_method| %>
+      <li><%= link_to short_name(rdoc_method), rdoc_method,
+                class: "nav__method-link#{"--singleton" if rdoc_method.singleton}" %></li>
+    <% end %>
+  </ul>
+<% end %>

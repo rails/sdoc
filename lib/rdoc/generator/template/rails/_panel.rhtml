@@ -13,18 +13,16 @@
 
   <input id="panel__state" type="checkbox">
 
-  <div id="panel__tray" class="panel__tray" data-turbo-permanent>
+  <div class="panel__tray">
     <input id="search" class="panel__search" type="text"
       tabindex="-1" autocomplete="off" autosave="searchdoc"
-      placeholder="Search (/) for a class, method, ...">
+      placeholder="Search (/) for a class, method, ..."
+      data-turbo-permanent>
 
-    <div id="results" class="panel__results"></div>
+    <div id="results" class="panel__results" data-turbo-permanent></div>
 
-    <div class="panel__tree">
-      <div class="tree">
-        <ul>
-        </ul>
-      </div>
+    <div class="panel__nav content">
+      <% yield if block_given? %>
     </div>
 
     <a id="links" href="/panel/file_links.html">index</a>

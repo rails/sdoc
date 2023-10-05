@@ -42,26 +42,6 @@
     </ul>
   <% end %>
 
-  <% unless @context.method_list.empty? %>
-    <!-- Method ref -->
-    <div class="content__divider">Methods</div>
-    <dl class="methods">
-      <% group_by_first_letter(@context.method_list).each do |letter, methods| %>
-        <dt><%= letter %></dt>
-        <dd>
-          <ul>
-            <% methods.each_with_index do |method, i| %>
-              <%
-                comma = methods.size == i+1 ? '' : ','
-              %>
-              <li><%= link_to short_name(method), method %><%= comma %></li>
-            <% end %>
-          </ul>
-        </dd>
-      <% end %>
-    </dl>
-  <% end %>
-
 
 
   <% @context.each_section do |section, constants, attributes| %>

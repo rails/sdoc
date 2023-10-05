@@ -10,13 +10,13 @@ require "sdoc/renderer"
 require "sdoc/search_index"
 require "sdoc/version"
 
-class RDoc::ClassModule
-  def with_documentation?
-    document_self_or_methods || classes_and_modules.any?{ |c| c.with_documentation? }
-  end
-end
-
 class RDoc::Options
+  attr_writer :core_ext_pattern
+
+  def core_ext_pattern
+    @core_ext_pattern ||= /core_ext/
+  end
+
   attr_accessor :github
   attr_accessor :search_index
 end
@@ -25,8 +25,6 @@ class RDoc::Generator::SDoc
   RDoc::RDoc.add_generator self
 
   DESCRIPTION = 'Searchable HTML documentation'
-
-  TREE_FILE = File.join 'panel', 'tree.js'
 
   FILE_DIR = 'files'
   CLASS_DIR = 'classes'
@@ -45,6 +43,12 @@ class RDoc::Generator::SDoc
 
     opt.separator nil
     opt.separator "SDoc generator options:"
+
+    opt.separator nil
+    opt.on("--core-ext=PATTERN", Regexp, "Regexp pattern indicating files that define core extensions. " \
+      "Defaults to 'core_ext'.") do |pattern|
+      options.core_ext_pattern = pattern
+    end
 
     opt.separator nil
     opt.on("--github", "-g",
@@ -86,7 +90,6 @@ class RDoc::Generator::SDoc
     copy_resources
     generate_search_index
     generate_file_links
-    generate_class_tree
 
     generate_index_file
     generate_file_files
@@ -153,36 +156,6 @@ class RDoc::Generator::SDoc
     render_file("file_links.rhtml", "panel/file_links.html", @files)
   end
 
-  ### Create class tree structure and write it as json
-  def generate_class_tree
-    debug_msg "Generating class tree"
-    topclasses = @classes.select {|klass| !(RDoc::ClassModule === klass.parent) }
-    tree = generate_file_tree + generate_class_tree_level(topclasses)
-    file = @output_dir + TREE_FILE
-    debug_msg "  writing class tree to %s" % file
-    File.open(file, "w", 0644) do |f|
-      f.write('var tree = '); f.write(tree.to_json(:max_nesting => 0))
-    end unless @options.dry_run
-  end
-
-  ### Recursivly build class tree structure
-  def generate_class_tree_level(classes, visited = {})
-    tree = []
-    classes.select do |klass|
-      !visited[klass] && klass.with_documentation?
-    end.sort.each do |klass|
-      visited[klass] = true
-      item = [
-        klass.name,
-        klass.document_self_or_methods ? klass.path : '',
-        klass.module? ? '' : (klass.superclass ? " < #{String === klass.superclass ? klass.superclass : klass.superclass.full_name}" : ''),
-        generate_class_tree_level(klass.classes_and_modules, visited)
-      ]
-      tree << item
-    end
-    tree
-  end
-
   def generate_search_index
     debug_msg "Generating search index"
     unless @options.dry_run
@@ -201,42 +174,5 @@ class RDoc::Generator::SDoc
     resources_path = @template_dir + RESOURCES_DIR
     debug_msg "Copying #{resources_path}/** to #{@output_dir}/**"
     FileUtils.cp_r resources_path.to_s, @output_dir.to_s unless @options.dry_run
-  end
-
-  class FilesTree
-    attr_reader :children
-    def add(path, url)
-      path = path.split(File::SEPARATOR) unless Array === path
-      @children ||= {}
-      if path.length == 1
-        @children[path.first] = url
-      else
-        @children[path.first] ||= FilesTree.new
-        @children[path.first].add(path[1, path.length], url)
-      end
-    end
-  end
-
-  def generate_file_tree
-    if @files.length > 1
-      @files_tree = FilesTree.new
-      @files.each do |file|
-        @files_tree.add(file.relative_name, file.path)
-      end
-      [['', '', 'files', generate_file_tree_level(@files_tree)]]
-    else
-      []
-    end
-  end
-
-  def generate_file_tree_level(tree)
-    tree.children.keys.sort.map do |name|
-      child = tree.children[name]
-      if String === child
-        [name, child, '', []]
-      else
-        ['', '', name, generate_file_tree_level(child)]
-      end
-    end
   end
 end

@@ -1,0 +1,11 @@
+<% if @context.text? %>
+  <div class="nav__outline">
+    <%= outline(@context) %>
+  </div>
+<% else %>
+  <ul class="nav__list">
+    <% @context.each_classmodule do |rdoc_module| %>
+      <li><%= button_to_search rdoc_module %></li>
+    <% end %>
+  </ul>
+<% end %>

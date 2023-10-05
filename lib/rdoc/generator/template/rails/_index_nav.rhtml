@@ -1,0 +1,21 @@
+<div class="nav__outline">
+  <%= outline(@context) %>
+</div>
+
+<% unless (modules = top_modules(@context.store)).empty? %>
+  <div class="nav__heading">Modules</div>
+  <ul class="nav__list">
+    <% modules.each do |rdoc_module| %>
+      <li><%= link_to rdoc_module %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% unless (extensions = core_extensions(@context.store)).empty? %>
+  <div class="nav__heading">Core Extensions</div>
+  <ul class="nav__list">
+    <% extensions.each do |rdoc_module| %>
+      <li><%= link_to rdoc_module %></li>
+    <% end %>
+  </ul>
+<% end %>

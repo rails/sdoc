@@ -37,6 +37,11 @@ module SDoc::Helpers
     link_to(text, url, html_attributes)
   end
 
+  def button_to_search(query, display_name: full_name(query))
+    query = query.full_name if query.is_a?(RDoc::CodeObject)
+    %(<button class="query-button" data-query="#{h query} ">Search #{display_name}</button>)
+  end
+
   def full_name(named)
     named = named.full_name if named.is_a?(RDoc::CodeObject)
     "<code>#{named.split(%r"(?<=./|.::)").map { |part| h part }.join("<wbr>")}</code>"
@@ -97,10 +102,29 @@ module SDoc::Helpers
     h text
   end
 
-  def group_by_first_letter(rdoc_objects)
-    rdoc_objects.sort_by(&:name).group_by do |object|
-      object.name[/^[a-z]/i]&.upcase || "#"
+  def outline(context)
+    comment = context.respond_to?(:comment_location) ? context.comment_location : context.comment
+    return if comment.empty?
+
+    headings = context.parse(comment).table_of_contents
+    headings.shift if headings.one? { |heading| heading.level == 1 } && headings[0].level == 1
+
+    _outline_list(context, headings)
+  end
+
+  def _outline_list(context, headings, following: 0)
+    items = []
+    while headings[0] && headings[0].level > following
+      items << _outline_list_item(context, headings)
     end
+    "<ul>#{items.join}</ul>" unless items.empty?
+  end
+
+  def _outline_list_item(context, headings)
+    heading = headings.shift
+    link = link_to(heading.plain_html, "##{heading.label(context)}")
+    sublist = _outline_list(context, headings, following: heading.level)
+    "<li>#{link}#{sublist}</li>"
   end
 
   def more_less_ul(items, limit)
@@ -123,6 +147,31 @@ module SDoc::Helpers
     end
   end
 
+  def top_modules(rdoc_store)
+    _top_modules(rdoc_store).reject { |rdoc_module| _core_ext?(rdoc_module) }
+  end
+
+  def core_extensions(rdoc_store)
+    _top_modules(rdoc_store).select { |rdoc_module| _core_ext?(rdoc_module) }
+  end
+
+  def _top_modules(rdoc_store)
+    rdoc_store.all_classes_and_modules.select do |rdoc_module|
+      !rdoc_module.full_name.include?("::")
+    end.sort
+  end
+
+  def _core_ext?(rdoc_module)
+    # HACK There is currently a bug in RDoc v6.5.0 that causes the value of
+    # RDoc::ClassModule#in_files for `Object` to become polluted. The cause is
+    # unclear, but it might be related to setting global constants (for example,
+    # setting `APP_PATH = "..."` outside of a class or module). To work around
+    # this bug, we always treat `Object` as a core extension.
+    rdoc_module.full_name == "Object" ||
+
+    rdoc_module.in_files.all? { |rdoc_file| @options.core_ext_pattern.match?(rdoc_file.full_name) }
+  end
+
   def module_breadcrumbs(rdoc_module)
     parent_names = rdoc_module.full_name.split("::")[0...-1]
 
@@ -143,6 +192,12 @@ module SDoc::Helpers
     end
 
     ancestors
+  end
+
+  def module_methods(rdoc_module)
+    rdoc_module.each_method.sort_by do |rdoc_method|
+      [rdoc_method.singleton ? 0 : 1, rdoc_method.name]
+    end
   end
 
   def method_signature(rdoc_method)

@@ -51,5 +51,56 @@ describe SDoc::Renderer do
       _(SDoc::Renderer.new(nil, @rdoc_options).render("foo.erb")).
         must_equal "foo &amp; bar"
     end
+
+    it "is reentrant" do
+      create_template "foo.erb", %(1 + 1 = <%= render "two.erb" %>)
+      create_template "two.erb", %(<%= 1 + 1 %>)
+
+      _(SDoc::Renderer.new(nil, @rdoc_options).render("foo.erb")).
+        must_equal "1 + 1 = 2"
+    end
+  end
+
+  describe "#inline" do
+    it "supports isolated local variables" do
+      create_template "outer.erb", %(<%= foo %> <% inline "inner.erb", bar: "BAR" %> <%= foo %>)
+      create_template "inner.erb", %(<%= foo = bar %>)
+
+      _(SDoc::Renderer.new(nil, @rdoc_options).render("outer.erb", { foo: "FOO" })).
+        must_equal "FOO BAR FOO"
+    end
+
+    it "provides access to the same non-local values as #render" do
+      create_template "outer.erb", %(<% inline "inner.erb" %>)
+      create_template "inner.erb", %(<%= h @context[:foobar] %>)
+
+      _(SDoc::Renderer.new({ foobar: "foo & bar" }, @rdoc_options).render("outer.erb")).
+        must_equal "foo &amp; bar"
+    end
+
+    it "supports yield" do
+      create_template "outer.erb", '1 <% inline("inner.erb") { 3 } %> 5'
+      create_template "inner.erb", %(2 <%= yield %> 4)
+
+      _(SDoc::Renderer.new(nil, @rdoc_options).render("outer.erb")).
+        must_equal "1 2 3 4 5"
+    end
+
+    it "supports interleaved rendering" do
+      create_template "outer.erb", '1 <% inline("inner.erb") do %>3<% end %> 5'
+      create_template "inner.erb", %(2 <% yield %> 4)
+
+      _(SDoc::Renderer.new(nil, @rdoc_options).render("outer.erb")).
+        must_equal "1 2 3 4 5"
+    end
+
+    it "supports interleaved rendering with nested #inline calls" do
+      create_template "outer.erb", '1 <% inline("middle.erb") { inline("inner.erb") } %> 5'
+      create_template "middle.erb", %(2 <% yield %> 4)
+      create_template "inner.erb", %(3)
+
+      _(SDoc::Renderer.new(nil, @rdoc_options).render("outer.erb")).
+        must_equal "1 2 3 4 5"
+    end
   end
 end

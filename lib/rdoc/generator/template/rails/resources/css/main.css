@@ -57,8 +57,10 @@ a:has(> code):not(:has(> :not(code))) {
 }
 
 /* TODO: Remove this hack when Firefox supports `:has()` */
-a code {
-  text-decoration: underline var(--body-bg);
+@supports not selector(:has(*)) {
+  a code {
+    text-decoration: underline var(--body-bg);
+  }
 }
 
 .external-link {
@@ -713,8 +715,10 @@ html {
 }
 
 /* TODO: Remove this hack when Firefox supports `:has()` */
-.description a code {
-  text-decoration: underline var(--code-bg);
+@supports not selector(:has(*)) {
+  .description a code {
+    text-decoration: underline var(--code-bg);
+  }
 }
 
 @media (hover: hover) {

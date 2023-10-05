@@ -161,22 +161,6 @@ th
   font-size: 2rem;
 }
 
-a.back-to-top {
-  visibility: hidden;
-  position: fixed;
-  z-index: 1;
-  right: 1em;
-  bottom: 1em;
-  padding: 2em;
-  border-radius: 3em;
-  background: url('../i/up_white_arrow.png') no-repeat center center, #c52f24;
-  background-size: 2em;
-}
-
-a.back-to-top.show {
-  visibility: visible;
-}
-
 
 /*
  * Navigation panel

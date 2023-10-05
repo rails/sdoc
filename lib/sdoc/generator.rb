@@ -18,7 +18,6 @@ class RDoc::Options
   end
 
   attr_accessor :github
-  attr_accessor :search_index
 end
 
 class RDoc::Generator::SDoc

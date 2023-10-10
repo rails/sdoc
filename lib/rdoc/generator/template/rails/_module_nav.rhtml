@@ -1,3 +1,6 @@
+<% unless @context.classes_and_modules.empty? %>
+  <a href="#namespace" class="namespace-link"><%= short_name(@context) %> namespace</a>
+<% end %>
 <%= button_to_search @context, display_name: short_name(@context) %>
 
 <% if outline = outline(@context) %>

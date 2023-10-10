@@ -156,7 +156,7 @@
 
   <% unless @context.classes_and_modules.empty? %>
     <!-- Namespace -->
-    <div class="content__divider">Namespace</div>
+    <div id="namespace" class="content__divider">Namespace</div>
     <ul>
       <% (@context.modules.sort + @context.classes.sort).each do |mod| %>
         <li>

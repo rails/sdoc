@@ -410,9 +410,18 @@ html {
 }
 
 
-* + .nav__outline {
+.nav__heading {
+  font-size: 1.3em;
+}
+
+* + .nav__heading {
   margin-top: var(--space-lg);
 }
+
+.nav__heading + * {
+  margin-top: var(--space-sm);
+}
+
 
 .nav__outline ul {
   margin-top: var(--space-sm);
@@ -429,16 +438,6 @@ html {
 
 .nav__outline a {
   text-decoration: underline;
-}
-
-
-.nav__heading {
-  margin-top: var(--space-lg);
-  font-size: 1.3em;
-}
-
-.nav__heading + .nav__list {
-  margin-top: var(--space-sm);
 }
 
 

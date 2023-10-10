@@ -1,6 +1,7 @@
 <%= button_to_search @context, display_name: short_name(@context) %>
 
 <% if outline = outline(@context) %>
+  <div class="nav__heading">Outline</div>
   <div class="nav__outline">
     <%= outline %>
   </div>

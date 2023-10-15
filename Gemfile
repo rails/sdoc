@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "rake", "< 11"
+gem "rake"
 gem "minitest"
 
 if ENV["rdoc"] == "master"

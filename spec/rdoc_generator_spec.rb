@@ -8,12 +8,12 @@ describe RDoc::Generator::SDoc do
   end
 
   it "should find sdoc generator" do
-    RDoc::RDoc::GENERATORS.must_include 'sdoc'
+    _(RDoc::RDoc::GENERATORS).must_include 'sdoc'
   end
 
   it "should use sdoc generator" do
-    @options.generator.must_equal RDoc::Generator::SDoc
-    @options.generator_name.must_equal 'sdoc'
+    _(@options.generator).must_equal RDoc::Generator::SDoc
+    _(@options.generator_name).must_equal 'sdoc'
   end
 
   it "should parse github option" do
@@ -23,8 +23,8 @@ describe RDoc::Generator::SDoc do
       @parser.parse %w[--github]
     end
 
-    err.wont_match(/^invalid options/)
-    @options.github.must_equal true
+    _(err).wont_match(/^invalid options/)
+    _(@options.github).must_equal true
   end
 
   it "should parse github short-hand option" do
@@ -34,15 +34,15 @@ describe RDoc::Generator::SDoc do
       @parser.parse %w[-g]
     end
 
-    err.wont_match(/^invalid options/)
-    @options.github.must_equal true
+    _(err).wont_match(/^invalid options/)
+    _(@options.github).must_equal true
   end
 
   it "should display SDoc version on -v or --version" do
     out_full  = `./bin/sdoc --version`
     out_short = `./bin/sdoc -v`
 
-    out_short.strip.must_equal SDoc::VERSION
-    out_full.strip.must_equal SDoc::VERSION
+    _(out_short.strip).must_equal SDoc::VERSION
+    _(out_full.strip).must_equal SDoc::VERSION
   end
 end

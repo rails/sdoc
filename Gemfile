@@ -4,7 +4,6 @@ gemspec
 
 gem "rack"
 gem "rake"
-gem "hoe"
 gem "minitest"
 gem "puma"
 
@@ -14,4 +13,3 @@ end
 
 gem "importmap-rails"
 gem "railties"
-

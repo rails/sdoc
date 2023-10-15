@@ -1,8 +1,8 @@
 # SDoc
 
-[![Build Status](https://travis-ci.org/zzak/sdoc.svg?branch=master)](https://travis-ci.org/zzak/sdoc)
+[![Tests](https://github.com/toshimaru/sdoc/actions/workflows/test.yml/badge.svg)](https://github.com/toshimaru/sdoc/actions/workflows/test.yml)
 
-**Powering http://api.rubyonrails.org/**
+**Powering https://railsdoc.github.io/**
 
 ### What is sdoc?
 

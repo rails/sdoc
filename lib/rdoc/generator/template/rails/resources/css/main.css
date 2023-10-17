@@ -112,21 +112,14 @@ a {
   }
 }
 
-a:has(> code):not(:has(> :not(code))) {
-  text-decoration: none;
-}
-
-/* TODO: Remove this hack when Firefox supports `:has()` */
-@supports not selector(:has(*)) {
-  a code {
-    text-decoration: underline var(--body-bg);
-  }
-}
-
 .external-link {
   padding-left: 1.3em;
   background: url('../i/external-link.svg') no-repeat;
   background-size: 1.1em;
+}
+
+.ref-link {
+  text-decoration: none;
 }
 
 .query-button {
@@ -300,13 +293,6 @@ th
   background: var(--code-bg);
   padding: 0 0.15em;
   border-radius: 3px;
-}
-
-/* TODO: Remove this hack when Firefox supports `:has()` */
-@supports not selector(:has(*)) {
-  .description a code {
-    text-decoration: underline var(--code-bg);
-  }
 }
 
 @media (hover: hover) {
@@ -628,10 +614,6 @@ html {
 
 .nav__outline li {
   word-break: break-word;
-}
-
-.nav__outline a {
-  text-decoration: underline;
 }
 
 

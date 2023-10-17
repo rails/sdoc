@@ -11,6 +11,7 @@ module SDoc::Postprocessor
 
     rebase_urls!(document)
     version_rails_guides_urls!(document)
+    add_ref_link_classes!(document)
     unify_h1_headings!(document)
     highlight_code_blocks!(document)
 
@@ -68,6 +69,14 @@ module SDoc::Postprocessor
     end
 
     uri.to_s
+  end
+
+  def add_ref_link_classes!(document)
+    document.css(".description a code").each do |element|
+      if element.parent.children.one?
+        element.parent.add_class("ref-link")
+      end
+    end
   end
 
   def unify_h1_headings!(document)

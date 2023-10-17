@@ -12,13 +12,19 @@ module SDoc::Helpers
   def link_to(text, url = nil, html_attributes = {})
     url, html_attributes = nil, url if url.is_a?(Hash)
     url ||= text
+
+    text = _link_body(text)
+
+    if url.is_a?(RDoc::CodeObject)
+      url = "/#{url.path}"
+      default_class = "ref-link" if text.start_with?("<code>") && text.end_with?("</code>")
+    end
+
+    html_attributes = html_attributes.transform_keys(&:to_s)
+    html_attributes = { "href" => url, "class" => default_class }.compact.merge(html_attributes)
+
     attribute_string = html_attributes.map { |name, value| %( #{name}="#{h value}") }.join
-
-    %(<a href="#{_link_url url}"#{attribute_string}>#{_link_body text}</a>)
-  end
-
-  def _link_url(url)
-    h(url.is_a?(RDoc::CodeObject) ? "/#{url.path}" : url)
+    %(<a#{attribute_string}>#{text}</a>)
   end
 
   def _link_body(text)

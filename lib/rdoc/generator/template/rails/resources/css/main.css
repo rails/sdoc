@@ -74,14 +74,7 @@ a:has(> code):not(:has(> :not(code))) {
   text-align: left;
   font-family: inherit;
   font-size: 1em;
-
-  background: url('../i/filter.svg') no-repeat;
-  background-position-y: 1px;
-  background-size: 1.1em;
-  padding: 0 0 0 1.3em;
   color: var(--link-color);
-
-  word-break: break-word;
 }
 
 @media (hover: hover) {
@@ -394,9 +387,18 @@ html {
 }
 
 
-* + .nav__outline {
+.nav__heading {
+  font-size: 1.3em;
+}
+
+* + .nav__heading {
   margin-top: var(--space-lg);
 }
+
+.nav__heading + * {
+  margin-top: var(--space-sm);
+}
+
 
 .nav__outline ul {
   margin-top: var(--space-sm);
@@ -413,16 +415,6 @@ html {
 
 .nav__outline a {
   text-decoration: underline;
-}
-
-
-.nav__heading {
-  margin-top: var(--space-lg);
-  font-size: 1.3em;
-}
-
-.nav__heading + .nav__list {
-  margin-top: var(--space-sm);
 }
 
 
@@ -443,6 +435,28 @@ html {
 
 .nav__method-link--singleton code::before {
   content: "::";
+}
+
+
+.panel__nav :is(.namespace-link, .query-button) {
+  display: block;
+  word-break: break-word;
+}
+
+.panel__nav .namespace-link {
+  background: url('../i/list.svg') no-repeat;
+  background-position-y: 1px;
+  background-size: 1.1em;
+  padding: 0 0 0 1.3em;
+
+  text-decoration: none;
+}
+
+.panel__nav .query-button {
+  background: url('../i/filter.svg') no-repeat;
+  background-position-y: 1px;
+  background-size: 1.1em;
+  padding: 0 0 0 1.3em;
 }
 
 

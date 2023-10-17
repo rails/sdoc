@@ -156,13 +156,10 @@
 
   <% unless @context.classes_and_modules.empty? %>
     <!-- Namespace -->
-    <div class="content__divider">Namespace</div>
+    <div id="namespace" class="content__divider">Namespace</div>
     <ul>
-      <% (@context.modules.sort + @context.classes.sort).each do |mod| %>
-        <li>
-          <span class="kind"><%= mod.type %></span>
-          <%= link_to mod %>
-        </li>
+      <% @context.classes_and_modules.sort.each do |mod| %>
+        <li><%= link_to mod %></li>
       <% end %>
     </ul>
   <% end %>

@@ -156,6 +156,115 @@ th
 
 
 /*
+ * Generic content
+ */
+
+:where(.content) *,
+:where(.content) :is(br, wbr) {
+  margin: 0;
+}
+
+:where(.content) * + * {
+  margin-top: var(--space);
+}
+
+:where(.content) :is(ol, ul, dd) {
+  padding: 0 0 0 1.25em;
+}
+
+:where(.content) * + :is(li, dd) {
+  margin-top: var(--space-sm);
+}
+
+/* Increase top margin for list items when any item has more than one paragraph */
+:where(.content :is(ol, ul):has(> li > p:not(:only-child))) * + li {
+  margin-top: var(--space);
+}
+
+:where(.content) code {
+  font-style: normal;
+}
+
+
+/*
+ * Description section
+ */
+
+.description :is(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.25;
+  padding: 0.125em 0;
+}
+
+.description :not(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: var(--space-lg);
+}
+
+.description h1 {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.description h2 {
+  font-size: 1.6em;
+  font-weight: normal;
+}
+
+.description h3 {
+  font-size: 1.3em;
+  font-weight: normal;
+}
+
+.description h4 {
+  font-size: 1.2em;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.description h5 {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.description h6 {
+  font-size: 1em;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.description pre, .method__source pre {
+  padding: 0.5ch 1ch;
+  border-radius: 4px;
+  overflow-x: auto;
+
+  background: var(--code-bg);
+}
+
+
+:is(.description p, p.description) code {
+  background: var(--code-bg);
+  padding: 0 0.15em;
+  border-radius: 2px;
+}
+
+/* TODO: Remove this hack when Firefox supports `:has()` */
+@supports not selector(:has(*)) {
+  .description a code {
+    text-decoration: underline var(--code-bg);
+  }
+}
+
+@media (hover: hover) {
+  .description a:hover code {
+    box-shadow: 0 0 0 1px;
+  }
+}
+
+.description dt {
+  font-weight: bold;
+}
+
+
+/*
  * Navigation panel
  */
 
@@ -527,32 +636,6 @@ html {
   }
 }
 
-:where(.content) *,
-:where(.content) :is(br, wbr) {
-  margin: 0;
-}
-
-:where(.content) * + * {
-  margin-top: var(--space);
-}
-
-:where(.content) :is(ol, ul, dd) {
-  padding: 0 0 0 1.25em;
-}
-
-:where(.content) * + :is(li, dd) {
-  margin-top: var(--space-sm);
-}
-
-/* Increase top margin for list items when any item has more than one paragraph */
-:where(.content :is(ol, ul):has(> li > p:not(:only-child))) * + li {
-  margin-top: var(--space);
-}
-
-:where(.content) code {
-  font-style: normal;
-}
-
 .content__title {
   font-size: 1.6em;
   line-height: 1.25;
@@ -570,6 +653,10 @@ html {
   font-style: italic;
 
   margin-top: 0;
+}
+
+.content__title ~ #context > .description {
+  margin-top: var(--space-lg);
 }
 
 .content__source-link {
@@ -692,90 +779,6 @@ html {
 .method__source pre {
   margin-top: var(--space-sm);
   background: var(--source-code-bg);
-}
-
-.method__source pre,
-.description pre {
-  padding: 0.5ch 1ch;
-  border-radius: 4px;
-  overflow-x: auto;
-}
-
-
-/*
- * Description of method or module
- */
-
-.content__title ~ #context > .description {
-  margin-top: var(--space-lg);
-}
-
-.description :is(h1, h2, h3, h4, h5, h6) {
-  line-height: 1.25;
-  padding: 0.125em 0;
-}
-
-.description :not(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
-  margin-top: var(--space-lg);
-}
-
-.description h1 {
-  font-size: 1.6em;
-  font-weight: bold;
-}
-
-.description h2 {
-  font-size: 1.6em;
-  font-weight: normal;
-}
-
-.description h3 {
-  font-size: 1.3em;
-  font-weight: normal;
-}
-
-.description h4 {
-  font-size: 1.2em;
-  font-weight: normal;
-  font-style: italic;
-}
-
-.description h5 {
-  font-size: 1.1em;
-  font-weight: bold;
-}
-
-.description h6 {
-  font-size: 1em;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.description pre {
-  background: var(--code-bg);
-}
-
-:is(.description p, p.description) code {
-  background: var(--code-bg);
-  padding: 0 0.15em;
-  border-radius: 2px;
-}
-
-/* TODO: Remove this hack when Firefox supports `:has()` */
-@supports not selector(:has(*)) {
-  .description a code {
-    text-decoration: underline var(--code-bg);
-  }
-}
-
-@media (hover: hover) {
-  .description a:hover code {
-    box-shadow: 0 0 0 1px;
-  }
-}
-
-.description dt {
-  font-weight: bold;
 }
 
 

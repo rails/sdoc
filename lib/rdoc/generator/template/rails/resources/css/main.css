@@ -323,10 +323,29 @@ html {
   scroll-padding: var(--space) 0;
 }
 
+
+.panel__results::before {
+  display: block;
+  text-align: center;
+  text-wrap: balance;
+  padding-bottom: var(--space);
+
+  font-size: 0.9em;
+  font-style: italic;
+  color: color-mix(in srgb, currentColor 70%, transparent);
+
+  content: "TIP: Prefix query with \"#\" or \".\" to search for methods.";
+}
+
+/* Hide TIP when one of the first three search results is a method. */
+.panel__results:has(.results__result:nth-child(n+1):nth-child(-n+3) .result__method:not(:empty))::before {
+  display: none;
+}
+
 .panel__results:empty::before {
   content: "No results.";
-  font-style: italic;
 }
+
 
 .results__result:not(:first-child) {
   margin-top: var(--space-lg);
@@ -350,6 +369,7 @@ html {
     border-color: var(--link-hover-color);
   }
 }
+
 
 .result__link {
   display: flex;

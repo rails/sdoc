@@ -22,7 +22,7 @@
 
         <% inline "_context.rhtml" %>
 
-        <div class="content__divider">Definition files</div>
+        <h2 class="content__divider">Definition files</h2>
         <%= more_less_ul @context.in_files.map { |file| link_to file }, 5..9 %>
     </main>
   </body>

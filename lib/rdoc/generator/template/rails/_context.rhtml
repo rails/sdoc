@@ -8,7 +8,7 @@
 
   <%# File only: requires %>
   <% unless @context.requires.empty? %>
-    <div class="content__divider">Required Files</div>
+    <h2 class="content__divider">Required Files</h2>
     <ul>
       <% @context.requires.each do |req| %>
         <li><%= full_name req.name %></li>
@@ -19,7 +19,7 @@
 
   <%# Module only: ancestors %>
   <% unless @context.is_a?(RDoc::TopLevel) || (ancestors = module_ancestors(@context)).empty? %>
-    <div class="content__divider">Inherits From</div>
+    <h2 class="content__divider">Inherits From</h2>
     <ul>
       <% ancestors.each do |kind, ancestor| %>
         <li>
@@ -34,7 +34,7 @@
   <% sections = @context.sections.select { |s| s.title }.sort_by{ |s| s.title.to_s } %>
   <% unless sections.empty? then %>
     <!-- Sections -->
-    <div class="content__divider">Sections</div>
+    <h2 class="content__divider">Sections</h2>
     <ul>
       <% sections.each do |section| %>
         <li><%= link_to h(section.title), "##{section.aref}" %></li>
@@ -156,7 +156,7 @@
 
   <% unless @context.classes_and_modules.empty? %>
     <!-- Namespace -->
-    <div id="namespace" class="content__divider">Namespace</div>
+    <h2 id="namespace" class="content__divider">Namespace</h2>
     <ul>
       <% @context.classes_and_modules.sort.each do |mod| %>
         <li><%= link_to mod %></li>

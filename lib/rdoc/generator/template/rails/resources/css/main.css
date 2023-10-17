@@ -503,6 +503,7 @@ html {
     margin-top: calc(-1 * var(--banner-height));
     margin-left: var(--panel-width);
     padding: var(--space-lg) var(--space-xl);
+    max-width: calc(75ch + 2 * var(--space-xl));
   }
 }
 

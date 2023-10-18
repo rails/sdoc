@@ -442,7 +442,9 @@ html {
   font-size: 0.9em;
   font-style: italic;
   color: color-mix(in srgb, currentColor 70%, transparent);
+}
 
+.panel__results.active::before {
   content: "TIP: Prefix query with \"#\" or \".\" to search for methods.";
 }
 

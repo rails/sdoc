@@ -1,3 +1,40 @@
+@font-face {
+  font-family: "Bitter";
+  src: url("../fonts/Bitter-Roman.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bitter";
+  src: url("../fonts/Bitter-Italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Jost";
+  src: url("../fonts/Jost-Roman.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Jost";
+  src: url("../fonts/Jost-Italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RobotoMono";
+  src: url("../fonts/RobotoMono-Roman.woff2") format("woff2");
+  font-weight: 100 800;
+  font-display: swap;
+}
+
 * { box-sizing: border-box; }
 
 body {
@@ -6,7 +43,7 @@ body {
 }
 
 :root {
-  font-size: 16px;
+  font-size: 18px;
 
   --line-height: 1.5;
   --space: 1.25rem;
@@ -15,9 +52,9 @@ body {
   --space-lg: calc(var(--space) * 1.75);
   --space-xl: calc(var(--space) * 3);
 
-  --body-font: serif;
-  --heading-font: sans-serif;
-  --monospace-font: monospace;
+  --body-font: "Bitter", serif;
+  --heading-font: "Jost", sans-serif;
+  --monospace-font: "RobotoMono", monospace;
 
   --brand-color: #b61d1d;
 

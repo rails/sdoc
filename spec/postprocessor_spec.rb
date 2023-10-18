@@ -58,6 +58,26 @@ describe SDoc::Postprocessor do
       end
     end
 
+    it "adds .ref-link class to code ref links" do
+      rendered = <<~HTML
+        <div class="description">
+          <a href="classes/Foo.html"><code>Foo</code></a>
+          <a href="classes/Foo.html">not ref link</a>
+          <a href="classes/Foo.html">not <code>ref</code> link</a>
+        </div>
+      HTML
+
+      expected = <<~HTML
+        <div class="description">
+          <a href="classes/Foo.html" class="ref-link"><code>Foo</code></a>
+          <a href="classes/Foo.html">not ref link</a>
+          <a href="classes/Foo.html">not <code>ref</code> link</a>
+        </div>
+      HTML
+
+      _(SDoc::Postprocessor.process(rendered)).must_include expected
+    end
+
     it "unifies <h1> headings for a context" do
       rendered = <<~HTML
         <div id="content">

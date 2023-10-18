@@ -150,6 +150,24 @@ describe SDoc::Helpers do
           must_equal %(<a href="/#{code_object.path}">text</a>)
       end
     end
+
+    it "uses .ref-link as the default class when creating a <code> link to an RDoc::CodeObject" do
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo::Bar")
+        module Foo; module Bar; end
+      RUBY
+
+      _(@helpers.link_to(rdoc_module)).
+        must_equal %(<a href="/#{rdoc_module.path}" class="ref-link">#{@helpers.full_name(rdoc_module)}</a>)
+
+      _(@helpers.link_to("<code>Bar</code>", rdoc_module)).
+        must_equal %(<a href="/#{rdoc_module.path}" class="ref-link"><code>Bar</code></a>)
+
+      _(@helpers.link_to("<code>Bar</code>", rdoc_module, class: "other")).
+        must_equal %(<a href="/#{rdoc_module.path}" class="other"><code>Bar</code></a>)
+
+      _(@helpers.link_to("Jump to <code>Bar</code>", rdoc_module)).
+        must_equal %(<a href="/#{rdoc_module.path}">Jump to <code>Bar</code></a>)
+    end
   end
 
   describe "#link_to_if" do

@@ -15,7 +15,7 @@
   <ul class="nav__list">
     <% methods.each do |rdoc_method| %>
       <li><%= link_to short_name(rdoc_method), rdoc_method,
-                class: "nav__method-link#{"--singleton" if rdoc_method.singleton}" %></li>
+                class: "ref-link nav__method-link#{"--singleton" if rdoc_method.singleton}" %></li>
     <% end %>
   </ul>
 <% end %>

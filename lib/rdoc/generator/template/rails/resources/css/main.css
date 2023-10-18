@@ -1,3 +1,40 @@
+@font-face {
+  font-family: "Bitter";
+  src: url("../fonts/Bitter-Roman.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bitter";
+  src: url("../fonts/Bitter-Italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Jost";
+  src: url("../fonts/Jost-Roman.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Jost";
+  src: url("../fonts/Jost-Italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RobotoMono";
+  src: url("../fonts/RobotoMono-Roman.woff2") format("woff2");
+  font-weight: 100 800;
+  font-display: swap;
+}
+
 * { box-sizing: border-box; }
 
 body {
@@ -6,11 +43,18 @@ body {
 }
 
 :root {
+  font-size: 18px;
+
   --line-height: 1.5;
-  --space: calc(var(--line-height) * 0.50 * 1rem);
-  --space-sm: calc(var(--space) / 2);
-  --space-lg: calc(var(--space) * 2);
-  --space-xl: calc(var(--space) * 4);
+  --space: 1.25rem;
+  --space-xs: calc(var(--space) * 0.25);
+  --space-sm: calc(var(--space) * 0.5);
+  --space-lg: calc(var(--space) * 1.75);
+  --space-xl: calc(var(--space) * 3);
+
+  --body-font: "Bitter", serif;
+  --heading-font: "Jost", sans-serif;
+  --monospace-font: "RobotoMono", monospace;
 
   --brand-color: #b61d1d;
 
@@ -22,6 +66,12 @@ body {
   --body-bg: #ffffff;
   --code-bg: #f1f1f1;
   --source-code-bg: #f1f1e1;
+}
+
+@media (min-width: 600px) {
+  :root {
+    font-size: 20px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,10 +86,20 @@ body {
 }
 
 body {
+  font-family: var(--body-font);
   line-height: var(--line-height);
 
   background: var(--body-bg);
   color: var(--text-color);
+}
+
+pre, code, .kind {
+  font-family: var(--monospace-font);
+  font-size: .95em;
+}
+
+.kind::after {
+  content: " "; /* Ensure trailing space has width of 1 monospace char */
 }
 
 a {
@@ -52,21 +112,14 @@ a {
   }
 }
 
-a:has(> code):not(:has(> :not(code))) {
-  text-decoration: none;
-}
-
-/* TODO: Remove this hack when Firefox supports `:has()` */
-@supports not selector(:has(*)) {
-  a code {
-    text-decoration: underline var(--body-bg);
-  }
-}
-
 .external-link {
   padding-left: 1.3em;
   background: url('../i/external-link.svg') no-repeat;
   background-size: 1.1em;
+}
+
+.ref-link {
+  text-decoration: none;
 }
 
 .query-button {
@@ -81,14 +134,6 @@ a:has(> code):not(:has(> :not(code))) {
   .query-button:hover {
     color: var(--link-hover-color);
   }
-}
-
-.kind {
-  font-family: monospace;
-}
-
-.kind::after {
-  content: " "; /* Ensure trailing space has width of 1 monospace char */
 }
 
 table {
@@ -181,6 +226,17 @@ th
   margin-top: var(--space);
 }
 
+:where(.content) :is(hgroup, h1, h2, h3, h4, h5, h6) {
+  font-family: var(--heading-font);
+  font-weight: bold;
+  line-height: 1.125;
+}
+
+:where(.content :is(hgroup, h1, h2, h3, h4, h5, h6)) :is(code, .kind) {
+  font-size: 0.85em;
+  font-weight: normal;
+}
+
 :where(.content) code {
   font-style: normal;
 }
@@ -190,50 +246,43 @@ th
  * Description section
  */
 
-.description :is(h1, h2, h3, h4, h5, h6) {
-  line-height: 1.25;
-  padding: 0.125em 0;
+ .description * + :is(h1, h2) {
+  margin-top: var(--space-xl);
 }
 
-.description :not(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
+.description * + :is(h3, h4, h5, h6) {
   margin-top: var(--space-lg);
 }
 
 .description h1 {
-  font-size: 1.6em;
-  font-weight: bold;
+  font-size: 2em;
 }
 
 .description h2 {
   font-size: 1.6em;
-  font-weight: normal;
 }
 
 .description h3 {
   font-size: 1.3em;
-  font-weight: normal;
 }
 
 .description h4 {
   font-size: 1.2em;
-  font-weight: normal;
   font-style: italic;
 }
 
 .description h5 {
   font-size: 1.1em;
-  font-weight: bold;
 }
 
 .description h6 {
   font-size: 1em;
-  font-weight: bold;
   font-style: italic;
 }
 
 .description pre, .method__source pre {
   padding: 0.5ch 1ch;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow-x: auto;
 
   background: var(--code-bg);
@@ -243,14 +292,7 @@ th
 :is(.description p, p.description) code {
   background: var(--code-bg);
   padding: 0 0.15em;
-  border-radius: 2px;
-}
-
-/* TODO: Remove this hack when Firefox supports `:has()` */
-@supports not selector(:has(*)) {
-  .description a code {
-    text-decoration: underline var(--code-bg);
-  }
+  border-radius: 3px;
 }
 
 @media (hover: hover) {
@@ -270,8 +312,8 @@ th
 
 html {
   --panel-width: 100dvw;
-  --banner-height: 3.5rem;
-  --search-height: calc(0.70 * var(--banner-height));
+  --banner-height: 3.25rem;
+  --search-height: var(--space-lg);
   scroll-padding-top: calc(var(--banner-height) + 1rem);
 }
 
@@ -329,7 +371,7 @@ html {
   font-style: italic;
 
   position: relative;
-  bottom: 0.15em;
+  bottom: 0.1em;
 }
 
 
@@ -427,9 +469,8 @@ html {
  */
 
 .panel__results {
-  font-size: 0.95em;
-  padding: var(--space) var(--space-sm);
-  scroll-padding: var(--space) 0;
+  padding: var(--space-sm) var(--space-xs);
+  scroll-padding: var(--space-sm) 0;
 }
 
 
@@ -437,9 +478,9 @@ html {
   display: block;
   text-align: center;
   text-wrap: balance;
-  padding-bottom: var(--space);
+  padding-bottom: var(--space-sm);
 
-  font-size: 0.9em;
+  font-size: 0.85em;
   font-style: italic;
   color: color-mix(in srgb, currentColor 70%, transparent);
 }
@@ -459,13 +500,13 @@ html {
 
 
 .results__result:not(:first-child) {
-  margin-top: var(--space-lg);
+  margin-top: var(--space);
 }
 
 .results__result {
-  border-left: 5px solid color-mix(in srgb, currentColor 10%, transparent);
-  border-radius: 5px;
-  padding-left: var(--space-sm);
+  border-left: 0.5ch solid color-mix(in srgb, currentColor 10%, transparent);
+  border-radius: 0.5ch;
+  padding-left: var(--space-xs);
 }
 
 /* Assume physical keyboard exists when not `pointer: coarse` */
@@ -499,7 +540,7 @@ html {
 }
 
 .result__summary {
-  margin: var(--space-sm) 0 0 0;
+  margin: var(--space-xs) 0 0 0;
 }
 
 :is(.result__method, .result__summary):empty {
@@ -513,13 +554,45 @@ html {
 
 .panel__nav {
   padding: var(--space);
-  font-size: 0.95em;
-  line-height: calc(0.85 * var(--line-height));
+  padding-right: var(--space-xs);
+}
+
+:where(.panel__nav) * + :is(ul, ol, li) {
+  margin-top: var(--space-xs);
+}
+
+
+.panel__nav :is(.namespace-link, .query-button) {
+  display: block;
+  word-break: break-word;
+}
+
+.panel__nav * + :is(.namespace-link, .query-button) {
+  margin-top: var(--space-sm);
+}
+
+.panel__nav .namespace-link {
+  background: url('../i/list.svg') no-repeat;
+  background-position-y: 3px;
+  background-size: 1.1em;
+  padding: 0 0 0 1.3em;
+
+  text-decoration: none;
+}
+
+.panel__nav .query-button {
+  background: url('../i/filter.svg') no-repeat;
+  background-position-y: 2px;
+  background-size: 1.1em;
+  padding: 0 0 0 1.3em;
 }
 
 
 .nav__heading {
-  font-size: 1.3em;
+  font-family: var(--heading-font);
+  font-weight: bold;
+  font-size: 1.6em;
+  line-height: 1;
 }
 
 * + .nav__heading {
@@ -532,7 +605,6 @@ html {
 
 
 .nav__outline ul {
-  margin-top: var(--space-sm);
   padding-left: 1em;
 }
 
@@ -542,10 +614,6 @@ html {
 
 .nav__outline li {
   word-break: break-word;
-}
-
-.nav__outline a {
-  text-decoration: underline;
 }
 
 
@@ -566,28 +634,6 @@ html {
 
 .nav__method-link--singleton code::before {
   content: "::";
-}
-
-
-.panel__nav :is(.namespace-link, .query-button) {
-  display: block;
-  word-break: break-word;
-}
-
-.panel__nav .namespace-link {
-  background: url('../i/list.svg') no-repeat;
-  background-position-y: 1px;
-  background-size: 1.1em;
-  padding: 0 0 0 1.3em;
-
-  text-decoration: none;
-}
-
-.panel__nav .query-button {
-  background: url('../i/filter.svg') no-repeat;
-  background-position-y: 1px;
-  background-size: 1.1em;
-  padding: 0 0 0 1.3em;
 }
 
 
@@ -614,6 +660,10 @@ html {
     width: 60ch;
   }
 
+  :is(.panel__results, .panel__nav) {
+    font-size: 0.85em;
+  }
+
   :is(.panel__results, .panel__nav)::after {
     display: none;
   }
@@ -633,25 +683,20 @@ html {
   #content {
     margin-top: calc(-1 * var(--banner-height));
     margin-left: var(--panel-width);
-    padding: var(--space-lg) var(--space-xl);
-    max-width: calc(75ch + 2 * var(--space-xl));
+    padding: var(--space) var(--space-lg);
+    max-width: calc(75ch + 2 * var(--space-lg));
   }
 }
 
-.content__title {
-  font-size: 1.6em;
-  line-height: 1.25;
-}
-
 .content__title h1 {
-  font-size: inherit;
-  font-weight: normal;
+  font-size: 1.75em;
 
   margin-left: 1em;
   text-indent: -1em;
 }
 
 .content__title p {
+  font-size: 2em;
   font-style: italic;
 
   margin-top: 0;
@@ -662,22 +707,21 @@ html {
 }
 
 .content__source-link {
-  margin-top: var(--space-sm);
+  margin-top: var(--space-xs);
 }
 
 .content__section-title {
   margin: var(--space-xl) 0 0 0;
 
-  font-size: 1.6em;
+  font-size: 1.8em;
   font-weight: bold;
 }
 
 .content__divider {
   margin: var(--space-xl) 0 0 0;
 
-  font-size: 1.4em;
+  font-size: 1.6em;
   font-weight: bold;
-  font-variant: small-caps;
   text-transform: capitalize;
 
   border-bottom: 1px solid;
@@ -697,11 +741,12 @@ html {
 }
 
 .content__divider + .method {
-  margin-top: var(--space-lg);
+  margin-top: var(--space);
 }
 
+
 .method__signature {
-  padding-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
   border-bottom: 2px solid var(--code-bg);
 
   display: flex;
@@ -709,20 +754,21 @@ html {
 }
 
 .method__signature h3 {
-  font-size: 1rem;
-  font-weight: normal;
-  white-space: pre-wrap;
-
   position: relative;
 }
 
-:target .method__signature h3::before {
+.method__signature code {
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
+
+:target .method__signature code::before {
   content: " ";
 
   position: absolute;
-  left: calc(-5px - var(--space-sm));
-  border-left: 5px solid var(--link-color);
-  border-radius: 5px;
+  left: calc(-0.5ch - var(--space-sm));
+  border-left: 0.5ch solid var(--link-color);
+  border-radius: 0.5ch;
   height: 100%;
 }
 
@@ -743,9 +789,15 @@ html {
   }
 }
 
+
+.method__signature + * {
+  margin-top: var(--space-sm);
+}
+
 .method__aka {
   font-style: italic;
 }
+
 
 .method__source {
   width: fit-content; /* Reduce clickable area when collapsed */
@@ -779,7 +831,7 @@ html {
 }
 
 .method__source pre {
-  margin-top: var(--space-sm);
+  margin-top: var(--space-xs);
   background: var(--source-code-bg);
 }
 

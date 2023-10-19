@@ -136,6 +136,11 @@ a {
   }
 }
 
+blockquote {
+  padding: var(--space-xs) 0 var(--space-xs) var(--space);
+  border-left: var(--space-sm) solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
 table {
   border-collapse: collapse;
 }

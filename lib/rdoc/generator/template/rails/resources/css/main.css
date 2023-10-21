@@ -767,7 +767,7 @@ html {
   white-space: pre-wrap;
 }
 
-:target .method__signature code::before {
+.target .method__signature code::before {
   content: " ";
 
   position: absolute;

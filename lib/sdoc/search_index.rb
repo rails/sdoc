@@ -36,14 +36,14 @@ module SDoc::SearchIndex
     # Example: "ActiveSupport::Cache::Store" => ":ActiveSupport:Cache:Store"
     strings = [":#{name}".gsub("::", ":")]
 
+    # Example: ":ActiveModel:API" => ":activemodel:api"
+    strings.concat(strings.map(&:downcase))
     # Example: ":ActiveSupport:HashWithIndifferentAccess" => ":AS:HWIA"
     strings.concat(strings.map { |string| string.gsub(/([A-Z])[a-z]+/, '\1') })
     # Example: ":AbstractController:Base#action_name" => " AbstractController Base action_name"
     strings.concat(strings.map { |string| string.tr(":#", " ") })
     # Example: ":AbstractController:Base#action_name" => ":AbstractController:Base#actionname"
     strings.concat(strings.map { |string| string.tr("_", "") })
-    # Example: ":ActiveModel:API" => ":activemodel:api"
-    strings.concat(strings.map(&:downcase))
 
     # Example: ":ActiveModel:Name#<=>" => [":ActiveModel", ":Name", "#<=>"]
     strings.map! { |string| string.split(/(?=[ :#])/) }.flatten!

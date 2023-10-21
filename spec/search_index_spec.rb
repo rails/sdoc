@@ -99,10 +99,10 @@ describe SDoc::SearchIndex do
       _(bigrams).wont_include "GR"
     end
 
-    it "includes downcased bigrams" do
+    it "includes downcased bigrams except for acronym bigrams" do
       bigrams = SDoc::SearchIndex.derive_bigrams("AbcDefGhi::RstUvwXyz")
 
-      bigrams.grep(/[A-Z]/).each do |uppercase|
+      bigrams.grep(/[A-Z]/).grep_v(/[A-Z]{2}/).each do |uppercase|
         _(bigrams).must_include uppercase.downcase
       end
     end

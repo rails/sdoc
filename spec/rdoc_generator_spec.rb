@@ -38,7 +38,7 @@ describe RDoc::Generator::SDoc do
         index = File.read("doc/js/search-index.js")
         index.delete_prefix!("export default ").delete_suffix!(";")
         index.gsub!(/\(new Uint8Array\((.+?)\)\)/, '\1')
-        _(JSON.parse(index).keys.sort).must_equal ["bigrams", "entries", "weights"]
+        _(JSON.parse(index).keys.sort).must_equal ["ngrams", "weights", "entries"].sort
       end
     end
   end

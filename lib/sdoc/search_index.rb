@@ -43,26 +43,23 @@ module SDoc::SearchIndex
     # Example: "ActiveSupport::Cache::Store" => ":ActiveSupport:Cache:Store"
     strings = [":#{name}".gsub("::", ":")]
 
+    # Example: ":ActiveSupport:Cache:lookup_store" => ":ActiveSupport:Cache.lookup_store("
+    strings.concat(strings.map { |string| string.gsub(/[:#]([^A-Z].+)/, '.\1(') })
     # Example: ":ActiveModel:API" => ":activemodel:api"
     strings.concat(strings.map(&:downcase))
     # Example: ":ActiveSupport:HashWithIndifferentAccess" => ":AS:HWIA"
     strings.concat(strings.map { |string| string.gsub(/([A-Z])[a-z]+/, '\1') })
     # Example: ":AbstractController:Base#action_name" => " AbstractController Base action_name"
     strings.concat(strings.map { |string| string.tr(":#", " ") })
-    # Example: ":AbstractController:Base#action_name" => ":AbstractController:Base#actionname"
+    # Example: ":ActiveRecord:Querying#find_by_sql" => ":ActiveRecord:Querying#findbysql"
     strings.concat(strings.map { |string| string.tr("_", "") })
 
     # Example: ":ActiveModel:Name#<=>" => [":ActiveModel", ":Name", "#<=>"]
-    strings.map! { |string| string.split(/(?=[ :#])/) }.flatten!
+    strings.map! { |string| string.split(/(?=[ :#.])/) }.flatten!.uniq!
+    # Example: ":ActiveModel" => ":A "
+    strings.concat(strings.map { |string| "#{string[0, 2]} " })
 
-    if method_name_first_char = name[/(?:#|::)([^A-Z])/, 1]
-      # Example: "AbstractController::Base::controller_path" => ".c"
-      strings << ".#{method_name_first_char}"
-      # Example: "AbstractController::Base::controller_path" => "h("
-      strings << "#{name[-1]}("
-    end
-
-    strings.flat_map { |string| string.each_char.each_cons(2).map(&:join) }.uniq
+    strings.flat_map { |string| string.each_char.each_cons(3).map(&:join) }.uniq
   end
 
   def compile_ngrams(ngram_sets)

@@ -49,58 +49,76 @@ describe SDoc::SearchIndex do
 
   describe "#derive_ngrams" do
     it "returns ngrams for a given string" do
-      expected = %w[ab bc cx xy yz]
+      expected = %w[abc bcx cxy xyz]
       _(SDoc::SearchIndex.derive_ngrams("abcxyz") & expected).must_equal expected
     end
 
     it "includes module-related ngrams" do
       ngrams = SDoc::SearchIndex.derive_ngrams("Abc::Xyz")
 
-      _(ngrams).must_include ":A"
-      _(ngrams).must_include ":X"
+      _(ngrams).must_include ":Ab"
+      _(ngrams).must_include ":Xy"
 
-      _(ngrams).wont_include "c:"
-      _(ngrams).wont_include "::"
+      _(ngrams.grep(/c:|::|[.(]/)).must_be_empty
     end
 
-    it "includes method-related ngrams" do
+    it "includes method-related ngrams for instance methods" do
       ngrams = SDoc::SearchIndex.derive_ngrams("Abc#def_xyz")
 
-      _(ngrams).must_include "#d"
-      _(ngrams).must_include ".d"
-      _(ngrams).must_include "z("
+      _(ngrams).must_include "#de"
+      _(ngrams).must_include ".de"
+      _(ngrams).must_include "yz("
 
-      _(ngrams).wont_include "c#"
+      _(ngrams).must_include "f_x"
+      _(ngrams).must_include "efx"
+      _(ngrams).must_include "fxy"
 
-      _(ngrams).must_include "f_"
-      _(ngrams).must_include "_x"
-      _(ngrams).must_include "fx"
+      _(ngrams.grep(/c#/)).must_be_empty
+    end
+
+    it "includes method-related ngrams for singleton methods" do
+      ngrams = SDoc::SearchIndex.derive_ngrams("Abc::def_xyz")
+
+      _(ngrams).must_include ":de"
+      _(ngrams).must_include ".de"
+      _(ngrams).must_include "yz("
+
+      _(ngrams.grep(/c:/)).must_be_empty
     end
 
     it "includes space delimiter ngrams" do
       ngrams = SDoc::SearchIndex.derive_ngrams("Abc::Def#xyz")
 
-      _(ngrams).must_include " A"
-      _(ngrams).must_include " D"
-      _(ngrams).must_include " x"
+      _(ngrams).must_include " Ab"
+      _(ngrams).must_include " A "
+      _(ngrams).must_include ":A "
 
-      _(ngrams).wont_include "c "
-      _(ngrams).wont_include "f "
+      _(ngrams).must_include " De"
+      _(ngrams).must_include " D "
+      _(ngrams).must_include ":D "
+
+      _(ngrams).must_include " xy"
+      _(ngrams).must_include " x "
+      _(ngrams).must_include "#x "
+
+      _(ngrams.grep(/[cfz] $/)).must_be_empty
     end
 
     it "includes acronym ngrams" do
-      ngrams = SDoc::SearchIndex.derive_ngrams("AbcDefGhi::RstUvwXyz")
+      ngrams = SDoc::SearchIndex.derive_ngrams("AbcDef::StUvWxYz")
 
-      _(ngrams).must_include "AD"
-      _(ngrams).must_include "DG"
-      _(ngrams).must_include "RU"
-      _(ngrams).must_include "UX"
+      _(ngrams).must_include ":AD"
+      _(ngrams).must_include " AD"
+      _(ngrams).must_include ":SU"
+      _(ngrams).must_include " SU"
+      _(ngrams).must_include "SUW"
+      _(ngrams).must_include "UWY"
 
-      _(ngrams).wont_include "GR"
+      _(ngrams.grep(/DS/)).must_be_empty
     end
 
     it "includes downcased ngrams except for acronym ngrams" do
-      ngrams = SDoc::SearchIndex.derive_ngrams("AbcDefGhi::RstUvwXyz")
+      ngrams = SDoc::SearchIndex.derive_ngrams("AbcDef::StUvWxYz")
 
       ngrams.grep(/[A-Z]/).grep_v(/[A-Z]{2}/).each do |uppercase|
         _(ngrams).must_include uppercase.downcase
@@ -110,7 +128,7 @@ describe SDoc::SearchIndex do
 
   describe "#compile_ngrams" do
     it "assigns ngram bit positions based on ngram rarity" do
-      base_ngrams = ("aa".."zz").take(4)
+      base_ngrams = ("aaa".."zzz").take(4)
       ngram_sets = (0..3).map { |n| base_ngrams.drop(n) }
 
       _(SDoc::SearchIndex.compile_ngrams(ngram_sets)).
@@ -120,7 +138,7 @@ describe SDoc::SearchIndex do
 
   describe "#generate_fingerprint" do
     it "returns an array of bytes with bits set for the given ngrams" do
-      ngrams = ("aa".."zz").take(8)
+      ngrams = ("aaa".."zzz").take(8)
 
       packed_positions = ngrams.each_with_index.to_h
       _(SDoc::SearchIndex.generate_fingerprint(ngrams, packed_positions)).must_equal [0b11111111]
@@ -130,17 +148,17 @@ describe SDoc::SearchIndex do
     end
 
     it "omits trailing zero bytes" do
-      _(SDoc::SearchIndex.generate_fingerprint(["xx"], { "xx" => 0, "yy" => 100 })).must_equal [1]
+      _(SDoc::SearchIndex.generate_fingerprint(["xxx"], { "xxx" => 0, "yyy" => 100 })).must_equal [1]
     end
   end
 
   describe "#compute_bit_weights" do
     it "returns an array of weights" do
-      _(SDoc::SearchIndex.compute_bit_weights({ "xx" => 0, "yy" => 1 })).must_equal [1, 1]
+      _(SDoc::SearchIndex.compute_bit_weights({ "xxx" => 0, "yyy" => 1 })).must_equal [1, 1]
     end
 
     it "computes weights based on ngram content" do
-      ngram_bit_positions = { "xx" => 0, " x" => 1, ":X" => 2, "#x" => 3 }
+      ngram_bit_positions = { "xxx" => 0, " xx" => 1, ":Xx" => 2, "#xx" => 3 }
       bit_weights = SDoc::SearchIndex.compute_bit_weights(ngram_bit_positions)
 
       _(bit_weights.length).must_equal ngram_bit_positions.length
@@ -149,7 +167,7 @@ describe SDoc::SearchIndex do
     end
 
     it "orders weights by bit position" do
-      ngram_bit_positions = { "xx" => 0, " x" => 1, ":X" => 2, "#x" => 3 }
+      ngram_bit_positions = { "xxx" => 0, " xx" => 1, ":Xx" => 2, "#xx" => 3 }
       bit_weights = SDoc::SearchIndex.compute_bit_weights(ngram_bit_positions)
 
       reversed = ngram_bit_positions.reverse_each.to_h
@@ -160,7 +178,7 @@ describe SDoc::SearchIndex do
     end
 
     it "ignores alias ngrams" do
-      _(SDoc::SearchIndex.compute_bit_weights({ "#x" => 0, ".x" => 0}).length).must_equal 1
+      _(SDoc::SearchIndex.compute_bit_weights({ "#xx" => 0, ".xx" => 0}).length).must_equal 1
     end
   end
 

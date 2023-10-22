@@ -23,7 +23,7 @@ describe SDoc::SearchIndex do
       _(search_index["entries"].length).must_equal 2
       search_index["entries"].each do |entry|
         _(entry.length).must_be :<=, 6
-        _(entry[0]).must_be_instance_of Array # Fingerprint
+        _(entry[0]).must_be_kind_of Array # Fingerprint
         _(entry[1]).must_be :<, 1.0 # Tiebreaker bonus
       end
 

@@ -1,9 +1,16 @@
-require "base64"
 require "nokogiri"
 require_relative "helpers"
 
 module SDoc::SearchIndex
   extend self
+
+  class Uint8Array < Array
+    # This doesn't generate valid JSON, but it is suitable as an export from an
+    # ES6 module.
+    def to_json(*)
+      "(new Uint8Array(#{super}))"
+    end
+  end
 
   def generate(rdoc_modules)
     # RDoc duplicates RDoc::MethodAttr instances when modules are aliased by
@@ -74,7 +81,7 @@ module SDoc::SearchIndex
       bytes[position / 8] |= 1 << (position % 8)
     end
 
-    bytes
+    Uint8Array.new(bytes)
   end
 
   BIGRAM_PATTERN_WEIGHTS = {
@@ -85,9 +92,11 @@ module SDoc::SearchIndex
   }
 
   def compute_bit_weights(bigram_bit_positions)
-    bigram_bit_positions.uniq(&:last).sort_by(&:last).map do |bigram, _position|
+    weights = bigram_bit_positions.uniq(&:last).sort_by(&:last).map do |bigram, _position|
       BIGRAM_PATTERN_WEIGHTS.map { |pattern, weight| bigram.match?(pattern) ? weight : 1 }.max
     end
+
+    Uint8Array.new(weights)
   end
 
   def compute_tiebreaker_bonus(module_name, method_name, description)

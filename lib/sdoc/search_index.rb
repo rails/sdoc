@@ -40,24 +40,28 @@ module SDoc::SearchIndex
   end
 
   def derive_ngrams(name)
-    # Example: "ActiveSupport::Cache::Store" => ":ActiveSupport:Cache:Store"
-    strings = [":#{name}".gsub("::", ":")]
+    if name.match?(/:[^:A-Z]|#/)
+      # Example: "ActiveModel::Name::new" => ["ActiveModel", "Name", ":new"]
+      # Example: "ActiveModel::Name#<=>" => ["ActiveModel", "Name", "#<=>"]
+      strings = name.split(/::(?=[A-Z])|:(?=:)|(?=#)/)
 
-    # Example: ":ActiveSupport:Cache:lookup_store" => ":ActiveSupport:Cache.lookup_store("
-    strings.concat(strings.map { |string| string.gsub(/[:#]([^A-Z].+)/, '.\1(') })
-    # Example: ":ActiveModel:API" => ":activemodel:api"
+      # Example: ":lookup_store" => ".lookup_store("
+      strings.concat(strings.map { |string| string.sub(/^[:#](.+)/, '.\1(') })
+    else
+      # Example: "ActiveSupport::Cache::Store" => [":ActiveSupport", ":Cache, ":Store"]
+      strings = ":#{name}".split(/:(?=:)/)
+    end
+
+    # Example: ":API" => ":api"
     strings.concat(strings.map(&:downcase))
-    # Example: ":ActiveSupport:HashWithIndifferentAccess" => ":AS:HWIA"
+    # Example: ":HashWithIndifferentAccess" => ":HWIA"
     strings.concat(strings.map { |string| string.gsub(/([A-Z])[a-z]+/, '\1') })
-    # Example: ":AbstractController:Base#action_name" => " AbstractController Base action_name"
-    strings.concat(strings.map { |string| string.tr(":#", " ") })
-    # Example: ":ActiveRecord:Querying#find_by_sql" => ":ActiveRecord:Querying#findbysql"
+    # Example: "#find_by_sql" => "#findbysql"
     strings.concat(strings.map { |string| string.tr("_", "") })
-
-    # Example: ":ActiveModel:Name#<=>" => [":ActiveModel", ":Name", "#<=>"]
-    strings.map! { |string| string.split(/(?=[ :#.])/) }.flatten!.uniq!
-    # Example: ":ActiveModel" => ":A "
-    strings.concat(strings.map { |string| "#{string[0, 2]} " })
+    # Example: "#action_name" => " action_name"
+    strings.concat(strings.map { |string| string.tr(":#", " ") })
+    # Example: " action_name" => " a "
+    strings.concat(strings.map { |string| string.sub(/^([:# ].).+/, '\1 ') })
 
     strings.flat_map { |string| string.each_char.each_cons(3).map(&:join) }.uniq
   end
@@ -97,26 +101,14 @@ module SDoc::SearchIndex
   end
 
   def compute_tiebreaker_bonus(module_name, method_name, description)
-    method_name ||= ""
-
-    # Bonus is per matching ngram and is very small so it does not outweigh
-    # points from other matches. Longer names have smaller per-ngram bonuses,
-    # but the value scales down very slowly.
-    bonus = 0.01 / (module_name.length + method_name.length) ** 0.025
-
-    # Further reduce bonus in proportion to method name length. This prioritizes
-    # modules before methods, and short methods of long modules before long
-    # methods of short modules. For example, when searching for "find_by", this
-    # prioritizes ActiveRecord::FinderMethods#find_by before
-    # ActiveRecord::Querying#find_by_sql.
-    #
-    # However, slightly dampen the reduction in proportion to the length of the
-    # method description. When method names are the same, this marginally favors
-    # methods with more documentation over methods with less documentation. For
-    # example, favoring ActionController::Rendering#render (which is thoroughly
-    # documented) over ActionController::Renderer#render (which primarily refers
-    # to other methods).
-    bonus *= (0.99 + [description.length, 1000].min / 250_000.0) ** method_name.length
+    # Give bonus in proportion to documentation length, but scale up extremely
+    # slowly. Bonus is per matching ngram so it must be small enough to not
+    # outweigh points from other matches.
+    bonus = (description.length + 1) ** 0.01 / 100
+    # Reduce bonus in proportion to name length. This favors short names over
+    # long names. Notably, this will often favor methods over modules since
+    # method names are usually shorter than fully qualified module names.
+    bonus /= (method_name&.length || module_name.length) ** 0.1
   end
 
   def signature_for(rdoc_method)

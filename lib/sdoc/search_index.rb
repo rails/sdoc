@@ -1,9 +1,16 @@
-require "base64"
 require "nokogiri"
 require_relative "helpers"
 
 module SDoc::SearchIndex
   extend self
+
+  class Uint8Array < Array
+    # This doesn't generate valid JSON, but it is suitable as an export from an
+    # ES6 module.
+    def to_json(*)
+      "(new Uint8Array(#{super}))"
+    end
+  end
 
   def generate(rdoc_modules)
     # RDoc duplicates RDoc::MethodAttr instances when modules are aliased by
@@ -11,16 +18,16 @@ module SDoc::SearchIndex
     # all of Foo::Bar's RDoc::MethodAttr instances.
     rdoc_objects = rdoc_modules + rdoc_modules.flat_map(&:method_list).uniq
 
-    bigram_sets = rdoc_objects.map { |rdoc_object| derive_bigrams(rdoc_object.full_name) }
-    bigram_bit_positions = compile_bigrams(bigram_sets)
-    bit_weights = compute_bit_weights(bigram_bit_positions)
+    ngram_sets = rdoc_objects.map { |rdoc_object| derive_ngrams(rdoc_object.full_name) }
+    ngram_bit_positions = compile_ngrams(ngram_sets)
+    bit_weights = compute_bit_weights(ngram_bit_positions)
 
-    entries = rdoc_objects.zip(bigram_sets).map do |rdoc_object, bigrams|
+    entries = rdoc_objects.zip(ngram_sets).map do |rdoc_object, ngrams|
       rdoc_module, rdoc_method = rdoc_object.is_a?(RDoc::ClassModule) ? [rdoc_object] : [rdoc_object.parent, rdoc_object]
       description = rdoc_object.description
 
       [
-        generate_fingerprint(bigrams, bigram_bit_positions),
+        generate_fingerprint(ngrams, ngram_bit_positions),
         compute_tiebreaker_bonus(rdoc_module.full_name, rdoc_method&.name, description),
         rdoc_object.path,
         rdoc_module.full_name,
@@ -29,44 +36,41 @@ module SDoc::SearchIndex
       ]
     end
 
-    { "bigrams" => bigram_bit_positions, "weights" => bit_weights, "entries" => entries }
+    { "ngrams" => ngram_bit_positions, "weights" => bit_weights, "entries" => entries }
   end
 
-  def derive_bigrams(name)
+  def derive_ngrams(name)
     # Example: "ActiveSupport::Cache::Store" => ":ActiveSupport:Cache:Store"
     strings = [":#{name}".gsub("::", ":")]
 
+    # Example: ":ActiveSupport:Cache:lookup_store" => ":ActiveSupport:Cache.lookup_store("
+    strings.concat(strings.map { |string| string.gsub(/[:#]([^A-Z].+)/, '.\1(') })
     # Example: ":ActiveModel:API" => ":activemodel:api"
     strings.concat(strings.map(&:downcase))
     # Example: ":ActiveSupport:HashWithIndifferentAccess" => ":AS:HWIA"
     strings.concat(strings.map { |string| string.gsub(/([A-Z])[a-z]+/, '\1') })
     # Example: ":AbstractController:Base#action_name" => " AbstractController Base action_name"
     strings.concat(strings.map { |string| string.tr(":#", " ") })
-    # Example: ":AbstractController:Base#action_name" => ":AbstractController:Base#actionname"
+    # Example: ":ActiveRecord:Querying#find_by_sql" => ":ActiveRecord:Querying#findbysql"
     strings.concat(strings.map { |string| string.tr("_", "") })
 
     # Example: ":ActiveModel:Name#<=>" => [":ActiveModel", ":Name", "#<=>"]
-    strings.map! { |string| string.split(/(?=[ :#])/) }.flatten!
+    strings.map! { |string| string.split(/(?=[ :#.])/) }.flatten!.uniq!
+    # Example: ":ActiveModel" => ":A "
+    strings.concat(strings.map { |string| "#{string[0, 2]} " })
 
-    if method_name_first_char = name[/(?:#|::)([^A-Z])/, 1]
-      # Example: "AbstractController::Base::controller_path" => ".c"
-      strings << ".#{method_name_first_char}"
-      # Example: "AbstractController::Base::controller_path" => "h("
-      strings << "#{name[-1]}("
-    end
-
-    strings.flat_map { |string| string.each_char.each_cons(2).map(&:join) }.uniq
+    strings.flat_map { |string| string.each_char.each_cons(3).map(&:join) }.uniq
   end
 
-  def compile_bigrams(bigram_sets)
-    # Assign each bigram a bit position based on its rarity. More common bigrams
+  def compile_ngrams(ngram_sets)
+    # Assign each ngram a bit position based on its rarity. More common ngrams
     # come first. This reduces the average number of bytes required to store a
     # fingerprint.
-    bigram_sets.flatten.tally.sort_by(&:last).reverse.map(&:first).each_with_index.to_h
+    ngram_sets.flatten.tally.sort_by(&:last).reverse.map(&:first).each_with_index.to_h
   end
 
-  def generate_fingerprint(bigrams, bigram_bit_positions)
-    bit_positions = bigrams.map(&bigram_bit_positions)
+  def generate_fingerprint(ngrams, ngram_bit_positions)
+    bit_positions = ngrams.map(&ngram_bit_positions)
     byte_count = ((bit_positions.max + 1) / 8.0).ceil
     bytes = [0] * byte_count
 
@@ -74,27 +78,29 @@ module SDoc::SearchIndex
       bytes[position / 8] |= 1 << (position % 8)
     end
 
-    bytes
+    Uint8Array.new(bytes)
   end
 
-  BIGRAM_PATTERN_WEIGHTS = {
+  NGRAM_PATTERN_WEIGHTS = {
     /[^a-z]/ => 2, # Bonus point for non-lowercase-alpha chars because they show intentionality.
     /^ / => 3, # More points for matching generic start of token.
     /^:/ => 4, # Even more points for explicit start of token.
     /[#.(]/ => 50, # Strongly prefer methods when query includes "#", ".", or "(".
   }
 
-  def compute_bit_weights(bigram_bit_positions)
-    bigram_bit_positions.uniq(&:last).sort_by(&:last).map do |bigram, _position|
-      BIGRAM_PATTERN_WEIGHTS.map { |pattern, weight| bigram.match?(pattern) ? weight : 1 }.max
+  def compute_bit_weights(ngram_bit_positions)
+    weights = ngram_bit_positions.uniq(&:last).sort_by(&:last).map do |ngram, _position|
+      NGRAM_PATTERN_WEIGHTS.map { |pattern, weight| ngram.match?(pattern) ? weight : 1 }.max
     end
+
+    Uint8Array.new(weights)
   end
 
   def compute_tiebreaker_bonus(module_name, method_name, description)
     method_name ||= ""
 
-    # Bonus is per matching bigram and is very small so it does not outweigh
-    # points from other matches. Longer names have smaller per-bigram bonuses,
+    # Bonus is per matching ngram and is very small so it does not outweigh
+    # points from other matches. Longer names have smaller per-ngram bonuses,
     # but the value scales down very slowly.
     bonus = 0.01 / (module_name.length + method_name.length) ** 0.025
 

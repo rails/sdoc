@@ -35,9 +35,10 @@ describe RDoc::Generator::SDoc do
     Dir.mktmpdir do |dir|
       Dir.chdir(dir) do
         rdoc_run("--files", "#{__dir__}/../README.md", "#{__dir__}/../lib/sdoc/version.rb")
-        contents = File.read("doc/js/search-index.js")
-        index = JSON.parse(contents.delete_prefix!("export default ").delete_suffix!(";"))
-        _(index.keys.sort).must_equal ["bigrams", "entries", "weights"]
+        index = File.read("doc/js/search-index.js")
+        index.delete_prefix!("export default ").delete_suffix!(";")
+        index.gsub!(/\(new Uint8Array\((.+?)\)\)/, '\1')
+        _(JSON.parse(index).keys.sort).must_equal ["ngrams", "weights", "entries"].sort
       end
     end
   end

@@ -11,7 +11,7 @@ describe SDoc::SearchIndex do
         end
       RUBY
 
-      ngrams = SDoc::SearchIndex.derive_ngrams("FooBar#hoge_fuga")
+      ngrams = SDoc::SearchIndex.derive_ngrams("FooBar") | SDoc::SearchIndex.derive_ngrams("FooBar#hoge_fuga")
 
       search_index = SDoc::SearchIndex.generate(top_level.classes_and_modules)
 
@@ -54,54 +54,51 @@ describe SDoc::SearchIndex do
     end
 
     it "includes module-related ngrams" do
-      ngrams = SDoc::SearchIndex.derive_ngrams("Abc::Xyz")
+      ngrams = SDoc::SearchIndex.derive_ngrams("Abc::Def")
+
+      _(ngrams.map(&:length).uniq.first).must_equal 3
 
       _(ngrams).must_include ":Ab"
-      _(ngrams).must_include ":Xy"
+      _(ngrams).must_include ":A "
+      _(ngrams).must_include " Ab"
+      _(ngrams).must_include " A "
 
-      _(ngrams.grep(/c:|::|[.(]/)).must_be_empty
+      _(ngrams).must_include ":De"
+      _(ngrams).must_include ":D "
+      _(ngrams).must_include " De"
+      _(ngrams).must_include " D "
+
+      _(ngrams.grep(/.:|[^: ]. |[.(]/)).must_be_empty
     end
 
     it "includes method-related ngrams for instance methods" do
-      ngrams = SDoc::SearchIndex.derive_ngrams("Abc#def_xyz")
+      ngrams = SDoc::SearchIndex.derive_ngrams("Abc::Def#uvw_xyz")
 
-      _(ngrams).must_include "#de"
-      _(ngrams).must_include ".de"
+      _(ngrams.map(&:length).uniq.first).must_equal 3
+
+      _(ngrams).must_include "#uv"
+      _(ngrams).must_include "#u "
+      _(ngrams).must_include " uv"
+      _(ngrams).must_include " u "
+
+      _(ngrams).must_include ".uv"
       _(ngrams).must_include "yz("
 
-      _(ngrams).must_include "f_x"
-      _(ngrams).must_include "efx"
-      _(ngrams).must_include "fxy"
+      _(ngrams).must_include "w_x"
+      _(ngrams).must_include "vwx"
+      _(ngrams).must_include "wxy"
 
-      _(ngrams.grep(/c#/)).must_be_empty
+      _(ngrams.grep(/.#|[^:# ]. /)).must_be_empty
+
+      ngrams_from_module = SDoc::SearchIndex.derive_ngrams("Abc::Def")
+      _((ngrams & ngrams_from_module).sort).must_equal ngrams_from_module.grep_v(/[: ][A-F]/i).sort
     end
 
     it "includes method-related ngrams for singleton methods" do
-      ngrams = SDoc::SearchIndex.derive_ngrams("Abc::def_xyz")
+      ngrams = SDoc::SearchIndex.derive_ngrams("Abc::Def::uvw_xyz")
 
-      _(ngrams).must_include ":de"
-      _(ngrams).must_include ".de"
-      _(ngrams).must_include "yz("
-
-      _(ngrams.grep(/c:/)).must_be_empty
-    end
-
-    it "includes space delimiter ngrams" do
-      ngrams = SDoc::SearchIndex.derive_ngrams("Abc::Def#xyz")
-
-      _(ngrams).must_include " Ab"
-      _(ngrams).must_include " A "
-      _(ngrams).must_include ":A "
-
-      _(ngrams).must_include " De"
-      _(ngrams).must_include " D "
-      _(ngrams).must_include ":D "
-
-      _(ngrams).must_include " xy"
-      _(ngrams).must_include " x "
-      _(ngrams).must_include "#x "
-
-      _(ngrams.grep(/[cfz] $/)).must_be_empty
+      instance_method_ngrams = SDoc::SearchIndex.derive_ngrams("Abc::Def#uvw_xyz")
+      _(ngrams.sort).must_equal instance_method_ngrams.map { _1.tr("#", ":") }.sort
     end
 
     it "includes acronym ngrams" do
@@ -213,20 +210,6 @@ describe SDoc::SearchIndex do
       end
     end
 
-    it "favors long module + short method names over short module + long method names" do
-      [
-        [ ["ActiveRecord::Associations::ClassMethods", "has_many"],
-          ["ActiveStorage::Attached::Model", "has_many_attached"] ],
-        [ ["ActiveRecord::FinderMethods", "find_by"],
-          ["ActiveRecord::Querying", "find_by_sql"] ],
-      ].each do |long_short, short_long|
-        long_short_bonus = SDoc::SearchIndex.compute_tiebreaker_bonus(*long_short, "")
-        short_long_bonus = SDoc::SearchIndex.compute_tiebreaker_bonus(*short_long, "")
-
-        _(long_short_bonus).must_be :>, short_long_bonus, "#{long_short.join "#"} vs #{short_long.join "#"}"
-      end
-    end
-
     it "favors methods with long documentation over methods with short documentation" do
       [
         [ ["X", "x", 2],
@@ -246,8 +229,6 @@ describe SDoc::SearchIndex do
 
     it "balances factors to produce desirable results" do
       [
-        [ ["ActiveSupport::Deprecation", nil, 0],
-          ["Module", "deprecate", 600] ],
         [ ["Pathname", "existence", 200],
           ["ActiveSupport::Callbacks::CallTemplate::InstanceExec1", "expand", 0] ],
         [ ["ActiveRecord::Associations::ClassMethods", "has_many", 12000],

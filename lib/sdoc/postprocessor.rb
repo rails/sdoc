@@ -10,7 +10,7 @@ module SDoc::Postprocessor
     document = Nokogiri::HTML5.parse(rendered)
 
     rebase_urls!(document)
-    version_rails_guides_urls!(document)
+    version_rubyonrails_urls!(document)
     add_ref_link_classes!(document)
     unify_h1_headings!(document)
     highlight_code_blocks!(document)
@@ -49,9 +49,12 @@ module SDoc::Postprocessor
     end
   end
 
-  def version_rails_guides_urls!(document)
+  def version_rubyonrails_urls!(document)
     if ENV["HORO_PROJECT_NAME"] == "Ruby on Rails" && version = ENV["HORO_PROJECT_VERSION"]
-      document.css("a[href^='https://guides.rubyonrails.org/']").each do |element|
+      document.css(
+        "a[href^='https://api.rubyonrails.org/']",
+        "a[href^='https://guides.rubyonrails.org/']"
+      ).each do |element|
         element["href"] = version_url(element["href"], version)
       end
     end

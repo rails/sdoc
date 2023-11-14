@@ -29,6 +29,24 @@ describe SDoc::Postprocessor do
       _(postprocessed).must_include expected_body
     end
 
+    it "versions Rails API Docs URLs based on ENV['HORO_PROJECT_VERSION']" do
+      rendered = <<~HTML
+        <a href="https://api.rubyonrails.org/classes/ActiveRecord/Base.html">Learn more</a>
+      HTML
+
+      {
+        "3.2.1" => %(<a href="https://api.rubyonrails.org/v3.2.1/classes/ActiveRecord/Base.html">Learn more</a>),
+        "v3.2.1" => %(<a href="https://api.rubyonrails.org/v3.2.1/classes/ActiveRecord/Base.html">Learn more</a>),
+        "main@1337c0d3" => %(<a href="https://edgeapi.rubyonrails.org/classes/ActiveRecord/Base.html">Learn more</a>),
+        "edge" => %(<a href="https://edgeapi.rubyonrails.org/classes/ActiveRecord/Base.html">Learn more</a>),
+        nil => %(<a href="https://api.rubyonrails.org/classes/ActiveRecord/Base.html">Learn more</a>),
+      }.each do |version, expected|
+        with_env("HORO_PROJECT_VERSION" => version, "HORO_PROJECT_NAME" => "Ruby on Rails") do
+          _(SDoc::Postprocessor.process(rendered)).must_include expected
+        end
+      end
+    end
+
     it "versions Rails guides URLs based on ENV['HORO_PROJECT_VERSION']" do
       rendered = <<~HTML
         <a href="https://guides.rubyonrails.org/testing.html">Testing</a>
@@ -47,14 +65,16 @@ describe SDoc::Postprocessor do
       end
     end
 
-    it "does not version Rails guides URLs when ENV['HORO_PROJECT_NAME'] is not Ruby on Rails" do
+    it "does not version rubyonrails.org URLs when ENV['HORO_PROJECT_NAME'] is not Ruby on Rails" do
       rendered = <<~HTML
+        <a href="https://api.rubyonrails.org/classes/ActiveRecord/Base.html">Learn more</a>
         <a href="https://guides.rubyonrails.org/testing.html">Testing</a>
       HTML
 
       with_env("HORO_PROJECT_VERSION" => "3.2.1", "HORO_PROJECT_NAME" => "My Rails Gem") do
-        _(SDoc::Postprocessor.process(rendered)).
-          must_include %(<a href="https://guides.rubyonrails.org/testing.html">Testing</a>)
+        postprocessed = _(SDoc::Postprocessor.process(rendered))
+        postprocessed.must_include %(<a href="https://api.rubyonrails.org/classes/ActiveRecord/Base.html">Learn more</a>)
+        postprocessed.must_include %(<a href="https://guides.rubyonrails.org/testing.html">Testing</a>)
       end
     end
 

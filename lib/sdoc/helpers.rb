@@ -218,7 +218,7 @@ module SDoc::Helpers
   end
 
   def method_source_code_and_url(rdoc_method)
-    source_code = rdoc_method.markup_code if rdoc_method.token_stream
+    source_code = rdoc_method.markup_code if rdoc_method.token_stream&.any?
 
     if source_code&.match(/File\s(\S+), line (\d+)/)
       source_url = github_url($1, line: $2)

@@ -342,6 +342,8 @@ html {
 .banner {
   height: var(--banner-height);
   background-color: var(--brand-color);
+  position: fixed;
+  width: inherit;
 }
 
 .banner__segment {

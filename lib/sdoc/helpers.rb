@@ -207,14 +207,16 @@ module SDoc::Helpers
   end
 
   def method_signature(rdoc_method)
-    if rdoc_method.call_seq
+    signature = if rdoc_method.call_seq
       # Support specifying a call-seq like `to_s -> string`
       rdoc_method.call_seq.gsub(/^\s*([^(\s]+)(.*?)(?: -> (.+))?$/) do
-        "<code><b>#{h $1}</b>#{h $2}</code>#{" &rarr; <code>#{h $3}</code>" if $3}"
+        "<b>#{h $1}</b>#{h $2}#{" <span class=\"returns\">&rarr;</span> #{h $3}" if $3}"
       end
     else
-      "<code><b>#{h rdoc_method.name}</b>#{h rdoc_method.params}</code>"
+      "<b>#{h rdoc_method.name}</b>#{h rdoc_method.params}"
     end
+
+    "<code>#{signature}</code>"
   end
 
   def method_source_code_and_url(rdoc_method)

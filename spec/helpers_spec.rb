@@ -813,13 +813,13 @@ describe SDoc::Helpers do
       RUBY
 
       _(@helpers.method_signature(mod.find_method("bar", false))).must_equal <<~HTML.chomp
-        <code><b>bar</b>(op = :&lt;)</code>
-        <code><b>bar</b>(&amp;block)</code>
+        <code><b>bar</b>(op = :&lt;)
+        <b>bar</b>(&amp;block)</code>
       HTML
 
       _(@helpers.method_signature(mod.find_method("qux", false))).must_equal <<~HTML.chomp
-        <code><b>qux</b>(&amp;block)</code> &rarr; <code>self</code>
-        <code><b>qux</b></code> &rarr; <code>Enumerator</code>
+        <code><b>qux</b>(&amp;block) <span class="returns">&rarr;</span> self
+        <b>qux</b> <span class="returns">&rarr;</span> Enumerator</code>
       HTML
     end
   end

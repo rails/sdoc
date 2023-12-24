@@ -12,6 +12,23 @@ describe "RDoc monkey patches" do
     end
   end
 
+  describe RDoc::AnyMethod do
+    it "omits extra whitespace in #params" do
+      rdoc_method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)
+        module Foo
+          def bar(
+            x,
+            y,
+            z
+          )
+          end
+        end
+      RUBY
+
+      _(rdoc_method.params).must_equal "(x, y, z)"
+    end
+  end
+
   describe RDoc::Markup::ToHtmlCrossref do
     it "prevents unintentional ref links" do
       description = rdoc_top_level_for(<<~RUBY).find_module_named("CoolApp").description

@@ -9,6 +9,13 @@ RDoc::TopLevel.prepend(Module.new do
 end)
 
 
+RDoc::AnyMethod.prepend(Module.new do
+  def params
+    super&.sub(/\A\(\s+/, "(")&.sub(/\s+\)\z/, ")")
+  end
+end)
+
+
 RDoc::Markup::ToHtmlCrossref.prepend(Module.new do
   def cross_reference(name, text = nil, code = true)
     if text

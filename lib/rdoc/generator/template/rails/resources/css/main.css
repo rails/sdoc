@@ -95,7 +95,11 @@ body {
 
 pre, code, .kind {
   font-family: var(--monospace-font);
-  font-size: .95em;
+  font-size: 0.95em;
+}
+
+:where(pre, code, .kind) > :is(pre, code, .kind) {
+  font-size: unset;
 }
 
 .kind::after {

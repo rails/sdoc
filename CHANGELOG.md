@@ -35,6 +35,7 @@ Main (3.0.0.alpha)
 * [#320](https://github.com/rails/sdoc/pull/320) Remove jQuery [@jonathanhefner](https://github.com/jonathanhefner)
 * [#322](https://github.com/rails/sdoc/pull/322) Use `type="search"` for search input [@jonathanhefner](https://github.com/jonathanhefner)
 * [#323](https://github.com/rails/sdoc/pull/323) Update favicon [@jonathanhefner](https://github.com/jonathanhefner)
+* [#345](https://github.com/rails/sdoc/pull/345) Version explicit links to `api.rubyonrails.org` [@jonathanhefner](https://github.com/jonathanhefner)
 
 2.6.1
 =====

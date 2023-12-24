@@ -72,9 +72,9 @@ describe SDoc::Postprocessor do
       HTML
 
       with_env("HORO_PROJECT_VERSION" => "3.2.1", "HORO_PROJECT_NAME" => "My Rails Gem") do
-        postprocessed = _(SDoc::Postprocessor.process(rendered))
-        postprocessed.must_include %(<a href="https://api.rubyonrails.org/classes/ActiveRecord/Base.html">Learn more</a>)
-        postprocessed.must_include %(<a href="https://guides.rubyonrails.org/testing.html">Testing</a>)
+        postprocessed = SDoc::Postprocessor.process(rendered)
+        _(postprocessed).must_include %(<a href="https://api.rubyonrails.org/classes/ActiveRecord/Base.html">Learn more</a>)
+        _(postprocessed).must_include %(<a href="https://guides.rubyonrails.org/testing.html">Testing</a>)
       end
     end
 

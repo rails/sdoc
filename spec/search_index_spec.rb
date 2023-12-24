@@ -266,7 +266,46 @@ describe SDoc::SearchIndex do
       _(SDoc::SearchIndex.signature_for(rdoc_method)).must_equal "::bar(x, y, z)"
     end
 
-    it "uses '(...)' to represent params for :call-seq: methods" do
+    it "extracts params for basic :call-seq: methods" do
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        module Foo
+          # :method: bar
+          # :call-seq:
+          #   bar(x, y, z)
+          #
+          # Returns result.
+
+          # :method: bar!
+          # :call-seq:
+          #   bar!(x, y, z) -> result
+
+          # :method: qux
+          # :call-seq:
+          #   qux
+
+          # :method: qux?
+          # :call-seq:
+          #   qux? -> result
+
+          # :method: fuga
+          # :call-seq:
+          #   fuga(x = ' -> ') -> result
+
+          # :method: hoge
+          # :call-seq:
+          #   hoge() -> (result)
+        end
+      RUBY
+
+      _(SDoc::SearchIndex.signature_for(rdoc_module.find_method("bar", false))).must_equal "#bar(x, y, z)"
+      _(SDoc::SearchIndex.signature_for(rdoc_module.find_method("bar!", false))).must_equal "#bar!(x, y, z)"
+      _(SDoc::SearchIndex.signature_for(rdoc_module.find_method("qux", false))).must_equal "#qux()"
+      _(SDoc::SearchIndex.signature_for(rdoc_module.find_method("qux?", false))).must_equal "#qux?()"
+      _(SDoc::SearchIndex.signature_for(rdoc_module.find_method("fuga", false))).must_equal "#fuga(x = ' -> ')"
+      _(SDoc::SearchIndex.signature_for(rdoc_module.find_method("hoge", false))).must_equal "#hoge()"
+    end
+
+    it "uses '(...)' to represent params for overloaded :call-seq: methods" do
       rdoc_method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)
         module Foo
           # :method: bar

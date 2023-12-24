@@ -113,7 +113,19 @@ module SDoc::SearchIndex
 
   def signature_for(rdoc_method)
     sigil = rdoc_method.singleton ? "::" : "#"
-    params = rdoc_method.call_seq ? "(...)" : rdoc_method.params
+
+    params =
+      case rdoc_method.call_seq&.strip
+      when nil
+        rdoc_method.params
+      when /\A[^ (]+(?: -> .+)?\z/
+        "()"
+      when /\A[^ (]+(\(.*?\))(?: -> .+)?\z/
+        $1
+      else
+        "(...)"
+      end
+
     "#{sigil}#{rdoc_method.name}#{params}"
   end
 

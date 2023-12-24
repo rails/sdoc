@@ -342,6 +342,7 @@ html {
 .banner {
   height: var(--banner-height);
   background-color: var(--brand-color);
+  box-shadow: 1px 0px var(--brand-color); /* Match .panel_tray width on desktop */
 }
 
 .banner__segment {
@@ -658,7 +659,7 @@ html {
 
   .panel__tray {
     height: unset;
-    border-right: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+    box-shadow: 1px 0 color-mix(in srgb, currentColor 25%, transparent);
   }
 
   .panel__results.active {

@@ -182,7 +182,7 @@ module SDoc::Helpers
     parent_names = rdoc_module.full_name.split("::")[0...-1]
 
     crumbs = parent_names.each_with_index.map do |name, i|
-      parent = rdoc_module.store.find_module_named(parent_names[0..i].join("::"))
+      parent = rdoc_module.store.find_class_or_module(parent_names[0..i].join("::"))
       parent ? link_to(h(name), parent) : h(name)
     end
 

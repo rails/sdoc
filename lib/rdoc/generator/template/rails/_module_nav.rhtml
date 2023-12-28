@@ -1,7 +1,7 @@
 <% unless @context.classes_and_modules.empty? %>
-  <a href="#namespace" class="namespace-link"><%= short_name(@context) %> namespace</a>
+  <a href="#namespace" class="namespace-link"><%= short_name_for(@context) %> namespace</a>
 <% end %>
-<%= button_to_search @context, display_name: short_name(@context) %>
+<%= button_to_search @context, display_name: short_name_for(@context) %>
 
 <% if outline = outline(@context) %>
   <div class="nav__heading">Outline</div>
@@ -14,7 +14,7 @@
   <div class="nav__heading">Methods</div>
   <ul class="nav__list">
     <% methods.each do |rdoc_method| %>
-      <li><%= link_to short_name(rdoc_method), rdoc_method,
+      <li><%= link_to short_name_for(rdoc_method), rdoc_method,
                 class: "ref-link nav__method-link#{"--singleton" if rdoc_method.singleton}" %></li>
     <% end %>
   </ul>

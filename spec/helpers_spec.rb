@@ -119,7 +119,7 @@ describe SDoc::Helpers do
         must_equal %(<a href="foo/bar/qux.html" data-hoge="fuga">foo/bar/qux.html</a>)
     end
 
-    it "uses #full_name when the text argument is an RDoc::CodeObject" do
+    it "uses #full_name_for when the text argument is an RDoc::CodeObject" do
       top_level = rdoc_top_level_for <<~RUBY
         module Foo; class Bar; def qux; end; end; end
       RUBY
@@ -131,7 +131,7 @@ describe SDoc::Helpers do
         top_level.find_module_named("Foo::Bar").find_method("qux", false),
       ].each do |code_object|
         _(@helpers.link_to(code_object, "url")).
-          must_equal %(<a href="url">#{@helpers.full_name(code_object)}</a>)
+          must_equal %(<a href="url">#{@helpers.full_name_for(code_object)}</a>)
       end
     end
 
@@ -157,7 +157,7 @@ describe SDoc::Helpers do
       RUBY
 
       _(@helpers.link_to(rdoc_module)).
-        must_equal %(<a href="/#{rdoc_module.path}" class="ref-link">#{@helpers.full_name(rdoc_module)}</a>)
+        must_equal %(<a href="/#{rdoc_module.path}" class="ref-link">#{@helpers.full_name_for(rdoc_module)}</a>)
 
       _(@helpers.link_to("<code>Bar</code>", rdoc_module)).
         must_equal %(<a href="/#{rdoc_module.path}" class="ref-link"><code>Bar</code></a>)
@@ -183,7 +183,7 @@ describe SDoc::Helpers do
         module Foo; class Bar; end; end
       RUBY
 
-      _(@helpers.link_to_if(false, rdoc_module, "url")).must_equal @helpers.full_name(rdoc_module)
+      _(@helpers.link_to_if(false, rdoc_module, "url")).must_equal @helpers.full_name_for(rdoc_module)
     end
   end
 
@@ -233,23 +233,23 @@ describe SDoc::Helpers do
     end
   end
 
-  describe "#full_name" do
+  describe "#full_name_for" do
     it "wraps name in <code>" do
-      _(@helpers.full_name("Foo")).must_equal "<code>Foo</code>"
+      _(@helpers.full_name_for("Foo")).must_equal "<code>Foo</code>"
     end
 
     it "inserts word-break opportunities into module names" do
-      _(@helpers.full_name("Foo::Bar::Qux")).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
-      _(@helpers.full_name("::Foo::Bar::Qux")).must_equal "<code>::Foo::<wbr>Bar::<wbr>Qux</code>"
+      _(@helpers.full_name_for("Foo::Bar::Qux")).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
+      _(@helpers.full_name_for("::Foo::Bar::Qux")).must_equal "<code>::Foo::<wbr>Bar::<wbr>Qux</code>"
     end
 
     it "inserts word-break opportunities into file paths" do
-      _(@helpers.full_name("path/to/file.rb")).must_equal "<code>path/<wbr>to/<wbr>file.rb</code>"
-      _(@helpers.full_name("/path/to/file.rb")).must_equal "<code>/path/<wbr>to/<wbr>file.rb</code>"
+      _(@helpers.full_name_for("path/to/file.rb")).must_equal "<code>path/<wbr>to/<wbr>file.rb</code>"
+      _(@helpers.full_name_for("/path/to/file.rb")).must_equal "<code>/path/<wbr>to/<wbr>file.rb</code>"
     end
 
     it "escapes name parts" do
-      _(@helpers.full_name("ruby&rails/file.rb")).must_equal "<code>ruby&amp;rails/<wbr>file.rb</code>"
+      _(@helpers.full_name_for("ruby&rails/file.rb")).must_equal "<code>ruby&amp;rails/<wbr>file.rb</code>"
     end
 
     it "uses RDoc::CodeObject#full_name when argument is an RDoc::CodeObject" do
@@ -257,17 +257,17 @@ describe SDoc::Helpers do
         module Foo; module Bar; class Qux; end; end; end
       RUBY
 
-      _(@helpers.full_name(rdoc_module)).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
+      _(@helpers.full_name_for(rdoc_module)).must_equal "<code>Foo::<wbr>Bar::<wbr>Qux</code>"
     end
   end
 
-  describe "#short_name" do
+  describe "#short_name_for" do
     it "wraps name in <code>" do
-      _(@helpers.short_name("foo")).must_equal "<code>foo</code>"
+      _(@helpers.short_name_for("foo")).must_equal "<code>foo</code>"
     end
 
     it "escapes the name" do
-      _(@helpers.short_name("<=>")).must_equal "<code>&lt;=&gt;</code>"
+      _(@helpers.short_name_for("<=>")).must_equal "<code>&lt;=&gt;</code>"
     end
 
     it "uses RDoc::CodeObject#name when argument is an RDoc::CodeObject" do
@@ -275,7 +275,27 @@ describe SDoc::Helpers do
         module Foo; def bar; end; end
       RUBY
 
-      _(@helpers.short_name(rdoc_method)).must_equal "<code>bar</code>"
+      _(@helpers.short_name_for(rdoc_method)).must_equal "<code>bar</code>"
+    end
+  end
+
+  describe "#description_for" do
+    it "returns RDoc::CodeObject#description wrapped in div.description" do
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        # This is +Foo+.
+        module Foo; end
+      RUBY
+
+      _(@helpers.description_for(rdoc_module)).
+        must_equal %(<div class="description">\n<p>This is <code>Foo</code>.</p>\n</div>)
+    end
+
+    it "returns nil when RDoc::CodeObject#description is empty" do
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        module Foo; end
+      RUBY
+
+      _(@helpers.description_for(rdoc_module)).must_be_nil
     end
   end
 

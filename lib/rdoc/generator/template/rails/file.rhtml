@@ -18,7 +18,7 @@
     <main id="content" class="content">
         <div class="content__title">
           <%= "<h1>" if @context.comment.empty? %>
-            <%= full_name @context %>
+            <%= full_name_for @context %>
           <%= "</h1>" if @context.comment.empty? %>
         </div>
 

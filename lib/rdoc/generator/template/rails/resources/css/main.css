@@ -289,19 +289,23 @@ th
   font-style: italic;
 }
 
-.description pre, .method__source pre {
+.description pre, pre.source-code {
   padding: 0.5ch 1ch;
   border-radius: 6px;
   overflow-x: auto;
+}
 
+:is(.description p, p.description) code {
+  padding: 0 0.15em;
+  border-radius: 3px;
+}
+
+.description pre, :is(.description p, p.description) code {
   background: var(--code-bg);
 }
 
-
-:is(.description p, p.description) code {
-  background: var(--code-bg);
-  padding: 0 0.15em;
-  border-radius: 3px;
+pre.source-code {
+  background: var(--source-code-bg);
 }
 
 @media (hover: hover) {
@@ -737,8 +741,32 @@ html {
   border-bottom: 1px solid;
 }
 
-.content__section-title + .content__divider {
+.content__section-title + .content__divider,
+.content__divider + :is(*, div /* increase selector specificity */) {
   margin-top: var(--space);
+}
+
+
+/*
+ * Constant
+ */
+
+.constant {
+  margin-top: var(--space-lg);
+}
+
+.constant__name {
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--code-bg);
+}
+
+.constant__name code {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.constant__name + *, .constant__source {
+  margin-top: var(--space-sm);
 }
 
 
@@ -748,10 +776,6 @@ html {
 
 .method {
   margin-top: var(--space-xl);
-}
-
-.content__divider + .method {
-  margin-top: var(--space);
 }
 
 
@@ -847,7 +871,6 @@ html {
 
 .method__source pre {
   margin-top: var(--space-xs);
-  background: var(--source-code-bg);
 }
 
 

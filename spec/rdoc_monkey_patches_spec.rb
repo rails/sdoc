@@ -12,6 +12,28 @@ describe "RDoc monkey patches" do
     end
   end
 
+  describe RDoc::Constant do
+    it "implements #aref" do
+      rdoc_constant = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_constant_named("BAR_QUX")
+        module Foo
+          BAR_QUX = true
+        end
+      RUBY
+
+      _(rdoc_constant.aref).must_equal "constant-BAR_QUX"
+    end
+
+    it "uses #aref in #path" do
+      rdoc_constant = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_constant_named("BAR_QUX")
+        module Foo
+          BAR_QUX = true
+        end
+      RUBY
+
+      _(rdoc_constant.path).must_equal "classes/Foo.html#constant-BAR_QUX"
+    end
+  end
+
   describe RDoc::AnyMethod do
     it "omits extra whitespace in #params" do
       rdoc_method = rdoc_top_level_for(<<~RUBY).find_module_named("Foo").find_method("bar", false)

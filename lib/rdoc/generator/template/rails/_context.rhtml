@@ -58,9 +58,11 @@
     <% unless constants.empty? %>
       <h2 class="content__divider">Constants</h2>
       <% constants.each do |constant| %>
-        <div class="constant">
-          <div class="constant__name">
+        <div class="constant" id="<%= constant.aref %>">
+          <div class="constant__name permalink-container">
             <h3><%= short_name_for constant %></h3>
+            <%= link_to %(<img src="/i/link.svg" alt="Permalink">), constant,
+                  class: "permalink", title: "Permalink" %>
           </div>
           <%= description_for constant %>
           <div class="constant__source">
@@ -97,10 +99,10 @@
       <h2 class="content__divider"><%= visibility.to_s.capitalize %> <%= type %> methods</h2>
       <% methods.each do |method| %>
         <div class="method" id="<%= method.aref %>">
-          <div class="method__signature">
+          <div class="method__signature permalink-container">
             <h3><%= method_signature method %></h3>
             <%= link_to %(<img src="/i/link.svg" alt="Permalink">), method,
-                  class: "method__permalink", title: "Permalink" %>
+                  class: "permalink", title: "Permalink" %>
           </div>
 
           <% unless method.aliases.empty? %>

@@ -2,16 +2,22 @@ require "spec_helper"
 
 describe SDoc::SearchIndex do
   describe "#generate" do
-    it "generates a search index for the given modules and their methods" do
+    it "generates a search index for the given modules and their members" do
       top_level = rdoc_top_level_for <<~RUBY
         # This is FooBar.
         class FooBar
+          # This is +BAZ_QUX+.
+          BAZ_QUX = true
+
           # This is #hoge_fuga.
           def hoge_fuga; end
         end
       RUBY
 
-      ngrams = SDoc::SearchIndex.derive_ngrams("FooBar") | SDoc::SearchIndex.derive_ngrams("FooBar#hoge_fuga")
+      ngrams =
+        SDoc::SearchIndex.derive_ngrams("FooBar") |
+        SDoc::SearchIndex.derive_ngrams("FooBar::BAZ_QUX") |
+        SDoc::SearchIndex.derive_ngrams("FooBar#hoge_fuga")
 
       search_index = SDoc::SearchIndex.generate(top_level.classes_and_modules)
 
@@ -20,29 +26,29 @@ describe SDoc::SearchIndex do
       _(search_index["ngrams"].keys.sort).must_equal ngrams.sort
       _(search_index["ngrams"].values.max).must_equal search_index["weights"].length - 1
 
-      _(search_index["entries"].length).must_equal 2
+      _(search_index["entries"].length).must_equal 3
       search_index["entries"].each do |entry|
         _(entry.length).must_be :<=, 6
         _(entry[0]).must_be_kind_of Array # Fingerprint
         _(entry[1]).must_be :<, 1.0 # Tiebreaker bonus
+        _(entry[3]).must_equal "FooBar" # Module name
       end
 
-      module_entry, method_entry = search_index["entries"].sort_by { |entry| entry[4] ? 1 : 0 }
+      module_entry, method_entry, constant_entry = search_index["entries"].sort_by { |entry| entry[4].to_s }
 
       # URL
       _(module_entry[2]).must_equal "classes/FooBar.html"
+      _(constant_entry[2]).must_equal "classes/FooBar.html#constant-BAZ_QUX"
       _(method_entry[2]).must_equal "classes/FooBar.html#method-i-hoge_fuga"
 
-      # Module name
-      _(module_entry[3]).must_equal "FooBar"
-      _(method_entry[3]).must_equal "FooBar"
-
-      # Method signature
+      # Member label
       _(module_entry[4]).must_be_nil
+      _(constant_entry[4]).must_equal "::BAZ_QUX"
       _(method_entry[4]).must_equal "#hoge_fuga()"
 
       # Description
       _(module_entry[5]).must_equal "This is <code>FooBar</code>."
+      _(constant_entry[5]).must_equal "This is <code>BAZ_QUX</code>."
       _(method_entry[5]).must_equal "This is <code>hoge_fuga</code>."
     end
   end

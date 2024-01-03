@@ -13,30 +13,45 @@ module SDoc::SearchIndex
   end
 
   def generate(rdoc_modules)
-    # RDoc duplicates RDoc::MethodAttr instances when modules are aliased by
-    # assigning to a constant. For example, `MyBar = Foo::Bar` will duplicate
-    # all of Foo::Bar's RDoc::MethodAttr instances.
-    rdoc_objects = rdoc_modules + rdoc_modules.flat_map(&:method_list).uniq
+    rdoc_objects = rdoc_modules + rdoc_modules.flat_map(&:constants) + rdoc_modules.flat_map(&:method_list)
+
+    # RDoc duplicates member instances when modules are aliased by assigning to
+    # a constant. For example, `MyBar = Foo::Bar` will duplicate all of
+    # Foo::Bar's RDoc::Constant and RDoc::MethodAttr instances.
+    rdoc_objects.uniq!
 
     ngram_sets = rdoc_objects.map { |rdoc_object| derive_ngrams(rdoc_object.full_name) }
     ngram_bit_positions = compile_ngrams(ngram_sets)
     bit_weights = compute_bit_weights(ngram_bit_positions)
 
     entries = rdoc_objects.zip(ngram_sets).map do |rdoc_object, ngrams|
-      rdoc_module, rdoc_method = rdoc_object.is_a?(RDoc::ClassModule) ? [rdoc_object] : [rdoc_object.parent, rdoc_object]
-      description = rdoc_object.description
+      fingerprint = generate_fingerprint(ngrams, ngram_bit_positions)
 
-      [
-        generate_fingerprint(ngrams, ngram_bit_positions),
-        compute_tiebreaker_bonus(rdoc_module.full_name, rdoc_method&.name, description),
-        rdoc_object.path,
-        rdoc_module.full_name,
-        (signature_for(rdoc_method) if rdoc_method),
-        *truncate_description(description, 130),
-      ]
+      case rdoc_object
+      when RDoc::ClassModule
+        build_entry(rdoc_object, fingerprint)
+      when RDoc::Constant
+        build_entry(rdoc_object, fingerprint, "::#{rdoc_object.name}")
+      when RDoc::MethodAttr
+        build_entry(rdoc_object, fingerprint, signature_for(rdoc_object))
+      end
     end
 
     { "ngrams" => ngram_bit_positions, "weights" => bit_weights, "entries" => entries }
+  end
+
+  def build_entry(rdoc_object, fingerprint, member_label = nil)
+    rdoc_module = member_label ? rdoc_object.parent : rdoc_object
+    description = rdoc_object.description
+
+    [
+      fingerprint,
+      compute_tiebreaker_bonus(rdoc_module.full_name, (rdoc_object.name if member_label), description),
+      rdoc_object.path,
+      rdoc_module.full_name,
+      member_label,
+      *truncate_description(description, 130),
+    ]
   end
 
   def derive_ngrams(name)
@@ -100,15 +115,15 @@ module SDoc::SearchIndex
     Uint8Array.new(weights)
   end
 
-  def compute_tiebreaker_bonus(module_name, method_name, description)
+  def compute_tiebreaker_bonus(module_name, member_name, description)
     # Give bonus in proportion to documentation length, but scale up extremely
     # slowly. Bonus is per matching ngram so it must be small enough to not
     # outweigh points from other matches.
     bonus = (description.length + 1) ** 0.01 / 100
     # Reduce bonus in proportion to name length. This favors short names over
-    # long names. Notably, this will often favor methods over modules since
-    # method names are usually shorter than fully qualified module names.
-    bonus /= (method_name&.length || module_name.length) ** 0.1
+    # long names. Notably, this will often favor members over modules since
+    # member names are usually shorter than fully qualified module names.
+    bonus /= (member_name&.length || module_name.length) ** 0.1
   end
 
   def signature_for(rdoc_method)

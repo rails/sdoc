@@ -38,6 +38,7 @@ Main (3.0.0.alpha)
 * [#345](https://github.com/rails/sdoc/pull/345) Version explicit links to `api.rubyonrails.org` [@jonathanhefner](https://github.com/jonathanhefner)
 * [#356](https://github.com/rails/sdoc/pull/356) Redesign "Constants" section [@jonathanhefner](https://github.com/jonathanhefner)
 * [#357](https://github.com/rails/sdoc/pull/357) Support permalinking constants [@jonathanhefner](https://github.com/jonathanhefner)
+* [#358](https://github.com/rails/sdoc/pull/358) Add constants to search index [@jonathanhefner](https://github.com/jonathanhefner)
 
 2.6.1
 =====

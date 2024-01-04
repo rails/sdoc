@@ -504,7 +504,7 @@ html {
 }
 
 /* Hide TIP when one of the first three search results is a method. */
-.panel__results:has(.results__result:nth-child(n+1):nth-child(-n+3) .result__method:not(:empty))::before {
+.panel__results:has(.results__result:nth-child(n+1):nth-child(-n+3) .result__member:not(:empty))::before {
   display: none;
 }
 
@@ -542,11 +542,11 @@ html {
   flex-direction: column;
 }
 
-.result__method {
+.result__member {
   display: flex;
 }
 
-.result__method::before {
+.result__member::before {
   content: "\221F";
   font-size: 1.25em;
   margin: -0.3em 0.2em;
@@ -557,7 +557,7 @@ html {
   margin: var(--space-xs) 0 0 0;
 }
 
-:is(.result__method, .result__summary):empty {
+:is(.result__member, .result__summary):empty {
   display: none;
 }
 

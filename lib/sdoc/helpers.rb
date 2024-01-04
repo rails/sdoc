@@ -28,7 +28,7 @@ module SDoc::Helpers
   end
 
   def _link_body(text)
-    text.is_a?(RDoc::CodeObject) ? full_name(text) : text
+    text.is_a?(RDoc::CodeObject) ? full_name_for(text) : text
   end
 
   def link_to_if(condition, text, *args)
@@ -43,19 +43,25 @@ module SDoc::Helpers
     link_to(text, url, html_attributes)
   end
 
-  def button_to_search(query, display_name: full_name(query))
+  def button_to_search(query, display_name: full_name_for(query))
     query = query.full_name if query.is_a?(RDoc::CodeObject)
     %(<button class="query-button" data-query="#{h query} ">Search #{display_name}</button>)
   end
 
-  def full_name(named)
+  def full_name_for(named)
     named = named.full_name if named.is_a?(RDoc::CodeObject)
     "<code>#{named.split(%r"(?<=./|.::)").map { |part| h part }.join("<wbr>")}</code>"
   end
 
-  def short_name(named)
+  def short_name_for(named)
     named = named.name if named.is_a?(RDoc::CodeObject)
     "<code>#{h named}</code>"
+  end
+
+  def description_for(rdoc_object)
+    if rdoc_object.comment && !rdoc_object.comment.empty?
+      %(<div class="description">#{rdoc_object.description}</div>)
+    end
   end
 
   def base_tag_for_context(context)

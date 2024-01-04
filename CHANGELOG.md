@@ -36,6 +36,7 @@ Main (3.0.0.alpha)
 * [#322](https://github.com/rails/sdoc/pull/322) Use `type="search"` for search input [@jonathanhefner](https://github.com/jonathanhefner)
 * [#323](https://github.com/rails/sdoc/pull/323) Update favicon [@jonathanhefner](https://github.com/jonathanhefner)
 * [#345](https://github.com/rails/sdoc/pull/345) Version explicit links to `api.rubyonrails.org` [@jonathanhefner](https://github.com/jonathanhefner)
+* [#356](https://github.com/rails/sdoc/pull/356) Redesign "Constants" section [@jonathanhefner](https://github.com/jonathanhefner)
 
 2.6.1
 =====

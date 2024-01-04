@@ -54,26 +54,21 @@
 
     <%= description_for section %>
 
+    <!-- Constants -->
     <% unless constants.empty? %>
-      <!-- Section constants -->
       <h2 class="content__divider">Constants</h2>
-      <table border='0' cellpadding='5'>
-        <% constants.each do |const| %>
-          <tr valign='top'>
-            <td class="attr-name"><%= short_name_for const %></td>
-            <td>=</td>
-            <td class="attr-value"><%= h const.value %></td>
-          </tr>
-          <% if const.comment && !const.comment.empty? %>
-            <tr valign='top'>
-              <td>&nbsp;</td>
-              <td colspan="2" class="attr-desc"><%= const.description.strip %></td>
-            </tr>
-          <% end %>
-        <% end %>
-      </table>
+      <% constants.each do |constant| %>
+        <div class="constant">
+          <div class="constant__name">
+            <h3><%= short_name_for constant %></h3>
+          </div>
+          <%= description_for constant %>
+          <div class="constant__source">
+            <pre class="source-code"><code class="ruby"><%= h constant.value %></code></pre>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-
 
     <% unless attributes.empty? %>
       <!-- Section attributes -->
@@ -135,7 +130,7 @@
                 <% end %>
               </summary>
 
-              <pre><code class="ruby"><%= source_code %></code></pre>
+              <pre class="source-code"><code class="ruby"><%= source_code %></code></pre>
             </details>
           <% elsif source_url %>
             <p class="method__source"><%= link_to_external "GitHub", source_url %></p>

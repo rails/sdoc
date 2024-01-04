@@ -92,7 +92,7 @@ module SDoc::Postprocessor
   end
 
   def highlight_code_blocks!(document)
-    document.css(".description pre > code, .method__source pre > code").each do |element|
+    document.css(".description pre > code, pre.source-code > code").each do |element|
       code = element.inner_text
       language = element.classes.include?("ruby") ? "ruby" : guess_code_language(code)
       element.inner_html = highlight_code(code, language)

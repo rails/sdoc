@@ -758,6 +758,14 @@ html {
 .constant__name {
   padding-bottom: var(--space-xs);
   border-bottom: 2px solid var(--code-bg);
+
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.constant__name > * {
+  margin-top: 0;
 }
 
 .constant__name code {
@@ -785,10 +793,11 @@ html {
 
   display: flex;
   align-items: baseline;
+  gap: 0.5em;
 }
 
-.method__signature h3 {
-  position: relative;
+.method__signature > * {
+  margin-top: 0;
 }
 
 .method__signature code {
@@ -800,34 +809,6 @@ html {
   font-family: var(--body-font);
   font-size: 1.1em;
 }
-
-.target .method__signature code::before {
-  content: " ";
-
-  position: absolute;
-  left: calc(-0.5ch - var(--space-sm));
-  border-left: 0.5ch solid var(--link-color);
-  border-radius: 0.5ch;
-  height: 100%;
-}
-
-.method__permalink {
-  margin: 0 0 0 0.5em;
-}
-
-.method__permalink img {
-  font-family: monospace; /* Make em equivalent to <code>'s em */
-  height: 1em;
-  vertical-align: middle;
-}
-
-@media (hover: hover) {
-  .method__permalink:hover img {
-    filter: brightness(0) invert(1);
-    mix-blend-mode: difference;
-  }
-}
-
 
 .method__signature + * {
   margin-top: var(--space-sm);
@@ -871,6 +852,38 @@ html {
 
 .method__source pre {
   margin-top: var(--space-xs);
+}
+
+
+/*
+ * Permalink
+ */
+
+.permalink img {
+  height: 1.05em;
+  vertical-align: middle;
+}
+
+@media (hover: hover) {
+  .permalink:hover img {
+    filter: brightness(0) invert(1);
+    mix-blend-mode: difference;
+  }
+}
+
+.permalink-container {
+  position: relative;
+}
+
+:is(.target .permalink-container, .target.permalink-container)::before {
+  content: " ";
+  white-space: pre;
+
+  position: absolute;
+  left: calc(-0.5ch - var(--space-sm));
+  border-left: 0.5ch solid var(--link-color);
+  border-radius: 0.5ch;
+  height: 100%;
 }
 
 

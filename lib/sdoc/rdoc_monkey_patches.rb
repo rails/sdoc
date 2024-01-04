@@ -9,6 +9,21 @@ RDoc::TopLevel.prepend(Module.new do
 end)
 
 
+RDoc::Constant.prepend(Module.new do
+  def aref_prefix
+    "constant"
+  end
+
+  def aref
+    "#{aref_prefix}-#{name}"
+  end
+
+  def path
+    "#{super.sub(/#.+/, "")}##{aref}"
+  end
+end)
+
+
 RDoc::AnyMethod.prepend(Module.new do
   def params
     super&.sub(/\A\(\s+/, "(")&.sub(/\s+\)\z/, ")")

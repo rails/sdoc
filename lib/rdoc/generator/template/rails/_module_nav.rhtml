@@ -10,6 +10,15 @@
   </div>
 <% end %>
 
+<% unless (constants = @context.constants).empty? %>
+  <div class="nav__heading">Constants</div>
+  <ul class="nav__list">
+    <% constants.sort.each do |rdoc_constant| %>
+      <li><%= link_to short_name_for(rdoc_constant), rdoc_constant %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <% unless (methods = module_methods(@context)).empty? %>
   <div class="nav__heading">Methods</div>
   <ul class="nav__list">

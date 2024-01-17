@@ -8,6 +8,7 @@ describe SDoc::Helpers do
       attr_accessor :options
     end.new
 
+    @helpers._git.clear
     @helpers.options = RDoc::Options.new
   end
 
@@ -33,9 +34,9 @@ describe SDoc::Helpers do
     end
 
     it "returns the URL for a given path in the project's GitHub repository at the current SHA1" do
-      @helpers.git_repo_path = "path/to/repo"
-      @helpers.git_origin_url = "git@github.com:user/repo.git"
-      @helpers.git_head_sha1 = "1337c0d3"
+      @helpers._git[:repo_path] = "path/to/repo"
+      @helpers._git[:origin_url] = "git@github.com:user/repo.git"
+      @helpers._git[:head_sha1] = "1337c0d3"
 
       _(@helpers.github_url("foo/bar/qux.rb")).
         must_equal "https://github.com/user/repo/blob/1337c0d3/foo/bar/qux.rb"
@@ -47,14 +48,14 @@ describe SDoc::Helpers do
     end
 
     it "supports HTTPS remote URL" do
-      @helpers.git_origin_url = "https://github.com/user/repo.git"
+      @helpers._git[:origin_url] = "https://github.com/user/repo.git"
 
       _(@helpers.github_url("foo/bar/qux.rb")).
         must_match %r"\Ahttps://github.com/user/repo/blob/[0-9a-f]{40}/foo/bar/qux\.rb\z"
     end
 
     it "supports HTTPS remote URL without .git extension" do
-      @helpers.git_origin_url = "https://github.com/user/repo"
+      @helpers._git[:origin_url] = "https://github.com/user/repo"
 
       _(@helpers.github_url("foo/bar/qux.rb")).
         must_match %r"\Ahttps://github.com/user/repo/blob/[0-9a-f]{40}/foo/bar/qux\.rb\z"
@@ -67,19 +68,19 @@ describe SDoc::Helpers do
     end
 
     it "returns nil when git is not installed or project is not a git repository" do
-      @helpers.git_repo_path = ""
+      @helpers._git[:repo_path] = ""
 
       _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
     end
 
     it "returns nil when 'origin' remote is not present" do
-      @helpers.git_origin_url = ""
+      @helpers._git[:origin_url] = ""
 
       _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
     end
 
     it "returns nil when 'origin' remote is not recognized" do
-      @helpers.git_origin_url = "git@gitlab.com:user/repo.git"
+      @helpers._git[:origin_url] = "git@gitlab.com:user/repo.git"
 
       _(@helpers.github_url("foo/bar/qux.rb")).must_be_nil
     end
@@ -383,9 +384,9 @@ describe SDoc::Helpers do
 
   describe "#project_git_head" do
     it "returns the branch name and abbreviated SHA1 of the most recent commit in HEAD" do
-      @helpers.git_repo_path = "path/to/repo"
-      @helpers.git_head_branch = "1-0-stable"
-      @helpers.git_head_sha1 = "1337c0d3d00d" * 3
+      @helpers._git[:repo_path] = "path/to/repo"
+      @helpers._git[:head_branch] = "1-0-stable"
+      @helpers._git[:head_sha1] = "1337c0d3d00d" * 3
 
       _(@helpers.project_git_head).must_equal "1-0-stable@1337c0d3d00d"
     end
@@ -395,7 +396,7 @@ describe SDoc::Helpers do
     end
 
     it "returns nil when git is not installed or project is not a git repository" do
-      @helpers.git_repo_path = ""
+      @helpers._git[:repo_path] = ""
 
       _(@helpers.project_git_head).must_be_nil
     end
@@ -444,8 +445,8 @@ describe SDoc::Helpers do
 
   describe "#og_modified_time" do
     it "returns the commit time of the most recent commit in HEAD" do
-      @helpers.git_repo_path = "path/to/repo"
-      @helpers.git_head_timestamp = "1999-12-31T12:34:56Z"
+      @helpers._git[:repo_path] = "path/to/repo"
+      @helpers._git[:head_timestamp] = "1999-12-31T12:34:56Z"
 
       _(@helpers.og_modified_time).must_equal "1999-12-31T12:34:56Z"
     end
@@ -456,7 +457,7 @@ describe SDoc::Helpers do
     end
 
     it "returns nil when git is not installed or project is not a git repository" do
-      @helpers.git_repo_path = ""
+      @helpers._git[:repo_path] = ""
 
       _(@helpers.og_modified_time).must_be_nil
     end

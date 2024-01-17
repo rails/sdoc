@@ -1,4 +1,8 @@
 module SDoc::Helpers::Git
+  def _git
+    @@_git ||= {}
+  end
+
   def github_url(relative_path, line: nil)
     return unless github?
     line = "#L#{line}" if line
@@ -9,43 +13,34 @@ module SDoc::Helpers::Git
     @options.github && git? && github_repository
   end
 
-  attr_writer :git_repo_path
-
   def git?
-    @git_repo_path ||= Dir.chdir(@options.root) { `git rev-parse --show-toplevel 2> /dev/null`.chomp }
-    !@git_repo_path.empty?
+    _git[:repo_path] ||= Dir.chdir(@options.root) { `git rev-parse --show-toplevel 2> /dev/null`.chomp }
+    !_git[:repo_path].empty?
   end
 
   def git_command(command)
     Dir.chdir(@options.root) { `git #{command}`.chomp } if git?
   end
 
-  attr_writer :git_head_branch
-
   def git_head_branch
-    @git_head_branch ||= git_command("rev-parse --abbrev-ref HEAD")
+    _git[:head_branch] ||= git_command("rev-parse --abbrev-ref HEAD")
   end
-
-  attr_writer :git_head_sha1
 
   def git_head_sha1
-    @git_head_sha1 ||= git_command("rev-parse HEAD")
+    _git[:head_sha1] ||= git_command("rev-parse HEAD")
   end
-
-  attr_writer :git_head_timestamp
 
   def git_head_timestamp
-    @git_head_timestamp ||= git_command("show -s --format=%cI HEAD")
+    _git[:head_timestamp] ||= git_command("show -s --format=%cI HEAD")
   end
 
-  attr_writer :git_origin_url
-
   def git_origin_url
-    @git_origin_url ||= git_command("config --get remote.origin.url")
+    _git[:origin_url] ||= git_command("config --get remote.origin.url")
   end
 
   def github_repository
-    return @github_repository if defined?(@github_repository)
-    @github_repository = git_origin_url.chomp(".git")[%r"github\.com[/:](.+)", 1]
+    _git.fetch(:github_repository) do
+      _git[:github_repository] = git_origin_url.chomp(".git")[%r"github\.com[/:](.+)", 1]
+    end
   end
 end

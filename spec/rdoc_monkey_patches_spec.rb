@@ -114,4 +114,28 @@ describe "RDoc monkey patches" do
       end
     end
   end
+
+  describe RDoc::Markup::PreProcess do
+    it "includes files relative to the framework root" do
+      Dir.mktmpdir do |dir|
+        Dir.chdir(dir) do
+          FileUtils.mkdir_p("railties/lib")
+          File.write("railties/lib/rails.rb", <<~RUBY)
+            # :include: README.md
+            module Rails
+            end
+          RUBY
+
+          File.write("railties/README.md", <<~RUBY)
+            Railties - Gluing the Engine to the Rails
+          RUBY
+
+          rdoc_store = rdoc_dry_run("--files", "railties/lib/rails.rb", "railties/README.md").store
+
+          _(rdoc_store.find_class_or_module("Rails").description).
+            must_match %r"Railties - Gluing the Engine to the Rails"
+        end
+      end
+    end
+  end
 end

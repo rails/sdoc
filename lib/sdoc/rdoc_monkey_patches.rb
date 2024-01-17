@@ -60,3 +60,15 @@ RDoc::Parser::Ruby.prepend(Module.new do
     super unless @ignoring_constants
   end
 end)
+
+RDoc::Markup::PreProcess.prepend(Module.new do
+  def find_include_file(name)
+    to_search = [File.dirname(File.dirname(@input_file_name))].concat @include_path
+    to_search.each do |dir|
+      full_name = File.join(dir, name)
+      stat = File.stat(full_name) rescue next
+      return full_name if stat.readable?
+    end
+    nil
+  end
+end)

@@ -13,5 +13,5 @@ if ENV["rdoc"] == "master"
 end
 
 gem "importmap-rails"
-gem "railties"
+gem "railties", '>= 7.1'
 

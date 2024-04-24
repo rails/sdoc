@@ -41,7 +41,7 @@ require 'rdoc/task' # ensure this file is also required in order to use `RDoc::T
 
 RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = 'doc/rdoc'      # name of output directory
-  rdoc.options << '--format=sdoc' # explictly set the sdoc generator
+  rdoc.options << '--format=sdoc' # explicitly set the sdoc generator
   rdoc.template = 'rails'         # template used on api.rubyonrails.org
 end
 ```

@@ -104,7 +104,7 @@ Main (3.0.0.alpha)
 2.0.4
 =====
 
-* #149 Using HTML5 doctype accross all HTML files. [@MikeRogers0](https://github.com/MikeRogers0)
+* #149 Using HTML5 doctype across all HTML files. [@MikeRogers0](https://github.com/MikeRogers0)
 * #148 Fix overflow CSS property of panel elements. [@cveneziani](https://github.com/cveneziani)
 
 2.0.3
@@ -175,7 +175,7 @@ Enhancements
 Bug Fixes
 ---------
 
-- 926ff732 Remove redundany < 5.0 from rdoc dependency specification
+- 926ff732 Remove redundancy < 5.0 from rdoc dependency specification
 - db99e402 Remove code tags styling under pre elements
 - a1d7e211 Follow up of #68
 - bffc93ef Relax JSON dependency to ~> 1.7, >= 1.7.7

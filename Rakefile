@@ -43,12 +43,6 @@ class RailsTask < Rails::API::EdgeTask
     "doc/rails"
   end
 
-  # This file has been renamed in Rails 7.1.
-  # TODO: Remove this override some time after Rails 7.1 is released.
-  def api_main
-    super.sub("RDOC_MAIN.rdoc", "RDOC_MAIN.md")
-  end
-
   def component_root_dir(component)
     File.join("rails", component)
   end

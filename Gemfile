@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "rack"
+gem "rack", "~> 3.0"
 gem "rake"
 gem "hoe"
 gem "minitest"
@@ -14,4 +14,3 @@ end
 
 gem "importmap-rails"
 gem "railties"
-

@@ -13,7 +13,10 @@ module SDoc::SearchIndex
   end
 
   def generate(rdoc_modules)
-    rdoc_objects = rdoc_modules + rdoc_modules.flat_map(&:constants) + rdoc_modules.flat_map(&:method_list)
+    rdoc_objects = rdoc_modules +
+      rdoc_modules.flat_map(&:constants) +
+      rdoc_modules.flat_map(&:method_list) +
+      rdoc_modules.flat_map(&:attributes)
 
     # RDoc duplicates member instances when modules are aliased by assigning to
     # a constant. For example, `MyBar = Foo::Bar` will duplicate all of

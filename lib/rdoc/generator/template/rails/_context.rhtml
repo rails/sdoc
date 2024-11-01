@@ -77,7 +77,7 @@
       <h2 class="content__divider">Attributes</h2>
       <table border='0' cellpadding='5'>
         <% attributes.each do |attrib| %>
-          <tr valign='top'>
+          <tr valign='top' id='<%= attrib.aref %>'>
             <td class='attr-rw'>
               [<%= attrib.rw %>]
             </td>

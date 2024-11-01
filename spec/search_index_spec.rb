@@ -6,6 +6,9 @@ describe SDoc::SearchIndex do
       top_level = rdoc_top_level_for <<~RUBY
         # This is FooBar.
         class FooBar
+          # This is #lorem_ipsum.
+          attr_reader :lorem_ipsum
+
           # This is +BAZ_QUX+.
           BAZ_QUX = true
 
@@ -16,6 +19,7 @@ describe SDoc::SearchIndex do
 
       ngrams =
         SDoc::SearchIndex.derive_ngrams("FooBar") |
+        SDoc::SearchIndex.derive_ngrams("FooBar#lorem_ipsum") |
         SDoc::SearchIndex.derive_ngrams("FooBar::BAZ_QUX") |
         SDoc::SearchIndex.derive_ngrams("FooBar#hoge_fuga")
 
@@ -26,7 +30,7 @@ describe SDoc::SearchIndex do
       _(search_index["ngrams"].keys.sort).must_equal ngrams.sort
       _(search_index["ngrams"].values.max).must_equal search_index["weights"].length - 1
 
-      _(search_index["entries"].length).must_equal 3
+      _(search_index["entries"].length).must_equal 4
       search_index["entries"].each do |entry|
         _(entry.length).must_be :<=, 6
         _(entry[0]).must_be_kind_of Array # Fingerprint
@@ -34,22 +38,25 @@ describe SDoc::SearchIndex do
         _(entry[3]).must_equal "FooBar" # Module name
       end
 
-      module_entry, method_entry, constant_entry = search_index["entries"].sort_by { |entry| entry[4].to_s }
+      module_entry, method_entry, attr_entry, constant_entry = search_index["entries"].sort_by { |entry| entry[4].to_s }
 
       # URL
       _(module_entry[2]).must_equal "classes/FooBar.html"
       _(constant_entry[2]).must_equal "classes/FooBar.html#constant-BAZ_QUX"
       _(method_entry[2]).must_equal "classes/FooBar.html#method-i-hoge_fuga"
+      _(attr_entry[2]).must_equal "classes/FooBar.html#attribute-i-lorem_ipsum"
 
       # Member label
       _(module_entry[4]).must_be_nil
       _(constant_entry[4]).must_equal "::BAZ_QUX"
       _(method_entry[4]).must_equal "#hoge_fuga()"
+      _(attr_entry[4]).must_equal "#lorem_ipsum"
 
       # Description
       _(module_entry[5]).must_equal "This is <code>FooBar</code>."
       _(constant_entry[5]).must_equal "This is <code>BAZ_QUX</code>."
       _(method_entry[5]).must_equal "This is <code>hoge_fuga</code>."
+      _(attr_entry[5]).must_equal "This is <code>lorem_ipsum</code>."
     end
   end
 

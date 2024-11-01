@@ -39,6 +39,7 @@ Main (3.0.0.alpha)
 * [#356](https://github.com/rails/sdoc/pull/356) Redesign "Constants" section [@jonathanhefner](https://github.com/jonathanhefner)
 * [#357](https://github.com/rails/sdoc/pull/357) Support permalinking constants [@jonathanhefner](https://github.com/jonathanhefner)
 * [#358](https://github.com/rails/sdoc/pull/358) Add constants to search index [@jonathanhefner](https://github.com/jonathanhefner)
+* [#370](https://github.com/rails/sdoc/pull/370) Add attributes to search index [@earlopain](https://github.com/earlopain)
 
 2.6.1
 =====

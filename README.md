@@ -70,20 +70,20 @@ Please feel free to still report issues here for both projects, especially if yo
 If you'd like to contribute you can generate the Rails main branch documentation by running:
 
 ```bash
-rake test:rails
+bundle exec rake test:rails
 ```
 
 You can generate the Ruby default branch documentation by running:
 
 ```bash
-rake test:ruby
+bundle exec rake test:ruby
 ```
 
 The generated documentation will be put into `doc/public` directory.
 To view the just generated documentation start up a rack application by running:
 
 ```bash
-rackup config.ru
+bundle exec rackup config.ru
 ```
 
 Then open http://localhost:9292 in the browser to view the documentation.

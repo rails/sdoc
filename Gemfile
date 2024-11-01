@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "rack"
+gem "rack", "~> 3.0"
 gem "rake"
 gem "hoe"
 gem "minitest"
@@ -13,5 +13,4 @@ if ENV["rdoc"] == "master"
 end
 
 gem "importmap-rails"
-gem "railties", '>= 7.1'
-
+gem "railties"

@@ -15,6 +15,7 @@ unless Dir.exist?(root)
   exit
 end
 
+require "rack/static"
 use Rack::Static,
   :urls => ["/files", "/images", "/js", "/css", "/panel", "/i", "/fonts", "/classes", "/ruby", "/rails"],
   :root => root
@@ -22,8 +23,8 @@ run lambda { |env|
   [
     200,
     {
-      'Content-Type'  => 'text/html',
-      'Cache-Control' => 'public, max-age=86400'
+      'content-type'  => 'text/html',
+      'cache-control' => 'public, max-age=86400'
     },
     File.open("#{root}/index.html", File::RDONLY)
   ]

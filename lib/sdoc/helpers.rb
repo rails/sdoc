@@ -64,6 +64,12 @@ module SDoc::Helpers
     end
   end
 
+  def comments_for(context, section)
+    return if section.comments.empty?
+
+    %(<div class="description">#{context.markup section.comments}</div>)
+  end
+
   def base_tag_for_context(context)
     relative_root = "../" * context.path.count("/")
     %(<base href="./#{relative_root}" data-current-path="#{context.path}">)

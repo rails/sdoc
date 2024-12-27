@@ -300,6 +300,39 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#comments_for" do
+    it "returns RDoc::Context::Section#comments wrapped in div.description" do
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        module Foo
+          # :section: Section 1
+          # First comment for Section 1 in +Foo+.
+
+          # :section: Section 1
+          # Second comment for Section 1 in +Foo+.
+        end
+      RUBY
+
+      _(@helpers.comments_for(rdoc_module, rdoc_module.sections.last)).
+        must_equal <<~HTML.chomp
+          <div class="description">
+          <p>First comment for Section 1 in <code>Foo</code>.</p>
+
+          <p>Second comment for Section 1 in <code>Foo</code>.</p>
+          </div>
+        HTML
+    end
+
+    it "returns nil when RDoc::CodeObject#description is empty" do
+      rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
+        module Foo
+          # :section: One
+        end
+      RUBY
+
+      _(@helpers.comments_for(rdoc_module, rdoc_module.sections.last)).must_be_nil
+    end
+  end
+
   describe "#base_tag_for_context" do
     it "returns a <base> tag with an appropriate path for the given RDoc::Context" do
       top_level = rdoc_top_level_for <<~RUBY

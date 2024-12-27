@@ -32,7 +32,7 @@ end)
 
 
 RDoc::Markup::ToHtmlCrossref.prepend(Module.new do
-  def cross_reference(name, text = nil, code = true)
+  def cross_reference(name, text = nil, code = true, rdoc_ref: false)
     if text
       # Style ref links that look like code, such as `{Rails}[rdoc-ref:Rails]`.
       code ||= !text.include?(" ") || text.match?(/\S\(/)

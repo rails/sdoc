@@ -305,10 +305,10 @@ describe SDoc::Helpers do
       rdoc_module = rdoc_top_level_for(<<~RUBY).find_module_named("Foo")
         module Foo
           # :section: Section 1
-          # First comment for Section 1 in Foo.
+          # First comment for Section 1 in +Foo+.
 
           # :section: Section 1
-          # Second comment for Section 1 in Foo.
+          # Second comment for Section 1 in +Foo+.
         end
       RUBY
 

@@ -1,6 +1,20 @@
 require "rdoc"
 
 RDoc::TopLevel.prepend(Module.new do
+  def path
+    File.join("files", super)
+  end
+end)
+
+
+RDoc::ClassModule.prepend(Module.new do
+  def path
+    File.join("classes", super)
+  end
+end)
+
+
+RDoc::TopLevel.prepend(Module.new do
   attr_writer :path
 
   def path

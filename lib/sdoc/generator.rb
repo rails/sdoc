@@ -25,9 +25,6 @@ class RDoc::Generator::SDoc
 
   DESCRIPTION = 'Searchable HTML documentation'
 
-  FILE_DIR = 'files'
-  CLASS_DIR = 'classes'
-
   RESOURCES_DIR = File.join('resources', '.')
 
   attr_reader :options
@@ -94,11 +91,11 @@ class RDoc::Generator::SDoc
   end
 
   def class_dir
-    CLASS_DIR
+    nil
   end
 
   def file_dir
-    FILE_DIR
+    nil
   end
 
   ### Determines index page based on @options.main_page (or lack thereof)

@@ -76,12 +76,13 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: #dddddd;
-    --link-color: #ee3f3f;
+    --text-color: #e5e5e5;
+    --link-color: #f06b6e;
+    --link-hover-color: #ec3d41;
 
-    --body-bg: #0c0c0c;
-    --code-bg: #1b1b1b;
-    --source-code-bg: #000000;
+    --body-bg: #181818;
+    --code-bg: #292929;
+    --source-code-bg: #292929;
   }
 }
 

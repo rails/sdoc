@@ -28,7 +28,7 @@ def rdoc_top_level_for(ruby_code)
   # foolproof way to initialize it is by simply running it with a dummy file.
   $rdoc_for_specs ||= rdoc_dry_run("--files", __FILE__)
 
-  $rdoc_for_specs.store = RDoc::Store.new(RDoc::Options.new)
+  $rdoc_for_specs.store = RDoc::Store.new($rdoc_for_specs.options)
 
   Dir.mktmpdir do |dir|
     path = "#{dir}/ruby_code.rb"

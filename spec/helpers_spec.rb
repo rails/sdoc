@@ -453,7 +453,7 @@ describe SDoc::Helpers do
 
     it "returns the commit time of the most recent commit in HEAD (smoke test)" do
       _(@helpers.og_modified_time).
-        must_match %r"\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[-+]\d{2}:\d{2}\z"
+        must_match %r"\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[-+]\d{2}:\d{2})\z"
     end
 
     it "returns nil when git is not installed or project is not a git repository" do

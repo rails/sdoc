@@ -25,6 +25,9 @@ class RDoc::Generator::SDoc
 
   DESCRIPTION = 'Searchable HTML documentation'
 
+  FILE_DIR = "files"
+  CLASS_DIR = "classes"
+
   RESOURCES_DIR = File.join('resources', '.')
 
   attr_reader :options
@@ -63,6 +66,14 @@ class RDoc::Generator::SDoc
       ENV["HORO_BADGE_VERSION"] || ENV["HORO_PROJECT_VERSION"],
       "API documentation"
     ].compact.join(" ")
+
+    if options.respond_to?(:class_module_path_prefix)
+      options.class_module_path_prefix = CLASS_DIR
+    end
+
+    if options.respond_to?(:file_path_prefix)
+      options.file_path_prefix = FILE_DIR
+    end
   end
 
   def initialize(store, options)
@@ -90,12 +101,14 @@ class RDoc::Generator::SDoc
     generate_class_files
   end
 
+  # For compatibility with RDoc < 6.13.0
   def class_dir
-    nil
+    CLASS_DIR
   end
 
+  # For compatibility with RDoc < 6.13.0
   def file_dir
-    nil
+    FILE_DIR
   end
 
   ### Determines index page based on @options.main_page (or lack thereof)

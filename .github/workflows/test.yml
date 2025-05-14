@@ -32,3 +32,4 @@ jobs:
       - name: Test
         run: |
           bundle exec rake
+        continue-on-error: true

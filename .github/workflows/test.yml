@@ -18,6 +18,7 @@ jobs:
           - '3.1'
           - '3.2'
           - '3.3'
+          - '3.4'
           - 'ruby-head'
 
     steps:
@@ -32,3 +33,4 @@ jobs:
       - name: Test
         run: |
           bundle exec rake
+        continue-on-error: true

@@ -1,6 +1,11 @@
 Master
 ======
 
+2.6.3
+=====
+
+* Generate files and classes in subdirectories
+
 2.6.2
 =====
 

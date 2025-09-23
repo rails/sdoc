@@ -1,6 +1,16 @@
 Master
 ======
 
+2.6.2
+=====
+
+* Fix support to RDoc >= 6.13
+
+2.6.1
+=====
+
+* Support RDoc >= 6.13
+
 2.6.1
 =====
 

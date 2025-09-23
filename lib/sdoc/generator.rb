@@ -25,6 +25,9 @@ class RDoc::Generator::SDoc
 
   DESCRIPTION = 'Searchable HTML documentation'
 
+  FILE_DIR = "files"
+  CLASS_DIR = "classes"
+
   include ERB::Util
   include SDoc::GitHub
   include SDoc::Templatable
@@ -34,9 +37,6 @@ class RDoc::Generator::SDoc
 
   TREE_FILE = File.join 'panel', 'tree.js'
   SEARCH_INDEX_FILE = File.join 'js', 'search_index.js'
-
-  FILE_DIR = 'files'
-  CLASS_DIR = 'classes'
 
   RESOURCES_DIR = File.join('resources', '.')
 
@@ -63,6 +63,14 @@ class RDoc::Generator::SDoc
     opt.on("--version", "-v", "Output current version") do
       puts SDoc::VERSION
       exit
+    end
+
+    if options.respond_to?(:class_module_path_prefix)
+      options.class_module_path_prefix = CLASS_DIR
+    end
+
+    if options.respond_to?(:file_path_prefix)
+      options.file_path_prefix = FILE_DIR
     end
   end
 
@@ -98,10 +106,12 @@ class RDoc::Generator::SDoc
     generate_class_files
   end
 
+  # For compatibility with RDoc < 6.13.0
   def class_dir
     CLASS_DIR
   end
 
+  # For compatibility with RDoc < 6.13.0
   def file_dir
     FILE_DIR
   end

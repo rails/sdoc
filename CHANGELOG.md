@@ -1,10 +1,20 @@
 Master
 ======
 
-2.6.3
+2.6.5
+=====
+
+* Fix favicon
+
+2.6.4
 =====
 
 * Generate files and classes in subdirectories
+
+2.6.3
+=====
+
+* Fix support to RDoc >= 6.13
 
 2.6.2
 =====

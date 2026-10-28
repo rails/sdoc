@@ -45,4 +45,33 @@ describe RDoc::Generator::SDoc do
     _(out_short.strip).must_equal SDoc::VERSION
     _(out_full.strip).must_equal SDoc::VERSION
   end
+
+  it "shows source only for methods with source code" do
+    Dir.mktmpdir("sdoc") do |dir|
+      source = File.join(dir, "example.rb")
+      output = File.join(dir, "doc")
+      File.write(source, <<-RUBY)
+        class Example
+          def regular
+            :body
+          end
+
+          ##
+          # :method: generated
+        end
+      RUBY
+
+      capture_io do
+        RDoc::RDoc.new.document([
+          "--quiet", "--format", "sdoc", "--template", "rails",
+          "--op", output, source
+        ])
+      end
+
+      html = File.read(File.join(output, "classes", "Example.html"))
+      _(html).must_include 'id="l_method-i-regular_source"'
+      _(html).must_include 'id="method-i-generated"'
+      _(html).wont_include 'id="l_method-i-generated_source"'
+    end
+  end
 end

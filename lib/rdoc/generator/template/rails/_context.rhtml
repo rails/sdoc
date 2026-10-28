@@ -196,7 +196,10 @@
                   false
                 end
 
-                ghost = method.instance_of?(RDoc::GhostMethod)
+                # RDoc 8.0 removed RDoc::GhostMethod (ruby/rdoc#1705). Methods
+                # defined by a :method: directive have an empty token stream.
+                ghost = method.token_stream.empty? ||
+                  (defined?(RDoc::GhostMethod) && method.instance_of?(RDoc::GhostMethod))
               %>
               <p class="source-link">
                 <% if !ghost || github %> Source: <% end %>

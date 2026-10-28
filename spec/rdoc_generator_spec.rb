@@ -74,4 +74,62 @@ describe RDoc::Generator::SDoc do
       _(html).wont_include 'id="l_method-i-generated_source"'
     end
   end
+
+  it "renders RBS type signatures of methods and attributes" do
+    skip "RBS type signatures require RDoc >= 8.0" unless RDoc::VERSION.to_i >= 8
+
+    Dir.mktmpdir("sdoc") do |dir|
+      source = File.join(dir, "example.rb")
+      output = File.join(dir, "doc")
+      File.write(source, <<-RUBY)
+        # An example class.
+        class Example
+          # The name.
+          #: String
+          attr_reader :name
+
+          # Returns a copy.
+          #: (Integer count) -> Example
+          def copy(count)
+          end
+        end
+      RUBY
+
+      capture_io do
+        RDoc::RDoc.new.document([
+          "--quiet", "--format", "sdoc", "--template", "rails",
+          "--op", output, source
+        ])
+      end
+
+      html = File.read(File.join(output, "classes", "Example.html"))
+      _(html).must_include %(<pre class="method-type-signature"><code>(Integer count) &rarr; <a href="Example.html" class="rbs-type">Example</a></code></pre>)
+      _(html).must_include %(<code class="attr-type-signature">String</code>)
+      _(html).wont_include %(#: )
+    end
+  end
+
+  it "renders no type signature for methods without one" do
+    Dir.mktmpdir("sdoc") do |dir|
+      source = File.join(dir, "example.rb")
+      output = File.join(dir, "doc")
+      File.write(source, <<-RUBY)
+        class Example
+          # Says hello.
+          def hello
+          end
+        end
+      RUBY
+
+      capture_io do
+        RDoc::RDoc.new.document([
+          "--quiet", "--format", "sdoc", "--template", "rails",
+          "--op", output, source
+        ])
+      end
+
+      html = File.read(File.join(output, "classes", "Example.html"))
+      _(html).wont_include %(method-type-signature)
+    end
+  end
 end

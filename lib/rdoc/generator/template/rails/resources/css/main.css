@@ -311,6 +311,19 @@ tt {
   text-indent: 2em;
 }
 
+.method .method-type-signature {
+  margin: 0 0 0.5em 1.2em;
+  padding: 0;
+  background: transparent;
+  color: #555;
+  white-space: pre-wrap;
+}
+
+.attr-type-signature {
+  margin-left: 0.5em;
+  color: #555;
+}
+
 .method .source-link
 {
     font-size: 0.85em;

@@ -1,6 +1,8 @@
 Master
 ======
 
+* Fix documentation generation with RDoc >= 8.0 for methods defined by a `:method:` directive.
+
 2.6.5
 =====
 

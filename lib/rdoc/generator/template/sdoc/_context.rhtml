@@ -129,7 +129,12 @@
             <td class='attr-rw'>
               [<%= attrib.rw %>]
             </td>
-            <td class='attr-name'><%= h attrib.name %></td>
+            <td class='attr-name'>
+              <%= h attrib.name %>
+              <% if (signature = type_signature_html(attrib, context.path)) %>
+                <code class="attr-type-signature"><%= signature %></code>
+              <% end %>
+            </td>
             <td class='attr-desc'><%= attrib.description.strip %></td>
           </tr>
         <% end %>
@@ -156,6 +161,10 @@
             <% end %>
             <a href="<%= "#{rel_prefix}/#{context.path}##{method.aref}"%>" name="<%= method.aref %>" class="permalink">Link</a>
           </div>
+
+          <% if (signature = type_signature_html(method, context.path)) %>
+            <pre class="method-type-signature"><code><%= signature %></code></pre>
+          <% end %>
 
           <% if method.comment %>
             <div class="description">
@@ -196,7 +205,8 @@
                   false
                 end
 
-                ghost = method.instance_of?(RDoc::GhostMethod)
+                ghost = method.token_stream.empty? ||
+                  (defined?(RDoc::GhostMethod) && method.instance_of?(RDoc::GhostMethod))
               %>
               <p class="source-link">
                 <% if !ghost || github %> Source: <% end %>

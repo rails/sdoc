@@ -43,6 +43,39 @@ describe RDoc::Generator::SDoc do
     end
   end
 
+  describe "version banner" do
+    def render_index_banner
+      Dir.mktmpdir do |dir|
+        Dir.chdir(dir) do
+          rdoc_run("--files", "#{__dir__}/../README.md")
+          Nokogiri::HTML5.parse(File.read("doc/index.html")).at_css(".banner__version")
+        end
+      end
+    end
+
+    it "is a version selector when ENV['HORO_VERSIONS'] is set" do
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => "edge=https://edge.example v2.0=https://example/v2.0") do
+        banner_version = render_index_banner
+
+        _(banner_version.name).must_equal "select"
+        _(banner_version["aria-label"]).must_equal "Documentation version"
+        _(banner_version.css("option").map { |option| [option.text, option["value"], option.key?("selected")] }).must_equal [
+          ["edge", "https://edge.example/", false],
+          ["v2.0.1", "https://example/v2.0/", true],
+        ]
+      end
+    end
+
+    it "is a plain version badge when ENV['HORO_VERSIONS'] is not set" do
+      with_env("HORO_BADGE_VERSION" => "v2.0.1") do
+        banner_version = render_index_banner
+
+        _(banner_version.name).must_equal "span"
+        _(banner_version.text).must_equal "v2.0.1"
+      end
+    end
+  end
+
   describe "options.dry_run" do
     it "prevents files from being rendered" do
       Dir.mktmpdir do |dir|

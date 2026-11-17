@@ -5,7 +5,11 @@
     </div>
     <div class="banner__segment">
       <a class="banner__logo" href="/"><img src="/i/logo.svg" alt="<%= project_name %>"></a>
+      <% if versions = version_options(@context) %>
+      <select class="banner__version" title="<%= project_git_head %>" aria-label="Documentation version"><%= versions %></select>
+      <% else %>
       <span class="banner__version" title="<%= project_git_head %>"><%= project_version %></span>
+      <% end %>
     </div>
   </div>
 

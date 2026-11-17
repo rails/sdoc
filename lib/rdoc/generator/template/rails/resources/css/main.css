@@ -388,6 +388,21 @@ html {
   bottom: 0.1em;
 }
 
+select.banner__version {
+  appearance: none;
+  border: none;
+  padding: 0 1em 0 0;
+  background: url('../i/chevron-down.svg') no-repeat right center / 0.85em;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+select.banner__version option {
+  color: var(--text-color);
+  background-color: var(--body-bg);
+}
+
 
 /*
  * Navigation panel - Tray

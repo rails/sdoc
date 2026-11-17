@@ -382,6 +382,142 @@ describe SDoc::Helpers do
     end
   end
 
+  describe "#version_options" do
+    it "returns an option per ENV['HORO_VERSIONS'] entry that links to the given RDoc::Context" do
+      context = rdoc_top_level_for(<<~RUBY).find_module_named("Foo::Bar")
+        module Foo; module Bar; end; end
+      RUBY
+
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => "edge=https://edge.example v2.0=https://example/v2.0 v1.0=https://example/v1.0") do
+        _(@helpers.version_options(context)).must_equal \
+          %(<option value="https://edge.example/classes/Foo/Bar.html">edge</option>) +
+          %(<option value="https://example/v2.0/classes/Foo/Bar.html" selected>v2.0.1</option>) +
+          %(<option value="https://example/v1.0/classes/Foo/Bar.html">v1.0</option>)
+      end
+    end
+
+    it "links to the root of each version for the index page" do
+      index = rdoc_top_level_for("").dup.tap { |top_level| top_level.path = "" }
+
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => "v2.0=https://example/v2.0 v1.0=https://example/v1.0/") do
+        _(@helpers.version_options(index)).must_equal \
+          %(<option value="https://example/v2.0/" selected>v2.0.1</option>) +
+          %(<option value="https://example/v1.0/">v1.0</option>)
+      end
+    end
+
+    it "selects the entry whose label equals the badge version" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "edge", "HORO_VERSIONS" => "edge=https://edge.example v2.0=https://example/v2.0") do
+        _(@helpers.version_options(context)).must_equal \
+          %(<option value="https://edge.example/classes/Foo.html" selected>edge</option>) +
+          %(<option value="https://example/v2.0/classes/Foo.html">v2.0</option>)
+      end
+    end
+
+    it "falls back to ENV['HORO_PROJECT_VERSION'] for the current version" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_PROJECT_VERSION" => "v2.0.1", "HORO_VERSIONS" => "v2.0=https://example/v2.0") do
+        _(@helpers.version_options(context)).must_equal \
+          %(<option value="https://example/v2.0/classes/Foo.html" selected>v2.0.1</option>)
+      end
+    end
+
+    it "does not mistake a label for the series of a longer version number" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "v2.10.0", "HORO_VERSIONS" => "v2.1=https://example/v2.1") do
+        _(@helpers.version_options(context)).must_equal \
+          %(<option value="classes/Foo.html" selected>v2.10.0</option>) +
+          %(<option value="https://example/v2.1/classes/Foo.html">v2.1</option>)
+      end
+    end
+
+    it "prepends the badge version when no entry matches it" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "v3.0.0.beta1", "HORO_VERSIONS" => "v2.0=https://example/v2.0") do
+        _(@helpers.version_options(context)).must_equal \
+          %(<option value="classes/Foo.html" selected>v3.0.0.beta1</option>) +
+          %(<option value="https://example/v2.0/classes/Foo.html">v2.0</option>)
+      end
+    end
+
+    it "selects only the first matching entry" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => "v2.0=https://example/v2.0 v2=https://example/v2") do
+        _(@helpers.version_options(context)).must_equal \
+          %(<option value="https://example/v2.0/classes/Foo.html" selected>v2.0.1</option>) +
+          %(<option value="https://example/v2/classes/Foo.html">v2</option>)
+      end
+    end
+
+    it "accepts entries separated by newlines" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => "v2.0=https://example/v2.0\nv1.0=https://example/v1.0\n") do
+        _(@helpers.version_options(context)).must_equal \
+          %(<option value="https://example/v2.0/classes/Foo.html" selected>v2.0.1</option>) +
+          %(<option value="https://example/v1.0/classes/Foo.html">v1.0</option>)
+      end
+    end
+
+    it "escapes labels and URLs" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "<v2>", "HORO_VERSIONS" => "<v1>=https://example/v1&old") do
+        _(@helpers.version_options(context)).must_equal \
+          %(<option value="classes/Foo.html" selected>&lt;v2&gt;</option>) +
+          %(<option value="https://example/v1&amp;old/classes/Foo.html">&lt;v1&gt;</option>)
+      end
+    end
+
+    it "raises when an ENV['HORO_VERSIONS'] entry has no URL" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => "v2.0=https://example/v2.0 v1.0") do
+        error = _ { @helpers.version_options(context) }.must_raise ArgumentError
+        _(error.message).must_include %("v1.0")
+      end
+    end
+
+    it "raises when an ENV['HORO_VERSIONS'] entry has no label" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => "=https://example/v2.0") do
+        error = _ { @helpers.version_options(context) }.must_raise ArgumentError
+        _(error.message).must_include %("=https://example/v2.0")
+      end
+    end
+
+    it "returns nil when ENV['HORO_VERSIONS'] is not set" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => nil) do
+        _(@helpers.version_options(context)).must_be_nil
+      end
+    end
+
+    it "returns nil when ENV['HORO_VERSIONS'] is blank" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => "v2.0.1", "HORO_VERSIONS" => " ") do
+        _(@helpers.version_options(context)).must_be_nil
+      end
+    end
+
+    it "returns nil when there is no current version to select" do
+      context = rdoc_top_level_for("module Foo; end").find_module_named("Foo")
+
+      with_env("HORO_BADGE_VERSION" => nil, "HORO_PROJECT_VERSION" => nil, "HORO_VERSIONS" => "v2.0=https://example/v2.0") do
+        _(@helpers.version_options(context)).must_be_nil
+      end
+    end
+  end
+
   describe "#project_git_head" do
     it "returns the branch name and abbreviated SHA1 of the most recent commit in HEAD" do
       @helpers._git[:repo_path] = "path/to/repo"

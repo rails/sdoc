@@ -51,6 +51,12 @@ class RailsTask < Rails::API::EdgeTask
     super
 
     ENV["HORO_BADGE_VERSION"] ||= "edge" if ENV["HORO_PROJECT_VERSION"]&.include?("@")
+    ENV["HORO_VERSIONS"] ||= [
+      "edge=https://edgeapi.rubyonrails.org",
+      *%w[8.1 8.0 7.2 7.1 7.0 6.1 6.0 5.2 5.1 5.0 4.2 4.1 4.0 3.2 3.1 3.0 2.3].map do |version|
+        "v#{version}=https://api.rubyonrails.org/v#{version}"
+      end
+    ].join(" ")
 
     if ENV['NETLIFY']
       ENV['HORO_CANONICAL_URL'] = ENV.fetch('DEPLOY_PRIME_URL', 'https://edgeapi.rubyonrails.org')

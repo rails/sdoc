@@ -52,6 +52,20 @@ Now you can execute this command with `rake rdoc`, to compile the documentation 
 
 Alternatively you can pass this command a path to the project you wish to compile: `rake rdoc path/to/project`.
 
+### Version selector
+
+Set `HORO_VERSIONS` to turn the version badge into a menu that opens the current page in another version of your documentation.
+Entries are `LABEL=URL` pairs separated by whitespace:
+
+```bash
+HORO_BADGE_VERSION=v2.1.3 \
+HORO_VERSIONS="edge=https://example.org/edge v2.1=https://example.org/v2.1 v2.0=https://example.org/v2.0" \
+sdoc projectdir
+```
+
+The entry whose label is the badge version, or its series (`v2.1` for `v2.1.3`), is selected and shows the full badge version.
+If no entry matches, the badge version is added on top.
+
 ### RDoc
 
 As mentioned before, SDoc is built on top of the RDoc project.

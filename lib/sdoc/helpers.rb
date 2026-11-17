@@ -79,8 +79,41 @@ module SDoc::Helpers
   end
 
   def project_version
-    version = ENV["HORO_BADGE_VERSION"] || ENV["HORO_PROJECT_VERSION"]
+    version = _current_version
     h version if version
+  end
+
+  def _current_version
+    ENV["HORO_BADGE_VERSION"] || ENV["HORO_PROJECT_VERSION"]
+  end
+
+  def version_options(context)
+    current = _current_version
+    versions = _versions
+    return if current.nil? || versions.empty?
+
+    current_index = versions.index { |label, _| current == label || current.start_with?("#{label}.") }
+
+    options = versions.each_with_index.map do |(label, url), index|
+      url = "#{url.chomp("/")}/#{context.path}"
+      index == current_index ? _version_option(current, url, selected: true) : _version_option(label, url)
+    end
+    options.unshift(_version_option(current, context.path, selected: true)) unless current_index
+    options.join
+  end
+
+  def _version_option(text, url, selected: false)
+    %(<option value="#{h url}"#{" selected" if selected}>#{h text}</option>)
+  end
+
+  def _versions
+    ENV["HORO_VERSIONS"].to_s.split.map do |entry|
+      label, url = entry.split("=", 2)
+      if label.to_s.empty? || url.to_s.empty?
+        raise ArgumentError, "Expected HORO_VERSIONS entries of the form LABEL=URL, got #{entry.inspect}"
+      end
+      [label, url]
+    end
   end
 
   def project_git_head
